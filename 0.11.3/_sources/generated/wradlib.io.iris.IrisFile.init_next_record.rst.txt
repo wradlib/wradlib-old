@@ -1,0 +1,6 @@
+wradlib.io.iris.IrisFile.init\_next\_record
+===========================================
+
+.. currentmodule:: wradlib.io.iris
+
+.. automethod:: IrisFile.init_next_record

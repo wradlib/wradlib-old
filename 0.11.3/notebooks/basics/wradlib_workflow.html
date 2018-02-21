@@ -1,0 +1,1312 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>A Typical Workflow For Radar-Based Rainfall Estimation &mdash; wradlib</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/wradlib.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="wradlib" href="../../index.html"/>
+        <link rel="up" title="Getting started with wradlib" href="../basics.html"/>
+        <link rel="next" title="Converting Reflectivity to Rainfall" href="wradlib_get_rainfall.html"/>
+        <link rel="prev" title="Import wradlib and check its version" href="wradlib_introduction.html"/>
+    
+    <link href="../../_static/wradlib.css" rel="stylesheet" type="text/css">
+
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+  <a href="../../index.html" class="icon icon-home"> wradlib
+
+
+
+</a>
+
+
+
+  <div class="version">
+    
+    <button class="verbtn">0.11.3</button>
+    <div class="version-content">
+      
+        <a href="../latest/">latest</a>
+        <a href="../0.11.3/">0.11.3</a>
+        <a href="../0.11.1/">0.11.1</a>
+    </div>
+  </div>
+
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../gettingstarted.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../notebooks.html">Tutorials and Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../jupyter.html">How to use the tutorials and examples?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../learnpython.html">An incomplete introduction to Python</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../basics.html">Getting started with wradlib</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="wradlib_introduction.html">Get wradlib version</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Typical Workflow for Radar-Based RainfallEstimation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Introduction">Introduction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Reading-the-data">Reading the data</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Clutter-removal">Clutter removal</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Attenuation-correction">Attenuation correction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Vertical-Profile-of-Reflectivity">Vertical Profile of Reflectivity</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Conversion-of-Reflectivity-into-Rainfall">Conversion of Reflectivity into Rainfall</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Rainfall-accumulation">Rainfall accumulation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Georeferencing-and-Projection">Georeferencing and Projection</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Gridding">Gridding</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Adjustment-by-rain-gage-observations">Adjustment by rain gage observations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Verification-and-quality-control">Verification and quality control</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Visualisation-and-mapping">Visualisation and mapping</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Data-export-to-other-applications">Data export to other applications</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="wradlib_get_rainfall.html">From Reflectivity toRainfall</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../visualisation/wradlib_plot_ppi_example.html">Plot Polar Data asPPI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../visualisation/wradlib_plot_curvelinear_grids.html">Plot PolarData on CurvelinearGrids</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../fileio.html">Data Input - Data Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../attenuation/wradlib_attenuation.html">Attenuation correction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../beamblockage/wradlib_beamblock.html">Beam Blockage Calculation using a DEM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../classify.html">Clutter and Echo Classification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../georeferencing.html">Georeferencing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../match3d/wradlib_match_workflow.html">Match spaceborn SR (GPM/TRMM) with ground radars GR</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../develop.html">For Developers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interpolation/wradlib_ipol_example.html">How to use wradlib’s ipol module for interpolation tasks?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../multisensor/wradlib_adjust_example.html">Adjusting radar-base rainfall estimates by rain gauge observations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../verification/wradlib_verify_example.html">Routine verification measures for radar-based precipitation estimates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../recipes.html">Recipes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../radolan.html">RADOLAN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zonalstats/wradlib_zonalstats_classes.html">Zonal Statistics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference.html">Library Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev_setup.html">For Developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zreferences.html">Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../release_notes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">wradlib</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../notebooks.html">Tutorials and Examples</a> &raquo;</li>
+        
+          <li><a href="../basics.html">Getting started with wradlib</a> &raquo;</li>
+        
+      <li>A Typical Workflow For Radar-Based Rainfall Estimation</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/notebooks/basics/wradlib_workflow.ipynb.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #303F9F;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #D84315;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 8ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+/* nice headers on first paragraph of info/warning boxes */
+.admonition .first {
+    margin: -12px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1;
+    display: block;
+}
+.admonition.warning .first {
+    background: #f0b37e;
+}
+.admonition.note .first {
+    background: #6ab0de;
+}
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="A-Typical-Workflow-For-Radar-Based-Rainfall-Estimation">
+<h1>A Typical Workflow For Radar-Based Rainfall Estimation<a class="headerlink" href="#A-Typical-Workflow-For-Radar-Based-Rainfall-Estimation" title="Permalink to this headline">¶</a></h1>
+<p>Raw, unprocessed reflectivity products can already provide useful visual
+information about the spatial distribution of rainfall fields. However,
+in order to use weather radar observations for quantitative studies
+(e.g.&nbsp;in hydrological modelling or for assimilation into Numerical
+Weather Prediction models), the data has to be carefully processed in
+order to account for typical errors sources such as ground echoes
+(clutter), attenuation of the radar signal, or uncertainties in the Z/R
+relationship.</p>
+<p>Moreover, it might be necessary to transfer the data from polar
+coordinates to Cartesian grids, or to combine observations from
+different radar locations in overlapping areas on a common grid
+(composition). And in the end, you would typically like to visualise the
+spatial rainfall distribution on a map. Many users also need to quantify
+the potential error (uncertainty) of their data-based rainfall
+estimation.</p>
+<p>These are just some steps that might be necessary in order to make radar
+data useful in a specific quantitative application environment. All
+steps together are typically referred to as a <em>“radar data processing
+chain”</em>. <span class="math notranslate">\(\omega radlib\)</span> was designed to support you in
+establishing your own processing chain, suited to your specific
+requirements. In the following, we will provide an outline of a typical
+processing chain, step-by-step. You might not need all steps for your
+own workflow, or you might need steps which are not yet included here.</p>
+<div class="section" id="Introduction">
+<h2>Introduction<a class="headerlink" href="#Introduction" title="Permalink to this headline">¶</a></h2>
+<p>Consider this just as an example. We will not go into detail for each
+step in this section, but refer to more detailed tutorials (if
+available) or the corresponding entry in the library reference. Most of
+the steps have a corresponding <span class="math notranslate">\(\omega radlib\)</span> module. In order to
+access the functions of <span class="math notranslate">\(\omega radlib\)</span>, you have to import
+<span class="math notranslate">\(\omega radlib\)</span> in your Python environment:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">wradlib</span> <span class="kn">as</span> <span class="nn">wrl</span>
+</pre></div>
+</div>
+<p>If you have trouble with that import, please head back to the <a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/gettingstarted.html">Getting
+Started</a>
+section.</p>
+<div class="admonition note">
+<p class="first fa fa-exclamation-circle"><strong>Note</strong></p>
+<p class="last">The data used in this tutorial can be found in the <a class="reference external" href="https://github.com/wradlib/wradlib-data">wradlib-data
+repository</a>. Follow <a class="reference external" href="https://github.com/wradlib/wradlib-data/blob/master/README.md">these
+instructions</a>
+to install and use this data files.</p>
+</div>
+<div class="admonition warning">
+<p class="first fa fa-exclamation-circle"><strong>Warning</strong></p>
+<p class="last">Be aware that applying an algorithm for error correction does not
+guarantee that the error is totally removed. Error correction procedures
+are suceptible to errors, too. Not only might they fail to <em>remove</em> the
+error. They might also introduce <em>new</em> errors. The trade-off between
+costs (introduction of new errors) and benefits (error reduction) can
+turn out differently for different locations, different points in time,
+or different rainfall situations.</p>
+</div>
+</div>
+<div class="section" id="Reading-the-data">
+<h2>Reading the data<a class="headerlink" href="#Reading-the-data" title="Permalink to this headline">¶</a></h2>
+<p>The binary encoding of many radar products is a major obstacle for many
+potential radar users. Often, decoder software is not easily available.
+<span class="math notranslate">\(\omega radlib\)</span> supports a couple of formats such as the ODIM_H5
+implementation, NetCDF, and some formats used by the German Weather
+Service. We seek to continuously enhance the range of supported formats.</p>
+<p>The basic data type used in <span class="math notranslate">\(\omega radlib\)</span> is a multi-dimensional
+array, the numpy.ndarray. Such an array might e.g.&nbsp;represent a polar or
+Cartesian grid, or a series of rain gage observations. Metadata are
+normally managed as Python dictionaries. In order to read the content of
+a data file into a numpy array, you would normally use the
+<a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/io.html">wradlib.io</a> module. In
+the following example, a local PPI from the German Weather Service, a DX
+file, is read:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">pylab</span> <span class="kn">as</span> <span class="nn">pl</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">filename</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">get_wradlib_data_file</span><span class="p">(</span><span class="s1">&#39;dx/raa00-dx_10908-0806021655-fbg---bin.gz&#39;</span><span class="p">)</span>
+<span class="n">data</span><span class="p">,</span> <span class="n">metadata</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">readDX</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">,</span> <span class="n">pm</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">vis</span><span class="o">.</span><span class="n">plot_ppi</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="c1"># simple diagnostic plot</span>
+<span class="n">cbar</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">pm</span><span class="p">,</span> <span class="n">shrink</span><span class="o">=</span><span class="mf">0.75</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>&lt;matplotlib.figure.Figure at 0x7f5aaaf08590&gt;
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_basics_wradlib_workflow_11_1.png" src="../../_images/notebooks_basics_wradlib_workflow_11_1.png" />
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">metadata</span></code> object can be inspected via keywords. The <code class="docutils literal notranslate"><span class="pre">data</span></code>
+object contains the actual data, in this case a polar grid with 360
+azimuth angles and 128 range bins.</p>
+<div class="admonition note">
+<p class="first fa fa-exclamation-circle"><strong>Seealso</strong></p>
+<p class="last">Get more info in the section Supported radar data
+formats and in the library
+reference section <a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/io.html">Raw Data
+I/O</a>.</p>
+</div>
+</div>
+<div class="section" id="Clutter-removal">
+<h2>Clutter removal<a class="headerlink" href="#Clutter-removal" title="Permalink to this headline">¶</a></h2>
+<p>Clutter are non-meteorological echos. They are caused by the radar beam
+hitting objects on the earth’s surface (e.g.&nbsp;mountain or hill tops,
+houses, wind turbines) or in the air (e.g.&nbsp;airplanes, birds). These
+objects can potentially cause high reflectivities due large scattering
+cross sections. Static clutter, if not efficiently removed by Doppler
+filters, can cause permanent echos which could introduce severe bias in
+quantitative applications. Thus, an efficient identification and removal
+of clutter is mandatory e.g.&nbsp;for hydrological studies. Clutter removal
+can be based on static maps or dynamic filters. Normally, static clutter
+becomes visible more clearly in rainfall accumulation maps over periods
+of weeks or months. We recommend such accumulations to create static
+clutter maps which can in turn be used to remove the static clutter from
+an image and fill the resulting gaps by interpolation.</p>
+<p>In the following example, the clutter filter published by <a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/zreferences.html#gabella2002">Gabella et
+al.,
+2002</a>)
+is applied to the single radar sweep of the above example:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">clutter</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">clutter</span><span class="o">.</span><span class="n">filter_gabella</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">tr1</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">n_p</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">tr2</span><span class="o">=</span><span class="mf">1.1</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">ax</span><span class="p">,</span> <span class="n">pm</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">vis</span><span class="o">.</span><span class="n">plot_ppi</span><span class="p">(</span><span class="n">clutter</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">pl</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">gray</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Clutter Map&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[4]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Text(0.5,1,u&#39;Clutter Map&#39;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>&lt;matplotlib.figure.Figure at 0x7f5aaaaa2650&gt;
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_basics_wradlib_workflow_17_2.png" src="../../_images/notebooks_basics_wradlib_workflow_17_2.png" />
+</div>
+</div>
+<p>The resulting Boolean array <code class="docutils literal notranslate"><span class="pre">clutter</span></code> indicates the position of
+clutter. It can be used to interpolate the values at those positons from
+non-clutter values, as shown in the following line:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">data_no_clutter</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">ipol</span><span class="o">.</span><span class="n">interpolate_polar</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">clutter</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">ax</span><span class="p">,</span> <span class="n">pm</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">vis</span><span class="o">.</span><span class="n">plot_ppi</span><span class="p">(</span><span class="n">data_no_clutter</span><span class="p">)</span> <span class="c1"># simple diagnostic plot</span>
+<span class="n">cbar</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">pm</span><span class="p">,</span> <span class="n">shrink</span><span class="o">=</span><span class="mf">0.75</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>&lt;matplotlib.figure.Figure at 0x7f5aa22576d0&gt;
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_basics_wradlib_workflow_19_1.png" src="../../_images/notebooks_basics_wradlib_workflow_19_1.png" />
+</div>
+</div>
+<p>It is generally recommended to remove the clutter before e.g.&nbsp;gridding
+the data. Otherwise the clutter signal might be “smeared” over multiple
+grid cells, resulting into a decrease in detectability.</p>
+<div class="admonition note">
+<p class="first fa fa-exclamation-circle"><strong>Seealso</strong></p>
+<p class="last">Get more info in the library reference section <a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/clutter.html">Clutter
+Identification</a>.</p>
+</div>
+</div>
+<div class="section" id="Attenuation-correction">
+<h2>Attenuation correction<a class="headerlink" href="#Attenuation-correction" title="Permalink to this headline">¶</a></h2>
+<p>Attenuation by wet radome and by heavy rainfall can cause serious
+underestimation of rainfall for <a class="reference external" href="http://www.everythingweather.com/weather-radar/bands.shtml">C-Band and
+X-Band</a>
+devices. For such radar devices, situations with heavy rainfall require
+a correction of attenuation effects. The general approach with
+single-polarized radars is to use a recursive gate-by-gate approach. See
+<a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/zreferences.html#kraemer2008">Kraemer et al.,
+2008</a>
+for an introduction to this concept. Basically, the specific attenuation
+<code class="docutils literal notranslate"><span class="pre">k</span></code> of the first range gate is computed via a so-called <code class="docutils literal notranslate"><span class="pre">k-Z</span></code>
+relationship. Based on <code class="docutils literal notranslate"><span class="pre">k</span></code>, the reflectivity of the second range gate
+is corrected and then used to compute the specific attenuation for the
+second range gate (and so on). The concept was first introduced by
+<a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/zreferences.html#hitschfeld1954">Hitschfeld et al.,
+1954)</a>.
+Its main drawback is its suceptibility to instable behaviour.
+<span class="math notranslate">\(\omega radlib\)</span> provides different implementations which address
+this problem.</p>
+<p>One example is the algorithm published by <a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/zreferences.html#kraemer2008">Kraemer et al.,
+2008</a>:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">pia</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">atten</span><span class="o">.</span><span class="n">correctAttenuationKraemer</span><span class="p">(</span><span class="n">data_no_clutter</span><span class="p">)</span>
+<span class="n">data_attcorr</span> <span class="o">=</span> <span class="n">data_no_clutter</span> <span class="o">+</span> <span class="n">pia</span>
+</pre></div>
+</div>
+</div>
+<p>The first line computes the path integrated attenuation <code class="docutils literal notranslate"><span class="pre">pia</span></code> for each
+radar bin. The second line uses <code class="docutils literal notranslate"><span class="pre">pia</span></code> to correct the reflectivity
+values. Let’s inspect the effect of attenuation correction for an
+azimuth angle of 65 deg:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">pl</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data_attcorr</span><span class="p">[</span><span class="mi">65</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;attcorr&quot;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data_no_clutter</span><span class="p">[</span><span class="mi">65</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;no attcorr&quot;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;km&quot;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;dBZ&quot;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[7]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>&lt;matplotlib.legend.Legend at 0x7f5aaac68450&gt;
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_basics_wradlib_workflow_27_1.png" src="../../_images/notebooks_basics_wradlib_workflow_27_1.png" />
+</div>
+</div>
+<div class="admonition note">
+<p class="first fa fa-exclamation-circle"><strong>Seealso</strong></p>
+<p class="last">Get more info in the library reference section <a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/atten.html">Attenuation
+Correction</a>. There
+you will learn to know the algorithms available for attenuation
+correction and how to manipulate their behaviour by using additonal
+keyword arguments.</p>
+</div>
+</div>
+<div class="section" id="Vertical-Profile-of-Reflectivity">
+<h2>Vertical Profile of Reflectivity<a class="headerlink" href="#Vertical-Profile-of-Reflectivity" title="Permalink to this headline">¶</a></h2>
+<p>Precipitation is 3-dimensional in space. The vertical distribution of
+precipitation (and thus reflectivity) is typically non-uniform. As the
+height of the radar beam increases with the distance from the radar
+location (beam elevation, earth curvature), one sweep samples from
+different heights. The effects of the non-uniform VPR and the different
+sampling heights need to be accounted for if we are interested in the
+precipiation near the ground or in defined altitudes.</p>
+<div class="admonition note">
+<p class="first fa fa-exclamation-circle"><strong>Seealso</strong></p>
+<p class="last">Get more info in the library reference section <a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/vpr.html">Vertical Profile of
+Reflectivity (VPR)</a>.
+There you will learn how to reference polar volume data, to create
+CAPPIs and Pseudo CAPPIs, to inspect vertical profiles of reflectivity
+(UNDER DEVELOPMENT), and to use these for correction (UNDER
+DEVELOPMENT).</p>
+</div>
+</div>
+<div class="section" id="Conversion-of-Reflectivity-into-Rainfall">
+<h2>Conversion of Reflectivity into Rainfall<a class="headerlink" href="#Conversion-of-Reflectivity-into-Rainfall" title="Permalink to this headline">¶</a></h2>
+<p>Reflectivity (Z) and precipitation rate (R) can be related in form of a
+power law <span class="math notranslate">\(R=a*Z^b\)</span>. The parameters <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code> depend on the
+type of precipitation in terms of drop size distribution and water
+temperature. Before applying the Z-R relationship, we need to convert
+from dBZ to Z:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">R</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">zr</span><span class="o">.</span><span class="n">z2r</span><span class="p">(</span><span class="n">wrl</span><span class="o">.</span><span class="n">trafo</span><span class="o">.</span><span class="n">idecibel</span><span class="p">(</span><span class="n">data_attcorr</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>The above line uses the default parameters parameters <code class="docutils literal notranslate"><span class="pre">a=200</span></code> and
+<code class="docutils literal notranslate"><span class="pre">b=1.6</span></code> for the Z-R relationship. In order to compute a rainfall depth
+from rainfall intensity, we have to specify an integration interval in
+seconds. In this example, we chose five minutes (300 s), corresponding
+to the sweep return interval:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">depth</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">trafo</span><span class="o">.</span><span class="n">r2depth</span><span class="p">(</span><span class="n">R</span><span class="p">,</span> <span class="mi">300</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="admonition note">
+<p class="first fa fa-exclamation-circle"><strong>Seealso</strong></p>
+<p class="last">Get more info in the section Converting reflectivity to
+rainfall and in the library reference
+sections <a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/zr.html">Z-R
+Conversions</a> and <a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/trafo.html">Data
+Transformation</a>.
+Here you will learn about the effects of the Z-R parameters <code class="docutils literal notranslate"><span class="pre">a</span></code> and
+<code class="docutils literal notranslate"><span class="pre">b</span></code>.</p>
+</div>
+</div>
+<div class="section" id="Rainfall-accumulation">
+<h2>Rainfall accumulation<a class="headerlink" href="#Rainfall-accumulation" title="Permalink to this headline">¶</a></h2>
+<p>For many applications, accumulated rainfall depths over specific time
+intervals are required, e.g.&nbsp;hourly or daily accumulations.
+<span class="math notranslate">\(\omega radlib\)</span> supports the corresponding datetime operations. In
+the following example, we will use a synthetic time series of 5 minute
+intervals. Just imagine we have repeated the above procedure for one day
+of five-minute sweeps and combined the arrays of rainfall depth in a
+3-dimensional array of shape
+<code class="docutils literal notranslate"><span class="pre">(number</span> <span class="pre">of</span> <span class="pre">time</span> <span class="pre">steps,</span> <span class="pre">number</span> <span class="pre">of</span> <span class="pre">azimuth</span> <span class="pre">angles,</span> <span class="pre">number</span> <span class="pre">of</span> <span class="pre">range</span> <span class="pre">gates)</span></code>.</p>
+<p>Now we want to compute hourly accumulations:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">sweep_times</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">from_to</span><span class="p">(</span><span class="s2">&quot;2012-10-26 00:00:00&quot;</span><span class="p">,</span> <span class="s2">&quot;2012-10-27 00:00:00&quot;</span><span class="p">,</span> <span class="mi">300</span><span class="p">)</span>
+<span class="n">depths_5min</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sweep_times</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">360</span><span class="p">,</span> <span class="mi">128</span><span class="p">))</span>
+<span class="n">hours</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">from_to</span><span class="p">(</span><span class="s2">&quot;2012-10-26 00:00:00&quot;</span><span class="p">,</span> <span class="s2">&quot;2012-10-27 00:00:00&quot;</span><span class="p">,</span> <span class="mi">3600</span><span class="p">)</span>
+<span class="n">depths_hourly</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">aggregate_in_time</span><span class="p">(</span><span class="n">depths_5min</span><span class="p">,</span> <span class="n">sweep_times</span><span class="p">,</span> <span class="n">hours</span><span class="p">,</span> <span class="n">func</span><span class="o">=</span><span class="s1">&#39;sum&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Check the shape and values of your resulting array for plausibility:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">print</span><span class="p">(</span><span class="n">depths_hourly</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">depths_hourly</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">round</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(24, 360, 128)
+6.0
+</pre></div></div>
+</div>
+<div class="admonition note">
+<p class="first fa fa-exclamation-circle"><strong>Seealso</strong></p>
+<p class="last">Get more info in the library reference section <a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/util.html">Utility
+functions</a>.</p>
+</div>
+</div>
+<div class="section" id="Georeferencing-and-Projection">
+<h2>Georeferencing and Projection<a class="headerlink" href="#Georeferencing-and-Projection" title="Permalink to this headline">¶</a></h2>
+<p>In order to define the horizontal and vertical position of the radar
+bins, we need to retrieve the corresponding 3-dimensional coordinates in
+terms of longitude, latitude and altitude. This information is required
+e.g.&nbsp;if the positions should be plotted on a map. It is also required
+for constructing
+<a class="reference external" href="https://en.wikipedia.org/wiki/Constant_altitude_plan_position_indicator">CAPPIs</a>.
+The position of a radar bin in 3-dimensional space depends on the
+position of the radar device, the elevation and azimuth angle of the
+radar beam, the range of the bin, and the assumed influence of
+atmospheric refraction on the beam propagation. For the sample data used
+above, the position of the radar device is the Feldberg in Germany
+(8.005, 47.8744, 1517):</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">radar_location</span> <span class="o">=</span> <span class="p">(</span><span class="mf">8.005</span><span class="p">,</span> <span class="mf">47.8744</span><span class="p">,</span> <span class="mi">1517</span><span class="p">)</span> <span class="c1"># (lon, lat, alt) in decimal degree and meters</span>
+<span class="n">elevation</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="c1"># in degree</span>
+<span class="n">azimuths</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">360</span><span class="p">)</span> <span class="c1"># in degrees</span>
+<span class="n">ranges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">128000.</span><span class="p">,</span> <span class="mf">1000.</span><span class="p">)</span> <span class="c1"># in meters</span>
+<span class="n">polargrid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">ranges</span><span class="p">,</span> <span class="n">azimuths</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Using <code class="docutils literal notranslate"><span class="pre">georef.spherical_to_xyz</span></code> we get the cartesian coordinates in
+xyz-space and the connected azimuthal equidistant projection osr-object
+<code class="docutils literal notranslate"><span class="pre">rad</span></code>.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">coords</span><span class="p">,</span> <span class="n">rad</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">georef</span><span class="o">.</span><span class="n">spherical_to_xyz</span><span class="p">(</span><span class="n">polargrid</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">polargrid</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                                          <span class="n">elevation</span><span class="p">,</span> <span class="n">radar_location</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">coords</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">coords</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<p><span class="math notranslate">\(\omega radlib\)</span> supports the projection between geographical
+coordinates (lon/lat) and other reference systems. It uses GDAL/OSR
+Spatial References Objects as function parameters. Basically, you have
+to create the OSR-object by using GDAL-capabilities or one of the
+provided helper functions. We recommend the creation using <a class="reference external" href="https://epsg.io/">EPSG
+numbers</a>:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Gauss Krueger Zone 3, EPSG-Number 31467</span>
+<span class="n">gk3</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">georef</span><span class="o">.</span><span class="n">epsg_to_osr</span><span class="p">(</span><span class="mi">31467</span><span class="p">)</span>
+<span class="n">gk3_coords</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">georef</span><span class="o">.</span><span class="n">reproject</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="n">projection_source</span><span class="o">=</span><span class="n">rad</span><span class="p">,</span>
+                                  <span class="n">projection_target</span><span class="o">=</span><span class="n">gk3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Second, you can provide a string which represents the projection - based
+on the <a class="reference external" href="https://trac.osgeo.org/proj/">PROJ.4 library</a>. You can <a class="reference external" href="http://www.spatialreference.org/">look
+up projection strings</a>, but for
+some projections, <span class="math notranslate">\(\omega radlib\)</span> helps you to define a projection
+string. In the following example, the target projection is
+‘dwd-radolan’:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">radolan</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">georef</span><span class="o">.</span><span class="n">create_osr</span><span class="p">(</span><span class="s2">&quot;dwd-radolan&quot;</span><span class="p">)</span>
+<span class="n">radolan_coords</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">georef</span><span class="o">.</span><span class="n">reproject</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="n">projection_target</span><span class="o">=</span><span class="n">radolan</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="admonition note">
+<p class="first fa fa-exclamation-circle"><strong>Seealso</strong></p>
+<p class="last">Get more info in the library reference section
+<a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/georef.html">Georeferencing</a>.</p>
+</div>
+</div>
+<div class="section" id="Gridding">
+<h2>Gridding<a class="headerlink" href="#Gridding" title="Permalink to this headline">¶</a></h2>
+<p>Assume you would like to transfer the rainfall intensity from the <a class="reference external" href="#Conversion-of-Reflectivity-into-Rainfall">above
+example</a> from polar
+coordinates to a Cartesian grid, or to an arbitrary set of irregular
+points in space (e.g.&nbsp;centroids of sub-catchments). You already
+retrieved the Cartesian coordinates of the radar bins in the previous
+section <a class="reference external" href="#Georeferencing-and-Projection">Georeferencing and
+Projection</a>. Now you only need to
+define the target coordinates (e.g.&nbsp;a grid) and apply the <code class="docutils literal notranslate"><span class="pre">togrid</span></code>
+function of the
+<a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/comp.html">wradlib.comp</a>
+module. In this example, we want our grid only to represent the
+South-West sector of our radar circle on a 100 x 100 grid. First, we
+define the target grid coordinates (these must be an array of 100x100
+rows with one coordinate pair each):</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">xgrid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">ygrid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">y</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">grid_xy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">xgrid</span><span class="p">,</span> <span class="n">ygrid</span><span class="p">)</span>
+<span class="n">grid_xy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">grid_xy</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">grid_xy</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">ravel</span><span class="p">()))</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>Now we transfer the polar data to the grid and mask out invalid values
+for plotting (values outside the radar circle receive NaN):</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">xy</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">x</span><span class="o">.</span><span class="n">ravel</span><span class="p">()[:,</span><span class="bp">None</span><span class="p">],</span><span class="n">y</span><span class="o">.</span><span class="n">ravel</span><span class="p">()[:,</span><span class="bp">None</span><span class="p">]],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">gridded</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">comp</span><span class="o">.</span><span class="n">togrid</span><span class="p">(</span><span class="n">xy</span><span class="p">,</span> <span class="n">grid_xy</span><span class="p">,</span> <span class="mf">128000.</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">y</span><span class="o">.</span><span class="n">mean</span><span class="p">()]),</span> <span class="n">data</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">wrl</span><span class="o">.</span><span class="n">ipol</span><span class="o">.</span><span class="n">Nearest</span><span class="p">)</span>
+<span class="n">gridded</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">masked_invalid</span><span class="p">(</span><span class="n">gridded</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">xgrid</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">ygrid</span><span class="p">)))</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s2">&quot;equal&quot;</span><span class="p">)</span>
+<span class="n">pm</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">xgrid</span><span class="p">,</span> <span class="n">ygrid</span><span class="p">,</span> <span class="n">gridded</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">pm</span><span class="p">,</span> <span class="n">shrink</span><span class="o">=</span><span class="mf">0.75</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Easting (m)&quot;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Northing (m)&quot;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">xgrid</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">xgrid</span><span class="p">))</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">ygrid</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">ygrid</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[17]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>(-126946.43557281807, 0.0)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_basics_wradlib_workflow_58_1.png" src="../../_images/notebooks_basics_wradlib_workflow_58_1.png" />
+</div>
+</div>
+<div class="admonition note">
+<p class="first fa fa-exclamation-circle"><strong>Seealso</strong></p>
+<p class="last">Get more info about the function
+<a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/generated/wradlib.comp.togrid.html">wradlib.comp.togrid()</a>.</p>
+</div>
+</div>
+<div class="section" id="Adjustment-by-rain-gage-observations">
+<h2>Adjustment by rain gage observations<a class="headerlink" href="#Adjustment-by-rain-gage-observations" title="Permalink to this headline">¶</a></h2>
+<p>Adjustment normally refers to using rain gage observations on the ground
+to correct for errors in the radar-based rainfall estimating.
+<a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/zreferences.html#goudenhoofdt2009">Goudenhoofdt et al.,
+2009</a>
+provide an excellent overview of adjustment procedures. A typical
+approach is to quantify the error of the radar-based rainfall estimate
+<em>at</em> the rain gage locations, assuming the rain gage observation to be
+accurate. The error can be assumed to be additive, multiplicative, or a
+mixture of both. Most approaches assume the error to be heterogeneous in
+space. Hence, the error at the rain gage locations will be interpolated
+to the radar bin (or grid) locations and then used to adjust (correct)
+the raw radar rainfall estimates.</p>
+<p>In the following example, we will use an illustrative one-dimensional
+example with synthetic data (just imagine radar rainfall estimates and
+rain gage observations along one radar beam).</p>
+<p>First, we create the synthetic “true” rainfall (<code class="docutils literal notranslate"><span class="pre">truth</span></code>):</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="n">radar_coords</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">101</span><span class="p">)</span>
+<span class="n">truth</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="mf">1.5</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mf">0.075</span><span class="o">*</span><span class="n">radar_coords</span><span class="p">))</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mf">0.1</span><span class="p">,</span><span class="mf">0.1</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">radar_coords</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>The radar rainfall estimate <code class="docutils literal notranslate"><span class="pre">radar</span></code> is then computed by imprinting a
+multiplicative <code class="docutils literal notranslate"><span class="pre">error</span></code> on <code class="docutils literal notranslate"><span class="pre">truth</span></code> and adding some noise:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">error</span> <span class="o">=</span> <span class="mf">0.75</span> <span class="o">+</span> <span class="mf">0.015</span><span class="o">*</span><span class="n">radar_coords</span>
+<span class="n">radar</span> <span class="o">=</span> <span class="n">error</span> <span class="o">*</span> <span class="n">truth</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mf">0.1</span><span class="p">,</span><span class="mf">0.1</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">radar_coords</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>Synthetic gage observations <code class="docutils literal notranslate"><span class="pre">obs</span></code> are then created by selecting
+arbitrary “true” values:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">obs_coords</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">5</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">15</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">45</span><span class="p">,</span><span class="mi">65</span><span class="p">,</span><span class="mi">70</span><span class="p">,</span><span class="mi">77</span><span class="p">,</span><span class="mi">90</span><span class="p">])</span>
+<span class="n">obs</span> <span class="o">=</span> <span class="n">truth</span><span class="p">[</span><span class="n">obs_coords</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<p>Now we adjust the <code class="docutils literal notranslate"><span class="pre">radar</span></code> rainfall estimate by using the gage
+observations. First, you create an “adjustment object” from the approach
+you want to use for adjustment. After that, you can call the object with
+the actual data that is to be adjusted. Here, we use a multiplicative
+error model with spatially heterogenous error (see
+<a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/generated/wradlib.adjust.AdjustMultiply.html">wradlib.adjust.AdjustMultiply()</a>:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">adjuster</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">adjust</span><span class="o">.</span><span class="n">AdjustMultiply</span><span class="p">(</span><span class="n">obs_coords</span><span class="p">,</span> <span class="n">radar_coords</span><span class="p">,</span> <span class="n">nnear_raws</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">adjusted</span> <span class="o">=</span> <span class="n">adjuster</span><span class="p">(</span><span class="n">obs</span><span class="p">,</span> <span class="n">radar</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Let’s compare the <code class="docutils literal notranslate"><span class="pre">truth</span></code>, the <code class="docutils literal notranslate"><span class="pre">radar</span></code> rainfall estimate and the
+<code class="docutils literal notranslate"><span class="pre">adjusted</span></code> product:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [22]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">pl</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">radar_coords</span><span class="p">,</span> <span class="n">truth</span><span class="p">,</span> <span class="s1">&#39;k-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;True rainfall&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">2.</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Distance (km)&quot;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Rainfall intensity (mm/h)&quot;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">radar_coords</span><span class="p">,</span> <span class="n">radar</span><span class="p">,</span> <span class="s1">&#39;k-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Raw radar rainfall&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">2.</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;dashed&quot;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">obs_coords</span><span class="p">,</span> <span class="n">obs</span><span class="p">,</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Gage observation&quot;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mf">10.0</span><span class="p">,</span> <span class="n">markerfacecolor</span><span class="o">=</span><span class="s2">&quot;grey&quot;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">radar_coords</span><span class="p">,</span> <span class="n">adjusted</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;green&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Multiplicative adjustment&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">2.</span><span class="p">,</span> <span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">prop</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;size&#39;</span><span class="p">:</span><span class="mi">12</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[22]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>&lt;matplotlib.legend.Legend at 0x7f5aa21b5790&gt;
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_basics_wradlib_workflow_70_1.png" src="../../_images/notebooks_basics_wradlib_workflow_70_1.png" />
+</div>
+</div>
+<div class="admonition note">
+<p class="first fa fa-exclamation-circle"><strong>Seealso</strong></p>
+<p class="last">Get more info in the library reference section <a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/adjust.html">Gage
+Adjustment</a>. There,
+you will also learn how to use the built-in <em>cross-validation</em> in order
+to evaluate the performance of the adjustment approach.</p>
+</div>
+</div>
+<div class="section" id="Verification-and-quality-control">
+<h2>Verification and quality control<a class="headerlink" href="#Verification-and-quality-control" title="Permalink to this headline">¶</a></h2>
+<p>Typically, radar-based precipitation estimation and the effectiveness of
+the underlying correction and adjustment methods are verified by
+comparing the results against rain gage observations on the ground.
+<a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/verify.html">wradlib.verify</a>
+module provides procedures not only to extract the radar values at
+specific gauge locations, but also a set of error metrics which are
+computed from gage observations and the corresponding radar-based
+precipitation estimates (including standard metrics such as RMSE, mean
+error, Nash-Sutcliffe Efficiency). In the following, we will illustrate
+the usage of error metrics by comparing the “true” rainfall against the
+raw and adjusted radar rainfall estimates from the above example:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [23]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">raw_error</span>  <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">verify</span><span class="o">.</span><span class="n">ErrorMetrics</span><span class="p">(</span><span class="n">truth</span><span class="p">,</span> <span class="n">radar</span><span class="p">)</span>
+<span class="n">adj_error</span>  <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">verify</span><span class="o">.</span><span class="n">ErrorMetrics</span><span class="p">(</span><span class="n">truth</span><span class="p">,</span> <span class="n">adjusted</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Error metrics can be reported e.g.&nbsp;as follows:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [24]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">raw_error</span><span class="o">.</span><span class="n">report</span><span class="p">()</span>
+<span class="n">adj_error</span><span class="o">.</span><span class="n">report</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_basics_wradlib_workflow_76_0.png" src="../../_images/notebooks_basics_wradlib_workflow_76_0.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_basics_wradlib_workflow_76_1.png" src="../../_images/notebooks_basics_wradlib_workflow_76_1.png" />
+</div>
+</div>
+<div class="admonition note">
+<p class="first fa fa-exclamation-circle"><strong>Seealso</strong></p>
+<p class="last">Get more info in the library reference section
+<a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/verify.html">Verification</a>.</p>
+</div>
+</div>
+<div class="section" id="Visualisation-and-mapping">
+<h2>Visualisation and mapping<a class="headerlink" href="#Visualisation-and-mapping" title="Permalink to this headline">¶</a></h2>
+<p>In the above sections <a class="reference external" href="#Reading-the-data">Reading the data</a>, <a class="reference external" href="#Clutter-removal">Clutter
+removal</a>, and <a class="reference external" href="#Gridding">Gridding</a> you already
+saw examples of the <span class="math notranslate">\(\omega radlib's\)</span> plotting capabilities.</p>
+<div class="admonition note">
+<p class="first fa fa-exclamation-circle"><strong>Seealso</strong></p>
+<p class="last">Get more info in the library reference section
+<a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/vis.html">Visualisation</a>.</p>
+</div>
+</div>
+<div class="section" id="Data-export-to-other-applications">
+<h2>Data export to other applications<a class="headerlink" href="#Data-export-to-other-applications" title="Permalink to this headline">¶</a></h2>
+<p>Once you created a dataset which meets your requirements, you might want
+to export it to other applications or archives. <span class="math notranslate">\(\omega radlib\)</span>
+does not favour or support a specific output format. Basically, you have
+all the freedom of choice offered by Python and its packages in order to
+export your data. Arrays can be stored as text or binary files by using
+numpy functions. You can use the package
+<a class="reference external" href="https://unidata.github.io/netcdf4-python/">NetCDF4</a> to write NetCDF
+files, and the packages <a class="reference external" href="http://www.h5py.org/">h5py</a> or
+<a class="reference external" href="http://www.pytables.org">PyTables</a> to write hdf5 files. At a later
+stage of development, <span class="math notranslate">\(\omega radlib\)</span> might support a standardized
+data export by using the OPERA’s ODIM_H5 data model (see Supported
+Radar Data Formats). Of
+course, you can also export data as images. See
+<a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/vis.html">Visualisation</a> for
+some options.</p>
+<p>Export your data array as a text file:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [25]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="s2">&quot;mydata.txt&quot;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Or as a gzip-compressed text file:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [26]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="s2">&quot;mydata.gz&quot;</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Or as a NetCDF file:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [27]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">netCDF4</span>
+<span class="n">rootgrp</span> <span class="o">=</span> <span class="n">netCDF4</span><span class="o">.</span><span class="n">Dataset</span><span class="p">(</span><span class="s1">&#39;test.nc&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">format</span><span class="o">=</span><span class="s1">&#39;NETCDF4&#39;</span><span class="p">)</span>
+<span class="n">sweep_xy</span> <span class="o">=</span> <span class="n">rootgrp</span><span class="o">.</span><span class="n">createGroup</span><span class="p">(</span><span class="s1">&#39;sweep_xy&#39;</span><span class="p">)</span>
+<span class="n">dim_azimuth</span> <span class="o">=</span> <span class="n">sweep_xy</span><span class="o">.</span><span class="n">createDimension</span><span class="p">(</span><span class="s1">&#39;azimuth&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+<span class="n">dim_range</span> <span class="o">=</span> <span class="n">sweep_xy</span><span class="o">.</span><span class="n">createDimension</span><span class="p">(</span><span class="s1">&#39;range&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+<span class="n">azimuths_var</span> <span class="o">=</span> <span class="n">sweep_xy</span><span class="o">.</span><span class="n">createVariable</span><span class="p">(</span><span class="s1">&#39;azimuths&#39;</span><span class="p">,</span><span class="s1">&#39;i4&#39;</span><span class="p">,(</span><span class="s1">&#39;azimuth&#39;</span><span class="p">,))</span>
+<span class="n">ranges_var</span> <span class="o">=</span> <span class="n">sweep_xy</span><span class="o">.</span><span class="n">createVariable</span><span class="p">(</span><span class="s1">&#39;ranges&#39;</span><span class="p">,</span><span class="s1">&#39;f4&#39;</span><span class="p">,(</span><span class="s1">&#39;range&#39;</span><span class="p">,))</span>
+<span class="n">dBZ_var</span> <span class="o">=</span> <span class="n">sweep_xy</span><span class="o">.</span><span class="n">createVariable</span><span class="p">(</span><span class="s1">&#39;dBZ&#39;</span><span class="p">,</span><span class="s1">&#39;f4&#39;</span><span class="p">,(</span><span class="s1">&#39;azimuth&#39;</span><span class="p">,</span><span class="s1">&#39;range&#39;</span><span class="p">,))</span>
+<span class="n">azimuths_var</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">360</span><span class="p">)</span>
+<span class="n">ranges_var</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">128000.</span><span class="p">,</span> <span class="mf">1000.</span><span class="p">)</span>
+<span class="n">dBZ_var</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">data</span>
+</pre></div>
+</div>
+</div>
+<p>You can easily add metadata to the NetCDF file on different group
+levels:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [28]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">rootgrp</span><span class="o">.</span><span class="n">bandwith</span> <span class="o">=</span> <span class="s2">&quot;C-Band&quot;</span>
+<span class="n">sweep_xy</span><span class="o">.</span><span class="n">datetime</span> <span class="o">=</span> <span class="s2">&quot;2012-11-02 10:15:00&quot;</span>
+<span class="n">rootgrp</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="admonition note">
+<p class="first fa fa-exclamation-circle"><strong>Note</strong></p>
+<p class="last">An example for hdf5 export will follow.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="wradlib_get_rainfall.html" class="btn btn-neutral float-right" title="Converting Reflectivity to Rainfall" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="wradlib_introduction.html" class="btn btn-neutral" title="Import wradlib and check its version" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2011-2016, wradlib developers.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.11.3',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,13 @@
+wradlib\.io\.iris\.IrisRecord
+=============================
+
+.. currentmodule:: wradlib.io.iris
+
+.. autoclass:: IrisRecord
+
+   
+
+
+
+   
+

@@ -1,0 +1,1125 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>A quick start to Python &mdash; wradlib</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/wradlib.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="wradlib" href="../../index.html"/>
+        <link rel="up" title="An incomplete introduction to Python" href="../learnpython.html"/>
+        <link rel="next" title="NumPy: manipulating numerical data" href="numpyintro.html"/>
+        <link rel="prev" title="An incomplete introduction to Python" href="../learnpython.html"/>
+    
+    <link href="../../_static/wradlib.css" rel="stylesheet" type="text/css">
+
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+  <a href="../../index.html" class="icon icon-home"> wradlib
+
+
+
+</a>
+
+
+
+  <div class="version">
+    
+    <button class="verbtn">0.11.1</button>
+    <div class="version-content">
+      
+        <a href="../latest/">latest</a>
+        <a href="../0.11.1/">0.11.1</a>
+    </div>
+  </div>
+
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../gettingstarted.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../notebooks.html">Tutorials and Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../jupyter.html">How to use the tutorials and examples?</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../learnpython.html">An incomplete introduction to Python</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">A quick start to Python</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Hello-interpreted-world">Hello interpreted world</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Writing-a-program-in-Python">Writing a program in Python</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Important-data-types">Important data types</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Other-data-types:-collections">Other data types: collections</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Excursus:-indexing-in-Python">Excursus: indexing in Python</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Dictionaries">Dictionaries</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Control-flow">Control flow</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Importing-functions-from-modules">Importing functions from modules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Getting-help">Getting help</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Writing-your-own-functions">Writing your own functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#File-input-and-output">File input and output</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#The-building-blocks-of-scientific-Python">The building blocks of scientific Python</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="numpyintro.html">Numpy: manipulating numerical data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mplintro.html">Visualising data with Matplotlib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="timeseries.html">Dealing with time series</a></li>
+<li class="toctree-l3"><a class="reference internal" href="virtenvs.html">Using virtual environments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../ide.html">Integrated Development Environments for Python</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../basics.html">Getting started with wradlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../fileio.html">Data Input - Data Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../attenuation/wradlib_attenuation.html">Attenuation correction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../beamblockage/wradlib_beamblock.html">Beam Blockage Calculation using a DEM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../classify.html">Clutter and Echo Classification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../georeferencing.html">Georeferencing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../match3d/wradlib_match_workflow.html">Match spaceborn PR (GPM/TRMM) with ground radars</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../develop.html">For Developers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interpolation/wradlib_ipol_example.html">How to use wradlib’s ipol module for interpolation tasks?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../multisensor/wradlib_adjust_example.html">Adjusting radar-base rainfall estimates by rain gauge observations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../verification/wradlib_verify_example.html">Routine verification measures for radar-based precipitation estimates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../recipes.html">Recipes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../radolan.html">RADOLAN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zonalstats/wradlib_zonalstats_classes.html">Zonal Statistics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference.html">Library Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev_setup.html">For Developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zreferences.html">Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../release_notes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">wradlib</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../notebooks.html">Tutorials and Examples</a> &raquo;</li>
+        
+          <li><a href="../learnpython.html">An incomplete introduction to Python</a> &raquo;</li>
+        
+      <li>A quick start to Python</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/notebooks/python/quickstart.ipynb.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #303F9F;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #D84315;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 8ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+/* nice headers on first paragraph of info/warning boxes */
+.admonition .first {
+    margin: -12px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1;
+    display: block;
+}
+.admonition.warning .first {
+    background: #f0b37e;
+}
+.admonition.note .first {
+    background: #6ab0de;
+}
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="A-quick-start-to-Python">
+<h1>A quick start to Python<a class="headerlink" href="#A-quick-start-to-Python" title="Permalink to this headline">¶</a></h1>
+<p>In order to use <span class="math">\(\omega radlib\)</span>, you need to be able to use
+Python.</p>
+<p>This notebook will - give you a glimpse of the Python language, -
+confront you with some Python exercises, - and refer you to further
+in-depth courses for learning Python.</p>
+<div class="section" id="Hello-interpreted-world">
+<h2>Hello interpreted world<a class="headerlink" href="#Hello-interpreted-world" title="Permalink to this headline">¶</a></h2>
+<p>Python is an interpreted language just as e.g.&nbsp;R, Matlab and many
+others. In contrast to a compiled languages such as C, C++ or Fortran,
+each command is immediately interpreted by the Python interpreter. In
+this case, executing the following cell produces an immediate output.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="k">print</span><span class="p">(</span><span class="s2">&quot;Hello interpreted world.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Hello interpreted world.
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Writing-a-program-in-Python">
+<h2>Writing a program in Python<a class="headerlink" href="#Writing-a-program-in-Python" title="Permalink to this headline">¶</a></h2>
+<p>Instead of entering this command interactively in a Python console (or a
+jupyter cell, as in this case), you can also write a <strong>Python script</strong>
+(or, in other words, a Python “program”).</p>
+<ul class="simple">
+<li>Use a text editor to create a file,</li>
+<li>add the line <code class="docutils literal"><span class="pre">print(&quot;Hello</span> <span class="pre">interpreted</span> <span class="pre">world.&quot;)</span></code>,</li>
+<li>save the file under the name <code class="docutils literal"><span class="pre">demoscript.py</span></code></li>
+</ul>
+<p>(by convention, Python scripts should have the extension <code class="docutils literal"><span class="pre">.py</span></code>).</p>
+<p>Now execute your script from any shell (or the DOS console on Windows):</p>
+<p><code class="docutils literal"><span class="pre">$</span> <span class="pre">python</span> <span class="pre">demoscript.py</span></code></p>
+<p>Note that this will work only if you open the shell in the <em>same
+directory</em> in which you saved your script. Otherwise, you need to
+provide the full path like e.g.</p>
+<p><em>Under Linux/OSX:</em></p>
+<p><code class="docutils literal"><span class="pre">$</span> <span class="pre">python</span> <span class="pre">/home/user/path/to/demoscript.py</span></code></p>
+<p><em>Under Windows:</em></p>
+<p><code class="docutils literal"><span class="pre">&gt;</span> <span class="pre">python</span> <span class="pre">e:\path\to\demoscript.py</span></code></p>
+</div>
+<div class="section" id="Important-data-types">
+<h2>Important data types<a class="headerlink" href="#Important-data-types" title="Permalink to this headline">¶</a></h2>
+<p>Python knows various standard data types such as - <code class="docutils literal"><span class="pre">integer</span></code>, -
+<code class="docutils literal"><span class="pre">float</span></code>, - <code class="docutils literal"><span class="pre">bool</span></code>, - and <code class="docutils literal"><span class="pre">str</span></code>.</p>
+<p>If you define a variable, Python typically assigns the <em>type</em> of that
+variable for you.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="n">x1</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;x1 is of </span><span class="si">%r</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">type</span><span class="p">(</span><span class="n">x1</span><span class="p">))</span>
+
+<span class="n">x2</span> <span class="o">=</span> <span class="mf">2.3</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;x2 is of </span><span class="si">%r</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">type</span><span class="p">(</span><span class="n">x2</span><span class="p">))</span>
+
+<span class="n">x3</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;x3 is of </span><span class="si">%r</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">type</span><span class="p">(</span><span class="n">x3</span><span class="p">))</span>
+
+<span class="n">x4</span> <span class="o">=</span> <span class="n">x1</span> <span class="o">*</span> <span class="n">x2</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;x4 is of </span><span class="si">%r</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">type</span><span class="p">(</span><span class="n">x4</span><span class="p">))</span>
+
+<span class="n">x5</span> <span class="o">=</span> <span class="s2">&quot;Hello interpreted world.&quot;</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;x5 is of </span><span class="si">%r</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">type</span><span class="p">(</span><span class="n">x5</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+x1 is of &lt;class &#39;int&#39;&gt;
+x2 is of &lt;class &#39;float&#39;&gt;
+x3 is of &lt;class &#39;bool&#39;&gt;
+x4 is of &lt;class &#39;float&#39;&gt;
+x5 is of &lt;class &#39;str&#39;&gt;
+</pre></div></div>
+</div>
+<p>As you noticed in the above cell, you can inspect the data type of a
+variable by using function <code class="docutils literal"><span class="pre">type()</span></code>. Python has a plethora of data
+types beyond the standard ones shown above. See for example:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="k">print</span><span class="p">(</span> <span class="nb">type</span><span class="p">(</span><span class="nb">sum</span><span class="p">)</span> <span class="p">)</span>
+<span class="k">print</span><span class="p">(</span> <span class="nb">type</span><span class="p">(</span><span class="nb">type</span><span class="p">)</span> <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;class &#39;builtin_function_or_method&#39;&gt;
+&lt;class &#39;type&#39;&gt;
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Other-data-types:-collections">
+<h2>Other data types: collections<a class="headerlink" href="#Other-data-types:-collections" title="Permalink to this headline">¶</a></h2>
+<p>Further important data types (and specific to Python) are so called
+<code class="docutils literal"><span class="pre">data</span> <span class="pre">collections</span></code> (or <code class="docutils literal"><span class="pre">containers</span></code>), namely</p>
+<ul class="simple">
+<li>lists (<code class="docutils literal"><span class="pre">list</span></code>),</li>
+<li>dictionaries (<code class="docutils literal"><span class="pre">dict</span></code>),</li>
+<li>and tuples (<code class="docutils literal"><span class="pre">tuple</span></code>).</li>
+</ul>
+<div class="section" id="Lists">
+<h3>Lists<a class="headerlink" href="#Lists" title="Permalink to this headline">¶</a></h3>
+<p>A list is an ordered collection of objects which may have different
+types.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="c1"># a list</span>
+<span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;Paris&quot;</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">]</span>
+<span class="c1"># a list is &quot;mutable&quot; (i.e. you can change the values of its elements)</span>
+<span class="n">l</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="k">print</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[1, 2, 3.0]
+[1, 2]
+</pre></div></div>
+</div>
+</div>
+</div>
+<div class="section" id="Excursus:-indexing-in-Python">
+<h2>Excursus: indexing in Python<a class="headerlink" href="#Excursus:-indexing-in-Python" title="Permalink to this headline">¶</a></h2>
+<p>You might have noticed that the index <code class="docutils literal"><span class="pre">1</span></code> refers to the second element
+of the list.</p>
+<p>This is an important rule for all containers in Python: <strong>indexing
+begins with 0</strong></p>
+<p><em>(which is familiar e.g.&nbsp;to C programmers, and new e.g.&nbsp;to R
+programmers)</em></p>
+</div>
+<div class="section" id="Dictionaries">
+<h2>Dictionaries<a class="headerlink" href="#Dictionaries" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>a <code class="docutils literal"><span class="pre">dictionary</span></code> is basically an efficient table that maps <code class="docutils literal"><span class="pre">keys</span></code>
+to <code class="docutils literal"><span class="pre">values</span></code>.</li>
+<li>it is an unordered container.</li>
+</ul>
+<p>There are two ways to define dictionaries - both are equivalent.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="c1"># One way to define a dictionary</span>
+<span class="n">d1</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;band&quot;</span><span class="p">:</span> <span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="s2">&quot;altitude&quot;</span><span class="p">:</span><span class="mf">1000.</span><span class="p">}</span>
+
+<span class="c1"># Another way to define a dictionary</span>
+<span class="n">d2</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">band</span><span class="o">=</span><span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="n">altitude</span><span class="o">=</span><span class="mf">1000.</span><span class="p">)</span>
+
+<span class="c1"># Both are equivalent</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;d1 equals d2 is a </span><span class="si">%r</span><span class="s2"> statement &quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">d1</span> <span class="o">==</span> <span class="n">d2</span><span class="p">)</span> <span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;The type of d1 is </span><span class="si">%r</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">type</span><span class="p">(</span><span class="n">d1</span><span class="p">)</span> <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+d1 equals d2 is a True statement
+The type of d1 is &lt;class &#39;dict&#39;&gt;
+</pre></div></div>
+</div>
+<p>A <code class="docutils literal"><span class="pre">dictionary</span></code> can be queried using their keywords. You can also
+iterate over the keys.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="k">print</span><span class="p">(</span><span class="n">d1</span><span class="p">[</span><span class="s2">&quot;band&quot;</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Printing all keys and values of d1:&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">d1</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="si">%s</span><span class="s2">: </span><span class="si">%r</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">d1</span><span class="p">[</span><span class="n">key</span><span class="p">])</span> <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+C
+Printing all keys and values of d1:
+        band: &#39;C&#39;
+        altitude: 1000.0
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Control-flow">
+<h2>Control flow<a class="headerlink" href="#Control-flow" title="Permalink to this headline">¶</a></h2>
+<p>Loops or iterations as well as conditional statments are key to data
+processing workflows.</p>
+<p>In this section, we will present the most important syntax for control
+flow.</p>
+<div class="section" id="“for”-loops">
+<h3>“for” loops<a class="headerlink" href="#“for”-loops" title="Permalink to this headline">¶</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="c1"># For loops</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+0
+1
+2
+</pre></div></div>
+</div>
+<p><strong>Indentation in Python</strong></p>
+<p>Indentation is a mandatory element of Python syntax - not just a
+question of style.</p>
+<p>Not using indentation will raise an <code class="docutils literal"><span class="pre">IndentationError</span></code>.</p>
+</div>
+<div class="section" id="“while”-loops">
+<h3>“while” loops<a class="headerlink" href="#“while”-loops" title="Permalink to this headline">¶</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="c1"># While loops (in case the number of iterations is not known a-priori)</span>
+<span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+0
+1
+2
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Conditional-statements">
+<h3>Conditional statements<a class="headerlink" href="#Conditional-statements" title="Permalink to this headline">¶</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="c1"># Conditional statements</span>
+<span class="n">a</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="k">if</span> <span class="n">a</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;a is less than 10.&quot;</span><span class="p">)</span>
+<span class="k">elif</span> <span class="n">a</span> <span class="o">==</span> <span class="mi">10</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;a equals 10.&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;a is greater than 10.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+a is less than 10.
+</pre></div></div>
+</div>
+<p>You can also exit a loop before it is finished or skip parts of a
+specific iteration.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+    <span class="c1"># Exit the loop already if i equals 1</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">break</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+0
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+    <span class="c1"># Skip the iteration if i equals 1 (but continue the loop)</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">continue</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+0
+2
+</pre></div></div>
+</div>
+</div>
+</div>
+<div class="section" id="Importing-functions-from-modules">
+<h2>Importing functions from modules<a class="headerlink" href="#Importing-functions-from-modules" title="Permalink to this headline">¶</a></h2>
+<p>For most applications, you will need to use <code class="docutils literal"><span class="pre">functions</span></code> that are
+available in <code class="docutils literal"><span class="pre">modules</span></code>. Just think of a module as a collection (or
+library) of functions. Some are shipped with the Python interpreter
+(<a class="reference external" href="https://docs.python.org/2/library/">Python Standard Library</a>),
+others (such as wradlib) need to be installed (e.g.&nbsp;from the <a class="reference external" href="https://pypi.python.org/pypi">Python
+Package Index</a>) or using the
+<a class="reference external" href="https://www.continuum.io/downloads">Anaconda</a> Package Manager
+(<code class="docutils literal"><span class="pre">conda</span></code>).</p>
+<p>In order to use a function from a module, you need to <code class="docutils literal"><span class="pre">import</span></code> the
+module. See e.g.&nbsp;how to import the <code class="docutils literal"><span class="pre">os</span></code> module and use its <code class="docutils literal"><span class="pre">getcwd</span></code>
+function (which retruns the path to the current working directory):</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="n">mycwd</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">mycwd</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+/home/kai/python/projects/wradlib/notebooks-render/notebooks/python
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Getting-help">
+<h2>Getting help<a class="headerlink" href="#Getting-help" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>In most environments, you can use the <em>TAB</em> key for code completion
+and for listing functions available in a module.</li>
+<li>Use the following cell, enter <code class="docutils literal"><span class="pre">os.</span></code> and hit the <em>TAB</em> key. You can
+narrow down available functions by typing further characters.</li>
+<li>Once you’ve selected (or typed) a function name, <em>jupyter</em> will show
+you the help content after hitting <em>TAB+Shift</em>.</li>
+<li>Alternatively, you can get help for a function in any Python
+environment by calling <code class="docutils literal"><span class="pre">help</span></code> (e.g. <code class="docutils literal"><span class="pre">help(os.getcwd)</span></code>). In
+juypter, you can also use the following syntax: <code class="docutils literal"><span class="pre">os.getcwd?</span></code></li>
+</ul>
+</div>
+<div class="section" id="Writing-your-own-functions">
+<h2>Writing your own functions<a class="headerlink" href="#Writing-your-own-functions" title="Permalink to this headline">¶</a></h2>
+<p>In order to organise applications and write reusable code, you will need
+to write funcions on you own.</p>
+<p>This is how you define and call a function (notice again the
+<strong>indentation</strong>):</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="c1"># Define the function...</span>
+<span class="k">def</span> <span class="nf">demofunction</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="c1"># ...and call the function</span>
+<span class="n">demofunction</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[14]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>5
+</pre></div>
+</div>
+</div>
+<p>Using <code class="docutils literal"><span class="pre">docstrings</span></code>, you can document your function as you write it.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">demofunction</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This function computes the sum of a and b.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    a : numeric</span>
+<span class="sd">    b : numeric</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    output : numeric (the sum of a and b)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Now try calling <code class="docutils literal"><span class="pre">help(demofunction)</span></code>.</p>
+<p>This should be the output:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">Help</span> <span class="n">on</span> <span class="n">function</span> <span class="n">demofunction</span> <span class="ow">in</span> <span class="n">module</span> <span class="n">__main__</span><span class="p">:</span>
+
+<span class="n">demofunction</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+    <span class="n">This</span> <span class="n">function</span> <span class="n">computes</span> <span class="n">the</span> <span class="nb">sum</span> <span class="n">of</span> <span class="n">a</span> <span class="ow">and</span> <span class="n">b</span>
+
+    <span class="n">Parameters</span>
+    <span class="o">----------</span>
+    <span class="n">a</span> <span class="p">:</span> <span class="n">numeric</span>
+    <span class="n">b</span> <span class="p">:</span> <span class="n">numeric</span>
+
+    <span class="n">Returns</span>
+    <span class="o">-------</span>
+    <span class="n">output</span> <span class="p">:</span> <span class="n">numeric</span> <span class="p">(</span><span class="n">the</span> <span class="nb">sum</span> <span class="n">of</span> <span class="n">a</span> <span class="ow">and</span> <span class="n">b</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Functions can have keyword arguments with default values. In the
+following example, we set a default value for parameter <code class="docutils literal"><span class="pre">b</span></code>.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">demofunction</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Adds 2 to a by default.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="k">print</span><span class="p">(</span><span class="n">demofunction</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">demofunction</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">3</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+5
+6
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="File-input-and-output">
+<h2>File input and output<a class="headerlink" href="#File-input-and-output" title="Permalink to this headline">¶</a></h2>
+<p>This is the basic way to read from and write to text and binary files
+(there are a lot of other file formats which have specific interfaces -
+particularly in the radar world: see <a class="reference internal" href="../fileio.html"><span class="doc">file formats supported by
+wradlib</span></a>).</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="c1"># Open a file for writing</span>
+<span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;testfile.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="c1"># opens the workfile file</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
+<span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;This is a test line,</span><span class="se">\n</span><span class="s1">and another test line.</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;class &#39;_io.TextIOWrapper&#39;&gt;
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="c1"># Open a file for reading</span>
+<span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;testfile.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+This is a test line,
+and another test line.
+
+</pre></div></div>
+</div>
+<p>A safer way to handle files is to use Python’s <code class="docutils literal"><span class="pre">with</span></code> statement which
+makes sure that the file is properly closed even if your code breaks
+inbetween opening and closing the file.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;testfile.txt&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+This is a test line,
+and another test line.
+
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="The-building-blocks-of-scientific-Python">
+<h2>The building blocks of scientific Python<a class="headerlink" href="#The-building-blocks-of-scientific-Python" title="Permalink to this headline">¶</a></h2>
+<p>With this, we conclude the basic Python intro.</p>
+<p>The following sections introduce, we introduce the most important
+packages for scientific computing in Python. Unlike Matlab, Scilab or R,
+Python does not come with a pre-bundled set of modules for scientific
+computing. Instead, a scientific computing environment can be obtained
+by combining these building blocks:</p>
+<ul class="simple">
+<li><strong>Python</strong>, a generic and modern computing language, including
+standard data types and collections, flow control, modules of the
+standard library, and development tools (automatic testing,
+documentation generation)</li>
+<li><strong>IPython</strong>: an interactive <strong>Python shell</strong>, see our article on <a class="reference internal" href="../../jupyter.html"><span class="doc">how
+to use notebooks</span></a>.</li>
+<li><strong>Numpy</strong>: provides powerful <strong>numerical arrays</strong> objects, and
+routines to manipulate them - see our <a class="reference internal" href="numpyintro.html"><span class="doc">NumPy intro
+article</span></a></li>
+<li><strong>Matplotlib</strong> : visualization and “publication-ready” plots, see
+related intro <a class="reference internal" href="mplintro.html"><span class="doc">here</span></a></li>
+<li><strong>Scipy</strong>: high-level data processing routines - e.g.&nbsp;optimization,
+regression, interpolation, etc (<a class="reference external" href="http://www.scipy.org">http://www.scipy.org</a>)</li>
+</ul>
+<p>Please also check out further in-depth courses such as - the <a class="reference external" href="http://www.scipy-lectures.org/index.html">SciPy
+Lecture Notes</a> or - the
+<a class="reference external" href="http://www.diveintopython3.net/">Dive into Python</a> book.</p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="numpyintro.html" class="btn btn-neutral float-right" title="NumPy: manipulating numerical data" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../learnpython.html" class="btn btn-neutral" title="An incomplete introduction to Python" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2011-2016, wradlib developers.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.11.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,6 @@
+wradlib.verify.PolarNeighbours.get\_bincoords\_at\_points
+=========================================================
+
+.. currentmodule:: wradlib.verify
+
+.. automethod:: PolarNeighbours.get_bincoords_at_points

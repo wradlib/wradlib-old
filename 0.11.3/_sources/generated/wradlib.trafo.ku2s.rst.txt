@@ -1,0 +1,22 @@
+wradlib.trafo.ku2s
+==================
+
+.. currentmodule:: wradlib.trafo
+
+.. autoclass:: ku2s
+
+   
+
+
+
+   
+
+.. HACK -- the point here is that we don't want this to appear in the output, but the autosummary should still generate the pages.
+
+.. autosummary::
+   :toctree:
+
+
+   ~ku2s.hail
+   ~ku2s.snow
+

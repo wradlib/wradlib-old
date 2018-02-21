@@ -1,0 +1,6 @@
+wradlib.util.get\_raster\_origin
+================================
+
+.. currentmodule:: wradlib.util
+
+.. autofunction:: get_raster_origin

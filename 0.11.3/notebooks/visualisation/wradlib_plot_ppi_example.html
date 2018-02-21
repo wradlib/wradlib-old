@@ -1,0 +1,728 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>A simple function to plot polar data in cartesian coordinate systems &mdash; wradlib</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/wradlib.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="wradlib" href="../../index.html"/>
+        <link rel="up" title="Getting started with wradlib" href="../basics.html"/>
+        <link rel="next" title="Plot data to curvelinear grid" href="wradlib_plot_curvelinear_grids.html"/>
+        <link rel="prev" title="Converting Reflectivity to Rainfall" href="../basics/wradlib_get_rainfall.html"/>
+    
+    <link href="../../_static/wradlib.css" rel="stylesheet" type="text/css">
+
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+  <a href="../../index.html" class="icon icon-home"> wradlib
+
+
+
+</a>
+
+
+
+  <div class="version">
+    
+    <button class="verbtn">0.11.3</button>
+    <div class="version-content">
+      
+        <a href="../latest/">latest</a>
+        <a href="../0.11.3/">0.11.3</a>
+        <a href="../0.11.1/">0.11.1</a>
+    </div>
+  </div>
+
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../gettingstarted.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../notebooks.html">Tutorials and Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../jupyter.html">How to use the tutorials and examples?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../learnpython.html">An incomplete introduction to Python</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../basics.html">Getting started with wradlib</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../basics/wradlib_introduction.html">Get wradlib version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/wradlib_workflow.html">Typical Workflow for Radar-Based RainfallEstimation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/wradlib_get_rainfall.html">From Reflectivity toRainfall</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Plot Polar Data asPPI</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Read-a-polar-data-set-from-the-German-Weather-Service">Read a polar data set from the German Weather Service</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#The-simplest-way-to-plot-this-dataset">The simplest way to plot this dataset</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Plotting-just-one-sector">Plotting just one sector</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Adding-a-crosshair-to-the-PPI">Adding a crosshair to the PPI</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Placing-the-polar-data-in-a-projected-Cartesian-reference-system">Placing the polar data in a projected Cartesian reference system</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Some-side-effects-of-georeferencing">Some side effects of georeferencing</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#More-decorations-and-annotations">More decorations and annotations</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="wradlib_plot_curvelinear_grids.html">Plot PolarData on CurvelinearGrids</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../fileio.html">Data Input - Data Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../attenuation/wradlib_attenuation.html">Attenuation correction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../beamblockage/wradlib_beamblock.html">Beam Blockage Calculation using a DEM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../classify.html">Clutter and Echo Classification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../georeferencing.html">Georeferencing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../match3d/wradlib_match_workflow.html">Match spaceborn SR (GPM/TRMM) with ground radars GR</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../develop.html">For Developers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interpolation/wradlib_ipol_example.html">How to use wradlib’s ipol module for interpolation tasks?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../multisensor/wradlib_adjust_example.html">Adjusting radar-base rainfall estimates by rain gauge observations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../verification/wradlib_verify_example.html">Routine verification measures for radar-based precipitation estimates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../recipes.html">Recipes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../radolan.html">RADOLAN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zonalstats/wradlib_zonalstats_classes.html">Zonal Statistics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference.html">Library Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev_setup.html">For Developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zreferences.html">Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../release_notes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">wradlib</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../notebooks.html">Tutorials and Examples</a> &raquo;</li>
+        
+          <li><a href="../basics.html">Getting started with wradlib</a> &raquo;</li>
+        
+      <li>A simple function to plot polar data in cartesian coordinate systems</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/notebooks/visualisation/wradlib_plot_ppi_example.ipynb.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #303F9F;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #D84315;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 8ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+/* nice headers on first paragraph of info/warning boxes */
+.admonition .first {
+    margin: -12px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1;
+    display: block;
+}
+.admonition.warning .first {
+    background: #f0b37e;
+}
+.admonition.note .first {
+    background: #6ab0de;
+}
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="A-simple-function-to-plot-polar-data-in-cartesian-coordinate-systems">
+<h1>A simple function to plot polar data in cartesian coordinate systems<a class="headerlink" href="#A-simple-function-to-plot-polar-data-in-cartesian-coordinate-systems" title="Permalink to this headline">¶</a></h1>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">pl</span>
+<span class="kn">import</span> <span class="nn">wradlib</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">get_ipython</span><span class="p">()</span><span class="o">.</span><span class="n">magic</span><span class="p">(</span><span class="s2">&quot;matplotlib inline&quot;</span><span class="p">)</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="n">pl</span><span class="o">.</span><span class="n">ion</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="stderr output_area docutils container">
+<div class="highlight"><pre>
+/home/travis/miniconda/envs/wradlib/lib/python2.7/site-packages/h5py/__init__.py:36: FutureWarning: Conversion of the second argument of issubdtype from `float` to `np.floating` is deprecated. In future, it will be treated as `np.float64 == np.dtype(float).type`.
+  from ._conv import register_converters as _register_converters
+</pre></div></div>
+</div>
+<div class="section" id="Read-a-polar-data-set-from-the-German-Weather-Service">
+<h2>Read a polar data set from the German Weather Service<a class="headerlink" href="#Read-a-polar-data-set-from-the-German-Weather-Service" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">filename</span> <span class="o">=</span> <span class="n">wradlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">get_wradlib_data_file</span><span class="p">(</span><span class="s1">&#39;dx/raa00-dx_10908-0806021735-fbg---bin.gz&#39;</span><span class="p">)</span>
+<span class="n">img</span><span class="p">,</span> <span class="n">meta</span> <span class="o">=</span> <span class="n">wradlib</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">readDX</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Inspect the data set a little</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">print</span><span class="p">(</span><span class="s2">&quot;Shape of polar array: </span><span class="si">%r</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">,))</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Some meta data of the DX file:&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">datetime: </span><span class="si">%r</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;datetime&quot;</span><span class="p">],))</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">Radar ID: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">meta</span><span class="p">[</span><span class="s2">&quot;radarid&quot;</span><span class="p">],))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Shape of polar array: (360, 128)
+
+Some meta data of the DX file:
+        datetime: datetime.datetime(2008, 6, 2, 17, 35, tzinfo=&lt;UTC&gt;)
+        Radar ID: 10908
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="The-simplest-way-to-plot-this-dataset">
+<h2>The simplest way to plot this dataset<a class="headerlink" href="#The-simplest-way-to-plot-this-dataset" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">wradlib</span><span class="o">.</span><span class="n">vis</span><span class="o">.</span><span class="n">plot_ppi</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+<span class="n">txt</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Simple PPI&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_visualisation_wradlib_plot_ppi_example_8_0.png" src="../../_images/notebooks_visualisation_wradlib_plot_ppi_example_8_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="Plotting-just-one-sector">
+<h2>Plotting just one sector<a class="headerlink" href="#Plotting-just-one-sector" title="Permalink to this headline">¶</a></h2>
+<p>For this purpose, we need to give the ranges and azimuths explicitly…</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="mi">81</span><span class="p">)</span>
+<span class="n">az</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">251</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">,</span> <span class="n">pm</span> <span class="o">=</span> <span class="n">wradlib</span><span class="o">.</span><span class="n">vis</span><span class="o">.</span><span class="n">plot_ppi</span><span class="p">(</span><span class="n">img</span><span class="p">[</span><span class="mi">200</span><span class="p">:</span><span class="mi">250</span><span class="p">,</span> <span class="mi">40</span><span class="p">:</span><span class="mi">80</span><span class="p">],</span> <span class="n">r</span><span class="p">,</span> <span class="n">az</span><span class="p">,</span> <span class="n">autoext</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">txt</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Sector PPI&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_visualisation_wradlib_plot_ppi_example_11_0.png" src="../../_images/notebooks_visualisation_wradlib_plot_ppi_example_11_0.png" />
+</div>
+</div>
+<p><em>Notice we passed one more range value and azimuth angle as we passed
+actual data. Otherwise the last row and column of our data would not be
+plotted.</em></p>
+</div>
+<div class="section" id="Adding-a-crosshair-to-the-PPI">
+<h2>Adding a crosshair to the PPI<a class="headerlink" href="#Adding-a-crosshair-to-the-PPI" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># We introduce a site offset...</span>
+<span class="n">site</span> <span class="o">=</span> <span class="p">(</span><span class="mf">10.</span><span class="p">,</span> <span class="mf">45.</span><span class="p">)</span>
+<span class="n">wradlib</span><span class="o">.</span><span class="n">vis</span><span class="o">.</span><span class="n">plot_ppi</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">site</span><span class="o">=</span><span class="n">site</span><span class="p">)</span>
+<span class="c1"># ... plot a crosshair over our data...</span>
+<span class="n">wradlib</span><span class="o">.</span><span class="n">vis</span><span class="o">.</span><span class="n">plot_ppi_crosshair</span><span class="p">(</span><span class="n">site</span><span class="o">=</span><span class="n">site</span><span class="p">,</span> <span class="n">ranges</span><span class="o">=</span><span class="p">[</span><span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">128</span><span class="p">],</span>
+                               <span class="n">angles</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">180</span><span class="p">,</span> <span class="mi">270</span><span class="p">],</span>
+                               <span class="n">line</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">),</span>
+                               <span class="n">circle</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;edgecolor&#39;</span><span class="p">:</span> <span class="s1">&#39;white&#39;</span><span class="p">})</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Offset and Custom Crosshair&#39;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;tight&quot;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">axes</span><span class="p">()</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_visualisation_wradlib_plot_ppi_example_14_0.png" src="../../_images/notebooks_visualisation_wradlib_plot_ppi_example_14_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="Placing-the-polar-data-in-a-projected-Cartesian-reference-system">
+<h2>Placing the polar data in a projected Cartesian reference system<a class="headerlink" href="#Placing-the-polar-data-in-a-projected-Cartesian-reference-system" title="Permalink to this headline">¶</a></h2>
+<p>Using the <code class="docutils literal notranslate"><span class="pre">proj</span></code> keyword we tell the function to: - interpret the site
+coordinates as longitude/latitude - reproject the coordinates to the
+given projection (here: dwd-radolan composite coordinate system)</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">site</span><span class="o">=</span><span class="p">(</span><span class="mf">10.</span><span class="p">,</span> <span class="mf">45.</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">proj_rad</span> <span class="o">=</span> <span class="n">wradlib</span><span class="o">.</span><span class="n">georef</span><span class="o">.</span><span class="n">create_osr</span><span class="p">(</span><span class="s2">&quot;dwd-radolan&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">,</span> <span class="n">pm</span> <span class="o">=</span> <span class="n">wradlib</span><span class="o">.</span><span class="n">vis</span><span class="o">.</span><span class="n">plot_ppi</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">site</span><span class="o">=</span><span class="n">site</span><span class="p">,</span> <span class="n">proj</span><span class="o">=</span><span class="n">proj_rad</span><span class="p">)</span>
+<span class="c1"># Now the crosshair ranges must be given in meters</span>
+<span class="n">wradlib</span><span class="o">.</span><span class="n">vis</span><span class="o">.</span><span class="n">plot_ppi_crosshair</span><span class="p">(</span><span class="n">site</span><span class="o">=</span><span class="n">site</span><span class="p">,</span>
+                               <span class="n">ranges</span><span class="o">=</span><span class="p">[</span><span class="mi">40000</span><span class="p">,</span> <span class="mi">80000</span><span class="p">,</span> <span class="mi">128000</span><span class="p">],</span>
+                               <span class="n">line</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">),</span>
+                               <span class="n">circle</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;edgecolor&#39;</span><span class="p">:</span><span class="s1">&#39;white&#39;</span><span class="p">},</span>
+                               <span class="n">proj</span><span class="o">=</span><span class="n">proj_rad</span>
+                               <span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Georeferenced/Projected PPI&#39;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;tight&quot;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">axes</span><span class="p">()</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_visualisation_wradlib_plot_ppi_example_17_0.png" src="../../_images/notebooks_visualisation_wradlib_plot_ppi_example_17_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="Some-side-effects-of-georeferencing">
+<h2>Some side effects of georeferencing<a class="headerlink" href="#Some-side-effects-of-georeferencing" title="Permalink to this headline">¶</a></h2>
+<p>Transplanting the radar virtually moves it away from the central
+meridian of the projection (which is 10 degrees east). Due north now
+does not point straight upwards on the map.</p>
+<p>The crosshair shows this: for the case that the lines should actually
+become curved, they are implemented as a piecewise linear curve with 10
+vertices. The same is true for the range circles, but with more
+vertices, of course.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">site</span><span class="o">=</span><span class="p">(</span><span class="mf">45.</span><span class="p">,</span> <span class="mf">7.</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">,</span> <span class="n">pm</span> <span class="o">=</span> <span class="n">wradlib</span><span class="o">.</span><span class="n">vis</span><span class="o">.</span><span class="n">plot_ppi</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">site</span><span class="o">=</span><span class="n">site</span><span class="p">,</span> <span class="n">proj</span><span class="o">=</span><span class="n">proj_rad</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">wradlib</span><span class="o">.</span><span class="n">vis</span><span class="o">.</span><span class="n">plot_ppi_crosshair</span><span class="p">(</span><span class="n">site</span><span class="o">=</span><span class="n">site</span><span class="p">,</span>
+                               <span class="n">ranges</span><span class="o">=</span><span class="p">[</span><span class="mi">64000</span><span class="p">,</span> <span class="mi">128000</span><span class="p">],</span>
+                               <span class="n">line</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">),</span>
+                               <span class="n">circle</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;edgecolor&#39;</span><span class="p">:</span> <span class="s1">&#39;red&#39;</span><span class="p">},</span>
+                               <span class="n">proj</span><span class="o">=</span><span class="n">proj_rad</span>
+                               <span class="p">)</span>
+<span class="n">txt</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Projection Side Effects&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_visualisation_wradlib_plot_ppi_example_20_0.png" src="../../_images/notebooks_visualisation_wradlib_plot_ppi_example_20_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="More-decorations-and-annotations">
+<h2>More decorations and annotations<a class="headerlink" href="#More-decorations-and-annotations" title="Permalink to this headline">¶</a></h2>
+<p>You can annotate these plots by using standard matplotlib methods.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">ax</span><span class="p">,</span> <span class="n">pm</span> <span class="o">=</span> <span class="n">wradlib</span><span class="o">.</span><span class="n">vis</span><span class="o">.</span><span class="n">plot_ppi</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+<span class="n">ylabel</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;easting [km]&#39;</span><span class="p">)</span>
+<span class="n">ylabel</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;northing [km]&#39;</span><span class="p">)</span>
+<span class="n">title</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;PPI manipulations/colorbar&#39;</span><span class="p">)</span>
+<span class="c1"># you can now also zoom - either programmatically or interactively</span>
+<span class="n">xlim</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">80</span><span class="p">,</span> <span class="o">-</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">ylim</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">80</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="c1"># as the function returns the axes- and &#39;mappable&#39;-objects colorbar needs, adding a colorbar is easy</span>
+<span class="n">cb</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">pm</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_visualisation_wradlib_plot_ppi_example_23_0.png" src="../../_images/notebooks_visualisation_wradlib_plot_ppi_example_23_0.png" />
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="wradlib_plot_curvelinear_grids.html" class="btn btn-neutral float-right" title="Plot data to curvelinear grid" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../basics/wradlib_get_rainfall.html" class="btn btn-neutral" title="Converting Reflectivity to Rainfall" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2011-2016, wradlib developers.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.11.3',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

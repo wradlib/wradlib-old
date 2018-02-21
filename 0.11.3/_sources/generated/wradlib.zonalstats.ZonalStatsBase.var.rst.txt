@@ -1,0 +1,6 @@
+wradlib.zonalstats.ZonalStatsBase.var
+=====================================
+
+.. currentmodule:: wradlib.zonalstats
+
+.. automethod:: ZonalStatsBase.var

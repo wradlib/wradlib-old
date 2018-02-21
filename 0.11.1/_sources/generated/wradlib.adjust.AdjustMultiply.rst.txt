@@ -1,0 +1,13 @@
+wradlib\.adjust\.AdjustMultiply
+===============================
+
+.. currentmodule:: wradlib.adjust
+
+.. autoclass:: AdjustMultiply
+
+   
+
+
+
+   
+

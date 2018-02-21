@@ -1,0 +1,6 @@
+wradlib.io.netcdf.read\_EDGE\_netcdf
+====================================
+
+.. currentmodule:: wradlib.io.netcdf
+
+.. autofunction:: read_EDGE_netcdf

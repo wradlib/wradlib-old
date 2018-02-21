@@ -1,0 +1,389 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Automate image generation with sphinx &mdash; wradlib</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/wradlib.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="wradlib" href="index.html"/>
+        <link rel="up" title="For Developers" href="notebooks/develop.html"/>
+        <link rel="next" title="API-Change" href="notebooks/develop/wradlib_api_change.html"/>
+        <link rel="prev" title="For Developers" href="notebooks/develop.html"/>
+    
+    <link href="_static/wradlib.css" rel="stylesheet" type="text/css">
+
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+  <a href="index.html" class="icon icon-home"> wradlib
+
+
+
+</a>
+
+
+
+  <div class="version">
+    
+    <button class="verbtn">0.11.1</button>
+    <div class="version-content">
+      
+        <a href="../latest/">latest</a>
+        <a href="../0.11.1/">0.11.1</a>
+    </div>
+  </div>
+
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="gettingstarted.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="notebooks.html">Tutorials and Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="jupyter.html">How to use the tutorials and examples?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/learnpython.html">An incomplete introduction to Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/basics.html">Getting started with wradlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/fileio.html">Data Input - Data Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/attenuation/wradlib_attenuation.html">Attenuation correction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/beamblockage/wradlib_beamblock.html">Beam Blockage Calculation using a DEM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/classify.html">Clutter and Echo Classification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/georeferencing.html">Georeferencing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/match3d/wradlib_match_workflow.html">Match spaceborn PR (GPM/TRMM) with ground radars</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="notebooks/develop.html">For Developers</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Automate Image Generation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="notebooks/develop/wradlib_api_change.html">Apichange Function Decorators</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/interpolation/wradlib_ipol_example.html">How to use wradlib’s ipol module for interpolation tasks?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/multisensor/wradlib_adjust_example.html">Adjusting radar-base rainfall estimates by rain gauge observations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/verification/wradlib_verify_example.html">Routine verification measures for radar-based precipitation estimates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/recipes.html">Recipes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/radolan.html">RADOLAN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/zonalstats/wradlib_zonalstats_classes.html">Zonal Statistics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="reference.html">Library Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dev_setup.html">For Developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="zreferences.html">Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="release_notes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">wradlib</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="notebooks.html">Tutorials and Examples</a> &raquo;</li>
+        
+          <li><a href="notebooks/develop.html">For Developers</a> &raquo;</li>
+        
+      <li>Automate image generation with sphinx</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/tutorial_autoimages.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+/* nice headers on first paragraph of info/warning boxes */
+.admonition .first {
+    margin: -12px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1;
+    display: block;
+}
+.admonition.warning .first {
+    background: #f0b37e;
+}
+.admonition.note .first {
+    background: #6ab0de;
+}
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="automate-image-generation-with-sphinx">
+<h1>Automate image generation with sphinx<a class="headerlink" href="#automate-image-generation-with-sphinx" title="Permalink to this headline">¶</a></h1>
+<p>With active version control it is often undesirable to bundle images with the documentation.
+This tutorial shows how to generate images on the fly with <cite>sphinx</cite>.</p>
+<p>First thing is to add the necessary sphinx extension configuration on your accompanying <cite>conf.py</cite>.</p>
+<p>Add <cite>matplotlib.sphinxext.plot_directive</cite> to the extensions section:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># Add any Sphinx extension module names here, as strings. They can be extensions</span>
+<span class="c1"># coming with Sphinx (named &#39;sphinx.ext.*&#39;) or your custom ones.</span>
+<span class="n">extensions</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sphinx.ext.autodoc&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;sphinx.ext.todo&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;sphinx.ext.coverage&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;sphinx.ext.pngmath&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;sphinx.ext.autosummary&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;numpydoc&#39;</span><span class="p">,</span>
+              <span class="s1">&#39;matplotlib.sphinxext.plot_directive&#39;</span><span class="p">,</span>
+              <span class="p">]</span>
+</pre></div>
+</div>
+<p>This was actually the hardest part! Next time you can just write in your documentation:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">..</span> <span class="n">plot</span><span class="p">::</span>
+
+    <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+    <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span> <span class="n">x</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;Normal: $\mu=</span><span class="si">%.2f</span><span class="s1">, \sigma=</span><span class="si">%.2f</span><span class="s1">$&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">x</span><span class="o">.</span><span class="n">std</span><span class="p">()))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This will lead to a nice arranged histogram plot in the final documentation. See yourself:</p>
+<p>(<a class="reference external" href=".//tutorial_autoimages-1.py">Source code</a>, <a class="reference external" href=".//tutorial_autoimages-1.png">png</a>)</p>
+<div class="figure">
+<img alt="_images/tutorial_autoimages-1.png" src="_images/tutorial_autoimages-1.png" />
+</div>
+<p>So, now let’s plot some weather radar stuff:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">..</span> <span class="n">plot</span><span class="p">::</span>
+
+    <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+    <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+    <span class="kn">import</span> <span class="nn">wradlib</span>
+
+    <span class="c1"># load a polar scan and create range and azimuth arrays accordingly</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">wradlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">get_wradlib_data_file</span><span class="p">(</span><span class="s1">&#39;misc/polar_dBZ_tur.gz&#39;</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">az</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="c1"># mask data array for better presentation</span>
+    <span class="n">mask_ind</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data</span> <span class="o">&lt;=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmin</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+    <span class="n">data</span><span class="p">[</span><span class="n">mask_ind</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+    <span class="n">ma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+    <span class="c1"># the simplest call, plot cg ppi in new window</span>
+    <span class="c1"># plot simple CG PPI</span>
+    <span class="n">wradlib</span><span class="o">.</span><span class="n">vis</span><span class="o">.</span><span class="n">plot_cg_ppi</span><span class="p">(</span><span class="n">ma</span><span class="p">,</span> <span class="n">refrac</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Simple CG PPI&#39;</span><span class="p">)</span>
+    <span class="n">t</span><span class="o">.</span><span class="n">set_y</span><span class="p">(</span><span class="mf">1.05</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>But, take care of the correct path to your example data. It starts from your documentation root directory
+(the one where ‘conf.py` resides). After all this nice radar ppi will magically compile into your documentation:</p>
+<p>(<a class="reference external" href=".//tutorial_autoimages-2.py">Source code</a>, <a class="reference external" href=".//tutorial_autoimages-2.png">png</a>)</p>
+<div class="figure">
+<img alt="_images/tutorial_autoimages-2.png" src="_images/tutorial_autoimages-2.png" />
+</div>
+<p>More, you have one option not to clutter your documentation files with elaborate plotting code.
+Just give the directive a file with your code. One idea is to take one of your example files.
+This is as follows:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">..</span> <span class="n">plot</span><span class="p">::</span> <span class="n">pyplots</span><span class="o">/</span><span class="n">plot_cg_rhi_example</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p>As you can see, there is a folder <cite>pyplots</cite>, which, you may already gess, lives in your documentation root folder.
+All in documentation referenced plotting routines have to be in that folder, which may have some other name.
+If you like to build on your already available example files, you have to symlink to them.</p>
+<p>The above statement looks like this in the final documentation:</p>
+<p>(<a class="reference external" href="./pyplots/plot_cg_rhi_example.py">Source code</a>, <a class="reference external" href="./pyplots/plot_cg_rhi_example.png">png</a>)</p>
+<div class="figure">
+<img alt="_images/plot_cg_rhi_example.png" src="_images/plot_cg_rhi_example.png" />
+</div>
+<p>This plot_directive is very convenient if you just want to add plots to your documentation at compile time.
+If you want to learn more about matplotlib and documentation, take a look at the <a class="reference external" href="http://matplotlib.org/sampledoc/extensions.html">Matplotlib Sampledoc</a>.
+A deeper insight into all magic behind plot_directive and much more you can find at <a class="reference external" href="http://matplotlib.org/devel/documenting_mpl.html">Documenting Matplotlib</a>.
+Have fun!</p>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="notebooks/develop/wradlib_api_change.html" class="btn btn-neutral float-right" title="API-Change" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="notebooks/develop.html" class="btn btn-neutral" title="For Developers" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2011-2016, wradlib developers.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.11.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

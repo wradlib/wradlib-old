@@ -1,0 +1,334 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>wradlib.verify.ErrorMetrics.r2 &mdash; wradlib</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/wradlib.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="wradlib" href="../index.html"/>
+        <link rel="up" title="wradlib.verify.ErrorMetrics" href="wradlib.verify.ErrorMetrics.html"/>
+        <link rel="next" title="wradlib.verify.ErrorMetrics.ratio" href="wradlib.verify.ErrorMetrics.ratio.html"/>
+        <link rel="prev" title="wradlib.verify.ErrorMetrics.pprint" href="wradlib.verify.ErrorMetrics.pprint.html"/>
+    
+    <link href="../_static/wradlib.css" rel="stylesheet" type="text/css">
+
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+  <a href="../index.html" class="icon icon-home"> wradlib
+
+
+
+</a>
+
+
+
+  <div class="version">
+    
+    <button class="verbtn">0.11.3</button>
+    <div class="version-content">
+      
+        <a href="../latest/">latest</a>
+        <a href="../0.11.3/">0.11.3</a>
+        <a href="../0.11.1/">0.11.1</a>
+    </div>
+  </div>
+
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../gettingstarted.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks.html">Tutorials and Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../reference.html">Library Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../io.html">Raw Data I/O</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../trafo.html">Data Transformation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zr.html">Z-R Conversions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../georef.html">Georeferencing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ipol.html">Interpolation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../qual.html">Data Quality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../comp.html">Composition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../clutter.html">Clutter Identification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dp.html">Dual-Pol and Differential Phase</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../fill.html">Filling Missing Values</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../vpr.html">Vertical Profile of Reflectivity (VPR)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../atten.html">Attenuation Correction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../adjust.html">Gage adjustment</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../verify.html">Verification</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="wradlib.verify.ErrorMetrics.html">wradlib.verify.ErrorMetrics</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="wradlib.verify.ErrorMetrics.all.html">wradlib.verify.ErrorMetrics.all</a></li>
+<li class="toctree-l4"><a class="reference internal" href="wradlib.verify.ErrorMetrics.corr.html">wradlib.verify.ErrorMetrics.corr</a></li>
+<li class="toctree-l4"><a class="reference internal" href="wradlib.verify.ErrorMetrics.mas.html">wradlib.verify.ErrorMetrics.mas</a></li>
+<li class="toctree-l4"><a class="reference internal" href="wradlib.verify.ErrorMetrics.meanerr.html">wradlib.verify.ErrorMetrics.meanerr</a></li>
+<li class="toctree-l4"><a class="reference internal" href="wradlib.verify.ErrorMetrics.mse.html">wradlib.verify.ErrorMetrics.mse</a></li>
+<li class="toctree-l4"><a class="reference internal" href="wradlib.verify.ErrorMetrics.nash.html">wradlib.verify.ErrorMetrics.nash</a></li>
+<li class="toctree-l4"><a class="reference internal" href="wradlib.verify.ErrorMetrics.pbias.html">wradlib.verify.ErrorMetrics.pbias</a></li>
+<li class="toctree-l4"><a class="reference internal" href="wradlib.verify.ErrorMetrics.plot.html">wradlib.verify.ErrorMetrics.plot</a></li>
+<li class="toctree-l4"><a class="reference internal" href="wradlib.verify.ErrorMetrics.pprint.html">wradlib.verify.ErrorMetrics.pprint</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">wradlib.verify.ErrorMetrics.r2</a></li>
+<li class="toctree-l4"><a class="reference internal" href="wradlib.verify.ErrorMetrics.ratio.html">wradlib.verify.ErrorMetrics.ratio</a></li>
+<li class="toctree-l4"><a class="reference internal" href="wradlib.verify.ErrorMetrics.report.html">wradlib.verify.ErrorMetrics.report</a></li>
+<li class="toctree-l4"><a class="reference internal" href="wradlib.verify.ErrorMetrics.rmse.html">wradlib.verify.ErrorMetrics.rmse</a></li>
+<li class="toctree-l4"><a class="reference internal" href="wradlib.verify.ErrorMetrics.spearman.html">wradlib.verify.ErrorMetrics.spearman</a></li>
+<li class="toctree-l4"><a class="reference internal" href="wradlib.verify.ErrorMetrics.sse.html">wradlib.verify.ErrorMetrics.sse</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="wradlib.verify.PolarNeighbours.html">wradlib.verify.PolarNeighbours</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../vis.html">Visualisation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zonalstats.html">Zonal Statistics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../util.html">Utility functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_setup.html">For Developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zreferences.html">Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">wradlib</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../reference.html">Library Reference</a> &raquo;</li>
+        
+          <li><a href="../verify.html">Verification</a> &raquo;</li>
+        
+          <li><a href="wradlib.verify.ErrorMetrics.html">wradlib.verify.ErrorMetrics</a> &raquo;</li>
+        
+      <li>wradlib.verify.ErrorMetrics.r2</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/generated/wradlib.verify.ErrorMetrics.r2.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+/* nice headers on first paragraph of info/warning boxes */
+.admonition .first {
+    margin: -12px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1;
+    display: block;
+}
+.admonition.warning .first {
+    background: #f0b37e;
+}
+.admonition.note .first {
+    background: #6ab0de;
+}
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="wradlib-verify-errormetrics-r2">
+<h1>wradlib.verify.ErrorMetrics.r2<a class="headerlink" href="#wradlib-verify-errormetrics-r2" title="Permalink to this headline">¶</a></h1>
+<dl class="method">
+<dt id="wradlib.verify.ErrorMetrics.r2">
+<code class="descclassname">ErrorMetrics.</code><code class="descname">r2</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#wradlib.verify.ErrorMetrics.r2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Coefficient of determination</p>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="wradlib.verify.ErrorMetrics.ratio.html" class="btn btn-neutral float-right" title="wradlib.verify.ErrorMetrics.ratio" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="wradlib.verify.ErrorMetrics.pprint.html" class="btn btn-neutral" title="wradlib.verify.ErrorMetrics.pprint" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2011-2016, wradlib developers.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.11.3',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

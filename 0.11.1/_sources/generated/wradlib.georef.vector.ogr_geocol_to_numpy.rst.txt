@@ -1,0 +1,6 @@
+wradlib\.georef\.vector\.ogr\_geocol\_to\_numpy
+===============================================
+
+.. currentmodule:: wradlib.georef.vector
+
+.. autofunction:: ogr_geocol_to_numpy

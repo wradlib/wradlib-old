@@ -1,0 +1,6 @@
+wradlib.io.iris.IrisFile.array\_from\_record
+============================================
+
+.. currentmodule:: wradlib.io.iris
+
+.. automethod:: IrisFile.array_from_record

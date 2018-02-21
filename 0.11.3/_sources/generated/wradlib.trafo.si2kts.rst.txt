@@ -1,0 +1,6 @@
+wradlib.trafo.si2kts
+====================
+
+.. currentmodule:: wradlib.trafo
+
+.. autofunction:: si2kts

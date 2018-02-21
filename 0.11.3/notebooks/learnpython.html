@@ -1,0 +1,371 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>An incomplete introduction to Python &mdash; wradlib</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/wradlib.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="wradlib" href="../index.html"/>
+        <link rel="up" title="Tutorials and Examples" href="../notebooks.html"/>
+        <link rel="next" title="A quick start to Python" href="python/quickstart.html"/>
+        <link rel="prev" title="How to use the tutorials and examples?" href="../jupyter.html"/>
+    
+    <link href="../_static/wradlib.css" rel="stylesheet" type="text/css">
+
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+  <a href="../index.html" class="icon icon-home"> wradlib
+
+
+
+</a>
+
+
+
+  <div class="version">
+    
+    <button class="verbtn">0.11.3</button>
+    <div class="version-content">
+      
+        <a href="../latest/">latest</a>
+        <a href="../0.11.3/">0.11.3</a>
+        <a href="../0.11.1/">0.11.1</a>
+    </div>
+  </div>
+
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../gettingstarted.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../notebooks.html">Tutorials and Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../jupyter.html">How to use the tutorials and examples?</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">An incomplete introduction to Python</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="python/quickstart.html">A quick start to Python</a></li>
+<li class="toctree-l3"><a class="reference internal" href="python/numpyintro.html">Numpy: manipulating numerical data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="python/mplintro.html">Visualising data with Matplotlib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="python/timeseries.html">Dealing with time series</a></li>
+<li class="toctree-l3"><a class="reference internal" href="python/virtenvs.html">Using virtual environments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ide.html">Integrated Development Environments for Python</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="basics.html">Getting started with wradlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fileio.html">Data Input - Data Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="attenuation/wradlib_attenuation.html">Attenuation correction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="beamblockage/wradlib_beamblock.html">Beam Blockage Calculation using a DEM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classify.html">Clutter and Echo Classification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="georeferencing.html">Georeferencing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="match3d/wradlib_match_workflow.html">Match spaceborn SR (GPM/TRMM) with ground radars GR</a></li>
+<li class="toctree-l2"><a class="reference internal" href="develop.html">For Developers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interpolation/wradlib_ipol_example.html">How to use wradlib’s ipol module for interpolation tasks?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multisensor/wradlib_adjust_example.html">Adjusting radar-base rainfall estimates by rain gauge observations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="verification/wradlib_verify_example.html">Routine verification measures for radar-based precipitation estimates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="recipes.html">Recipes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="radolan.html">RADOLAN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zonalstats/wradlib_zonalstats_classes.html">Zonal Statistics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../reference.html">Library Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_setup.html">For Developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zreferences.html">Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">wradlib</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../notebooks.html">Tutorials and Examples</a> &raquo;</li>
+        
+      <li>An incomplete introduction to Python</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/notebooks/learnpython.ipynb.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+/* nice headers on first paragraph of info/warning boxes */
+.admonition .first {
+    margin: -12px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1;
+    display: block;
+}
+.admonition.warning .first {
+    background: #f0b37e;
+}
+.admonition.note .first {
+    background: #6ab0de;
+}
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="An-incomplete-introduction-to-Python">
+<h1>An incomplete introduction to Python<a class="headerlink" href="#An-incomplete-introduction-to-Python" title="Permalink to this headline">¶</a></h1>
+<p>In order to use <span class="math notranslate">\(\omega radlib\)</span>, you need to be able to use
+Python. The notebooks in this section will give you a glimpse of the
+Python language and important scientific packages, confront you with
+some Python exercises, and refer you to further online material. In
+addition, we will address some issues that are relevant to
+<span class="math notranslate">\(\omega radlib\)</span>, but do not necessarily address
+<span class="math notranslate">\(\omega radlib\)</span> functionality.</p>
+<p>As an introduction to scientific python, <strong>this section is necessarily
+incomplete</strong>. There are better and more comprehensive courses such as
+the <a class="reference external" href="http://www.scipy-lectures.org/index.html">SciPy Lecture Notes</a>
+or the <a class="reference external" href="http://www.diveintopython3.net/">Dive into Python</a> book.</p>
+<p>Mostly, we will assume that you have some basic knowledge about
+programming, e.g.&nbsp;from other interpreted langauages such as
+<a class="reference external" href="https://www.r-project.org/">R</a> or Matlab. Otherwise, a fundamental
+course such as <a class="reference external" href="http://www.diveintopython3.net/">Dive into Python</a>
+might help you more.</p>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">List of Python related articles in this section</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="python/quickstart.html">A quick start to Python</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="python/quickstart.html#Hello-interpreted-world">Hello interpreted world</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/quickstart.html#Writing-a-program-in-Python">Writing a program in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/quickstart.html#Important-data-types">Important data types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/quickstart.html#Other-data-types:-collections">Other data types: collections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/quickstart.html#Excursus:-indexing-in-Python">Excursus: indexing in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/quickstart.html#Dictionaries">Dictionaries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/quickstart.html#Control-flow">Control flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/quickstart.html#Importing-functions-from-modules">Importing functions from modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/quickstart.html#Getting-help">Getting help</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/quickstart.html#Writing-your-own-functions">Writing your own functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/quickstart.html#File-input-and-output">File input and output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/quickstart.html#The-building-blocks-of-scientific-Python">The building blocks of scientific Python</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="python/numpyintro.html">Numpy: manipulating numerical data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="python/numpyintro.html#Creating-and-inspecting-NumPy-arrays">Creating and inspecting NumPy arrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/numpyintro.html#Indexing-and-slicing">Indexing and slicing</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="python/mplintro.html">Visualising data with Matplotlib</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="python/mplintro.html#Different-ways-to-import-matplotlib">Different ways to import matplotlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/mplintro.html#Simple-plots-and-decorations">Simple plots and decorations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/mplintro.html#More-complex-plots-and-fine-control">More complex plots and fine control</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="python/timeseries.html">Dealing with time series</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="python/timeseries.html#The-datetime-module">The datetime module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="python/virtenvs.html">Using virtual environments</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="python/virtenvs.html#Why-should-I-use-virtual-environments">Why should I use virtual environments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="python/virtenvs.html#Why-should-I-NOT-use-virtual-environments">Why should I NOT use virtual environments</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../ide.html">Integrated Development Environments for Python</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ide.html#development-environments-vs-notebooks">Development Environments vs. Notebooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ide.html#some-suitable-ides">Some suitable IDEs</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="python/quickstart.html" class="btn btn-neutral float-right" title="A quick start to Python" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../jupyter.html" class="btn btn-neutral" title="How to use the tutorials and examples?" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2011-2016, wradlib developers.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.11.3',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

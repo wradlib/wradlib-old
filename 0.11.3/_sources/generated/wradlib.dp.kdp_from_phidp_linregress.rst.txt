@@ -1,0 +1,6 @@
+wradlib.dp.kdp\_from\_phidp\_linregress
+=======================================
+
+.. currentmodule:: wradlib.dp
+
+.. autofunction:: kdp_from_phidp_linregress

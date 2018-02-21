@@ -1,0 +1,410 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>wradlib.vis.plot_cg_rhi &mdash; wradlib</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/wradlib.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="wradlib" href="../index.html"/>
+        <link rel="up" title="Visualisation" href="../vis.html"/>
+        <link rel="next" title="wradlib.vis.plot_scan_strategy" href="wradlib.vis.plot_scan_strategy.html"/>
+        <link rel="prev" title="wradlib.vis.plot_cg_ppi" href="wradlib.vis.plot_cg_ppi.html"/>
+    
+    <link href="../_static/wradlib.css" rel="stylesheet" type="text/css">
+
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+  <a href="../index.html" class="icon icon-home"> wradlib
+
+
+
+</a>
+
+
+
+  <div class="version">
+    
+    <button class="verbtn">0.11.3</button>
+    <div class="version-content">
+      
+        <a href="../latest/">latest</a>
+        <a href="../0.11.3/">0.11.3</a>
+        <a href="../0.11.1/">0.11.1</a>
+    </div>
+  </div>
+
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../gettingstarted.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks.html">Tutorials and Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../reference.html">Library Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../io.html">Raw Data I/O</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../trafo.html">Data Transformation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zr.html">Z-R Conversions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../georef.html">Georeferencing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ipol.html">Interpolation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../qual.html">Data Quality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../comp.html">Composition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../clutter.html">Clutter Identification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dp.html">Dual-Pol and Differential Phase</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../fill.html">Filling Missing Values</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../vpr.html">Vertical Profile of Reflectivity (VPR)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../atten.html">Attenuation Correction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../adjust.html">Gage adjustment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../verify.html">Verification</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../vis.html">Visualisation</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="wradlib.vis.plot_ppi.html">wradlib.vis.plot_ppi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wradlib.vis.plot_ppi_crosshair.html">wradlib.vis.plot_ppi_crosshair</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wradlib.vis.plot_rhi.html">wradlib.vis.plot_rhi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wradlib.vis.create_cg.html">wradlib.vis.create_cg</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wradlib.vis.plot_cg_ppi.html">wradlib.vis.plot_cg_ppi</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">wradlib.vis.plot_cg_rhi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wradlib.vis.plot_scan_strategy.html">wradlib.vis.plot_scan_strategy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wradlib.vis.plot_plan_and_vert.html">wradlib.vis.plot_plan_and_vert</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wradlib.vis.plot_max_plan_and_vert.html">wradlib.vis.plot_max_plan_and_vert</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wradlib.vis.plot_tseries.html">wradlib.vis.plot_tseries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wradlib.vis.add_lines.html">wradlib.vis.add_lines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wradlib.vis.add_patches.html">wradlib.vis.add_patches</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../zonalstats.html">Zonal Statistics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../util.html">Utility functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_setup.html">For Developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zreferences.html">Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">wradlib</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../reference.html">Library Reference</a> &raquo;</li>
+        
+          <li><a href="../vis.html">Visualisation</a> &raquo;</li>
+        
+      <li>wradlib.vis.plot_cg_rhi</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/generated/wradlib.vis.plot_cg_rhi.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+/* nice headers on first paragraph of info/warning boxes */
+.admonition .first {
+    margin: -12px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1;
+    display: block;
+}
+.admonition.warning .first {
+    background: #f0b37e;
+}
+.admonition.note .first {
+    background: #6ab0de;
+}
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="wradlib-vis-plot-cg-rhi">
+<h1>wradlib.vis.plot_cg_rhi<a class="headerlink" href="#wradlib-vis-plot-cg-rhi" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="wradlib.vis.plot_cg_rhi">
+<code class="descclassname">wradlib.vis.</code><code class="descname">plot_cg_rhi</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#wradlib.vis.plot_cg_rhi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plots a Range Height Indicator (RHI) on a curvelinear grid.</p>
+<div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 0.10.0: </span>This will be removed in 1.0.0. Use <a class="reference internal" href="wradlib.vis.plot_rhi.html#wradlib.vis.plot_rhi" title="wradlib.vis.plot_rhi"><code class="xref py py-func docutils literal notranslate"><span class="pre">plot_rhi</span></code></a> with <cite>cg=True</cite> instead.</p>
+</div>
+<p>The implementation of this plot routine is in a curvelinear grid axes and
+does all coordinate transforms beforehand.</p>
+<p>This allows zooming into the data as well as making it easier to plot
+additional cartesian data (like certain special points) without having to
+convert them to the radar’s polar coordinate system.</p>
+<p>Plotting in the radar’s polar coordinate system is possible as well.</p>
+<p>The function uses create_cg wich uses the Matplotlib AXISARTIST namespace
+<a class="reference external" href="http://matplotlib.org/mpl_toolkits/axes_grid/users/axisartist.html">mpl_toolkits.axisartist</a>.</p>
+<p>Here are some limitations to normal Matplotlib Axes. While using the
+Matplotlib <a class="reference external" href="http://matplotlib.org/mpl_toolkits/axes_grid/index.html">AxesGrid Toolkit</a>
+most of the limitations can be overcome.
+See <a class="reference external" href="http://matplotlib.org/mpl_toolkits/axes_grid/users/index.html">Matplotlib AxesGrid Toolkit User’s Guide</a>.</p>
+<p><cite>**kwargs</cite> may be used to try to influence <code class="xref py py-func docutils literal notranslate"><span class="pre">matplotlib.pcolormesh</span></code>
+under the hood.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data</strong> (<em>np.array</em>) – The data to be plotted. It is assumed that the first dimension is over
+the elevation angles, while the second dimension is over the range bins</li>
+<li><strong>r</strong> (<em>np.array</em>) – The ranges. Units may be chosen arbitrarily. If None, a default is
+calculated from the dimensions of <cite>data</cite>.</li>
+<li><strong>rf</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) – if present, factor for scaling range axis
+defaults to 1.</li>
+<li><strong>th</strong> (<em>np.array</em>) – The elevation angles in degrees. If None, a default is
+calculated from the dimensions of <cite>data</cite> and span from 0 to 90 degrees
+is assumed</li>
+<li><strong>th_res</strong> (float or np.array of same shape as <cite>th</cite>) – In RHI’s it happens that the elevation angles are spaced wider than
+the beam width. If this beam width (in degrees) is given in <cite>th_res</cite>,
+plot_rhi will plot the beams accordingly. Otherwise the behavior of
+<a class="reference external" href="https://matplotlib.org/api/_as_gen/matplotlib.pyplot.pcolormesh.html#matplotlib.pyplot.pcolormesh" title="(in Matplotlib v2.1.2)"><code class="xref py py-func docutils literal notranslate"><span class="pre">matplotlib.pyplot.pcolormesh</span></code></a> assumes all beams to be adjacent
+to each other, which might lead to unexpected results.</li>
+<li><strong>autoext</strong> (<em>True | False</em>) – This routine uses matplotlib.pyplot.pcolormesh to draw the bins.
+As this function needs one set of coordinates more than would usually
+provided by <cite>r</cite> and <cite>th</cite>, setting ´autoext´ to True automatically
+extends r and th so that all of <cite>data</cite> will be plotted.</li>
+<li><strong>refrac</strong> (<em>True | False</em>) – If True, the effect of refractivity of the earth’s atmosphere on the
+beam propagation will be taken into account.
+Functionality for this will be provided by functions
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">wradlib.georef.arc_distance_n</span></code> and
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">wradlib.georef.beam_height_n</span></code>, which
+assume distances to be given in meters. Therefore, if <cite>refrac</cite> is True,
+<cite>r</cite> must be given in meters. Cartesian Axis caax ist used for plotting.
+If False,
+<a class="reference external" href="https://matplotlib.org/api/projections_api.html#matplotlib.projections.polar.PolarAxes.PolarTransform" title="(in Matplotlib v2.1.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">PolarTransform</span></code></a>
+will be used to calculate beam propagation.</li>
+<li><strong>fig</strong> (<em>matplotlib Figure object</em>) – If given, the RHI will be plotted into this figure object. Axes are
+created as needed. If None a new figure object will be created or
+current figure will be used, depending on “subplot”.</li>
+<li><strong>subplot</strong> (<em>matplotlib grid definition</em>) – nrows/ncols/plotnumber
+defaults to ‘111’, only one subplot</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference internal" href="wradlib.vis.create_cg.html#wradlib.vis.create_cg" title="wradlib.vis.create_cg"><code class="xref py py-func docutils literal notranslate"><span class="pre">create_cg</span></code></a></dt>
+<dd>creation of curvelinear grid axes objects</dd>
+</dl>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><ul class="simple">
+<li><strong>cgax</strong> (<em>matplotlib Axes object</em>) – curvelinear Axes (r-theta-grid)</li>
+<li><strong>caax</strong> (<em>matplotlib Axes object</em>) – Cartesian Axes (x-y-grid) for plotting cartesian data</li>
+<li><strong>paax</strong> (<em>matplotlib Axes object</em>) – The parasite axes object for plotting polar data
+All data in polar format must be plottet to this axis</li>
+<li><strong>pm</strong> (<em>matplotlib QuadMesh object</em>) – The result of the pcolormesh operation. Necessary, if you want to
+add a colorbar to the plot.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<p>See <span class="xref std std-ref">notebooks/visualisation/wradlib_plot_curvelinear_grids.ipynb</span>.</p>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="wradlib.vis.plot_scan_strategy.html" class="btn btn-neutral float-right" title="wradlib.vis.plot_scan_strategy" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="wradlib.vis.plot_cg_ppi.html" class="btn btn-neutral" title="wradlib.vis.plot_cg_ppi" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2011-2016, wradlib developers.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.11.3',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

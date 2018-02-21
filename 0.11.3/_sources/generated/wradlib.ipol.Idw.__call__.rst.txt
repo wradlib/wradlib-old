@@ -1,0 +1,6 @@
+wradlib.ipol.Idw.\_\_call\_\_
+=============================
+
+.. currentmodule:: wradlib.ipol
+
+.. automethod:: Idw.__call__

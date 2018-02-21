@@ -1,0 +1,6 @@
+wradlib.zonalstats.ZonalDataBase.isecs
+======================================
+
+.. currentmodule:: wradlib.zonalstats
+
+.. autoattribute:: ZonalDataBase.isecs

@@ -1,0 +1,6 @@
+wradlib.vpr.CAPPI.\_\_call\_\_
+==============================
+
+.. currentmodule:: wradlib.vpr
+
+.. automethod:: CAPPI.__call__

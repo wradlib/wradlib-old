@@ -1,0 +1,572 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Release Notes &mdash; wradlib</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/wradlib.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="wradlib" href="index.html"/>
+        <link rel="prev" title="Bibliography" href="zreferences.html"/>
+    
+    <link href="_static/wradlib.css" rel="stylesheet" type="text/css">
+
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+  <a href="index.html" class="icon icon-home"> wradlib
+
+
+
+</a>
+
+
+
+  <div class="version">
+    
+    <button class="verbtn">0.11.1</button>
+    <div class="version-content">
+      
+        <a href="../latest/">latest</a>
+        <a href="../0.11.1/">0.11.1</a>
+    </div>
+  </div>
+
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="gettingstarted.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks.html">Tutorials and Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference.html">Library Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dev_setup.html">For Developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="zreferences.html">Bibliography</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#bleeding-edge">Bleeding Edge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#version-0-11-1">Version 0.11.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#version-0-11-0">Version 0.11.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#version-0-10-1">Version 0.10.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#version-0-10-0">Version 0.10.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#version-0-9-0">Version 0.9.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#version-0-8-0">Version 0.8.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#version-0-7-0">Version 0.7.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#version-0-6-0">Version 0.6.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#version-0-5-1">Version 0.5.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#version-0-5-0">Version 0.5.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#version-0-4-2">Version 0.4.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#version-0-4-1">Version 0.4.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#version-0-4-0">Version 0.4.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#version-0-3-0">Version 0.3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#version-0-2-0">Version 0.2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#version-0-1-1">Version 0.1.1</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">wradlib</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Release Notes</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/release_notes.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+/* nice headers on first paragraph of info/warning boxes */
+.admonition .first {
+    margin: -12px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1;
+    display: block;
+}
+.admonition.warning .first {
+    background: #f0b37e;
+}
+.admonition.note .first {
+    background: #6ab0de;
+}
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="release-notes">
+<h1>Release Notes<a class="headerlink" href="#release-notes" title="Permalink to this headline">¶</a></h1>
+<p>Please note that as long as <span class="math">\(\omega radlib\)</span> releases are within the <code class="docutils literal"><span class="pre">0.y.z</span></code> series, the API cannot be considered stable. We will try to avoid sudden API breaks via deprecation warnings. All <span class="math">\(\omega radlib\)</span> releases come without any warranty. Release notes might be incomplete. See <a class="reference external" href="https://github.com/wradlib/wradlib/commits/master">here</a> for a complete record of changes.</p>
+<p>You can install the latest <span class="math">\(\omega radlib\)</span> release from PyPI via <code class="docutils literal"><span class="pre">$</span> <span class="pre">pip</span> <span class="pre">install</span> <span class="pre">wradlib</span></code> or specific version via <code class="docutils literal"><span class="pre">$</span> <span class="pre">pip</span> <span class="pre">install</span> <span class="pre">wradlib==x.y.z</span></code>. The recommended installation process is described in <a class="reference internal" href="gettingstarted.html"><span class="doc">Getting Started</span></a>.</p>
+<div class="section" id="bleeding-edge">
+<h2>Bleeding Edge<a class="headerlink" href="#bleeding-edge" title="Permalink to this headline">¶</a></h2>
+<p><em>Nothing, so far</em></p>
+</div>
+<div class="section" id="version-0-11-1">
+<h2>Version 0.11.1<a class="headerlink" href="#version-0-11-1" title="Permalink to this headline">¶</a></h2>
+<p><strong>New features</strong></p>
+<ul class="simple">
+<li>add <cite>open_vector</cite> to <cite>wradlib.io.gdal</cite>, deprecate <cite>open_shape</cite></li>
+<li>add <cite>test_open_vector</cite>, use <cite>gdal.OpenEx</cite></li>
+</ul>
+<p><strong>Bugfixes</strong></p>
+<ul class="simple">
+<li>raise Exception if file is corrupt in <cite>wradlib.io.iris.iris.py</cite></li>
+<li>divide by wavelength in <cite>decode_kdp</cite> in <cite>wradlib.io.iris.iris.py</cite></li>
+<li>correctly calculate azimuth difference in <cite>wradlib.vis.plot_ppi</cite></li>
+<li>add <cite>zorder</cite> handling to <cite>vis.plot_ppi</cite> and <cite>vis.plot_rhi</cite></li>
+<li>add documentation of <cite>lat_minmax</cite>-handling to <cite>wradlib_plot_curvelinear_grids.ipynb</cite></li>
+<li>use np.array instead of np.stack to be backwards compatible</li>
+<li>fix stderr output in <cite>wradlib.util.deprecated</cite> doctest, minor doctest fixes</li>
+</ul>
+</div>
+<div class="section" id="version-0-11-0">
+<h2>Version 0.11.0<a class="headerlink" href="#version-0-11-0" title="Permalink to this headline">¶</a></h2>
+<p><strong>Highlights</strong></p>
+<ul class="simple">
+<li>Reorganize modules <cite>io</cite> and <cite>georef</cite>.</li>
+<li>Add IRIS-Reader to <cite>io</cite> module.</li>
+</ul>
+<p><strong>New features</strong></p>
+<ul class="simple">
+<li>Enhanced: report code coverage on a per test-basis (unit, doc, notebook)</li>
+<li>Enhanced: select tests per substring - argument with <cite>testrunner.py</cite></li>
+</ul>
+<p><strong>Bugfixes</strong></p>
+<ul class="simple">
+<li>Fix latex functions in notebooks</li>
+<li>Fix NaNs are considered adequately in weighted composition</li>
+<li>Several minor fixes in codebase and docs</li>
+</ul>
+</div>
+<div class="section" id="version-0-10-1">
+<h2>Version 0.10.1<a class="headerlink" href="#version-0-10-1" title="Permalink to this headline">¶</a></h2>
+<p><strong>Highlights</strong></p>
+<ul class="simple">
+<li>Introduced <cite>execute</cite>-workflow. Notebooks are now tested and rendered in one pass.</li>
+<li>Meet <a class="reference external" href="https://trac.osgeo.org/gdal/wiki/rfc46_gdal_ogr_unification">GDAL RFC46</a>.</li>
+</ul>
+<p><strong>New features</strong></p>
+<ul class="simple">
+<li>Enhanced <code class="xref py py-meth docutils literal"><span class="pre">wradlib.io.parse_DWD_quant_composite_header</span></code> to handle <cite>QN</cite>-header.</li>
+</ul>
+<p><strong>Bugfixes</strong></p>
+<ul class="simple">
+<li>Fix <code class="xref py py-meth docutils literal"><span class="pre">wradlib.zonalstats.numpy_to_ogr</span></code> to handle nested ndarrays</li>
+<li>Fix several functions for use with <cite>numpy 1.13</cite></li>
+</ul>
+</div>
+<div class="section" id="version-0-10-0">
+<h2>Version 0.10.0<a class="headerlink" href="#version-0-10-0" title="Permalink to this headline">¶</a></h2>
+<p><strong>Highlights</strong></p>
+<ul class="simple">
+<li>Added functions to match the precipitation radar of GPM/TRMM platforms with ground radar observations in 3D (<code class="xref py py-meth docutils literal"><span class="pre">wradlib.georef.correct_parallax</span></code>, <code class="xref py py-meth docutils literal"><span class="pre">wradlib.georef.sat2pol</span></code>, <code class="xref py py-meth docutils literal"><span class="pre">wradlib.georef.dist_from_orbit</span></code>, <a class="reference internal" href="generated/wradlib.qual.get_bb_ratio.html#wradlib.qual.get_bb_ratio" title="wradlib.qual.get_bb_ratio"><code class="xref py py-meth docutils literal"><span class="pre">wradlib.qual.get_bb_ratio</span></code></a>, <a class="reference internal" href="generated/wradlib.trafo.s2ku.html#wradlib.trafo.s2ku" title="wradlib.trafo.s2ku"><code class="xref py py-meth docutils literal"><span class="pre">wradlib.trafo.s2ku</span></code></a>, <a class="reference internal" href="generated/wradlib.trafo.ku2s.html#wradlib.trafo.ku2s" title="wradlib.trafo.ku2s"><code class="xref py py-meth docutils literal"><span class="pre">wradlib.trafo.ku2s</span></code></a>, <a class="reference internal" href="generated/wradlib.util.calculate_polynomial.html#wradlib.util.calculate_polynomial" title="wradlib.util.calculate_polynomial"><code class="xref py py-meth docutils literal"><span class="pre">wradlib.util.calculate_polynomial</span></code></a>, <a class="reference internal" href="generated/wradlib.zonalstats.get_clip_mask.html#wradlib.zonalstats.get_clip_mask" title="wradlib.zonalstats.get_clip_mask"><code class="xref py py-meth docutils literal"><span class="pre">wradlib.zonalstats.get_clip_mask</span></code></a>)</li>
+<li>Added example notebook of GPM/TRMM-GR matching</li>
+<li>Revised docs and build proces. Use codecov for coverage testing. Use suprocesses for testing on CI.</li>
+<li>Merged <a class="reference internal" href="generated/wradlib.vis.plot_cg_ppi.html#wradlib.vis.plot_cg_ppi" title="wradlib.vis.plot_cg_ppi"><code class="xref py py-meth docutils literal"><span class="pre">wradlib.vis.plot_cg_ppi</span></code></a> and <a class="reference internal" href="generated/wradlib.vis.plot_cg_rhi.html#wradlib.vis.plot_cg_rhi" title="wradlib.vis.plot_cg_rhi"><code class="xref py py-meth docutils literal"><span class="pre">wradlib.vis.plot_cg_rhi</span></code></a> with <a class="reference internal" href="generated/wradlib.vis.plot_ppi.html#wradlib.vis.plot_ppi" title="wradlib.vis.plot_ppi"><code class="xref py py-meth docutils literal"><span class="pre">wradlib.vis.plot_ppi</span></code></a> and <a class="reference internal" href="generated/wradlib.vis.plot_rhi.html#wradlib.vis.plot_rhi" title="wradlib.vis.plot_rhi"><code class="xref py py-meth docutils literal"><span class="pre">wradlib.vis.plot_rhi</span></code></a>. Added contour and filled contour plotting.</li>
+<li>Consolidate raster handling functions with respect to raster origin. Added <code class="xref py py-meth docutils literal"><span class="pre">wradlib.georef.create_raster_dataset</span></code>, <code class="xref py py-meth docutils literal"><span class="pre">wradlib.georef.extract_raster_dataset</span></code>, <code class="xref py py-meth docutils literal"><span class="pre">wradlib.georef.set_raster_origin</span></code>, <code class="xref py py-meth docutils literal"><span class="pre">wradlib.georef.reproject_raster_dataset</span></code>, <code class="xref py py-meth docutils literal"><span class="pre">wradlib.io.write_raster_dataset</span></code> and <a class="reference internal" href="generated/wradlib.util.get_raster_origin.html#wradlib.util.get_raster_origin" title="wradlib.util.get_raster_origin"><code class="xref py py-meth docutils literal"><span class="pre">wradlib.util.get_raster_origin</span></code></a>.</li>
+</ul>
+<p><strong>New features</strong></p>
+<ul class="simple">
+<li>New notebook examples covering wradlib-tour, classification</li>
+<li>Added reading WX-format to RADOLAN reader</li>
+<li>Enhanced <code class="xref py py-meth docutils literal"><span class="pre">wradlib.io.read_RADOLAN_composite</span></code> to also accept file-handles</li>
+<li>Enhanced <code class="xref py py-meth docutils literal"><span class="pre">wradlib.io.read_Rainbow</span></code> to also accept file-handles</li>
+<li>Added reading groups to <code class="xref py py-meth docutils literal"><span class="pre">wradlib.io.read_generic_netcdf</span></code></li>
+<li>Added <code class="xref py py-meth docutils literal"><span class="pre">wradlib.qual.cum_beam_block_frac</span></code> to compute cumulative beam blockage</li>
+<li>Added earth curvature display to beam blockage</li>
+<li>Enhance <code class="xref py py-meth docutils literal"><span class="pre">wradlib.georef.read_gdal_values</span></code> to read multiband data</li>
+</ul>
+<p><strong>Bugfixes</strong></p>
+<ul class="simple">
+<li>Fix documentation inconsistencies</li>
+<li>Fix calculation of pulse volume in <a class="reference internal" href="generated/wradlib.qual.pulse_volume.html#wradlib.qual.pulse_volume" title="wradlib.qual.pulse_volume"><code class="xref py py-meth docutils literal"><span class="pre">wradlib.qual.pulse_volume</span></code></a></li>
+<li>Use dedicated OSR IsSame() in <code class="xref py py-meth docutils literal"><span class="pre">wradlib.georef.transform_geometry</span></code></li>
+<li>Fix <a class="reference internal" href="generated/wradlib.util.find_bbox_indices.html#wradlib.util.find_bbox_indices" title="wradlib.util.find_bbox_indices"><code class="xref py py-meth docutils literal"><span class="pre">wradlib.util.find_bbox_indices</span></code></a> to account for origin.</li>
+<li>Fix <a class="reference internal" href="generated/wradlib.ipol.cart2irregular_spline.html#wradlib.ipol.cart2irregular_spline" title="wradlib.ipol.cart2irregular_spline"><code class="xref py py-meth docutils literal"><span class="pre">wradlib.ipol.cart2irregular_spline</span></code></a> to account for data/coordinate origin.</li>
+<li>Several minor fixes</li>
+</ul>
+<p><strong>Deprecated features</strong></p>
+<ul class="simple">
+<li><code class="xref py py-meth docutils literal"><span class="pre">wradlib.io.to_AAIGrid</span></code> and <code class="xref py py-meth docutils literal"><span class="pre">wradlib.georef.to_GeoTIFF</span></code>. Use <code class="xref py py-meth docutils literal"><span class="pre">wradlib.io.write_raster_dataset</span></code>.</li>
+<li><code class="xref py py-meth docutils literal"><span class="pre">wradlib.io.read_raster_dataset</span></code></li>
+<li><code class="xref py py-meth docutils literal"><span class="pre">wradlib.georef.resample_raster_dataset</span></code>. Use <code class="xref py py-meth docutils literal"><span class="pre">wradlib.georef.reproject_raster_dataset</span></code>.</li>
+</ul>
+</div>
+<div class="section" id="version-0-9-0">
+<h2>Version 0.9.0<a class="headerlink" href="#version-0-9-0" title="Permalink to this headline">¶</a></h2>
+<p><strong>Highlights</strong></p>
+<ul class="simple">
+<li>examples and tutorials are provided as jupyter notebooks</li>
+<li>docs are directly created from notebooks (see full workflow <a class="reference external" href="https://github.com/wradlib/wradlib/wiki/dev.-notebook-workflow">here</a>)</li>
+<li>structured notebooks with parent notebook, where appropriate</li>
+<li><dl class="first docutils">
+<dt>documentation reviewed and adapted</dt>
+<dd><ul class="first last">
+<li>community.rst,</li>
+<li>dev_setup.rst,</li>
+<li>gettingstarted.rst,</li>
+<li>index.rst,</li>
+<li>notebooks.rst,</li>
+<li>release_notes.rst</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li>docstrings reviewed, added links to notebooks where appropriate, cosmetic changes</li>
+<li>package notebooks and converted python scripts with pypi-sdist</li>
+<li>added tutorials on how to use notebooks and a breif Python introduction</li>
+</ul>
+<p><strong>New features</strong></p>
+<ul class="simple">
+<li>deploy untagged MICRO-version changes to test-pypi</li>
+<li>reworked citation handling</li>
+<li>added reading capability of new radolan FZ product</li>
+<li>added use of dedicated wradlib-repo, WRADLIB_DATA env variable and data file retrieving functions</li>
+<li>add ability to read gzipped dx data</li>
+<li>enhanced <code class="docutils literal"><span class="pre">wradlib.io.read_Rainbow</span></code> to read product pixmap data from rainbow5 files</li>
+</ul>
+<p><strong>Bugfixes</strong></p>
+<ul class="simple">
+<li>removed bug reading lists in <code class="docutils literal"><span class="pre">wradlib.io.read_Rainbow</span></code></li>
+<li>fixed offset bug in <code class="docutils literal"><span class="pre">wradlib.georef.sweep_centroids</span></code></li>
+<li>fixed incompatibility issue of ipol module with scipy 0.18.0</li>
+<li>several minor fixes</li>
+</ul>
+</div>
+<div class="section" id="version-0-8-0">
+<h2>Version 0.8.0<a class="headerlink" href="#version-0-8-0" title="Permalink to this headline">¶</a></h2>
+<p><strong>Highlights</strong></p>
+<ul class="simple">
+<li>As of now <span class="math">\(\omega radlib\)</span> is python3 compatible.</li>
+<li>Docstrings, tests and examples as well as the documentation have been reviewed and fixed.</li>
+<li>main <span class="math">\(\omega radlib\)</span> repository is now hosted <a class="reference external" href="https://github.com/wradlib/wradlib">here on github</a>.</li>
+<li><span class="math">\(\omega radlib\)</span> docs are now hosted <a class="reference external" href="http://wradlib.org/wradlib-docs/">on github, but with custom domain</a>.</li>
+</ul>
+<p><strong>New features</strong></p>
+<p><span class="math">\(\omega radlib\)</span> is constantly tested on <a class="reference external" href="https://travis-ci.org/wradlib/wradlib">travis-ci wradlib</a> within a miniconda python environment with the latest python27, python34 and python35 interpreters on linux OS.
+We also check code coverage for all pull requests and additions with <a class="reference external" href="https://coveralls.io/github/wradlib/wradlib">coveralls</a>.</p>
+<p><strong>Deprecated features</strong></p>
+<p><em>None.</em></p>
+<p><strong>Removed functions</strong></p>
+<ul class="simple">
+<li><cite>georef.create_projstr</cite>, also removed deprecated decorators</li>
+</ul>
+</div>
+<div class="section" id="version-0-7-0">
+<h2>Version 0.7.0<a class="headerlink" href="#version-0-7-0" title="Permalink to this headline">¶</a></h2>
+<p><strong>Highlights</strong></p>
+<p>New <em>experimental</em> module <code class="docutils literal"><span class="pre">zonalstats</span></code>: it supports computation of zonal statistics (so far mean and variance) for target polygons.
+Typical applications would be the computation of average catchment rainfall from polar or cartesian grids. Check out the
+<a class="reference external" href="http://wradlib.org/wradlib-docs/latest/zonalstats.html">module documentation</a> and the new examples.</p>
+</div>
+<div class="section" id="version-0-6-0">
+<h2>Version 0.6.0<a class="headerlink" href="#version-0-6-0" title="Permalink to this headline">¶</a></h2>
+<p><strong>Highlights</strong></p>
+<p><span class="math">\(\omega radlib\)</span> functions concerned with georeferencing will only use projection information based on OSR objects. This version will help you to adapt your code base to this change before next minor release: Using deprecated PROJ.4 strings in call to the following functions/classes: <code class="docutils literal"><span class="pre">vis.plot_ppi</span></code>, <code class="docutils literal"><span class="pre">vis.plot_ppi_crosshair</span></code>, <code class="docutils literal"><span class="pre">georef.projected_bincoords_from_radarspec</span></code>, <code class="docutils literal"><span class="pre">verify.PolarNeighbours</span></code>, <code class="docutils literal"><span class="pre">vpr.volcoords_from_polar</span></code>, <code class="docutils literal"><span class="pre">vpr.volcoords_from_polar_irregular</span></code>, <code class="docutils literal"><span class="pre">vpr.make_3D_grid</span></code> will generate a DeprecationWarning and try to correct old calling method at runtime.</p>
+<p>Added ability to handle georeferenced raster and vector data</p>
+<p>Port of PyRadarMet partial beamblockage calculations by DEM</p>
+<p><strong>New features</strong></p>
+<ul class="simple">
+<li>In georef module a new helper function <cite>create_osr</cite> is added. This function helps to create an osr object for specific projections.</li>
+<li>Bugfix: add multiplication of grid resolution in <code class="docutils literal"><span class="pre">wradlib.georef.get_radolan_grid</span></code> merged from v0.5.1</li>
+<li>Several convenience functions for reading, transforming and projecting as well as plotting rasterfiles and shapefiles including example</li>
+<li>Calculation of partial/cumulative beamblockage with example</li>
+<li>The behaviour of wradlib.adjust.AdjustMFB has been changed. Control parameters are no longer passed via the <code class="docutils literal"><span class="pre">__call__</span></code> function, but, as for all other adjustment classes, via the initialisation of an adjustment object. Documentation has been revised to make the behaviour more transparent. The parameter ‘biasby’ has been replaced by a dictionary mfb_args that carries all parameters that control the behaviour of AdjustMFB.</li>
+</ul>
+<p><strong>Deprecated features</strong></p>
+<p>Function <cite>georef.create_projstr</cite> is deprecated.</p>
+<p><strong>Removed functions</strong></p>
+<p><em>None.</em></p>
+</div>
+<div class="section" id="version-0-5-1">
+<h2>Version 0.5.1<a class="headerlink" href="#version-0-5-1" title="Permalink to this headline">¶</a></h2>
+<p><strong>Highlights</strong></p>
+<p>Bugfix: add multiplication of grid resolution in <code class="docutils literal"><span class="pre">wradlib.georef.get_radolan_grid</span></code> merged from v0.4.2</p>
+</div>
+<div class="section" id="version-0-5-0">
+<h2>Version 0.5.0<a class="headerlink" href="#version-0-5-0" title="Permalink to this headline">¶</a></h2>
+<p><strong>Highlights</strong></p>
+<p>From version <code class="docutils literal"><span class="pre">0.6.0</span></code> on, <span class="math">\(\omega radlib\)</span> functions concerned with georeferencing will only use projection information based on OSR objects. This version will help you to adapt your code base to this change before using version <code class="docutils literal"><span class="pre">0.6.0</span></code>: Any use of proj4 strings will generate a deprecation warning with the following functions/classes: <code class="docutils literal"><span class="pre">vis.plot_ppi</span></code>,``vis.plot_ppi_crosshair``, <code class="docutils literal"><span class="pre">georef.projected_bincoords_from_radarspec</span></code>, <code class="docutils literal"><span class="pre">verify.PolarNeighbours</span></code>, <code class="docutils literal"><span class="pre">vpr.volcoords_from_polar</span></code>, <code class="docutils literal"><span class="pre">vpr.volcoords_from_polar_irregular</span></code>, <code class="docutils literal"><span class="pre">vpr.make_3D_grid</span></code>.</p>
+<p><strong>New features</strong></p>
+<ul class="simple">
+<li>Two functions exposed documentation library section: <span class="xref std std-doc">generated/wradlib.io.read_safnwc</span> and <a class="reference internal" href="generated/wradlib.vis.plot_max_plan_and_vert.html"><span class="doc">wradlib.vis.plot_max_plan_and_vert</span></a></li>
+<li>New features, changes and deprecations will be addressed in the documentation in the future. This is by highlighting them as <em>New in Version X.Y.Z</em>, <em>Changed in Version X.Y.Z</em> or <em>Deprecated since Version X.Y.Z</em></li>
+</ul>
+<p><strong>Deprecated features</strong></p>
+<p><em>None.</em></p>
+<p><strong>Removed functions</strong></p>
+<p><em>None.</em></p>
+</div>
+<div class="section" id="version-0-4-2">
+<h2>Version 0.4.2<a class="headerlink" href="#version-0-4-2" title="Permalink to this headline">¶</a></h2>
+<p><strong>Highlights</strong></p>
+<p>Bugfix: add multiplication of grid resolution in <code class="docutils literal"><span class="pre">wradlib.georef.get_radolan_grid</span></code></p>
+</div>
+<div class="section" id="version-0-4-1">
+<h2>Version 0.4.1<a class="headerlink" href="#version-0-4-1" title="Permalink to this headline">¶</a></h2>
+<p><strong>Highlights</strong></p>
+<p>From now on, <span class="math">\(\omega radlib\)</span> will generate warnings if keyword parameters of <span class="math">\(\omega radlib\)</span> functions will be or have been changed. This is achieved by using <code class="docutils literal"><span class="pre">wradlib.util.apichange_kwargs</span></code> as a decorator (see <code class="docutils literal"><span class="pre">apichange_example.py</span></code> for examples how these warnings might look like). Please take these warnings seriously and adapt your applications before stepping to a new <span class="math">\(\omega radlib\)</span> release.</p>
+</div>
+<div class="section" id="version-0-4-0">
+<h2>Version 0.4.0<a class="headerlink" href="#version-0-4-0" title="Permalink to this headline">¶</a></h2>
+<p><strong>Highlights</strong></p>
+<ul class="simple">
+<li>Fixed a broken proj4 string for DWD radolan polarstereographic projection in function <code class="docutils literal"><span class="pre">wradlib.georef.create_projstr</span></code></li>
+<li>Added RADOLAN tutorial to the documentation. Together with that came new function to retrieve the RADOLAN composite grid.</li>
+<li>Adding section <code class="docutils literal"><span class="pre">Release</span> <span class="pre">notes</span></code> to the documentation.</li>
+</ul>
+<p><strong>New features</strong></p>
+<ul class="simple">
+<li>comprehensive RADOLAN tutorial, examples, and example data: <a class="reference external" href="http://wradlib.org/wradlib-docs/latest/tutorial_radolan_format.html">http://wradlib.org/wradlib-docs/latest/tutorial_radolan_format.html</a></li>
+<li>enhanced <span class="xref std std-doc">generated/wradlib.io.read_RADOLAN_composite</span> to read EX product</li>
+<li><span class="xref std std-doc">generated/wradlib.georef.get_radolan_grid</span></li>
+</ul>
+<p><strong>Deprecated features</strong></p>
+<p><em>None.</em></p>
+<p><strong>Removed functions</strong></p>
+<p><em>None.</em></p>
+</div>
+<div class="section" id="version-0-3-0">
+<h2>Version 0.3.0<a class="headerlink" href="#version-0-3-0" title="Permalink to this headline">¶</a></h2>
+<p><strong>Highlights</strong></p>
+<p>Visually most strikingly, we moved to a new style in our online documentation.</p>
+<p>However, the most important change introduced with this release was to remove a number of deprecated functions that will not be supported anymore (see list below). Users who want to use these functions need to fall back to <code class="docutils literal"><span class="pre">0.2.0</span></code> (not recommended). Accordingly, examples and documentation has been revised in order to remove all remaining usage of deprecated functions and also fix some documentation issues.</p>
+<p>In addition, we removed three outdated tutorial (on clutter detection, convertion and rainfall accumulation) and replaced the two latter by a more concise tutorial “Converting reflectivity to rainfall”.</p>
+<p>Finally, we use one “central” bibliography for literature cross-referencing now (see <a class="reference external" href="http://wradlib.org/wradlib-docs/latest/zreferences.html">http://wradlib.org/wradlib-docs/latest/zreferences.html</a>).</p>
+<p><strong>New features</strong></p>
+<ul class="simple">
+<li>New style of online docs (<a class="reference external" href="http://wradlib.org/wradlib-docs">http://wradlib.org/wradlib-docs</a>), using sphinx_rtd_theme</li>
+<li>Added Tutorial <a class="reference external" href="http://wradlib.org/wradlib-docs/latest/tutorial_get_rainfall.html">http://wradlib.org/wradlib-docs/latest/tutorial_get_rainfall.html</a></li>
+<li>New organisation of bibliography: <a class="reference external" href="http://wradlib.org/wradlib-docs/latest/zreferences.html">http://wradlib.org/wradlib-docs/latest/zreferences.html</a></li>
+</ul>
+<p><strong>Deprecated features</strong></p>
+<p><em>None</em></p>
+<p><strong>Removed functions</strong></p>
+<p>The following functions/classes that were marked as deprecated before have been removed with this release:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">wradlib.dp.fill_phidp</span></code></li>
+<li><code class="docutils literal"><span class="pre">wradlib.dp.process_raw_phidp</span></code></li>
+<li><code class="docutils literal"><span class="pre">wradlib.georef.polar2latlon</span></code></li>
+<li><code class="docutils literal"><span class="pre">wradlib.georef.__pol2latlon</span></code></li>
+<li><code class="docutils literal"><span class="pre">wradlib.georef.polar2latlonalt</span></code></li>
+<li><code class="docutils literal"><span class="pre">wradlib.georef.polar2latlonalt_n</span></code></li>
+<li><code class="docutils literal"><span class="pre">wradlib.georef.project</span></code></li>
+<li><code class="docutils literal"><span class="pre">wradlib.vis.PolarPlot</span></code></li>
+<li><code class="docutils literal"><span class="pre">wradlib.vis.polar_plot2</span></code></li>
+<li><code class="docutils literal"><span class="pre">wradlib.vis.polar_plot</span></code></li>
+<li><code class="docutils literal"><span class="pre">wradlib.vis.CartesianPlot</span></code></li>
+<li><code class="docutils literal"><span class="pre">wradlib.vis.cartesian_plot</span></code></li>
+<li><code class="docutils literal"><span class="pre">wradlib.vis.get_tick_vector</span></code></li>
+<li><code class="docutils literal"><span class="pre">wradlib.vis.create_curvilinear_axes</span></code></li>
+<li><code class="docutils literal"><span class="pre">wradlib.vis.rhi_plot</span></code></li>
+<li><code class="docutils literal"><span class="pre">wradlib.vis.cg_plot</span></code></li>
+<li><code class="docutils literal"><span class="pre">wradlib.vis.rhi_plot</span></code></li>
+</ul>
+</div>
+<div class="section" id="version-0-2-0">
+<h2>Version 0.2.0<a class="headerlink" href="#version-0-2-0" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">0.2.0</span></code> is the first new release of <span class="math">\(\omega radlib\)</span> after more than three years of <code class="docutils literal"><span class="pre">0.0.1</span></code>. The changes that have accumulated during this time are too many to list them here. Let’s just say that from here on, we will keep track of changes in <span class="math">\(\omega radlib\)</span> releases more thoroughly.</p>
+</div>
+<div class="section" id="version-0-1-1">
+<h2>Version 0.1.1<a class="headerlink" href="#version-0-1-1" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">0.1.1</span></code> was the first experimental <span class="math">\(\omega radlib\)</span> release.</p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="zreferences.html" class="btn btn-neutral" title="Bibliography" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2011-2016, wradlib developers.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.11.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

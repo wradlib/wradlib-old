@@ -1,0 +1,6 @@
+wradlib.vis.plot\_tseries
+=========================
+
+.. currentmodule:: wradlib.vis
+
+.. autofunction:: plot_tseries

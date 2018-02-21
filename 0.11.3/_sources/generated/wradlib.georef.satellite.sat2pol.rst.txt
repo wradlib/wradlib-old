@@ -1,0 +1,6 @@
+wradlib.georef.satellite.sat2pol
+================================
+
+.. currentmodule:: wradlib.georef.satellite
+
+.. autofunction:: sat2pol

@@ -1,0 +1,911 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Adjusting radar-base rainfall estimates by rain gauge observations &mdash; wradlib</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/wradlib.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="wradlib" href="../../index.html"/>
+        <link rel="up" title="Tutorials and Examples" href="../../notebooks.html"/>
+        <link rel="next" title="Routine verification measures for radar-based precipitation estimates" href="../verification/wradlib_verify_example.html"/>
+        <link rel="prev" title="How to use wradlib’s ipol module for interpolation tasks?" href="../interpolation/wradlib_ipol_example.html"/>
+    
+    <link href="../../_static/wradlib.css" rel="stylesheet" type="text/css">
+
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+  <a href="../../index.html" class="icon icon-home"> wradlib
+
+
+
+</a>
+
+
+
+  <div class="version">
+    
+    <button class="verbtn">0.11.3</button>
+    <div class="version-content">
+      
+        <a href="../latest/">latest</a>
+        <a href="../0.11.3/">0.11.3</a>
+        <a href="../0.11.1/">0.11.1</a>
+    </div>
+  </div>
+
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../gettingstarted.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../notebooks.html">Tutorials and Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../jupyter.html">How to use the tutorials and examples?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../learnpython.html">An incomplete introduction to Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics.html">Getting started with wradlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../fileio.html">Data Input - Data Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../attenuation/wradlib_attenuation.html">Attenuation correction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../beamblockage/wradlib_beamblock.html">Beam Blockage Calculation using a DEM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../classify.html">Clutter and Echo Classification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../georeferencing.html">Georeferencing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../match3d/wradlib_match_workflow.html">Match spaceborn SR (GPM/TRMM) with ground radars GR</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../develop.html">For Developers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interpolation/wradlib_ipol_example.html">How to use wradlib’s ipol module for interpolation tasks?</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Adjusting radar-base rainfall estimates by rain gauge observations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Background">Background</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Example-for-the-1-dimensional-case">Example for the 1-dimensional case</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Create-synthetic-data">Create synthetic data</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Apply-different-adjustment-methods">Apply different adjustment methods</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Plot-adjustment-results">Plot adjustment results</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Verification">Verification</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#Example-for-the-2-dimensional-case">Example for the 2-dimensional case</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Create-2-D-synthetic-data">Create 2-D synthetic data</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Apply-different-adjustment-methods">Apply different adjustment methods</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Plot-2-D-adjustment-results">Plot 2-D adjustment results</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../verification/wradlib_verify_example.html">Routine verification measures for radar-based precipitation estimates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../recipes.html">Recipes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../radolan.html">RADOLAN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zonalstats/wradlib_zonalstats_classes.html">Zonal Statistics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference.html">Library Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev_setup.html">For Developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zreferences.html">Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../release_notes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">wradlib</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../notebooks.html">Tutorials and Examples</a> &raquo;</li>
+        
+      <li>Adjusting radar-base rainfall estimates by rain gauge observations</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/notebooks/multisensor/wradlib_adjust_example.ipynb.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #303F9F;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #D84315;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 8ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+/* nice headers on first paragraph of info/warning boxes */
+.admonition .first {
+    margin: -12px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1;
+    display: block;
+}
+.admonition.warning .first {
+    background: #f0b37e;
+}
+.admonition.note .first {
+    background: #6ab0de;
+}
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="Adjusting-radar-base-rainfall-estimates-by-rain-gauge-observations">
+<h1>Adjusting radar-base rainfall estimates by rain gauge observations<a class="headerlink" href="#Adjusting-radar-base-rainfall-estimates-by-rain-gauge-observations" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="Background">
+<h2>Background<a class="headerlink" href="#Background" title="Permalink to this headline">¶</a></h2>
+<p>There are various ways to correct specific errors and artifacts in
+radar-based quantitative precipitation estimates (<em>radar QPE</em>).
+Alternatively, you might want to correct your radar QPE regardless of
+the error source - by using ground truth, or, more specifically, rain
+gauge observations. Basically, you define the error of your radar QPE at
+a rain gauge location by the discrepancy between rain gauge observation
+(considered as “the truth”) and radar QPE at that very location. Whether
+you consider this “discrepancy” as an <em>additive</em> or <em>multiplicative</em>
+error is somehow arbitrary - typically, it’s a <em>mix</em> of both. If you
+quantify this error at various locations (i.e.&nbsp;rain gauges), you can go
+ahead and construct correction fields for your radar QPE. You might
+compute a single correction factor for your entire radar domain (which
+would e.g.&nbsp;make sense in case of hardware miscalibration), or you might
+want to compute a spatially variable correction field. This typically
+implies to interpolate the error in space.</p>
+<p><span class="math notranslate">\(\omega radlib\)</span> provides different error models and different
+spatial interpolation methods to address the adjustment problem. For
+details, please refer to <span class="math notranslate">\(\omega radlib's\)</span> <a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/adjust.html">library
+reference</a>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">wradlib.adjust</span> <span class="kn">as</span> <span class="nn">adjust</span>
+<span class="kn">import</span> <span class="nn">wradlib.verify</span> <span class="kn">as</span> <span class="nn">verify</span>
+<span class="kn">import</span> <span class="nn">wradlib.util</span> <span class="kn">as</span> <span class="nn">util</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">pl</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">get_ipython</span><span class="p">()</span><span class="o">.</span><span class="n">magic</span><span class="p">(</span><span class="s2">&quot;matplotlib inline&quot;</span><span class="p">)</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="n">pl</span><span class="o">.</span><span class="n">ion</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="stderr output_area docutils container">
+<div class="highlight"><pre>
+/home/travis/miniconda/envs/wradlib/lib/python2.7/site-packages/h5py/__init__.py:36: FutureWarning: Conversion of the second argument of issubdtype from `float` to `np.floating` is deprecated. In future, it will be treated as `np.float64 == np.dtype(float).type`.
+  from ._conv import register_converters as _register_converters
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Example-for-the-1-dimensional-case">
+<h2>Example for the 1-dimensional case<a class="headerlink" href="#Example-for-the-1-dimensional-case" title="Permalink to this headline">¶</a></h2>
+<p>Looking at the 1-D (instead of 2-D) case is more illustrative.</p>
+<div class="section" id="Create-synthetic-data">
+<h3>Create synthetic data<a class="headerlink" href="#Create-synthetic-data" title="Permalink to this headline">¶</a></h3>
+<p>First, we <strong>create synthetic data</strong>: - true rainfall, - point
+observations of the truth, - radar observations of the truth.</p>
+<p>The latter is disturbed by some kind of error, e.g.&nbsp;a combination
+between systemtic and random error.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># gage and radar coordinates</span>
+<span class="n">obs_coords</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">65</span><span class="p">,</span> <span class="mi">70</span><span class="p">,</span> <span class="mi">77</span><span class="p">,</span> <span class="mi">90</span><span class="p">])</span>
+<span class="n">radar_coords</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">101</span><span class="p">)</span>
+
+<span class="c1"># true rainfall</span>
+<span class="n">truth</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="mf">1.5</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mf">0.075</span> <span class="o">*</span> <span class="n">radar_coords</span><span class="p">))</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span>
+    <span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">radar_coords</span><span class="p">))</span>
+
+<span class="c1"># radar error</span>
+<span class="n">erroradd</span> <span class="o">=</span> <span class="mf">0.7</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mf">0.2</span> <span class="o">*</span> <span class="n">radar_coords</span> <span class="o">+</span> <span class="mf">10.</span><span class="p">)</span>
+<span class="n">errormult</span> <span class="o">=</span> <span class="mf">0.75</span> <span class="o">+</span> <span class="mf">0.015</span> <span class="o">*</span> <span class="n">radar_coords</span>
+<span class="n">noise</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">radar_coords</span><span class="p">))</span>
+
+<span class="c1"># radar observation</span>
+<span class="n">radar</span> <span class="o">=</span> <span class="n">errormult</span> <span class="o">*</span> <span class="n">truth</span> <span class="o">+</span> <span class="n">erroradd</span> <span class="o">+</span> <span class="n">noise</span>
+
+<span class="c1"># gage observations are assumed to be perfect</span>
+<span class="n">obs</span> <span class="o">=</span> <span class="n">truth</span><span class="p">[</span><span class="n">obs_coords</span><span class="p">]</span>
+
+<span class="c1"># add a missing value to observations (just for testing)</span>
+<span class="n">obs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Apply-different-adjustment-methods">
+<h3>Apply different adjustment methods<a class="headerlink" href="#Apply-different-adjustment-methods" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>additive error, spatially variable (<code class="docutils literal notranslate"><span class="pre">AdjustAdd</span></code>)</li>
+<li>multiplicative error, spatially variable (<code class="docutils literal notranslate"><span class="pre">AdjustMultiply</span></code>)</li>
+<li>mixed error, spatially variable (<code class="docutils literal notranslate"><span class="pre">AdjustMixed</span></code>)</li>
+<li>multiplicative error, spatially uniform (<code class="docutils literal notranslate"><span class="pre">AdjustMFB</span></code>)</li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># number of neighbours to be used</span>
+<span class="n">nnear_raws</span> <span class="o">=</span> <span class="mi">3</span>
+
+<span class="c1"># adjust the radar observation by additive model</span>
+<span class="n">add_adjuster</span> <span class="o">=</span> <span class="n">adjust</span><span class="o">.</span><span class="n">AdjustAdd</span><span class="p">(</span><span class="n">obs_coords</span><span class="p">,</span> <span class="n">radar_coords</span><span class="p">,</span>
+                                <span class="n">nnear_raws</span><span class="o">=</span><span class="n">nnear_raws</span><span class="p">)</span>
+<span class="n">add_adjusted</span> <span class="o">=</span> <span class="n">add_adjuster</span><span class="p">(</span><span class="n">obs</span><span class="p">,</span> <span class="n">radar</span><span class="p">)</span>
+
+<span class="c1"># adjust the radar observation by multiplicative model</span>
+<span class="n">mult_adjuster</span> <span class="o">=</span> <span class="n">adjust</span><span class="o">.</span><span class="n">AdjustMultiply</span><span class="p">(</span><span class="n">obs_coords</span><span class="p">,</span> <span class="n">radar_coords</span><span class="p">,</span>
+                                      <span class="n">nnear_raws</span><span class="o">=</span><span class="n">nnear_raws</span><span class="p">)</span>
+<span class="n">mult_adjusted</span> <span class="o">=</span> <span class="n">mult_adjuster</span><span class="p">(</span><span class="n">obs</span><span class="p">,</span> <span class="n">radar</span><span class="p">)</span>
+
+<span class="c1"># adjust the radar observation by AdjustMixed</span>
+<span class="n">mixed_adjuster</span> <span class="o">=</span> <span class="n">adjust</span><span class="o">.</span><span class="n">AdjustMixed</span><span class="p">(</span><span class="n">obs_coords</span><span class="p">,</span> <span class="n">radar_coords</span><span class="p">,</span>
+                                    <span class="n">nnear_raws</span><span class="o">=</span><span class="n">nnear_raws</span><span class="p">)</span>
+<span class="n">mixed_adjusted</span> <span class="o">=</span> <span class="n">mixed_adjuster</span><span class="p">(</span><span class="n">obs</span><span class="p">,</span> <span class="n">radar</span><span class="p">)</span>
+
+<span class="c1"># adjust the radar observation by MFB</span>
+<span class="n">mfb_adjuster</span> <span class="o">=</span> <span class="n">adjust</span><span class="o">.</span><span class="n">AdjustMFB</span><span class="p">(</span><span class="n">obs_coords</span><span class="p">,</span> <span class="n">radar_coords</span><span class="p">,</span>
+                                <span class="n">nnear_raws</span><span class="o">=</span><span class="n">nnear_raws</span><span class="p">,</span>
+                                <span class="n">mfb_args</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;median&quot;</span><span class="p">))</span>
+<span class="n">mfb_adjusted</span> <span class="o">=</span> <span class="n">mfb_adjuster</span><span class="p">(</span><span class="n">obs</span><span class="p">,</span> <span class="n">radar</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="stderr output_area docutils container">
+<div class="highlight"><pre>
+/home/travis/miniconda/envs/wradlib/lib/python2.7/site-packages/numpy/core/fromnumeric.py:664: UserWarning: Warning: &#39;partition&#39; will ignore the &#39;mask&#39; of the MaskedArray.
+  a.partition(kth, axis=axis, kind=kind, order=order)
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Plot-adjustment-results">
+<h3>Plot adjustment results<a class="headerlink" href="#Plot-adjustment-results" title="Permalink to this headline">¶</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Enlarge all label fonts</span>
+<span class="n">font</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;size&#39;</span>   <span class="p">:</span> <span class="mi">15</span><span class="p">}</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">rc</span><span class="p">(</span><span class="s1">&#39;font&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">font</span><span class="p">)</span>
+
+<span class="n">pl</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">radar_coords</span><span class="p">,</span> <span class="n">radar</span><span class="p">,</span>         <span class="s1">&#39;k-&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">2.</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;dashed&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Unadjusted radar&quot;</span><span class="p">,</span> <span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">radar_coords</span><span class="p">,</span> <span class="n">truth</span><span class="p">,</span>         <span class="s1">&#39;k-&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">2.</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;True rainfall&quot;</span><span class="p">,</span> <span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">obs_coords</span><span class="p">,</span>   <span class="n">obs</span><span class="p">,</span>           <span class="s1">&#39;o&#39;</span><span class="p">,</span>  <span class="n">markersize</span><span class="o">=</span><span class="mf">10.0</span><span class="p">,</span> <span class="n">markerfacecolor</span><span class="o">=</span><span class="s2">&quot;grey&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Gage observation&quot;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">radar_coords</span><span class="p">,</span> <span class="n">add_adjusted</span><span class="p">,</span>  <span class="s1">&#39;-&#39;</span><span class="p">,</span>  <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span>   <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Additive adjustment&quot;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">radar_coords</span><span class="p">,</span> <span class="n">mult_adjusted</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span>  <span class="n">color</span><span class="o">=</span><span class="s2">&quot;green&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Multiplicative adjustment&quot;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">radar_coords</span><span class="p">,</span> <span class="n">mfb_adjusted</span><span class="p">,</span>  <span class="s1">&#39;-&#39;</span><span class="p">,</span>  <span class="n">color</span><span class="o">=</span><span class="s2">&quot;orange&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Mean Field Bias adjustment&quot;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">radar_coords</span><span class="p">,</span> <span class="n">mixed_adjusted</span><span class="p">,</span><span class="s1">&#39;-&#39;</span><span class="p">,</span>  <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Mixed (mult./add.) adjustment&quot;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Distance (km)&quot;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Rainfall intensity (mm/h)&quot;</span><span class="p">)</span>
+<span class="n">leg</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">prop</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;size&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_multisensor_wradlib_adjust_example_14_0.png" src="../../_images/notebooks_multisensor_wradlib_adjust_example_14_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="Verification">
+<h3>Verification<a class="headerlink" href="#Verification" title="Permalink to this headline">¶</a></h3>
+<p>We use the <code class="docutils literal notranslate"><span class="pre">verify</span></code> module to compare the errors of different
+adjustment approaches.</p>
+<p><em>Here, we compare the adjustment to the “truth”. In practice, we would
+carry out a cross validation.</em></p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Verification for this example</span>
+<span class="n">rawerror</span> <span class="o">=</span> <span class="n">verify</span><span class="o">.</span><span class="n">ErrorMetrics</span><span class="p">(</span><span class="n">truth</span><span class="p">,</span> <span class="n">radar</span><span class="p">)</span>
+<span class="n">mfberror</span> <span class="o">=</span> <span class="n">verify</span><span class="o">.</span><span class="n">ErrorMetrics</span><span class="p">(</span><span class="n">truth</span><span class="p">,</span> <span class="n">mfb_adjusted</span><span class="p">)</span>
+<span class="n">adderror</span> <span class="o">=</span> <span class="n">verify</span><span class="o">.</span><span class="n">ErrorMetrics</span><span class="p">(</span><span class="n">truth</span><span class="p">,</span> <span class="n">add_adjusted</span><span class="p">)</span>
+<span class="n">multerror</span> <span class="o">=</span> <span class="n">verify</span><span class="o">.</span><span class="n">ErrorMetrics</span><span class="p">(</span><span class="n">truth</span><span class="p">,</span> <span class="n">mult_adjusted</span><span class="p">)</span>
+<span class="n">mixerror</span> <span class="o">=</span> <span class="n">verify</span><span class="o">.</span><span class="n">ErrorMetrics</span><span class="p">(</span><span class="n">truth</span><span class="p">,</span> <span class="n">mixed_adjusted</span><span class="p">)</span>
+
+<span class="c1"># Verification reports</span>
+<span class="n">maxval</span> <span class="o">=</span> <span class="mf">4.</span>
+<span class="c1"># Enlarge all label fonts</span>
+<span class="n">font</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;size&#39;</span>   <span class="p">:</span> <span class="mi">10</span><span class="p">}</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">rc</span><span class="p">(</span><span class="s1">&#39;font&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">font</span><span class="p">)</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">231</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="mf">1.</span><span class="p">)</span>
+<span class="n">rawerror</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;mm&quot;</span><span class="p">,</span> <span class="n">maxval</span><span class="o">=</span><span class="n">maxval</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.9</span> <span class="o">*</span> <span class="n">maxval</span><span class="p">,</span> <span class="s2">&quot;Unadjusted radar&quot;</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">232</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="mf">1.</span><span class="p">)</span>
+<span class="n">adderror</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;mm&quot;</span><span class="p">,</span> <span class="n">maxval</span><span class="o">=</span><span class="n">maxval</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.9</span> <span class="o">*</span> <span class="n">maxval</span><span class="p">,</span> <span class="s2">&quot;Additive adjustment&quot;</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">233</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="mf">1.</span><span class="p">)</span>
+<span class="n">multerror</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;mm&quot;</span><span class="p">,</span> <span class="n">maxval</span><span class="o">=</span><span class="n">maxval</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.9</span> <span class="o">*</span> <span class="n">maxval</span><span class="p">,</span> <span class="s2">&quot;Multiplicative adjustment&quot;</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">234</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="mf">1.</span><span class="p">)</span>
+<span class="n">mixerror</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;mm&quot;</span><span class="p">,</span> <span class="n">maxval</span><span class="o">=</span><span class="n">maxval</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.9</span> <span class="o">*</span> <span class="n">maxval</span><span class="p">,</span> <span class="s2">&quot;Mixed (mult./add.) adjustment&quot;</span><span class="p">)</span>
+<span class="n">mixerror</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;mm&quot;</span><span class="p">,</span> <span class="n">maxval</span><span class="o">=</span><span class="n">maxval</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">235</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="mf">1.</span><span class="p">)</span>
+<span class="n">mfberror</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;mm&quot;</span><span class="p">,</span> <span class="n">maxval</span><span class="o">=</span><span class="n">maxval</span><span class="p">)</span>
+<span class="n">txt</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.9</span> <span class="o">*</span> <span class="n">maxval</span><span class="p">,</span> <span class="s2">&quot;Mean Field Bias adjustment&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_multisensor_wradlib_adjust_example_17_0.png" src="../../_images/notebooks_multisensor_wradlib_adjust_example_17_0.png" />
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="Example-for-the-2-dimensional-case">
+<h2>Example for the 2-dimensional case<a class="headerlink" href="#Example-for-the-2-dimensional-case" title="Permalink to this headline">¶</a></h2>
+<p>For the 2-D case, we follow the same approach as before:</p>
+<ul class="simple">
+<li>create synthetic data: truth, rain gauge observations, radar-based
+rainfall estimates</li>
+<li>apply adjustment methods</li>
+<li>verification</li>
+</ul>
+<p>The way these synthetic data are created is totally arbitrary - it’s
+just to show how the methods are applied.</p>
+<div class="section" id="Create-2-D-synthetic-data">
+<h3>Create 2-D synthetic data<a class="headerlink" href="#Create-2-D-synthetic-data" title="Permalink to this headline">¶</a></h3>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># grid axes</span>
+<span class="n">xgrid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">ygrid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+
+<span class="c1"># number of observations</span>
+<span class="n">num_obs</span> <span class="o">=</span> <span class="mi">10</span>
+
+<span class="c1"># create grid</span>
+<span class="n">gridshape</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">xgrid</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">ygrid</span><span class="p">)</span>
+<span class="n">grid_coords</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">gridaspoints</span><span class="p">(</span><span class="n">ygrid</span><span class="p">,</span> <span class="n">xgrid</span><span class="p">)</span>
+
+<span class="c1"># Synthetic true rainfall</span>
+<span class="n">truth</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="mf">10.</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mf">0.1</span> <span class="o">*</span> <span class="n">grid_coords</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+
+<span class="c1"># Creating radar data by perturbing truth with multiplicative and</span>
+<span class="c1"># additive error</span>
+<span class="c1"># YOU CAN EXPERIMENT WITH THE ERROR STRUCTURE</span>
+<span class="n">radar</span> <span class="o">=</span> <span class="mf">0.6</span> <span class="o">*</span> <span class="n">truth</span> <span class="o">+</span> <span class="mf">1.</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">low</span><span class="o">=-</span><span class="mf">1.</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                                             <span class="n">size</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">truth</span><span class="p">))</span>
+<span class="n">radar</span><span class="p">[</span><span class="n">radar</span> <span class="o">&lt;</span> <span class="mf">0.</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.</span>
+
+<span class="c1"># indices for creating obs from raw (random placement of gauges)</span>
+<span class="n">obs_ix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">grid_coords</span><span class="p">),</span>
+                           <span class="n">size</span><span class="o">=</span><span class="n">num_obs</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;i4&#39;</span><span class="p">)</span>
+
+<span class="c1"># creating obs_coordinates</span>
+<span class="n">obs_coords</span> <span class="o">=</span> <span class="n">grid_coords</span><span class="p">[</span><span class="n">obs_ix</span><span class="p">]</span>
+
+<span class="c1"># creating gauge observations from truth</span>
+<span class="n">obs</span> <span class="o">=</span> <span class="n">truth</span><span class="p">[</span><span class="n">obs_ix</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Apply-different-adjustment-methods">
+<h3>Apply different adjustment methods<a class="headerlink" href="#Apply-different-adjustment-methods" title="Permalink to this headline">¶</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Mean Field Bias Adjustment</span>
+<span class="n">mfbadjuster</span> <span class="o">=</span> <span class="n">adjust</span><span class="o">.</span><span class="n">AdjustMFB</span><span class="p">(</span><span class="n">obs_coords</span><span class="p">,</span> <span class="n">grid_coords</span><span class="p">)</span>
+<span class="n">mfbadjusted</span> <span class="o">=</span> <span class="n">mfbadjuster</span><span class="p">(</span><span class="n">obs</span><span class="p">,</span> <span class="n">radar</span><span class="p">)</span>
+
+<span class="c1"># Additive Error Model</span>
+<span class="n">addadjuster</span> <span class="o">=</span> <span class="n">adjust</span><span class="o">.</span><span class="n">AdjustAdd</span><span class="p">(</span><span class="n">obs_coords</span><span class="p">,</span> <span class="n">grid_coords</span><span class="p">)</span>
+<span class="n">addadjusted</span> <span class="o">=</span> <span class="n">addadjuster</span><span class="p">(</span><span class="n">obs</span><span class="p">,</span> <span class="n">radar</span><span class="p">)</span>
+
+<span class="c1"># Multiplicative Error Model</span>
+<span class="n">multadjuster</span> <span class="o">=</span> <span class="n">adjust</span><span class="o">.</span><span class="n">AdjustMultiply</span><span class="p">(</span><span class="n">obs_coords</span><span class="p">,</span> <span class="n">grid_coords</span><span class="p">)</span>
+<span class="n">multadjusted</span> <span class="o">=</span> <span class="n">multadjuster</span><span class="p">(</span><span class="n">obs</span><span class="p">,</span> <span class="n">radar</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="stderr output_area docutils container">
+<div class="highlight"><pre>
+wradlib/adjust.py:625: FutureWarning: `rcond` parameter will change to the default of machine precision times ``max(M, N)`` where M and N are the input matrix dimensions.
+To use the future default and silence this warning we advise to pass `rcond=None`, to keep using the old, explicitly pass `rcond=-1`.
+  slope, _, _, _ = np.linalg.lstsq(x, y)
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Plot-2-D-adjustment-results">
+<h3>Plot 2-D adjustment results<a class="headerlink" href="#Plot-2-D-adjustment-results" title="Permalink to this headline">¶</a></h3>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Two helper functions for repeated plotting tasks</span>
+<span class="k">def</span> <span class="nf">scatterplot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">title</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Quick and dirty helper function to produce scatter plots</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">pl</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+    <span class="n">pl</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.2</span> <span class="o">*</span> <span class="n">maxval</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.2</span> <span class="o">*</span> <span class="n">maxval</span><span class="p">],</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;grey&#39;</span><span class="p">)</span>
+    <span class="n">pl</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;True rainfall (mm)&quot;</span><span class="p">)</span>
+    <span class="n">pl</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Estimated rainfall (mm)&quot;</span><span class="p">)</span>
+    <span class="n">pl</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">maxval</span> <span class="o">+</span> <span class="mf">0.1</span> <span class="o">*</span> <span class="n">maxval</span><span class="p">)</span>
+    <span class="n">pl</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">maxval</span> <span class="o">+</span> <span class="mf">0.1</span> <span class="o">*</span> <span class="n">maxval</span><span class="p">)</span>
+    <span class="n">pl</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">gridplot</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">title</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Quick and dirty helper function to produce a grid plot</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">xplot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">xgrid</span><span class="p">,</span> <span class="n">xgrid</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mf">1.</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.5</span>
+    <span class="n">yplot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ygrid</span><span class="p">,</span> <span class="n">ygrid</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mf">1.</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.5</span>
+    <span class="n">grd</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">xplot</span><span class="p">,</span> <span class="n">yplot</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">gridshape</span><span class="p">),</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                        <span class="n">vmax</span><span class="o">=</span><span class="n">maxval</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">obs_coords</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">obs_coords</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">obs</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span>
+               <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">maxval</span><span class="p">)</span>
+    <span class="c1">#pl.colorbar(grd, shrink=0.5)</span>
+    <span class="n">pl</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Maximum value (used for normalisation of colorscales)</span>
+<span class="n">maxval</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">truth</span><span class="p">,</span> <span class="n">radar</span><span class="p">,</span> <span class="n">obs</span><span class="p">,</span> <span class="n">addadjusted</span><span class="p">))</span><span class="o">.</span><span class="n">ravel</span><span class="p">())</span>
+
+<span class="c1"># open figure</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+<span class="c1"># True rainfall</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">231</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">gridplot</span><span class="p">(</span><span class="n">truth</span><span class="p">,</span> <span class="s1">&#39;True rainfall&#39;</span><span class="p">)</span>
+
+<span class="c1"># Unadjusted radar rainfall</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">232</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">gridplot</span><span class="p">(</span><span class="n">radar</span><span class="p">,</span> <span class="s1">&#39;Radar rainfall&#39;</span><span class="p">)</span>
+
+<span class="c1"># Adjusted radar rainfall (MFB)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">234</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">gridplot</span><span class="p">(</span><span class="n">mfbadjusted</span><span class="p">,</span> <span class="s1">&#39;Adjusted (MFB)&#39;</span><span class="p">)</span>
+
+<span class="c1"># Adjusted radar rainfall (additive)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">235</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">gridplot</span><span class="p">(</span><span class="n">addadjusted</span><span class="p">,</span> <span class="s1">&#39;Adjusted (Add.)&#39;</span><span class="p">)</span>
+
+<span class="c1"># Adjusted radar rainfall (multiplicative)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">236</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">gridplot</span><span class="p">(</span><span class="n">multadjusted</span><span class="p">,</span> <span class="s1">&#39;Adjusted (Mult.)&#39;</span><span class="p">)</span>
+
+<span class="n">pl</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_multisensor_wradlib_adjust_example_26_0.png" src="../../_images/notebooks_multisensor_wradlib_adjust_example_26_0.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Open figure</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+<span class="c1"># Scatter plot radar vs. observations</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">221</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">scatterplot</span><span class="p">(</span><span class="n">truth</span><span class="p">,</span> <span class="n">radar</span><span class="p">,</span> <span class="s1">&#39;Radar vs. Truth (red: Gauges)&#39;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">obs</span><span class="p">,</span> <span class="n">radar</span><span class="p">[</span><span class="n">obs_ix</span><span class="p">],</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;None&quot;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">)</span>
+
+<span class="c1"># Adjusted (MFB) vs. radar (for control purposes)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">222</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">scatterplot</span><span class="p">(</span><span class="n">truth</span><span class="p">,</span> <span class="n">mfbadjusted</span><span class="p">,</span> <span class="s1">&#39;Adjusted (MFB) vs. Truth&#39;</span><span class="p">)</span>
+
+<span class="c1"># Adjusted (Add) vs. radar (for control purposes)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">223</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">scatterplot</span><span class="p">(</span><span class="n">truth</span><span class="p">,</span> <span class="n">addadjusted</span><span class="p">,</span> <span class="s1">&#39;Adjusted (Add.) vs. Truth&#39;</span><span class="p">)</span>
+
+<span class="c1"># Adjusted (Mult.) vs. radar (for control purposes)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">scatterplot</span><span class="p">(</span><span class="n">truth</span><span class="p">,</span> <span class="n">multadjusted</span><span class="p">,</span> <span class="s1">&#39;Adjusted (Mult.) vs. Truth&#39;</span><span class="p">)</span>
+
+<span class="n">pl</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_multisensor_wradlib_adjust_example_27_0.png" src="../../_images/notebooks_multisensor_wradlib_adjust_example_27_0.png" />
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../verification/wradlib_verify_example.html" class="btn btn-neutral float-right" title="Routine verification measures for radar-based precipitation estimates" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../interpolation/wradlib_ipol_example.html" class="btn btn-neutral" title="How to use wradlib’s ipol module for interpolation tasks?" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2011-2016, wradlib developers.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.11.3',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

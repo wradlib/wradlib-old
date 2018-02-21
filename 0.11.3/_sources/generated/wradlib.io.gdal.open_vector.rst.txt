@@ -1,0 +1,6 @@
+wradlib.io.gdal.open\_vector
+============================
+
+.. currentmodule:: wradlib.io.gdal
+
+.. autofunction:: open_vector

@@ -1,0 +1,6 @@
+wradlib.io.iris.IrisFile.data\_type
+===================================
+
+.. currentmodule:: wradlib.io.iris
+
+.. autoattribute:: IrisFile.data_type

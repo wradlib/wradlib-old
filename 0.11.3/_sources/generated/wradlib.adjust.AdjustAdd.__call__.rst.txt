@@ -1,0 +1,6 @@
+wradlib.adjust.AdjustAdd.\_\_call\_\_
+=====================================
+
+.. currentmodule:: wradlib.adjust
+
+.. automethod:: AdjustAdd.__call__

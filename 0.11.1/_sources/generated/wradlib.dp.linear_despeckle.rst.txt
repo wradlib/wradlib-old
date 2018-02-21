@@ -1,0 +1,6 @@
+wradlib\.dp\.linear\_despeckle
+==============================
+
+.. currentmodule:: wradlib.dp
+
+.. autofunction:: linear_despeckle

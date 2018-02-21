@@ -1,0 +1,47 @@
+wradlib.io.iris.IrisFile
+========================
+
+.. currentmodule:: wradlib.io.iris
+
+.. autoclass:: IrisFile
+
+   
+
+.. HACK -- the point here is that we don't want this to appear in the output, but the autosummary should still generate the pages.
+
+.. autosummary::
+   :toctree:
+
+
+   ~IrisFile.array_from_record
+   ~IrisFile.bytes_from_record
+   ~IrisFile.decode_data
+   ~IrisFile.get_product_specific_info
+   ~IrisFile.get_product_type_code
+   ~IrisFile.init_next_record
+   ~IrisFile.init_record
+   ~IrisFile.read_from_record
+
+
+
+
+   
+
+.. HACK -- the point here is that we don't want this to appear in the output, but the autosummary should still generate the pages.
+
+.. autosummary::
+   :toctree:
+
+
+   ~IrisFile.data_type
+   ~IrisFile.debug
+   ~IrisFile.fh
+   ~IrisFile.filepos
+   ~IrisFile.filesize
+   ~IrisFile.loaddata
+   ~IrisFile.product_hdr
+   ~IrisFile.product_type
+   ~IrisFile.rawdata
+   ~IrisFile.record_number
+   ~IrisFile.rh
+

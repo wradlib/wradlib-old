@@ -1,0 +1,1364 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Zonal Statistics Example &mdash; wradlib</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/wradlib.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="wradlib" href="../../index.html"/>
+    
+    <link href="../../_static/wradlib.css" rel="stylesheet" type="text/css">
+
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+  <a href="../../index.html" class="icon icon-home"> wradlib
+
+
+
+</a>
+
+
+
+  <div class="version">
+    
+    <button class="verbtn">0.11.3</button>
+    <div class="version-content">
+      
+        <a href="../latest/">latest</a>
+        <a href="../0.11.3/">0.11.3</a>
+        <a href="../0.11.1/">0.11.1</a>
+    </div>
+  </div>
+
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../gettingstarted.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../notebooks.html">Tutorials and Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference.html">Library Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev_setup.html">For Developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zreferences.html">Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../release_notes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">wradlib</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+      <li>Zonal Statistics Example</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/notebooks/zonalstats/wradlib_zonalstats_example.ipynb.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #303F9F;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #D84315;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 8ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+/* nice headers on first paragraph of info/warning boxes */
+.admonition .first {
+    margin: -12px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1;
+    display: block;
+}
+.admonition.warning .first {
+    background: #f0b37e;
+}
+.admonition.note .first {
+    background: #6ab0de;
+}
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="Zonal-Statistics-Example">
+<h1>Zonal Statistics Example<a class="headerlink" href="#Zonal-Statistics-Example" title="Permalink to this headline">¶</a></h1>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">wradlib</span> <span class="kn">as</span> <span class="nn">wrl</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">pl</span>
+<span class="kn">import</span> <span class="nn">matplotlib</span> <span class="kn">as</span> <span class="nn">mpl</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">get_ipython</span><span class="p">()</span><span class="o">.</span><span class="n">magic</span><span class="p">(</span><span class="s2">&quot;matplotlib inline&quot;</span><span class="p">)</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="n">pl</span><span class="o">.</span><span class="n">ion</span><span class="p">()</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="stderr output_area docutils container">
+<div class="highlight"><pre>
+/home/travis/miniconda/envs/wradlib/lib/python2.7/site-packages/h5py/__init__.py:36: FutureWarning: Conversion of the second argument of issubdtype from `float` to `np.floating` is deprecated. In future, it will be treated as `np.float64 == np.dtype(float).type`.
+  from ._conv import register_converters as _register_converters
+</pre></div></div>
+</div>
+<div class="section" id="Setup-Examples">
+<h2>Setup Examples<a class="headerlink" href="#Setup-Examples" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">testplot</span><span class="p">(</span><span class="n">cats</span><span class="p">,</span> <span class="n">catsavg</span><span class="p">,</span> <span class="n">xy</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span>
+             <span class="n">levels</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">],</span>
+             <span class="n">title</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Quick test plot layout for this example file</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">colors</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">spectral</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">levels</span><span class="p">)))</span>
+    <span class="n">mycmap</span><span class="p">,</span> <span class="n">mynorm</span> <span class="o">=</span> <span class="n">from_levels_and_colors</span><span class="p">(</span><span class="n">levels</span><span class="p">,</span> <span class="n">colors</span><span class="p">,</span> <span class="n">extend</span><span class="o">=</span><span class="s2">&quot;max&quot;</span><span class="p">)</span>
+
+    <span class="n">radolevels</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">]</span>
+    <span class="n">radocolors</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">spectral</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">radolevels</span><span class="p">)))</span>
+    <span class="n">radocmap</span><span class="p">,</span> <span class="n">radonorm</span> <span class="o">=</span> <span class="n">from_levels_and_colors</span><span class="p">(</span><span class="n">radolevels</span><span class="p">,</span> <span class="n">radocolors</span><span class="p">,</span>
+                                                <span class="n">extend</span><span class="o">=</span><span class="s2">&quot;max&quot;</span><span class="p">)</span>
+
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">16</span><span class="p">))</span>
+
+    <span class="c1"># Average rainfall sum</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">211</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s2">&quot;equal&quot;</span><span class="p">)</span>
+    <span class="n">coll</span> <span class="o">=</span> <span class="n">PatchCollection</span><span class="p">(</span><span class="n">cats</span><span class="p">,</span> <span class="n">array</span><span class="o">=</span><span class="n">catsavg</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">mycmap</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">mynorm</span><span class="p">,</span>
+                           <span class="n">edgecolors</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">add_collection</span><span class="p">(</span><span class="n">coll</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">autoscale</span><span class="p">()</span>
+    <span class="n">pl</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">coll</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">shrink</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">pl</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;GK2 Easting&quot;</span><span class="p">)</span>
+    <span class="n">pl</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;GK2 Northing&quot;</span><span class="p">)</span>
+    <span class="n">pl</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+    <span class="n">pl</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+
+    <span class="c1"># Original radar data</span>
+    <span class="n">ax1</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">212</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s2">&quot;equal&quot;</span><span class="p">)</span>
+    <span class="n">pm</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">xy</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">xy</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">masked_invalid</span><span class="p">(</span><span class="n">data</span><span class="p">),</span>
+                        <span class="n">cmap</span><span class="o">=</span><span class="n">radocmap</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">radonorm</span><span class="p">)</span>
+    <span class="n">coll</span> <span class="o">=</span> <span class="n">PatchCollection</span><span class="p">(</span><span class="n">cats</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;None&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">add_collection</span><span class="p">(</span><span class="n">coll</span><span class="p">)</span>
+    <span class="n">cb</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">pm</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax1</span><span class="p">,</span> <span class="n">shrink</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">cb</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="s2">&quot;(mm/h)&quot;</span><span class="p">)</span>
+    <span class="n">pl</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;GK2 Easting&quot;</span><span class="p">)</span>
+    <span class="n">pl</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;GK2 Northing&quot;</span><span class="p">)</span>
+    <span class="n">pl</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Original radar rain sums&quot;</span><span class="p">)</span>
+    <span class="n">pl</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+    <span class="n">pl</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Zonal-Stats-Rectangular-Grid">
+<h2>Zonal Stats Rectangular Grid<a class="headerlink" href="#Zonal-Stats-Rectangular-Grid" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">matplotlib.collections</span> <span class="kn">import</span> <span class="n">PatchCollection</span>
+<span class="kn">from</span> <span class="nn">matplotlib.colors</span> <span class="kn">import</span> <span class="n">from_levels_and_colors</span>
+<span class="kn">import</span> <span class="nn">matplotlib.patches</span> <span class="kn">as</span> <span class="nn">patches</span>
+<span class="kn">import</span> <span class="nn">datetime</span> <span class="kn">as</span> <span class="nn">dt</span>
+<span class="kn">from</span> <span class="nn">osgeo</span> <span class="kn">import</span> <span class="n">osr</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># check for GEOS enabled GDAL</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">wrl</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">has_geos</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;NO GEOS support within GDAL, aborting...&quot;</span><span class="p">)</span>
+    <span class="nb">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Get RADOLAN grid coordinates</span>
+<span class="n">grid_xy_radolan</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">georef</span><span class="o">.</span><span class="n">get_radolan_grid</span><span class="p">(</span><span class="mi">900</span><span class="p">,</span> <span class="mi">900</span><span class="p">)</span>
+<span class="n">x_radolan</span> <span class="o">=</span> <span class="n">grid_xy_radolan</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">y_radolan</span> <span class="o">=</span> <span class="n">grid_xy_radolan</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">1</span><span class="p">]</span>
+
+<span class="c1"># create radolan projection osr object</span>
+<span class="n">proj_stereo</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">georef</span><span class="o">.</span><span class="n">create_osr</span><span class="p">(</span><span class="s2">&quot;dwd-radolan&quot;</span><span class="p">)</span>
+
+<span class="c1"># create Gauss Krueger zone 2 projection osr object</span>
+<span class="n">proj_gk</span> <span class="o">=</span> <span class="n">osr</span><span class="o">.</span><span class="n">SpatialReference</span><span class="p">()</span>
+<span class="n">proj_gk</span><span class="o">.</span><span class="n">ImportFromEPSG</span><span class="p">(</span><span class="mi">31466</span><span class="p">)</span>
+
+<span class="c1"># transform radolan polar stereographic projection to GK2</span>
+<span class="n">xy</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">georef</span><span class="o">.</span><span class="n">reproject</span><span class="p">(</span><span class="n">grid_xy_radolan</span><span class="p">,</span>
+                          <span class="n">projection_source</span><span class="o">=</span><span class="n">proj_stereo</span><span class="p">,</span>
+                          <span class="n">projection_target</span><span class="o">=</span><span class="n">proj_gk</span><span class="p">)</span>
+
+<span class="c1"># Open shapefile (already in GK2)</span>
+
+<span class="n">shpfile</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">get_wradlib_data_file</span><span class="p">(</span><span class="s1">&#39;shapefiles/agger/agger_merge.shp&#39;</span><span class="p">)</span>
+<span class="n">dataset</span><span class="p">,</span> <span class="n">inLayer</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">open_shape</span><span class="p">(</span><span class="n">shpfile</span><span class="p">)</span>
+<span class="n">cats</span><span class="p">,</span> <span class="n">keys</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">georef</span><span class="o">.</span><span class="n">get_shape_coordinates</span><span class="p">(</span><span class="n">inLayer</span><span class="p">)</span>
+
+<span class="c1"># Read and prepare the actual data (RADOLAN)</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">get_wradlib_data_file</span><span class="p">(</span>
+    <span class="s1">&#39;radolan/misc/raa01-sf_10000-1406100050-dwd---bin.gz&#39;</span><span class="p">)</span>
+<span class="n">data</span><span class="p">,</span> <span class="n">attrs</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_RADOLAN_composite</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">missing</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+<span class="n">sec</span> <span class="o">=</span> <span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;secondary&#39;</span><span class="p">]</span>
+<span class="n">data</span><span class="o">.</span><span class="n">flat</span><span class="p">[</span><span class="n">sec</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+
+<span class="c1"># Reduce grid size using a bounding box (to enhancing performance)</span>
+<span class="n">bbox</span> <span class="o">=</span> <span class="n">inLayer</span><span class="o">.</span><span class="n">GetExtent</span><span class="p">()</span>
+<span class="nb">buffer</span> <span class="o">=</span> <span class="mf">5000.</span>
+<span class="n">bbox</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">left</span><span class="o">=</span><span class="n">bbox</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="nb">buffer</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="n">bbox</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="nb">buffer</span><span class="p">,</span>
+            <span class="n">bottom</span><span class="o">=</span><span class="n">bbox</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="nb">buffer</span><span class="p">,</span> <span class="n">top</span><span class="o">=</span><span class="n">bbox</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="nb">buffer</span><span class="p">)</span>
+<span class="n">mask</span><span class="p">,</span> <span class="n">shape</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">zonalstats</span><span class="o">.</span><span class="n">mask_from_bbox</span><span class="p">(</span><span class="n">xy</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">xy</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+                                                <span class="n">bbox</span><span class="p">)</span>
+<span class="n">xy_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">xy</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">][</span><span class="n">mask</span><span class="p">]</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">xy</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">][</span><span class="n">mask</span><span class="p">]</span><span class="o">.</span><span class="n">ravel</span><span class="p">()))</span><span class="o">.</span><span class="n">T</span>
+<span class="n">data_</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1">###########################################################################</span>
+<span class="c1"># Approach #1: Assign grid points to each polygon and compute the average.</span>
+<span class="c1">#</span>
+<span class="c1"># - Uses matplotlib.path.Path</span>
+<span class="c1"># - Each point is weighted equally (assumption: polygon &gt;&gt; grid cell)</span>
+<span class="c1"># - this is quick, but theoretically dirty</span>
+<span class="c1">###########################################################################</span>
+
+<span class="n">t1</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+
+<span class="c1"># Create instance of type ZonalDataPoint from source grid and</span>
+<span class="c1"># catchment array</span>
+<span class="n">zd</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">zonalstats</span><span class="o">.</span><span class="n">ZonalDataPoint</span><span class="p">(</span><span class="n">xy_</span><span class="p">,</span> <span class="n">cats</span><span class="p">,</span> <span class="n">srs</span><span class="o">=</span><span class="n">proj_gk</span><span class="p">,</span> <span class="n">buf</span><span class="o">=</span><span class="mf">500.</span><span class="p">)</span>
+<span class="c1"># dump to file (for later use - see below)</span>
+<span class="n">zd</span><span class="o">.</span><span class="n">dump_vector</span><span class="p">(</span><span class="s1">&#39;test_zonal_points_cart&#39;</span><span class="p">)</span>
+<span class="c1"># Create instance of type GridPointsToPoly from zonal data object</span>
+<span class="n">obj1</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">zonalstats</span><span class="o">.</span><span class="n">GridPointsToPoly</span><span class="p">(</span><span class="n">zd</span><span class="p">)</span>
+
+<span class="n">isecs1</span> <span class="o">=</span> <span class="n">obj1</span><span class="o">.</span><span class="n">zdata</span><span class="o">.</span><span class="n">isecs</span>  <span class="c1"># for plotting (see below)</span>
+
+<span class="n">t2</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+
+<span class="c1"># Compute stats for target polygons</span>
+<span class="n">avg1</span> <span class="o">=</span> <span class="n">obj1</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">data_</span><span class="o">.</span><span class="n">ravel</span><span class="p">())</span>
+<span class="n">var1</span> <span class="o">=</span> <span class="n">obj1</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">data_</span><span class="o">.</span><span class="n">ravel</span><span class="p">())</span>
+
+<span class="n">t3</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+
+<span class="c1"># Create instance of type GridPointsToPoly from zonal data file</span>
+<span class="c1"># (much faster)</span>
+<span class="n">obj1</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">zonalstats</span><span class="o">.</span><span class="n">GridPointsToPoly</span><span class="p">(</span><span class="s1">&#39;test_zonal_points_cart&#39;</span><span class="p">)</span>
+
+<span class="n">t4</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Approach #1 computation time:&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">Create object from scratch: </span><span class="si">%f</span><span class="s2"> &quot;</span>
+      <span class="s2">&quot;seconds&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">t2</span> <span class="o">-</span> <span class="n">t1</span><span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">())</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">Create object from dumped file: </span><span class="si">%f</span><span class="s2"> &quot;</span>
+      <span class="s2">&quot;seconds&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">t4</span> <span class="o">-</span> <span class="n">t3</span><span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">())</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">Compute stats using object: </span><span class="si">%f</span><span class="s2"> &quot;</span>
+      <span class="s2">&quot;seconds&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">t3</span> <span class="o">-</span> <span class="n">t2</span><span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">())</span>
+
+<span class="c1"># PLOTTING Approach #1</span>
+
+<span class="c1"># Just a test for plotting results with zero buffer</span>
+<span class="n">zd2</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">zonalstats</span><span class="o">.</span><span class="n">ZonalDataPoint</span><span class="p">(</span><span class="n">xy_</span><span class="p">,</span> <span class="n">cats</span><span class="p">,</span> <span class="n">buf</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="c1"># Create instance of type GridPointsToPoly from zonal data object</span>
+<span class="n">obj2</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">zonalstats</span><span class="o">.</span><span class="n">GridPointsToPoly</span><span class="p">(</span><span class="n">zd2</span><span class="p">)</span>
+<span class="n">isecs2</span> <span class="o">=</span> <span class="n">obj2</span><span class="o">.</span><span class="n">zdata</span><span class="o">.</span><span class="n">isecs</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Approach #1 computation time:
+        Create object from scratch: 9.420181 seconds
+        Create object from dumped file: 0.046580 seconds
+        Compute stats using object: 0.005298 seconds
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Illustrate results for an example catchment i</span>
+<span class="n">i</span> <span class="o">=</span> <span class="mi">6</span>  <span class="c1"># try e.g. 48, 100</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s2">&quot;equal&quot;</span><span class="p">)</span>
+
+<span class="c1"># Target polygon patches</span>
+<span class="n">trg_patches</span> <span class="o">=</span> <span class="p">[</span><span class="n">patches</span><span class="o">.</span><span class="n">Polygon</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">obj1</span><span class="o">.</span><span class="n">zdata</span><span class="o">.</span><span class="n">trg</span><span class="o">.</span><span class="n">data</span><span class="p">]</span>
+<span class="n">trg_patch</span> <span class="o">=</span> <span class="p">[</span><span class="n">trg_patches</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">PatchCollection</span><span class="p">(</span><span class="n">trg_patch</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s2">&quot;None&quot;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span>
+                    <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">add_collection</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+
+<span class="c1"># pips</span>
+<span class="n">sources</span> <span class="o">=</span> <span class="n">obj1</span><span class="o">.</span><span class="n">zdata</span><span class="o">.</span><span class="n">src</span><span class="o">.</span><span class="n">data</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">sources</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">sources</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">s</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;grey&quot;</span><span class="p">,</span>
+            <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;None&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;all points&quot;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">isecs2</span><span class="p">[</span><span class="n">i</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">isecs2</span><span class="p">[</span><span class="n">i</span><span class="p">][:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">s</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;green&quot;</span><span class="p">,</span>
+            <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;None&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;buffer=0 m&quot;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">isecs1</span><span class="p">[</span><span class="n">i</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">isecs1</span><span class="p">[</span><span class="n">i</span><span class="p">][:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">s</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span>
+            <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;None&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;buffer=500 m&quot;</span><span class="p">)</span>
+<span class="n">bbox</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">zonalstats</span><span class="o">.</span><span class="n">get_bbox</span><span class="p">(</span><span class="n">cats</span><span class="p">[</span><span class="n">i</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">cats</span><span class="p">[</span><span class="n">i</span><span class="p">][:,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="n">bbox</span><span class="p">[</span><span class="s2">&quot;left&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="mi">2000</span><span class="p">,</span> <span class="n">bbox</span><span class="p">[</span><span class="s2">&quot;right&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2000</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="n">bbox</span><span class="p">[</span><span class="s2">&quot;bottom&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="mi">2000</span><span class="p">,</span> <span class="n">bbox</span><span class="p">[</span><span class="s2">&quot;top&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2000</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Catchment #</span><span class="si">%d</span><span class="s2">: Points considered for stats&quot;</span> <span class="o">%</span> <span class="n">i</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[8]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Text(0.5,1,u&#39;Catchment #6: Points considered for stats&#39;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_zonalstats_wradlib_zonalstats_example_10_1.png" src="../../_images/notebooks_zonalstats_wradlib_zonalstats_example_10_1.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Plot average rainfall and original data</span>
+<span class="n">testplot</span><span class="p">(</span><span class="n">trg_patches</span><span class="p">,</span> <span class="n">avg1</span><span class="p">,</span> <span class="n">xy</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span>
+         <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Catchment rainfall mean (GridPointsToPoly)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_zonalstats_wradlib_zonalstats_example_11_0.png" src="../../_images/notebooks_zonalstats_wradlib_zonalstats_example_11_0.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">testplot</span><span class="p">(</span><span class="n">trg_patches</span><span class="p">,</span> <span class="n">var1</span><span class="p">,</span> <span class="n">xy</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span>
+         <span class="n">levels</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">var1</span><span class="p">),</span> <span class="mf">1.</span><span class="p">),</span>
+         <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Catchment rainfall variance (GridPointsToPoly)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_zonalstats_wradlib_zonalstats_example_12_0.png" src="../../_images/notebooks_zonalstats_wradlib_zonalstats_example_12_0.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1">###########################################################################</span>
+<span class="c1"># Approach #2: Compute weighted mean based on fraction of source polygons</span>
+<span class="c1"># in target polygons</span>
+<span class="c1">#</span>
+<span class="c1"># - This is more accurate (no assumptions), but probably slower...</span>
+<span class="c1">###########################################################################</span>
+
+<span class="c1"># Create vertices for each grid cell</span>
+<span class="c1"># (MUST BE DONE IN NATIVE RADOLAN COORDINATES)</span>
+<span class="n">grdverts</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">zonalstats</span><span class="o">.</span><span class="n">grid_centers_to_vertices</span><span class="p">(</span><span class="n">x_radolan</span><span class="p">[</span><span class="n">mask</span><span class="p">],</span>
+                                                   <span class="n">y_radolan</span><span class="p">[</span><span class="n">mask</span><span class="p">],</span> <span class="mf">1.</span><span class="p">,</span>
+                                                   <span class="mf">1.</span><span class="p">)</span>
+<span class="c1"># And reproject to Cartesian reference system (here: GK2)</span>
+<span class="n">grdverts</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">georef</span><span class="o">.</span><span class="n">reproject</span><span class="p">(</span><span class="n">grdverts</span><span class="p">,</span>
+                                <span class="n">projection_source</span><span class="o">=</span><span class="n">proj_stereo</span><span class="p">,</span>
+                                <span class="n">projection_target</span><span class="o">=</span><span class="n">proj_gk</span><span class="p">)</span>
+
+<span class="n">t1</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+
+<span class="c1"># Create instance of type ZonalDataPoly from source grid and</span>
+<span class="c1"># catchment array</span>
+<span class="n">zd</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">zonalstats</span><span class="o">.</span><span class="n">ZonalDataPoly</span><span class="p">(</span><span class="n">grdverts</span><span class="p">,</span> <span class="n">cats</span><span class="p">,</span> <span class="n">srs</span><span class="o">=</span><span class="n">proj_gk</span><span class="p">)</span>
+<span class="c1"># dump to file</span>
+<span class="n">zd</span><span class="o">.</span><span class="n">dump_vector</span><span class="p">(</span><span class="s1">&#39;test_zonal_poly_cart&#39;</span><span class="p">)</span>
+<span class="c1"># Create instance of type GridPointsToPoly from zonal data object</span>
+<span class="n">obj3</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">zonalstats</span><span class="o">.</span><span class="n">GridCellsToPoly</span><span class="p">(</span><span class="n">zd</span><span class="p">)</span>
+
+<span class="n">t2</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+
+<span class="c1"># Compute stats for target polygons</span>
+<span class="n">avg3</span> <span class="o">=</span> <span class="n">obj3</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">data_</span><span class="o">.</span><span class="n">ravel</span><span class="p">())</span>
+<span class="n">var3</span> <span class="o">=</span> <span class="n">obj3</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">data_</span><span class="o">.</span><span class="n">ravel</span><span class="p">())</span>
+
+<span class="n">t3</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+
+<span class="c1"># Create instance of type GridCellsToPoly from zonal data file</span>
+<span class="n">obj3</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">zonalstats</span><span class="o">.</span><span class="n">GridCellsToPoly</span><span class="p">(</span><span class="s1">&#39;test_zonal_poly_cart&#39;</span><span class="p">)</span>
+
+<span class="n">t4</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Approach #2 computation time:&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">Create object from scratch: </span><span class="si">%f</span><span class="s2"> &quot;</span>
+      <span class="s2">&quot;seconds&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">t2</span> <span class="o">-</span> <span class="n">t1</span><span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">())</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">Create object from dumped file: </span><span class="si">%f</span><span class="s2"> &quot;</span>
+      <span class="s2">&quot;seconds&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">t4</span> <span class="o">-</span> <span class="n">t3</span><span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">())</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">Compute stats using object: </span><span class="si">%f</span><span class="s2"> &quot;</span>
+      <span class="s2">&quot;seconds&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">t3</span> <span class="o">-</span> <span class="n">t2</span><span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Approach #2 computation time:
+        Create object from scratch: 3.987260 seconds
+        Create object from dumped file: 0.090876 seconds
+        Compute stats using object: 0.004062 seconds
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># PLOTTING Approach #2</span>
+
+<span class="c1"># Target polygon patches</span>
+<span class="n">trg_patches</span> <span class="o">=</span> <span class="p">[</span><span class="n">patches</span><span class="o">.</span><span class="n">Polygon</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">obj3</span><span class="o">.</span><span class="n">zdata</span><span class="o">.</span><span class="n">trg</span><span class="o">.</span><span class="n">data</span><span class="p">]</span>
+
+<span class="c1"># Plot average rainfall and original data</span>
+<span class="n">testplot</span><span class="p">(</span><span class="n">trg_patches</span><span class="p">,</span> <span class="n">avg3</span><span class="p">,</span> <span class="n">xy</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span>
+         <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Catchment rainfall mean (GridCellsToPoly)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_zonalstats_wradlib_zonalstats_example_14_0.png" src="../../_images/notebooks_zonalstats_wradlib_zonalstats_example_14_0.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">testplot</span><span class="p">(</span><span class="n">trg_patches</span><span class="p">,</span> <span class="n">var3</span><span class="p">,</span> <span class="n">xy</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span>
+         <span class="n">levels</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">var3</span><span class="p">),</span> <span class="mf">1.</span><span class="p">),</span>
+         <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Catchment rainfall variance (GridCellsToPoly)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_zonalstats_wradlib_zonalstats_example_15_0.png" src="../../_images/notebooks_zonalstats_wradlib_zonalstats_example_15_0.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Illustrate results for an example catchment i</span>
+<span class="n">i</span> <span class="o">=</span> <span class="mi">6</span>  <span class="c1"># try any index between 0 and 13</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s2">&quot;equal&quot;</span><span class="p">)</span>
+
+<span class="c1"># Grid cell patches</span>
+<span class="n">src_index</span> <span class="o">=</span> <span class="n">obj3</span><span class="o">.</span><span class="n">zdata</span><span class="o">.</span><span class="n">get_source_index</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+<span class="n">grd_patches</span> <span class="o">=</span> <span class="p">[</span><span class="n">patches</span><span class="o">.</span><span class="n">Polygon</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+               <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">obj3</span><span class="o">.</span><span class="n">zdata</span><span class="o">.</span><span class="n">src</span><span class="o">.</span><span class="n">get_data_by_idx</span><span class="p">(</span><span class="n">src_index</span><span class="p">)]</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">PatchCollection</span><span class="p">(</span><span class="n">grd_patches</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s2">&quot;None&quot;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">add_collection</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+
+<span class="c1"># Target polygon patches</span>
+<span class="n">trg_patch</span> <span class="o">=</span> <span class="p">[</span><span class="n">trg_patches</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">PatchCollection</span><span class="p">(</span><span class="n">trg_patch</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s2">&quot;None&quot;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span>
+                    <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">add_collection</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+
+<span class="c1"># View the actual intersections</span>
+<span class="n">isecs</span> <span class="o">=</span> <span class="n">obj3</span><span class="o">.</span><span class="n">zdata</span><span class="o">.</span><span class="n">get_isec</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+<span class="n">isec_patches</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">zonalstats</span><span class="o">.</span><span class="n">numpy_to_pathpatch</span><span class="p">(</span><span class="n">isecs</span><span class="p">)</span>
+<span class="n">colors</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">isec_patches</span><span class="p">))</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">PatchCollection</span><span class="p">(</span><span class="n">isec_patches</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">pl</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">jet</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">set_array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">colors</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">add_collection</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+
+<span class="n">bbox</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">zonalstats</span><span class="o">.</span><span class="n">get_bbox</span><span class="p">(</span><span class="n">cats</span><span class="p">[</span><span class="n">i</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">cats</span><span class="p">[</span><span class="n">i</span><span class="p">][:,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="n">bbox</span><span class="p">[</span><span class="s2">&quot;left&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="mi">2000</span><span class="p">,</span> <span class="n">bbox</span><span class="p">[</span><span class="s2">&quot;right&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2000</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="n">bbox</span><span class="p">[</span><span class="s2">&quot;bottom&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="mi">2000</span><span class="p">,</span> <span class="n">bbox</span><span class="p">[</span><span class="s2">&quot;top&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2000</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_zonalstats_wradlib_zonalstats_example_16_0.png" src="../../_images/notebooks_zonalstats_wradlib_zonalstats_example_16_0.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Compare estimates</span>
+<span class="n">maxlim</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">avg1</span><span class="p">,</span> <span class="n">avg3</span><span class="p">)))</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s2">&quot;equal&quot;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">avg1</span><span class="p">,</span> <span class="n">avg3</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;None&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Average of points in or close to polygon (mm)&quot;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Area-weighted average (mm)&quot;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">maxlim</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">maxlim</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">maxlim</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">maxlim</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_zonalstats_wradlib_zonalstats_example_17_0.png" src="../../_images/notebooks_zonalstats_wradlib_zonalstats_example_17_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="Zonal-Stats-Polar-Grid">
+<h2>Zonal Stats Polar Grid<a class="headerlink" href="#Zonal-Stats-Polar-Grid" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">filename</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">get_wradlib_data_file</span><span class="p">(</span><span class="s1">&#39;hdf5/rainsum_boxpol_20140609.h5&#39;</span><span class="p">)</span>
+<span class="n">data</span><span class="p">,</span> <span class="n">attrib</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">from_hdf5</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+<span class="c1"># get Lat, Lon, range, azimuth, rays, bins out of radar data</span>
+<span class="n">lat1</span> <span class="o">=</span> <span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;Latitude&#39;</span><span class="p">]</span>
+<span class="n">lon1</span> <span class="o">=</span> <span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;Longitude&#39;</span><span class="p">]</span>
+<span class="n">r1</span> <span class="o">=</span> <span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">]</span>
+<span class="n">a1</span> <span class="o">=</span> <span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;az&#39;</span><span class="p">]</span>
+
+<span class="n">rays</span> <span class="o">=</span> <span class="n">a1</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">bins</span> <span class="o">=</span> <span class="n">r1</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="c1"># create polar grid polygon vertices in lat,lon</span>
+<span class="n">radar_ll</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">georef</span><span class="o">.</span><span class="n">polar2polyvert</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="p">(</span><span class="n">lon1</span><span class="p">,</span> <span class="n">lat1</span><span class="p">))</span>
+
+<span class="c1"># create polar grid centroids in lat,lon</span>
+<span class="n">rlon</span><span class="p">,</span> <span class="n">rlat</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">georef</span><span class="o">.</span><span class="n">polar2centroids</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="p">(</span><span class="n">lon1</span><span class="p">,</span> <span class="n">lat1</span><span class="p">))</span>
+<span class="n">radar_llc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dstack</span><span class="p">((</span><span class="n">rlon</span><span class="p">,</span> <span class="n">rlat</span><span class="p">))</span>
+
+<span class="c1"># setup OSR objects</span>
+<span class="n">proj_gk</span> <span class="o">=</span> <span class="n">osr</span><span class="o">.</span><span class="n">SpatialReference</span><span class="p">()</span>
+<span class="n">proj_gk</span><span class="o">.</span><span class="n">ImportFromEPSG</span><span class="p">(</span><span class="mi">31466</span><span class="p">)</span>
+<span class="n">proj_ll</span> <span class="o">=</span> <span class="n">osr</span><span class="o">.</span><span class="n">SpatialReference</span><span class="p">()</span>
+<span class="n">proj_ll</span><span class="o">.</span><span class="n">ImportFromEPSG</span><span class="p">(</span><span class="mi">4326</span><span class="p">)</span>
+
+<span class="c1"># project ll grids to GK2</span>
+<span class="n">radar_gk</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">georef</span><span class="o">.</span><span class="n">reproject</span><span class="p">(</span><span class="n">radar_ll</span><span class="p">,</span> <span class="n">projection_source</span><span class="o">=</span><span class="n">proj_ll</span><span class="p">,</span>
+                                <span class="n">projection_target</span><span class="o">=</span><span class="n">proj_gk</span><span class="p">)</span>
+<span class="n">radar_gkc</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">georef</span><span class="o">.</span><span class="n">reproject</span><span class="p">(</span><span class="n">radar_llc</span><span class="p">,</span> <span class="n">projection_source</span><span class="o">=</span><span class="n">proj_ll</span><span class="p">,</span>
+                                 <span class="n">projection_target</span><span class="o">=</span><span class="n">proj_gk</span><span class="p">)</span>
+
+<span class="c1"># reshape</span>
+<span class="n">radar_gk</span><span class="o">.</span><span class="n">shape</span> <span class="o">=</span> <span class="p">(</span><span class="n">rays</span><span class="p">,</span> <span class="n">bins</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">radar_gkc</span><span class="o">.</span><span class="n">shape</span> <span class="o">=</span> <span class="p">(</span><span class="n">rays</span><span class="p">,</span> <span class="n">bins</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">shpfile</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">get_wradlib_data_file</span><span class="p">(</span><span class="s1">&#39;shapefiles/agger/agger_merge.shp&#39;</span><span class="p">)</span>
+<span class="n">dataset</span><span class="p">,</span> <span class="n">inLayer</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">open_shape</span><span class="p">(</span><span class="n">shpfile</span><span class="p">)</span>
+<span class="n">cats</span><span class="p">,</span> <span class="n">keys</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">georef</span><span class="o">.</span><span class="n">get_shape_coordinates</span><span class="p">(</span><span class="n">inLayer</span><span class="p">)</span>
+
+
+<span class="c1"># create synthetic box</span>
+<span class="n">box</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">2600000.</span><span class="p">,</span> <span class="mf">5630000.</span><span class="p">],</span> <span class="p">[</span><span class="mf">2600000.</span><span class="p">,</span> <span class="mf">5640000.</span><span class="p">],</span>
+                <span class="p">[</span><span class="mf">2610000.</span><span class="p">,</span> <span class="mf">5640000.</span><span class="p">],</span> <span class="p">[</span><span class="mf">2610000.</span><span class="p">,</span> <span class="mf">5630000.</span><span class="p">],</span>
+                <span class="p">[</span><span class="mf">2600000.</span><span class="p">,</span> <span class="mf">5630000.</span><span class="p">]])</span>
+<span class="n">l</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">cats</span><span class="p">)</span>
+
+<span class="c1"># Todo: remove after testing</span>
+<span class="n">l</span> <span class="o">=</span> <span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+
+<span class="n">l</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">box</span><span class="p">)</span>
+<span class="n">cats</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+<span class="n">bbox</span> <span class="o">=</span> <span class="n">inLayer</span><span class="o">.</span><span class="n">GetExtent</span><span class="p">()</span>
+
+<span class="c1"># create catchment bounding box</span>
+<span class="nb">buffer</span> <span class="o">=</span> <span class="mf">5000.</span>
+<span class="n">bbox</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">left</span><span class="o">=</span><span class="n">bbox</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="nb">buffer</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="n">bbox</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="nb">buffer</span><span class="p">,</span>
+            <span class="n">bottom</span><span class="o">=</span><span class="n">bbox</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="nb">buffer</span><span class="p">,</span> <span class="n">top</span><span class="o">=</span><span class="n">bbox</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="nb">buffer</span><span class="p">)</span>
+
+<span class="n">mask</span><span class="p">,</span> <span class="n">shape</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">zonalstats</span><span class="o">.</span><span class="n">mask_from_bbox</span><span class="p">(</span><span class="n">radar_gkc</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                                            <span class="n">radar_gkc</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+                                            <span class="n">bbox</span><span class="p">,</span>
+                                            <span class="n">polar</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="n">radar_gkc_</span> <span class="o">=</span> <span class="n">radar_gkc</span><span class="p">[</span><span class="n">mask</span><span class="p">,</span> <span class="p">:]</span>
+<span class="n">radar_gk_</span> <span class="o">=</span> <span class="n">radar_gk</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+<span class="n">data_</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1">###########################################################################</span>
+<span class="c1"># Approach #1: Assign grid points to each polygon and compute the average.</span>
+<span class="c1">#</span>
+<span class="c1"># - Uses matplotlib.path.Path</span>
+<span class="c1"># - Each point is weighted equally (assumption: polygon &gt;&gt; grid cell)</span>
+<span class="c1"># - this is quick, but theoretically dirty</span>
+<span class="c1"># - for polar grids a range-area dependency has to be taken into account</span>
+<span class="c1">###########################################################################</span>
+
+<span class="n">t1</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+
+<span class="c1"># Create instance of type ZonalDataPoint from source grid and</span>
+<span class="c1"># catchment array</span>
+<span class="n">zd</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">zonalstats</span><span class="o">.</span><span class="n">ZonalDataPoint</span><span class="p">(</span><span class="n">radar_gkc_</span><span class="p">,</span> <span class="n">cats</span><span class="p">,</span> <span class="n">srs</span><span class="o">=</span><span class="n">proj_gk</span><span class="p">,</span>
+                                   <span class="n">buf</span><span class="o">=</span><span class="mf">500.</span><span class="p">)</span>
+<span class="c1"># dump to file</span>
+<span class="n">zd</span><span class="o">.</span><span class="n">dump_vector</span><span class="p">(</span><span class="s1">&#39;test_zonal_points&#39;</span><span class="p">)</span>
+<span class="c1"># Create instance of type GridPointsToPoly from zonal data object</span>
+<span class="n">obj1</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">zonalstats</span><span class="o">.</span><span class="n">GridPointsToPoly</span><span class="p">(</span><span class="n">zd</span><span class="p">)</span>
+
+<span class="n">isecs1</span> <span class="o">=</span> <span class="n">obj1</span><span class="o">.</span><span class="n">zdata</span><span class="o">.</span><span class="n">isecs</span>
+<span class="n">t2</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+
+<span class="c1"># Compute stats for target polygons</span>
+<span class="n">avg1</span> <span class="o">=</span> <span class="n">obj1</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">data_</span><span class="o">.</span><span class="n">ravel</span><span class="p">())</span>
+<span class="n">var1</span> <span class="o">=</span> <span class="n">obj1</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">data_</span><span class="o">.</span><span class="n">ravel</span><span class="p">())</span>
+
+<span class="n">t3</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+
+<span class="c1"># Create instance of type GridPointsToPoly from zonal data file</span>
+<span class="n">obj1</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">zonalstats</span><span class="o">.</span><span class="n">GridPointsToPoly</span><span class="p">(</span><span class="s1">&#39;test_zonal_points&#39;</span><span class="p">)</span>
+
+<span class="n">t4</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+
+<span class="k">print</span> <span class="p">(</span><span class="s2">&quot;Approach #1 computation time:&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span>
+<span class="s2">&quot;</span><span class="se">\t</span><span class="s2">Create object from scratch: </span><span class="si">%f</span><span class="s2"> seconds&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">t2</span> <span class="o">-</span> <span class="n">t1</span><span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">())</span>
+<span class="k">print</span><span class="p">(</span>
+<span class="s2">&quot;</span><span class="se">\t</span><span class="s2">Create object from dumped file: </span><span class="si">%f</span><span class="s2"> seconds&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">t4</span> <span class="o">-</span> <span class="n">t3</span><span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">())</span>
+<span class="k">print</span><span class="p">(</span>
+<span class="s2">&quot;</span><span class="se">\t</span><span class="s2">Compute stats using object: </span><span class="si">%f</span><span class="s2"> seconds&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">t3</span> <span class="o">-</span> <span class="n">t2</span><span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Approach #1 computation time:
+        Create object from scratch: 6.204520 seconds
+        Create object from dumped file: 0.251963 seconds
+        Compute stats using object: 0.002035 seconds
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># PLOTTING Approach #2</span>
+
+<span class="c1"># Just a test for plotting results with zero buffer</span>
+<span class="n">zd</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">zonalstats</span><span class="o">.</span><span class="n">ZonalDataPoint</span><span class="p">(</span><span class="n">radar_gkc_</span><span class="p">,</span> <span class="n">cats</span><span class="p">,</span> <span class="n">buf</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="c1"># Create instance of type GridPointsToPoly from zonal data object</span>
+<span class="n">obj2</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">zonalstats</span><span class="o">.</span><span class="n">GridPointsToPoly</span><span class="p">(</span><span class="n">zd</span><span class="p">)</span>
+<span class="n">isecs2</span> <span class="o">=</span> <span class="n">obj2</span><span class="o">.</span><span class="n">zdata</span><span class="o">.</span><span class="n">isecs</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Illustrate results for an example catchment i</span>
+<span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># try e.g. 6, 12</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s2">&quot;equal&quot;</span><span class="p">)</span>
+
+<span class="c1"># Target polygon patches</span>
+<span class="n">trg_patches</span> <span class="o">=</span> <span class="p">[</span><span class="n">patches</span><span class="o">.</span><span class="n">Polygon</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">obj1</span><span class="o">.</span><span class="n">zdata</span><span class="o">.</span><span class="n">trg</span><span class="o">.</span><span class="n">data</span><span class="p">]</span>
+<span class="n">trg_patch</span> <span class="o">=</span> <span class="p">[</span><span class="n">trg_patches</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">PatchCollection</span><span class="p">(</span><span class="n">trg_patch</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s2">&quot;None&quot;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span>
+                    <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">add_collection</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+
+<span class="c1"># pips</span>
+<span class="n">sources</span> <span class="o">=</span> <span class="n">obj1</span><span class="o">.</span><span class="n">zdata</span><span class="o">.</span><span class="n">src</span><span class="o">.</span><span class="n">data</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">sources</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">sources</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">s</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;grey&quot;</span><span class="p">,</span>
+           <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;None&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;all points&quot;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">isecs2</span><span class="p">[</span><span class="n">i</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">isecs2</span><span class="p">[</span><span class="n">i</span><span class="p">][:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">s</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;green&quot;</span><span class="p">,</span>
+           <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;None&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;buffer=0 m&quot;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">isecs1</span><span class="p">[</span><span class="n">i</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">isecs1</span><span class="p">[</span><span class="n">i</span><span class="p">][:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">s</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span>
+           <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;None&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;buffer=500 m&quot;</span><span class="p">)</span>
+<span class="n">bbox</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">zonalstats</span><span class="o">.</span><span class="n">get_bbox</span><span class="p">(</span><span class="n">cats</span><span class="p">[</span><span class="n">i</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">cats</span><span class="p">[</span><span class="n">i</span><span class="p">][:,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="n">bbox</span><span class="p">[</span><span class="s2">&quot;left&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="mi">2000</span><span class="p">,</span> <span class="n">bbox</span><span class="p">[</span><span class="s2">&quot;right&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2000</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="n">bbox</span><span class="p">[</span><span class="s2">&quot;bottom&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="mi">2000</span><span class="p">,</span> <span class="n">bbox</span><span class="p">[</span><span class="s2">&quot;top&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2000</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Catchment #</span><span class="si">%d</span><span class="s2">: Points considered for stats&quot;</span> <span class="o">%</span> <span class="n">i</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[19]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Text(0.5,1,u&#39;Catchment #0: Points considered for stats&#39;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_zonalstats_wradlib_zonalstats_example_22_1.png" src="../../_images/notebooks_zonalstats_wradlib_zonalstats_example_22_1.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Plot average rainfall and original data</span>
+<span class="n">testplot</span><span class="p">(</span><span class="n">trg_patches</span><span class="p">,</span> <span class="n">avg1</span><span class="p">,</span> <span class="n">radar_gkc</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span>
+         <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Catchment rainfall mean (GridPointsToPoly)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_zonalstats_wradlib_zonalstats_example_23_0.png" src="../../_images/notebooks_zonalstats_wradlib_zonalstats_example_23_0.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">testplot</span><span class="p">(</span><span class="n">trg_patches</span><span class="p">,</span> <span class="n">var1</span><span class="p">,</span> <span class="n">radar_gkc</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span>
+         <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Catchment rainfall variance (GridPointsToPoly)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_zonalstats_wradlib_zonalstats_example_24_0.png" src="../../_images/notebooks_zonalstats_wradlib_zonalstats_example_24_0.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [22]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1">###########################################################################</span>
+<span class="c1"># Approach #2: Compute weighted mean based on fraction of source polygons</span>
+<span class="c1"># in target polygons</span>
+<span class="c1">#</span>
+<span class="c1"># - This is more accurate (no assumptions), but probably slower...</span>
+<span class="c1">###########################################################################</span>
+
+<span class="n">t1</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+
+<span class="c1"># Create instance of type ZonalDataPoly from source grid and</span>
+<span class="c1"># catchment array</span>
+<span class="n">zd</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">zonalstats</span><span class="o">.</span><span class="n">ZonalDataPoly</span><span class="p">(</span><span class="n">radar_gk_</span><span class="p">,</span> <span class="n">cats</span><span class="p">,</span> <span class="n">srs</span><span class="o">=</span><span class="n">proj_gk</span><span class="p">)</span>
+<span class="c1"># dump to file</span>
+<span class="n">zd</span><span class="o">.</span><span class="n">dump_vector</span><span class="p">(</span><span class="s1">&#39;test_zonal_poly&#39;</span><span class="p">)</span>
+<span class="c1"># Create instance of type GridPointsToPoly from zonal data object</span>
+<span class="n">obj3</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">zonalstats</span><span class="o">.</span><span class="n">GridCellsToPoly</span><span class="p">(</span><span class="n">zd</span><span class="p">)</span>
+
+<span class="n">obj3</span><span class="o">.</span><span class="n">zdata</span><span class="o">.</span><span class="n">dump_vector</span><span class="p">(</span><span class="s1">&#39;test_zonal_poly&#39;</span><span class="p">)</span>
+<span class="n">t2</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+
+<span class="n">avg3</span> <span class="o">=</span> <span class="n">obj3</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">data_</span><span class="o">.</span><span class="n">ravel</span><span class="p">())</span>
+<span class="n">var3</span> <span class="o">=</span> <span class="n">obj3</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">data_</span><span class="o">.</span><span class="n">ravel</span><span class="p">())</span>
+
+<span class="n">t3</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+
+<span class="c1"># Create instance of type GridCellsToPoly from zonal data file</span>
+<span class="n">obj4</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">zonalstats</span><span class="o">.</span><span class="n">GridCellsToPoly</span><span class="p">(</span><span class="s1">&#39;test_zonal_poly&#39;</span><span class="p">)</span>
+
+<span class="n">t4</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+
+<span class="k">print</span> <span class="p">(</span><span class="s2">&quot;Approach #2 computation time:&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span>
+<span class="s2">&quot;</span><span class="se">\t</span><span class="s2">Create object from scratch: </span><span class="si">%f</span><span class="s2"> seconds&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">t2</span> <span class="o">-</span> <span class="n">t1</span><span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">())</span>
+<span class="k">print</span><span class="p">(</span>
+<span class="s2">&quot;</span><span class="se">\t</span><span class="s2">Create object from dumped file: </span><span class="si">%f</span><span class="s2"> seconds&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">t4</span> <span class="o">-</span> <span class="n">t3</span><span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">())</span>
+<span class="k">print</span><span class="p">(</span>
+<span class="s2">&quot;</span><span class="se">\t</span><span class="s2">Compute stats using object: </span><span class="si">%f</span><span class="s2"> seconds&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">t3</span> <span class="o">-</span> <span class="n">t2</span><span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">())</span>
+
+<span class="n">obj3</span><span class="o">.</span><span class="n">zdata</span><span class="o">.</span><span class="n">trg</span><span class="o">.</span><span class="n">dump_raster</span><span class="p">(</span><span class="s1">&#39;test_zonal_hdr.nc&#39;</span><span class="p">,</span> <span class="s1">&#39;netCDF&#39;</span><span class="p">,</span> <span class="s1">&#39;mean&#39;</span><span class="p">,</span>
+                           <span class="n">pixel_size</span><span class="o">=</span><span class="mf">100.</span><span class="p">)</span>
+
+<span class="n">obj3</span><span class="o">.</span><span class="n">zdata</span><span class="o">.</span><span class="n">trg</span><span class="o">.</span><span class="n">dump_vector</span><span class="p">(</span><span class="s1">&#39;test_zonal_shp&#39;</span><span class="p">)</span>
+<span class="n">obj3</span><span class="o">.</span><span class="n">zdata</span><span class="o">.</span><span class="n">trg</span><span class="o">.</span><span class="n">dump_vector</span><span class="p">(</span><span class="s1">&#39;test_zonal_json.geojson&#39;</span><span class="p">,</span> <span class="s1">&#39;GeoJSON&#39;</span><span class="p">)</span>
+
+<span class="c1"># Target polygon patches</span>
+<span class="n">trg_patches</span> <span class="o">=</span> <span class="p">[</span><span class="n">patches</span><span class="o">.</span><span class="n">Polygon</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">obj3</span><span class="o">.</span><span class="n">zdata</span><span class="o">.</span><span class="n">trg</span><span class="o">.</span><span class="n">data</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Approach #2 computation time:
+        Create object from scratch: 17.892988 seconds
+        Create object from dumped file: 1.108133 seconds
+        Compute stats using object: 0.003775 seconds
+Rasterize layers
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [23]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Plot average rainfall and original data</span>
+<span class="n">testplot</span><span class="p">(</span><span class="n">trg_patches</span><span class="p">,</span> <span class="n">avg3</span><span class="p">,</span> <span class="n">radar_gkc</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span>
+         <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Catchment rainfall mean (PolarGridCellsToPoly)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_zonalstats_wradlib_zonalstats_example_26_0.png" src="../../_images/notebooks_zonalstats_wradlib_zonalstats_example_26_0.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [24]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">testplot</span><span class="p">(</span><span class="n">trg_patches</span><span class="p">,</span> <span class="n">var3</span><span class="p">,</span> <span class="n">radar_gkc</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span>
+         <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Catchment rainfall variance (PolarGridCellsToPoly)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_zonalstats_wradlib_zonalstats_example_27_0.png" src="../../_images/notebooks_zonalstats_wradlib_zonalstats_example_27_0.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [25]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Illustrate results for an example catchment i</span>
+<span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># try any index between 0 and 13</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s2">&quot;equal&quot;</span><span class="p">)</span>
+
+<span class="c1"># Grid cell patches</span>
+<span class="n">src_index</span> <span class="o">=</span> <span class="n">obj3</span><span class="o">.</span><span class="n">zdata</span><span class="o">.</span><span class="n">get_source_index</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+<span class="n">grd_patches</span> <span class="o">=</span> <span class="p">[</span><span class="n">patches</span><span class="o">.</span><span class="n">Polygon</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span>
+               <span class="n">obj3</span><span class="o">.</span><span class="n">zdata</span><span class="o">.</span><span class="n">src</span><span class="o">.</span><span class="n">get_data_by_idx</span><span class="p">(</span><span class="n">src_index</span><span class="p">)]</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">PatchCollection</span><span class="p">(</span><span class="n">grd_patches</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s2">&quot;None&quot;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">add_collection</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+
+<span class="c1"># Target polygon patches</span>
+<span class="n">trg_patch</span> <span class="o">=</span> <span class="p">[</span><span class="n">trg_patches</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">PatchCollection</span><span class="p">(</span><span class="n">trg_patch</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s2">&quot;None&quot;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span>
+                    <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">add_collection</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+
+<span class="c1"># View the actual intersections</span>
+<span class="n">t1</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+<span class="n">isecs</span> <span class="o">=</span> <span class="n">obj3</span><span class="o">.</span><span class="n">zdata</span><span class="o">.</span><span class="n">get_isec</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+<span class="n">isec_patches</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">zonalstats</span><span class="o">.</span><span class="n">numpy_to_pathpatch</span><span class="p">(</span><span class="n">isecs</span><span class="p">)</span>
+<span class="n">colors</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">isec_patches</span><span class="p">))</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">PatchCollection</span><span class="p">(</span><span class="n">isec_patches</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">pl</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">jet</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">set_array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">colors</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">add_collection</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+
+<span class="n">bbox</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">zonalstats</span><span class="o">.</span><span class="n">get_bbox</span><span class="p">(</span><span class="n">cats</span><span class="p">[</span><span class="n">i</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">cats</span><span class="p">[</span><span class="n">i</span><span class="p">][:,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="n">bbox</span><span class="p">[</span><span class="s2">&quot;left&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="mi">2000</span><span class="p">,</span> <span class="n">bbox</span><span class="p">[</span><span class="s2">&quot;right&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2000</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="n">bbox</span><span class="p">[</span><span class="s2">&quot;bottom&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="mi">2000</span><span class="p">,</span> <span class="n">bbox</span><span class="p">[</span><span class="s2">&quot;top&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2000</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+
+<span class="n">t2</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;plot intersection takes: </span><span class="si">%f</span><span class="s2"> seconds&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">t2</span> <span class="o">-</span> <span class="n">t1</span><span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+plot intersection takes: 0.521531 seconds
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_zonalstats_wradlib_zonalstats_example_28_1.png" src="../../_images/notebooks_zonalstats_wradlib_zonalstats_example_28_1.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [26]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Compare estimates</span>
+<span class="n">maxlim</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">avg1</span><span class="p">,</span> <span class="n">avg3</span><span class="p">)))</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s2">&quot;equal&quot;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">avg1</span><span class="p">,</span> <span class="n">avg3</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;None&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Average of points in or close to polygon (mm)&quot;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Area-weighted average (mm)&quot;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">maxlim</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">maxlim</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">maxlim</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">maxlim</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_zonalstats_wradlib_zonalstats_example_29_0.png" src="../../_images/notebooks_zonalstats_wradlib_zonalstats_example_29_0.png" />
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2011-2016, wradlib developers.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.11.3',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

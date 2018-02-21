@@ -1,0 +1,6 @@
+wradlib.io.iris.IrisFile.filepos
+================================
+
+.. currentmodule:: wradlib.io.iris
+
+.. autoattribute:: IrisFile.filepos

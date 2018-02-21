@@ -1,0 +1,6 @@
+wradlib\.io\.radolan\.decode\_radolan\_runlength\_array
+=======================================================
+
+.. currentmodule:: wradlib.io.radolan
+
+.. autofunction:: decode_radolan_runlength_array

@@ -1,0 +1,884 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Beam Blockage Calculation using a DEM &mdash; wradlib</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/wradlib.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="wradlib" href="../../index.html"/>
+        <link rel="up" title="Tutorials and Examples" href="../../notebooks.html"/>
+        <link rel="next" title="Clutter and Echo Classification" href="../classify.html"/>
+        <link rel="prev" title="Attenuation correction" href="../attenuation/wradlib_attenuation.html"/>
+    
+    <link href="../../_static/wradlib.css" rel="stylesheet" type="text/css">
+
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+  <a href="../../index.html" class="icon icon-home"> wradlib
+
+
+
+</a>
+
+
+
+  <div class="version">
+    
+    <button class="verbtn">0.11.1</button>
+    <div class="version-content">
+      
+        <a href="../latest/">latest</a>
+        <a href="../0.11.1/">0.11.1</a>
+    </div>
+  </div>
+
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../gettingstarted.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../notebooks.html">Tutorials and Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../jupyter.html">How to use the tutorials and examples?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../learnpython.html">An incomplete introduction to Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics.html">Getting started with wradlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../fileio.html">Data Input - Data Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../attenuation/wradlib_attenuation.html">Attenuation correction</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Beam Blockage Calculation using a DEM</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Setup-for-Bonn-radar">Setup for Bonn radar</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Preprocessing-the-digitial-elevation-model">Preprocessing the digitial elevation model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Calculate-Beam-Blockage">Calculate Beam-Blockage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Visualize-Beamblockage">Visualize Beamblockage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Visualize-Beam-Propagation-showing-earth-curvature">Visualize Beam Propagation showing earth curvature</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../classify.html">Clutter and Echo Classification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../georeferencing.html">Georeferencing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../match3d/wradlib_match_workflow.html">Match spaceborn PR (GPM/TRMM) with ground radars</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../develop.html">For Developers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interpolation/wradlib_ipol_example.html">How to use wradlib’s ipol module for interpolation tasks?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../multisensor/wradlib_adjust_example.html">Adjusting radar-base rainfall estimates by rain gauge observations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../verification/wradlib_verify_example.html">Routine verification measures for radar-based precipitation estimates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../recipes.html">Recipes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../radolan.html">RADOLAN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zonalstats/wradlib_zonalstats_classes.html">Zonal Statistics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference.html">Library Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev_setup.html">For Developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zreferences.html">Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../release_notes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">wradlib</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../notebooks.html">Tutorials and Examples</a> &raquo;</li>
+        
+      <li>Beam Blockage Calculation using a DEM</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/notebooks/beamblockage/wradlib_beamblock.ipynb.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #303F9F;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #D84315;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 8ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+/* nice headers on first paragraph of info/warning boxes */
+.admonition .first {
+    margin: -12px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1;
+    display: block;
+}
+.admonition.warning .first {
+    background: #f0b37e;
+}
+.admonition.note .first {
+    background: #6ab0de;
+}
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="Beam-Blockage-Calculation-using-a-DEM">
+<h1>Beam Blockage Calculation using a DEM<a class="headerlink" href="#Beam-Blockage-Calculation-using-a-DEM" title="Permalink to this headline">¶</a></h1>
+<p>Here, we derive (<strong>p</strong>artial) <strong>b</strong>eam-<strong>b</strong>lockage (<strong>PBB</strong>)
+from a <strong>D</strong>igital <strong>E</strong>levation <strong>M</strong>odel (<strong>DEM</strong>).</p>
+<p>We require - the local radar setup (sitecoords, number of rays, number
+of bins, antenna elevation, beamwidth, and the range resolution); - a
+<strong>DEM</strong> with a adequate resolution.</p>
+<p>Here we use pre-processed data from the
+<a class="reference external" href="https://lta.cr.usgs.gov/GTOPO30">GTOPO30</a> and
+<a class="reference external" href="http://www2.jpl.nasa.gov/srtm">SRTM</a> missions.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">wradlib</span> <span class="kn">as</span> <span class="nn">wrl</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">pl</span>
+<span class="kn">import</span> <span class="nn">matplotlib</span> <span class="kn">as</span> <span class="nn">mpl</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">get_ipython</span><span class="p">()</span><span class="o">.</span><span class="n">magic</span><span class="p">(</span><span class="s2">&quot;matplotlib inline&quot;</span><span class="p">)</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="n">pl</span><span class="o">.</span><span class="n">ion</span><span class="p">()</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="Setup-for-Bonn-radar">
+<h2>Setup for Bonn radar<a class="headerlink" href="#Setup-for-Bonn-radar" title="Permalink to this headline">¶</a></h2>
+<p>First, we need to define some radar specifications (here: <em>University of
+Bonn</em>).</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="n">sitecoords</span> <span class="o">=</span> <span class="p">(</span><span class="mf">7.071663</span><span class="p">,</span> <span class="mf">50.73052</span><span class="p">,</span> <span class="mf">99.5</span><span class="p">)</span>
+<span class="n">nrays</span> <span class="o">=</span> <span class="mi">360</span> <span class="c1"># number of rays</span>
+<span class="n">nbins</span> <span class="o">=</span> <span class="mi">1000</span> <span class="c1"># number of range bins</span>
+<span class="n">el</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="c1"># vertical antenna pointing angle (deg)</span>
+<span class="n">bw</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="c1"># half power beam width (deg)</span>
+<span class="n">range_res</span> <span class="o">=</span> <span class="mf">100.</span> <span class="c1"># range resolution (meters)</span>
+</pre></div>
+</div>
+</div>
+<p>Create the range, azimuth, and beamradius arrays.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">nbins</span><span class="p">)</span> <span class="o">*</span> <span class="n">range_res</span>
+<span class="n">beamradius</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">half_power_radius</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">bw</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>We use</p>
+<ul class="simple">
+<li><a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/generated/wradlib.georef.sweep_centroids.html">wradlib.georef.sweep_centroids</a>
+and</li>
+<li><a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/generated/wradlib.georef.polar2lonlatalt_n.html">wradlib.georef.polar2lonlatalt_n</a></li>
+</ul>
+<p>to calculate the spherical coordinates of the bin centroids and their
+longitude, latutude and altitude.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="n">coord</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">georef</span><span class="o">.</span><span class="n">sweep_centroids</span><span class="p">(</span><span class="n">nrays</span><span class="p">,</span> <span class="n">range_res</span><span class="p">,</span> <span class="n">nbins</span><span class="p">,</span> <span class="n">el</span><span class="p">)</span>
+<span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">alt</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">georef</span><span class="o">.</span><span class="n">polar2lonlatalt_n</span><span class="p">(</span>
+    <span class="n">coord</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">degrees</span><span class="p">(</span><span class="n">coord</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">]),</span>
+    <span class="n">coord</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">sitecoords</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="n">polcoords</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dstack</span><span class="p">((</span><span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;lon,lat,alt:&quot;</span><span class="p">,</span> <span class="n">lon</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">lat</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">alt</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+lon,lat,alt: (360, 1000) (360, 1000) (360, 1000)
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="n">rlimits</span> <span class="o">=</span> <span class="p">(</span><span class="n">lon</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">lat</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">lon</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">lat</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Radar bounding box:</span><span class="se">\n\t</span><span class="si">%.2f</span><span class="se">\n</span><span class="si">%.2f</span><span class="s2">             </span><span class="si">%.2f</span><span class="se">\n\t</span><span class="si">%.2f</span><span class="s2">&quot;</span> <span class="o">%</span>
+      <span class="p">(</span><span class="n">lat</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">lon</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">lon</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">lat</span><span class="o">.</span><span class="n">min</span><span class="p">()))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Radar bounding box:
+        51.63
+5.65             8.49
+        49.83
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Preprocessing-the-digitial-elevation-model">
+<h2>Preprocessing the digitial elevation model<a class="headerlink" href="#Preprocessing-the-digitial-elevation-model" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Read the DEM from a <code class="docutils literal"><span class="pre">geotiff</span></code> file (in <code class="docutils literal"><span class="pre">WRADLIB_DATA</span></code>);</li>
+<li>clip the region inside the bounding box;</li>
+<li>map the DEM values to the polar grid points.</li>
+</ul>
+<p><em>Note</em>: You can choose between the coarser resolution <code class="docutils literal"><span class="pre">bonn_gtopo.tif</span></code>
+(from GTOPO30) and the finer resolution <code class="docutils literal"><span class="pre">bonn_new.tif</span></code> (from the SRTM
+mission).</p>
+<p>The DEM raster data is opened via
+<a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/generated/wradlib.io.open_raster.html">wradlib.io.open_raster</a>
+and extracted via
+<a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/generated/wradlib.georef.extract_raster_dataset.html">wradlib.georef.extract_raster_dataset</a>.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="c1">#rasterfile = wrl.util.get_wradlib_data_file(&#39;geo/bonn_gtopo.tif&#39;)</span>
+<span class="n">rasterfile</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">get_wradlib_data_file</span><span class="p">(</span><span class="s1">&#39;geo/bonn_new.tif&#39;</span><span class="p">)</span>
+
+<span class="n">ds</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">open_raster</span><span class="p">(</span><span class="n">rasterfile</span><span class="p">)</span>
+<span class="n">rastervalues</span><span class="p">,</span> <span class="n">rastercoords</span><span class="p">,</span> <span class="n">proj</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">georef</span><span class="o">.</span><span class="n">extract_raster_dataset</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="n">nodata</span><span class="o">=-</span><span class="mf">32768.</span><span class="p">)</span>
+
+<span class="c1"># Clip the region inside our bounding box</span>
+<span class="n">ind</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">find_bbox_indices</span><span class="p">(</span><span class="n">rastercoords</span><span class="p">,</span> <span class="n">rlimits</span><span class="p">)</span>
+<span class="n">rastercoords</span> <span class="o">=</span> <span class="n">rastercoords</span><span class="p">[</span><span class="n">ind</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span><span class="n">ind</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">ind</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="n">ind</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="o">...</span><span class="p">]</span>
+<span class="n">rastervalues</span> <span class="o">=</span> <span class="n">rastervalues</span><span class="p">[</span><span class="n">ind</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span><span class="n">ind</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">ind</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="n">ind</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span>
+
+<span class="c1"># Map rastervalues to polar grid points</span>
+<span class="n">polarvalues</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">ipol</span><span class="o">.</span><span class="n">cart2irregular_spline</span><span class="p">(</span><span class="n">rastercoords</span><span class="p">,</span> <span class="n">rastervalues</span><span class="p">,</span>
+                                             <span class="n">polcoords</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+                                             <span class="n">prefilter</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Calculate-Beam-Blockage">
+<h2>Calculate Beam-Blockage<a class="headerlink" href="#Calculate-Beam-Blockage" title="Permalink to this headline">¶</a></h2>
+<p>Now we can finally apply the
+<a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/generated/wradlib.qual.beam_block_frac.html">wradlib.qual.beam_block_frac</a>
+function to calculate the PBB.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="n">PBB</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">qual</span><span class="o">.</span><span class="n">beam_block_frac</span><span class="p">(</span><span class="n">polarvalues</span><span class="p">,</span> <span class="n">alt</span><span class="p">,</span> <span class="n">beamradius</span><span class="p">)</span>
+<span class="n">PBB</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">masked_invalid</span><span class="p">(</span><span class="n">PBB</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">PBB</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(360, 1000)
+</pre></div></div>
+</div>
+<p>So far, we calculated the fraction of beam blockage for each bin.</p>
+<p>But we need to into account that the radar signal travels along a beam.
+Cumulative beam blockage (CBB) in one bin along a beam will always be at
+least as high as the maximum PBB of the preceeding bins (see
+<a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/generated/wradlib.qual.cum_beam_block_frac.html">wradlib.qual.cum_beam_block_frac</a>)</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="n">CBB</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">qual</span><span class="o">.</span><span class="n">cum_beam_block_frac</span><span class="p">(</span><span class="n">PBB</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">CBB</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(360, 1000)
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Visualize-Beamblockage">
+<h2>Visualize Beamblockage<a class="headerlink" href="#Visualize-Beamblockage" title="Permalink to this headline">¶</a></h2>
+<p>Now we visualize - the average terrain altitude per radar bin - a beam
+blockage map - interaction with terrain along a single beam</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="c1"># just a little helper function to style x and y axes of our maps</span>
+<span class="k">def</span> <span class="nf">annotate_map</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">cm</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+    <span class="n">ticks</span> <span class="o">=</span> <span class="p">(</span><span class="n">ax</span><span class="o">.</span><span class="n">get_xticks</span><span class="p">()</span><span class="o">/</span><span class="mi">1000</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">ticks</span><span class="p">)</span>
+    <span class="n">ticks</span> <span class="o">=</span> <span class="p">(</span><span class="n">ax</span><span class="o">.</span><span class="n">get_yticks</span><span class="p">()</span><span class="o">/</span><span class="mi">1000</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">(</span><span class="n">ticks</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Kilometers&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Kilometers&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">cm</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">pl</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">cm</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">title</span><span class="o">==</span><span class="s2">&quot;&quot;</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+
+<span class="c1"># create subplots</span>
+<span class="n">ax1</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">subplot2grid</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+<span class="n">ax2</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">subplot2grid</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">ax3</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">subplot2grid</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">colspan</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">rowspan</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># azimuth angle</span>
+<span class="n">angle</span> <span class="o">=</span> <span class="mi">225</span>
+
+<span class="c1"># Plot terrain (on ax1)</span>
+<span class="n">ax1</span><span class="p">,</span> <span class="n">dem</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">vis</span><span class="o">.</span><span class="n">plot_ppi</span><span class="p">(</span><span class="n">polarvalues</span><span class="p">,</span>
+                            <span class="n">ax</span><span class="o">=</span><span class="n">ax1</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="n">r</span><span class="p">,</span>
+                            <span class="n">az</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">degrees</span><span class="p">(</span><span class="n">coord</span><span class="p">[:,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]),</span>
+                            <span class="n">cmap</span><span class="o">=</span><span class="n">mpl</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">terrain</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mf">0.</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">angle</span><span class="p">))</span><span class="o">*</span><span class="mf">1e5</span><span class="p">],</span>
+         <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">angle</span><span class="p">))</span><span class="o">*</span><span class="mf">1e5</span><span class="p">],</span><span class="s2">&quot;r-&quot;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">sitecoords</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">sitecoords</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;ro&#39;</span><span class="p">)</span>
+<span class="n">annotate_map</span><span class="p">(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">dem</span><span class="p">,</span> <span class="s1">&#39;Terrain within {0} km range&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">r</span> <span class="o">/</span> <span class="mf">1000.</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.1</span><span class="p">))</span>
+
+<span class="c1"># Plot CBB (on ax2)</span>
+<span class="n">ax2</span><span class="p">,</span> <span class="n">cbb</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">vis</span><span class="o">.</span><span class="n">plot_ppi</span><span class="p">(</span><span class="n">CBB</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax2</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="n">r</span><span class="p">,</span>
+                            <span class="n">az</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">degrees</span><span class="p">(</span><span class="n">coord</span><span class="p">[:,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]),</span>
+                            <span class="n">cmap</span><span class="o">=</span><span class="n">mpl</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">PuRd</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">annotate_map</span><span class="p">(</span><span class="n">ax2</span><span class="p">,</span> <span class="n">cbb</span><span class="p">,</span> <span class="s1">&#39;Beam-Blockage Fraction&#39;</span><span class="p">)</span>
+
+<span class="c1"># Plot single ray terrain profile on ax3</span>
+<span class="n">bc</span><span class="p">,</span> <span class="o">=</span> <span class="n">ax3</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">r</span> <span class="o">/</span> <span class="mf">1000.</span><span class="p">,</span> <span class="n">alt</span><span class="p">[</span><span class="n">angle</span><span class="p">,</span> <span class="p">:],</span> <span class="s1">&#39;-b&#39;</span><span class="p">,</span>
+               <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Beam Center&#39;</span><span class="p">)</span>
+<span class="n">b3db</span><span class="p">,</span> <span class="o">=</span> <span class="n">ax3</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">r</span> <span class="o">/</span> <span class="mf">1000.</span><span class="p">,</span> <span class="p">(</span><span class="n">alt</span><span class="p">[</span><span class="n">angle</span><span class="p">,</span> <span class="p">:]</span> <span class="o">+</span> <span class="n">beamradius</span><span class="p">),</span> <span class="s1">&#39;:b&#39;</span><span class="p">,</span>
+                 <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;3 dB Beam width&#39;</span><span class="p">)</span>
+<span class="n">ax3</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">r</span> <span class="o">/</span> <span class="mf">1000.</span><span class="p">,</span> <span class="p">(</span><span class="n">alt</span><span class="p">[</span><span class="n">angle</span><span class="p">,</span> <span class="p">:]</span> <span class="o">-</span> <span class="n">beamradius</span><span class="p">),</span> <span class="s1">&#39;:b&#39;</span><span class="p">)</span>
+<span class="n">ax3</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">r</span> <span class="o">/</span> <span class="mf">1000.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span>
+                 <span class="n">polarvalues</span><span class="p">[</span><span class="n">angle</span><span class="p">,</span> <span class="p">:],</span>
+                 <span class="n">color</span><span class="o">=</span><span class="s1">&#39;0.75&#39;</span><span class="p">)</span>
+<span class="n">ax3</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">r</span> <span class="o">/</span> <span class="mf">1000.</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.1</span><span class="p">)</span>
+<span class="n">ax3</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="mi">3000</span><span class="p">)</span>
+<span class="n">ax3</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Range (km)&#39;</span><span class="p">)</span>
+<span class="n">ax3</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Altitude (m)&#39;</span><span class="p">)</span>
+<span class="n">ax3</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+
+<span class="n">axb</span> <span class="o">=</span> <span class="n">ax3</span><span class="o">.</span><span class="n">twinx</span><span class="p">()</span>
+<span class="n">bbf</span><span class="p">,</span> <span class="o">=</span> <span class="n">axb</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">r</span> <span class="o">/</span> <span class="mf">1000.</span><span class="p">,</span> <span class="n">CBB</span><span class="p">[</span><span class="n">angle</span><span class="p">,</span> <span class="p">:],</span> <span class="s1">&#39;-k&#39;</span><span class="p">,</span>
+                <span class="n">label</span><span class="o">=</span><span class="s1">&#39;BBF&#39;</span><span class="p">)</span>
+<span class="n">axb</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Beam-blockage fraction&#39;</span><span class="p">)</span>
+<span class="n">axb</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">)</span>
+<span class="n">axb</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">r</span> <span class="o">/</span> <span class="mf">1000.</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.1</span><span class="p">)</span>
+
+
+<span class="n">legend</span> <span class="o">=</span> <span class="n">ax3</span><span class="o">.</span><span class="n">legend</span><span class="p">((</span><span class="n">bc</span><span class="p">,</span> <span class="n">b3db</span><span class="p">,</span> <span class="n">bbf</span><span class="p">),</span>
+                    <span class="p">(</span><span class="s1">&#39;Beam Center&#39;</span><span class="p">,</span> <span class="s1">&#39;3 dB Beam width&#39;</span><span class="p">,</span> <span class="s1">&#39;BBF&#39;</span><span class="p">),</span>
+                    <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_beamblockage_wradlib_beamblock_25_0.png" src="../../_images/notebooks_beamblockage_wradlib_beamblock_25_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="Visualize-Beam-Propagation-showing-earth-curvature">
+<h2>Visualize Beam Propagation showing earth curvature<a class="headerlink" href="#Visualize-Beam-Propagation-showing-earth-curvature" title="Permalink to this headline">¶</a></h2>
+<p>Now we visualize - interaction with terrain along a single beam</p>
+<p>In this representation the earth curvature is shown. For this we assume
+the earth a sphere with exactly 6370000 m radius. This is needed to get
+the height ticks at nice position.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">height_formatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="mi">6370000</span><span class="p">)</span> <span class="o">/</span> <span class="mi">1000</span>
+    <span class="n">fmt_str</span> <span class="o">=</span> <span class="s1">&#39;{:g}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">fmt_str</span>
+
+<span class="k">def</span> <span class="nf">range_formatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">/</span> <span class="mf">1000.</span>
+    <span class="n">fmt_str</span> <span class="o">=</span> <span class="s1">&#39;{:g}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">fmt_str</span>
+</pre></div>
+</div>
+</div>
+<ul class="simple">
+<li>The
+<a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/generated/wradlib.vis.create_cg.html">wradlib.vis.create_cg</a>-function
+is facilitated to create the curved geometries.</li>
+<li>The actual data is plottet as (theta, range) on the parasite axis.</li>
+<li>Some tweaking is needed to get the final plot look nice.</li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+<span class="n">cgax</span><span class="p">,</span> <span class="n">caax</span><span class="p">,</span> <span class="n">paax</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">vis</span><span class="o">.</span><span class="n">create_cg</span><span class="p">(</span><span class="s1">&#39;RHI&#39;</span><span class="p">,</span> <span class="n">fig</span><span class="p">,</span> <span class="mi">111</span><span class="p">)</span>
+
+<span class="c1"># azimuth angle</span>
+<span class="n">angle</span> <span class="o">=</span> <span class="mi">225</span>
+
+<span class="c1"># fix grid_helper</span>
+<span class="n">er</span> <span class="o">=</span> <span class="mi">6370000</span>
+<span class="n">gh</span> <span class="o">=</span> <span class="n">cgax</span><span class="o">.</span><span class="n">get_grid_helper</span><span class="p">()</span>
+<span class="n">gh</span><span class="o">.</span><span class="n">grid_finder</span><span class="o">.</span><span class="n">grid_locator2</span><span class="o">.</span><span class="n">_nbins</span><span class="o">=</span><span class="mi">80</span>
+<span class="n">gh</span><span class="o">.</span><span class="n">grid_finder</span><span class="o">.</span><span class="n">grid_locator2</span><span class="o">.</span><span class="n">_steps</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">10</span><span class="p">]</span>
+
+<span class="c1"># calculate beam_height and arc_distance for ke=1</span>
+<span class="c1"># means line of sight</span>
+<span class="n">bhe</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">georef</span><span class="o">.</span><span class="n">beam_height_n</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">ke</span><span class="o">=</span><span class="mf">1.</span><span class="p">)</span>
+<span class="n">ade</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">georef</span><span class="o">.</span><span class="n">arc_distance_n</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">ke</span><span class="o">=</span><span class="mf">1.</span><span class="p">)</span>
+<span class="n">nn0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+<span class="c1"># for nice plotting we assume earth_radius = 6370000 m</span>
+<span class="n">ecp</span> <span class="o">=</span> <span class="n">nn0</span> <span class="o">+</span> <span class="n">er</span>
+<span class="c1"># theta (arc_distance sector angle)</span>
+<span class="n">thetap</span> <span class="o">=</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">degrees</span><span class="p">(</span><span class="n">ade</span><span class="o">/</span><span class="n">er</span><span class="p">)</span> <span class="o">+</span> <span class="mf">90.0</span>
+
+<span class="c1"># zero degree elevation with standard refraction</span>
+<span class="n">bh0</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">georef</span><span class="o">.</span><span class="n">beam_height_n</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># plot (ecp is earth surface normal null)</span>
+<span class="n">bes</span><span class="p">,</span> <span class="o">=</span> <span class="n">paax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">thetap</span><span class="p">,</span> <span class="n">ecp</span><span class="p">,</span> <span class="s1">&#39;-k&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Earth Surface NN&#39;</span><span class="p">)</span>
+<span class="n">bc</span><span class="p">,</span> <span class="o">=</span> <span class="n">paax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">thetap</span><span class="p">,</span> <span class="n">ecp</span> <span class="o">+</span> <span class="n">alt</span><span class="p">[</span><span class="n">angle</span><span class="p">,</span> <span class="p">:],</span> <span class="s1">&#39;-b&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Beam Center&#39;</span><span class="p">)</span>
+<span class="n">bc0r</span><span class="p">,</span> <span class="o">=</span> <span class="n">paax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">thetap</span><span class="p">,</span> <span class="n">ecp</span> <span class="o">+</span> <span class="n">bh0</span> <span class="o">+</span> <span class="n">alt</span><span class="p">[</span><span class="n">angle</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="p">,</span> <span class="s1">&#39;-g&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;0 deg Refraction&#39;</span><span class="p">)</span>
+<span class="n">bc0n</span><span class="p">,</span> <span class="o">=</span> <span class="n">paax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">thetap</span><span class="p">,</span> <span class="n">ecp</span> <span class="o">+</span> <span class="n">bhe</span> <span class="o">+</span> <span class="n">alt</span><span class="p">[</span><span class="n">angle</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;-r&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;0 deg line of sight&#39;</span><span class="p">)</span>
+<span class="n">b3db</span><span class="p">,</span> <span class="o">=</span> <span class="n">paax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">thetap</span><span class="p">,</span> <span class="n">ecp</span> <span class="o">+</span> <span class="n">alt</span><span class="p">[</span><span class="n">angle</span><span class="p">,</span> <span class="p">:]</span>  <span class="o">+</span> <span class="n">beamradius</span><span class="p">,</span> <span class="s1">&#39;:b&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;+3 dB Beam width&#39;</span><span class="p">)</span>
+<span class="n">paax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">thetap</span><span class="p">,</span> <span class="n">ecp</span> <span class="o">+</span> <span class="n">alt</span><span class="p">[</span><span class="n">angle</span><span class="p">,</span> <span class="p">:]</span> <span class="o">-</span> <span class="n">beamradius</span><span class="p">,</span> <span class="s1">&#39;:b&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;-3 dB Beam width&#39;</span><span class="p">)</span>
+
+<span class="c1"># orography</span>
+<span class="n">paax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">thetap</span><span class="p">,</span> <span class="n">ecp</span><span class="p">,</span>
+                  <span class="n">ecp</span> <span class="o">+</span> <span class="n">polarvalues</span><span class="p">[</span><span class="n">angle</span><span class="p">,</span> <span class="p">:],</span>
+                  <span class="n">color</span><span class="o">=</span><span class="s1">&#39;0.75&#39;</span><span class="p">)</span>
+
+<span class="c1"># shape axes</span>
+<span class="n">cgax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">ade</span><span class="p">))</span>
+<span class="n">cgax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="n">ecp</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">-</span><span class="mi">1000</span><span class="p">,</span> <span class="n">ecp</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">+</span><span class="mi">2500</span><span class="p">])</span>
+<span class="n">caax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">cgax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+<span class="n">cgax</span><span class="o">.</span><span class="n">axis</span><span class="p">[</span><span class="s1">&#39;top&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">toggle</span><span class="p">(</span><span class="nb">all</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">caax</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_major_locator</span><span class="p">(</span><span class="n">mpl</span><span class="o">.</span><span class="n">ticker</span><span class="o">.</span><span class="n">MaxNLocator</span><span class="p">(</span><span class="n">steps</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">10</span><span class="p">],</span> <span class="n">nbins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">prune</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">))</span>
+<span class="n">caax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_locator</span><span class="p">(</span><span class="n">mpl</span><span class="o">.</span><span class="n">ticker</span><span class="o">.</span><span class="n">MaxNLocator</span><span class="p">())</span>
+<span class="n">caax</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">mpl</span><span class="o">.</span><span class="n">ticker</span><span class="o">.</span><span class="n">FuncFormatter</span><span class="p">(</span><span class="n">height_formatter</span><span class="p">))</span>
+<span class="n">caax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">mpl</span><span class="o">.</span><span class="n">ticker</span><span class="o">.</span><span class="n">FuncFormatter</span><span class="p">(</span><span class="n">range_formatter</span><span class="p">))</span>
+
+<span class="n">caax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Range (km)&#39;</span><span class="p">)</span>
+<span class="n">caax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Altitude (km)&#39;</span><span class="p">)</span>
+
+<span class="n">legend</span> <span class="o">=</span> <span class="n">paax</span><span class="o">.</span><span class="n">legend</span><span class="p">((</span><span class="n">bes</span><span class="p">,</span> <span class="n">bc0n</span><span class="p">,</span> <span class="n">bc0r</span><span class="p">,</span> <span class="n">bc</span><span class="p">,</span> <span class="n">b3db</span><span class="p">),</span>
+                    <span class="p">(</span><span class="s1">&#39;Earth Surface NN&#39;</span><span class="p">,</span> <span class="s1">&#39;0 deg line of sight&#39;</span><span class="p">,</span> <span class="s1">&#39;0 deg std refraction&#39;</span><span class="p">,</span> <span class="s1">&#39;Beam Center&#39;</span><span class="p">,</span> <span class="s1">&#39;3 dB Beam width&#39;</span><span class="p">),</span>
+                    <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_beamblockage_wradlib_beamblock_30_0.png" src="../../_images/notebooks_beamblockage_wradlib_beamblock_30_0.png" />
+</div>
+</div>
+<p>Go back to <a class="reference external" href="#Read-DEM-Raster-Data">Read DEM Raster Data</a>, change the
+rasterfile to use the other resolution DEM and process again.</p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../classify.html" class="btn btn-neutral float-right" title="Clutter and Echo Classification" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../attenuation/wradlib_attenuation.html" class="btn btn-neutral" title="Attenuation correction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2011-2016, wradlib developers.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.11.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

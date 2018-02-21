@@ -1,0 +1,13 @@
+wradlib\.ipol\.ExternalDriftKriging
+===================================
+
+.. currentmodule:: wradlib.ipol
+
+.. autoclass:: ExternalDriftKriging
+
+   
+
+
+
+   
+

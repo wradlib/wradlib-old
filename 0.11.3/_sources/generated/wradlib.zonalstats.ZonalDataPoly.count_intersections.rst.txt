@@ -1,0 +1,6 @@
+wradlib.zonalstats.ZonalDataPoly.count\_intersections
+=====================================================
+
+.. currentmodule:: wradlib.zonalstats
+
+.. autoattribute:: ZonalDataPoly.count_intersections

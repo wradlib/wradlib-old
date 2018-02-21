@@ -1,0 +1,6 @@
+wradlib.zonalstats.GridPointsToPoly.w
+=====================================
+
+.. currentmodule:: wradlib.zonalstats
+
+.. autoattribute:: GridPointsToPoly.w

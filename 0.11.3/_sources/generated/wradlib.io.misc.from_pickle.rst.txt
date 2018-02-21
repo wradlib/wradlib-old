@@ -1,0 +1,6 @@
+wradlib.io.misc.from\_pickle
+============================
+
+.. currentmodule:: wradlib.io.misc
+
+.. autofunction:: from_pickle

@@ -1,0 +1,6 @@
+wradlib.io.iris.IrisFile.record\_number
+=======================================
+
+.. currentmodule:: wradlib.io.iris
+
+.. autoattribute:: IrisFile.record_number

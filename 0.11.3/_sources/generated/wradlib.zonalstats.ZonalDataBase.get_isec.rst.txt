@@ -1,0 +1,6 @@
+wradlib.zonalstats.ZonalDataBase.get\_isec
+==========================================
+
+.. currentmodule:: wradlib.zonalstats
+
+.. automethod:: ZonalDataBase.get_isec

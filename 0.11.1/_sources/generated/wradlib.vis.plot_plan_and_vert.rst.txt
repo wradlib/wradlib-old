@@ -1,0 +1,6 @@
+wradlib\.vis\.plot\_plan\_and\_vert
+===================================
+
+.. currentmodule:: wradlib.vis
+
+.. autofunction:: plot_plan_and_vert

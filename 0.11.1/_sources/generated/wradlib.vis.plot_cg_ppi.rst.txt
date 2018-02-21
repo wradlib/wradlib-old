@@ -1,0 +1,6 @@
+wradlib\.vis\.plot\_cg\_ppi
+===========================
+
+.. currentmodule:: wradlib.vis
+
+.. autofunction:: plot_cg_ppi

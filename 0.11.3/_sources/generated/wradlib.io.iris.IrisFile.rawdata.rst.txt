@@ -1,0 +1,6 @@
+wradlib.io.iris.IrisFile.rawdata
+================================
+
+.. currentmodule:: wradlib.io.iris
+
+.. autoattribute:: IrisFile.rawdata

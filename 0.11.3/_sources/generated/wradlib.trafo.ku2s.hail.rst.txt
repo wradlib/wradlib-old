@@ -1,0 +1,6 @@
+wradlib.trafo.ku2s.hail
+=======================
+
+.. currentmodule:: wradlib.trafo
+
+.. autoattribute:: ku2s.hail

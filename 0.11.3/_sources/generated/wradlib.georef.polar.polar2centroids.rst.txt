@@ -1,0 +1,6 @@
+wradlib.georef.polar.polar2centroids
+====================================
+
+.. currentmodule:: wradlib.georef.polar
+
+.. autofunction:: polar2centroids

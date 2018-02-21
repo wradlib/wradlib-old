@@ -1,0 +1,6 @@
+wradlib.zonalstats.DataSource.get\_data\_by\_geom
+=================================================
+
+.. currentmodule:: wradlib.zonalstats
+
+.. automethod:: DataSource.get_data_by_geom

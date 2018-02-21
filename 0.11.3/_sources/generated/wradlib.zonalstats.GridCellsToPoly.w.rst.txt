@@ -1,0 +1,6 @@
+wradlib.zonalstats.GridCellsToPoly.w
+====================================
+
+.. currentmodule:: wradlib.zonalstats
+
+.. autoattribute:: GridCellsToPoly.w

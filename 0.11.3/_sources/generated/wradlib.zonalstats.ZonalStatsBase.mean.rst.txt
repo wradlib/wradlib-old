@@ -1,0 +1,6 @@
+wradlib.zonalstats.ZonalStatsBase.mean
+======================================
+
+.. currentmodule:: wradlib.zonalstats
+
+.. automethod:: ZonalStatsBase.mean

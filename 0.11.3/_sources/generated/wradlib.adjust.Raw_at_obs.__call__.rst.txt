@@ -1,0 +1,6 @@
+wradlib.adjust.Raw\_at\_obs.\_\_call\_\_
+========================================
+
+.. currentmodule:: wradlib.adjust
+
+.. automethod:: Raw_at_obs.__call__

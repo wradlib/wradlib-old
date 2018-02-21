@@ -1,0 +1,349 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>wradlib.io.rainbow.read_Rainbow &mdash; wradlib</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/wradlib.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="wradlib" href="../index.html"/>
+        <link rel="up" title="Raw Data I/O" href="../io.html"/>
+        <link rel="next" title="wradlib.io.gdal.open_shape" href="wradlib.io.gdal.open_shape.html"/>
+        <link rel="prev" title="wradlib.io.netcdf.read_generic_netcdf" href="wradlib.io.netcdf.read_generic_netcdf.html"/>
+    
+    <link href="../_static/wradlib.css" rel="stylesheet" type="text/css">
+
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+  <a href="../index.html" class="icon icon-home"> wradlib
+
+
+
+</a>
+
+
+
+  <div class="version">
+    
+    <button class="verbtn">0.11.3</button>
+    <div class="version-content">
+      
+        <a href="../latest/">latest</a>
+        <a href="../0.11.3/">0.11.3</a>
+        <a href="../0.11.1/">0.11.1</a>
+    </div>
+  </div>
+
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../gettingstarted.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks.html">Tutorials and Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../reference.html">Library Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../io.html">Raw Data I/O</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../io.html#read-radolan-and-dx">Read RADOLAN and DX</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../io.html#hdf-data-i-o">HDF Data I/O</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../io.html#read-netcdf">Read NetCDF</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../io.html#read-rainbow">Read Rainbow</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">wradlib.io.rainbow.read_Rainbow</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../io.html#raster-and-vector-i-o-using-gdal">Raster and Vector I/O using GDAL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../io.html#read-iris-data-format">Read IRIS Data Format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../io.html#miscellaneous-data-i-o">Miscellaneous Data I/O</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../trafo.html">Data Transformation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zr.html">Z-R Conversions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../georef.html">Georeferencing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ipol.html">Interpolation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../qual.html">Data Quality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../comp.html">Composition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../clutter.html">Clutter Identification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dp.html">Dual-Pol and Differential Phase</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../fill.html">Filling Missing Values</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../vpr.html">Vertical Profile of Reflectivity (VPR)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../atten.html">Attenuation Correction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../adjust.html">Gage adjustment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../verify.html">Verification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../vis.html">Visualisation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zonalstats.html">Zonal Statistics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../util.html">Utility functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_setup.html">For Developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zreferences.html">Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">wradlib</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../reference.html">Library Reference</a> &raquo;</li>
+        
+          <li><a href="../io.html">Raw Data I/O</a> &raquo;</li>
+        
+      <li>wradlib.io.rainbow.read_Rainbow</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/generated/wradlib.io.rainbow.read_Rainbow.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+/* nice headers on first paragraph of info/warning boxes */
+.admonition .first {
+    margin: -12px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1;
+    display: block;
+}
+.admonition.warning .first {
+    background: #f0b37e;
+}
+.admonition.note .first {
+    background: #6ab0de;
+}
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="wradlib-io-rainbow-read-rainbow">
+<h1>wradlib.io.rainbow.read_Rainbow<a class="headerlink" href="#wradlib-io-rainbow-read-rainbow" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="wradlib.io.rainbow.read_Rainbow">
+<code class="descclassname">wradlib.io.rainbow.</code><code class="descname">read_Rainbow</code><span class="sig-paren">(</span><em>f</em>, <em>loaddata=True</em><span class="sig-paren">)</span><a class="headerlink" href="#wradlib.io.rainbow.read_Rainbow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads Rainbow files files according to their structure</p>
+<p>In contrast to other file readers under <a class="reference internal" href="../io.html#module-wradlib.io" title="wradlib.io"><code class="xref py py-meth docutils literal notranslate"><span class="pre">wradlib.io</span></code></a>, this function
+will <em>not</em> return a two item tuple with (data, metadata). Instead, this
+function returns ONE dictionary that contains all the file contents - both
+data and metadata. The keys of the output dictionary conform to the XML
+outline in the original data file.
+The radar data will be extracted from the data blobs, converted and added
+to the dict with key ‘data’ at the place where the &#64;blobid was pointing
+from.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>f</strong> (<em>string</em><em> or </em><em>file handle</em>) – a rainbow file path or file handle of rainbow file</li>
+<li><strong>loaddata</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) – True | False, If False function returns only metadata</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>rbdict</strong> (<em>dict</em>) – a dictionary that contains both data and metadata according to the
+original rainbow file structure</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<p>See <span class="xref std std-ref">notebooks/fileio/wradlib_load_rainbow_example.ipynb</span>.</p>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="wradlib.io.gdal.open_shape.html" class="btn btn-neutral float-right" title="wradlib.io.gdal.open_shape" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="wradlib.io.netcdf.read_generic_netcdf.html" class="btn btn-neutral" title="wradlib.io.netcdf.read_generic_netcdf" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2011-2016, wradlib developers.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.11.3',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

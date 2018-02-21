@@ -1,0 +1,430 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Gage adjustment &mdash; wradlib</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/wradlib.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="wradlib" href="index.html"/>
+        <link rel="up" title="Library Reference" href="reference.html"/>
+        <link rel="next" title="wradlib.adjust.AdjustBase" href="generated/wradlib.adjust.AdjustBase.html"/>
+        <link rel="prev" title="wradlib.atten.pia_from_kdp" href="generated/wradlib.atten.pia_from_kdp.html"/>
+    
+    <link href="_static/wradlib.css" rel="stylesheet" type="text/css">
+
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+  <a href="index.html" class="icon icon-home"> wradlib
+
+
+
+</a>
+
+
+
+  <div class="version">
+    
+    <button class="verbtn">0.11.1</button>
+    <div class="version-content">
+      
+        <a href="../latest/">latest</a>
+        <a href="../0.11.1/">0.11.1</a>
+    </div>
+  </div>
+
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="gettingstarted.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks.html">Tutorials and Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="reference.html">Library Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="io.html">Raw Data I/O</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trafo.html">Data Transformation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zr.html">Z-R Conversions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="georef.html">Georeferencing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipol.html">Interpolation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qual.html">Data Quality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="comp.html">Composition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clutter.html">Clutter Identification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dp.html">Dual-Pol and Differential Phase</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fill.html">Filling Missing Values</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vpr.html">Vertical Profile of Reflectivity (VPR)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="atten.html">Attenuation Correction</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Gage adjustment</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#concept">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#quick-start">Quick start</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cross-validation">Cross validation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.adjust.AdjustBase.html">wradlib.adjust.AdjustBase</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.adjust.AdjustMFB.html">wradlib.adjust.AdjustMFB</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.adjust.AdjustMultiply.html">wradlib.adjust.AdjustMultiply</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.adjust.AdjustAdd.html">wradlib.adjust.AdjustAdd</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.adjust.AdjustMixed.html">wradlib.adjust.AdjustMixed</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.adjust.Raw_at_obs.html">wradlib.adjust.Raw_at_obs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.adjust.GageOnly.html">wradlib.adjust.GageOnly</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.adjust.AdjustNone.html">wradlib.adjust.AdjustNone</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="verify.html">Verification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vis.html">Visualisation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zonalstats.html">Zonal Statistics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="util.html">Utility functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dev_setup.html">For Developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="zreferences.html">Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="release_notes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">wradlib</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="reference.html">Library Reference</a> &raquo;</li>
+        
+      <li>Gage adjustment</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/adjust.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+/* nice headers on first paragraph of info/warning boxes */
+.admonition .first {
+    margin: -12px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1;
+    display: block;
+}
+.admonition.warning .first {
+    background: #f0b37e;
+}
+.admonition.note .first {
+    background: #6ab0de;
+}
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<span class="target" id="module-wradlib.adjust"></span><div class="section" id="gage-adjustment">
+<h1>Gage adjustment<a class="headerlink" href="#gage-adjustment" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="concept">
+<h2>Concept<a class="headerlink" href="#concept" title="Permalink to this headline">¶</a></h2>
+<p>The objective of this module is the adjustment of radar-based rainfall
+estimates by rain gage observations. However, this module could also be
+applied to adjust satellite rainfall by rain gage observations, remotely
+sensed soil moisture patterns by ground truthing moisture sensors, or any
+dense spatial point pattern which could be adjusted by sparse point
+measurements (ground truth).</p>
+<p>Basically, we only need two data sources:</p>
+<ul class="simple">
+<li>point observations (e.g. rain gage observations)</li>
+<li>set of (potentially irregular) unadjusted point values
+(e.g. remotely sensed rainfall)</li>
+</ul>
+<p><a class="reference internal" href="zreferences.html#goudenhoofdt2009" id="id1">[Goudenhoofdt et al., 2009]</a> provide an excellent overview of adjustment
+procedures. The general idea is that we quantify the error of the
+remotely sensed rainfall at the rain gage locations, assuming the rain
+gage observation to be accurate.</p>
+<p>The error can be assumed to be purely additive (AdjustAdd), purely
+multiplicative (AdjustMultiply, AdjustMFB) or a mixture of both (AdjustMixed).
+If the error is assumed to be heterogeneous in space (AdjustAdd,
+AdjustMultiply, AdjustMixed), the error at the rain gage locations is
+interpolated to the radar bin locations and then used to adjust (correct)
+the raw radar rainfall estimates. In case of the AdjustMFB approach, though,
+the multiplicative error is assumed to be homogeneous in space.</p>
+</div>
+<div class="section" id="quick-start">
+<h2>Quick start<a class="headerlink" href="#quick-start" title="Permalink to this headline">¶</a></h2>
+<p>The basic procedure consists of creating an adjustment object from the class
+you want to use for adjustment. After that, you can call the object with the
+actual data that is to be adjusted. The following example is using the
+additive error model with default settings. <code class="docutils literal"><span class="pre">obs_coords</span></code> and
+<code class="docutils literal"><span class="pre">raw_coords</span></code> represent arrays with coordinate pairs for the gage
+observations and the radar bins, respectively. <code class="docutils literal"><span class="pre">obs</span></code> and <code class="docutils literal"><span class="pre">raw</span></code> are
+arrays containing the actual data:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">adjuster</span> <span class="o">=</span> <span class="n">AdjustAdd</span><span class="p">(</span><span class="n">obs_coords</span><span class="p">,</span> <span class="n">raw_coords</span><span class="p">)</span>
+<span class="n">adjusted</span> <span class="o">=</span> <span class="n">adjuster</span><span class="p">(</span><span class="n">obs</span><span class="p">,</span> <span class="n">raw</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Both obs and raw need to be flat (1-dimensional) arrays of shape (n,) that have
+the same length as the the obs_coords and raw_coords arrays, respectively.</p>
+<p>The user can specify the approach that should be used to interpolate the error
+in space, as well as the keyword arguments which control the behaviour of the
+interpolation approach. For this purpose, all interpolation classes from the
+wradlib.ipol module are available and can be passed by using the <code class="docutils literal"><span class="pre">Ipclass</span></code>
+argument. The default interpolation class is Inverse Distance Weighting
+(wradlib.ipol.Idw). If you want to use e.g. linear barycentric interpolation:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">wradlib.ipol</span> <span class="k">as</span> <span class="nn">ipol</span>
+<span class="n">adjuster</span> <span class="o">=</span> <span class="n">AdjustAdd</span><span class="p">(</span><span class="n">obs_coords</span><span class="p">,</span> <span class="n">raw_coords</span><span class="p">,</span> <span class="n">Ipclass</span><span class="o">=</span><span class="n">ipol</span><span class="o">.</span><span class="n">Linear</span><span class="p">)</span>
+<span class="n">adjusted</span> <span class="o">=</span> <span class="n">adjuster</span><span class="p">(</span><span class="n">obs</span><span class="p">,</span> <span class="n">raw</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Be aware that there are a lot of control parameters that can dramatically
+influence the behaviour of the adjustment (which gauges are considered,
+how is an error interpolation carried out, …). Read the docs carefully
+and try to experiment with the effects of the different control parameters.
+There might be situations in which the algorithms decides - based on the
+control parameter -  not to do an adjustment and just return the unadjusted
+values.</p>
+</div>
+</div>
+<div class="section" id="cross-validation">
+<h2>Cross validation<a class="headerlink" href="#cross-validation" title="Permalink to this headline">¶</a></h2>
+<p>Another helpful feature is an easy-to-use method for leave-one-out
+cross-validation <a class="reference internal" href="zreferences.html#cross-validation" id="id2">[B6]</a>. Cross validation is a standard
+procedure for verifying rain gage adjustment or interpolation procedures. You
+can start the cross validation in the same way as you start the actual
+adjustment, however, you call the <code class="docutils literal"><span class="pre">xvalidate</span></code> method instead. The result of
+the cross validation are pairs of observation and the corresponding adjustment
+result at the observation location. Using the wradlib.verify module, you can
+compute error metrics for the cross validation results:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">adjuster</span> <span class="o">=</span> <span class="n">AdjustAdd</span><span class="p">(</span><span class="n">obs_coords</span><span class="p">,</span> <span class="n">raw_coords</span><span class="p">)</span>
+<span class="n">observed</span><span class="p">,</span> <span class="n">estimated</span> <span class="o">=</span> <span class="n">adjuster</span><span class="o">.</span><span class="n">xvalidate</span><span class="p">(</span><span class="n">obs</span><span class="p">,</span> <span class="n">raw</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">wradlib.verify</span> <span class="k">import</span> <span class="n">ErrorMetrics</span>
+<span class="n">metrics</span> <span class="o">=</span> <span class="n">ErrorMetrics</span><span class="p">(</span><span class="n">observed</span><span class="p">,</span> <span class="n">estimated</span><span class="p">)</span>
+<span class="n">metrics</span><span class="o">.</span><span class="n">report</span><span class="p">()</span>
+</pre></div>
+</div>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/wradlib.adjust.AdjustBase.html#wradlib.adjust.AdjustBase" title="wradlib.adjust.AdjustBase"><code class="xref py py-obj docutils literal"><span class="pre">AdjustBase</span></code></a></td>
+<td>The basic adjustment class that inherits to all other classes.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/wradlib.adjust.AdjustMFB.html#wradlib.adjust.AdjustMFB" title="wradlib.adjust.AdjustMFB"><code class="xref py py-obj docutils literal"><span class="pre">AdjustMFB</span></code></a></td>
+<td>Multiplicative gage adjustment using <em>one</em> correction factor for the entire domain.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/wradlib.adjust.AdjustMultiply.html#wradlib.adjust.AdjustMultiply" title="wradlib.adjust.AdjustMultiply"><code class="xref py py-obj docutils literal"><span class="pre">AdjustMultiply</span></code></a></td>
+<td>Gage adjustment using a multiplicative error model</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/wradlib.adjust.AdjustAdd.html#wradlib.adjust.AdjustAdd" title="wradlib.adjust.AdjustAdd"><code class="xref py py-obj docutils literal"><span class="pre">AdjustAdd</span></code></a></td>
+<td>Gage adjustment using an additive error model.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/wradlib.adjust.AdjustMixed.html#wradlib.adjust.AdjustMixed" title="wradlib.adjust.AdjustMixed"><code class="xref py py-obj docutils literal"><span class="pre">AdjustMixed</span></code></a></td>
+<td>Gage adjustment using a mixed error model (additive and multiplicative).</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/wradlib.adjust.Raw_at_obs.html#wradlib.adjust.Raw_at_obs" title="wradlib.adjust.Raw_at_obs"><code class="xref py py-obj docutils literal"><span class="pre">Raw_at_obs</span></code></a></td>
+<td>Get the raw values in the neighbourhood of the observation points</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/wradlib.adjust.GageOnly.html#wradlib.adjust.GageOnly" title="wradlib.adjust.GageOnly"><code class="xref py py-obj docutils literal"><span class="pre">GageOnly</span></code></a></td>
+<td>Same behaviour as the other adjustment classes, but returns an</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/wradlib.adjust.AdjustNone.html#wradlib.adjust.AdjustNone" title="wradlib.adjust.AdjustNone"><code class="xref py py-obj docutils literal"><span class="pre">AdjustNone</span></code></a></td>
+<td>Same behaviour as the other adjustment classes, but simply returns the unadjusted data.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="generated/wradlib.adjust.AdjustBase.html" class="btn btn-neutral float-right" title="wradlib.adjust.AdjustBase" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="generated/wradlib.atten.pia_from_kdp.html" class="btn btn-neutral" title="wradlib.atten.pia_from_kdp" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2011-2016, wradlib developers.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.11.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,6 @@
+wradlib.verify.ErrorMetrics.mse
+===============================
+
+.. currentmodule:: wradlib.verify
+
+.. automethod:: ErrorMetrics.mse

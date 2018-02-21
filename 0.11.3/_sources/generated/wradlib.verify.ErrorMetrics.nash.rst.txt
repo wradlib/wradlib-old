@@ -1,0 +1,6 @@
+wradlib.verify.ErrorMetrics.nash
+================================
+
+.. currentmodule:: wradlib.verify
+
+.. automethod:: ErrorMetrics.nash

@@ -1,0 +1,6 @@
+wradlib.clutter.filter\_gabella\_a
+==================================
+
+.. currentmodule:: wradlib.clutter
+
+.. autofunction:: filter_gabella_a

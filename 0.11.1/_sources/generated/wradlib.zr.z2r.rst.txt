@@ -1,0 +1,6 @@
+wradlib\.zr\.z2r
+================
+
+.. currentmodule:: wradlib.zr
+
+.. autofunction:: z2r

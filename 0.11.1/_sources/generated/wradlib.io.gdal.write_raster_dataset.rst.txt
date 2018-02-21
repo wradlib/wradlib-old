@@ -1,0 +1,6 @@
+wradlib\.io\.gdal\.write\_raster\_dataset
+=========================================
+
+.. currentmodule:: wradlib.io.gdal
+
+.. autofunction:: write_raster_dataset

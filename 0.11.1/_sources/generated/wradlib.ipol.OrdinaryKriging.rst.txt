@@ -1,0 +1,13 @@
+wradlib\.ipol\.OrdinaryKriging
+==============================
+
+.. currentmodule:: wradlib.ipol
+
+.. autoclass:: OrdinaryKriging
+
+   
+
+
+
+   
+

@@ -1,0 +1,6 @@
+wradlib.verify.ErrorMetrics.r2
+==============================
+
+.. currentmodule:: wradlib.verify
+
+.. automethod:: ErrorMetrics.r2

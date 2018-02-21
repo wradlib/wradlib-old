@@ -1,0 +1,6 @@
+wradlib.georef.vector.get\_shape\_points
+========================================
+
+.. currentmodule:: wradlib.georef.vector
+
+.. autofunction:: get_shape_points

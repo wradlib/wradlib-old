@@ -1,0 +1,6 @@
+wradlib.io.radolan.parse\_DWD\_quant\_composite\_header
+=======================================================
+
+.. currentmodule:: wradlib.io.radolan
+
+.. autofunction:: parse_DWD_quant_composite_header

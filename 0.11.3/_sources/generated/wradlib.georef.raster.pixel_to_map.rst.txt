@@ -1,0 +1,6 @@
+wradlib.georef.raster.pixel\_to\_map
+====================================
+
+.. currentmodule:: wradlib.georef.raster
+
+.. autofunction:: pixel_to_map

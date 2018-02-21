@@ -1,0 +1,6 @@
+wradlib.georef.vector.ogr\_copy\_layer\_by\_name
+================================================
+
+.. currentmodule:: wradlib.georef.vector
+
+.. autofunction:: ogr_copy_layer_by_name

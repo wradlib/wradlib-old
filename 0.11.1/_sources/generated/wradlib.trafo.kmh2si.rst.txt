@@ -1,0 +1,6 @@
+wradlib\.trafo\.kmh2si
+======================
+
+.. currentmodule:: wradlib.trafo
+
+.. autofunction:: kmh2si

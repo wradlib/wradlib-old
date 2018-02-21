@@ -1,0 +1,6 @@
+wradlib\.georef\.vector\.ogr\_add\_feature
+==========================================
+
+.. currentmodule:: wradlib.georef.vector
+
+.. autofunction:: ogr_add_feature

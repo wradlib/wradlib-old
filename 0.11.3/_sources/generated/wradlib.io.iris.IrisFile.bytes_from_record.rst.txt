@@ -1,0 +1,6 @@
+wradlib.io.iris.IrisFile.bytes\_from\_record
+============================================
+
+.. currentmodule:: wradlib.io.iris
+
+.. automethod:: IrisFile.bytes_from_record

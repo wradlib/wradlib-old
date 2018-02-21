@@ -1,0 +1,6 @@
+wradlib\.atten\.correctAttenuationHB
+====================================
+
+.. currentmodule:: wradlib.atten
+
+.. autofunction:: correctAttenuationHB

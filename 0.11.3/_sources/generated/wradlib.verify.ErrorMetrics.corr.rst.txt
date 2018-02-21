@@ -1,0 +1,6 @@
+wradlib.verify.ErrorMetrics.corr
+================================
+
+.. currentmodule:: wradlib.verify
+
+.. automethod:: ErrorMetrics.corr

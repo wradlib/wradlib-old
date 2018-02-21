@@ -1,0 +1,6 @@
+wradlib.georef.polar.spherical\_to\_centroids
+=============================================
+
+.. currentmodule:: wradlib.georef.polar
+
+.. autofunction:: spherical_to_centroids

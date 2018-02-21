@@ -1,0 +1,6 @@
+wradlib.io.gdal.open\_raster
+============================
+
+.. currentmodule:: wradlib.io.gdal
+
+.. autofunction:: open_raster

@@ -1,0 +1,519 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Raw Data I/O &mdash; wradlib</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/wradlib.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="wradlib" href="index.html"/>
+        <link rel="up" title="Library Reference" href="reference.html"/>
+        <link rel="next" title="wradlib.io.radolan.readDX" href="generated/wradlib.io.radolan.readDX.html"/>
+        <link rel="prev" title="Library Reference" href="reference.html"/>
+    
+    <link href="_static/wradlib.css" rel="stylesheet" type="text/css">
+
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+  <a href="index.html" class="icon icon-home"> wradlib
+
+
+
+</a>
+
+
+
+  <div class="version">
+    
+    <button class="verbtn">0.11.1</button>
+    <div class="version-content">
+      
+        <a href="../latest/">latest</a>
+        <a href="../0.11.1/">0.11.1</a>
+    </div>
+  </div>
+
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="gettingstarted.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks.html">Tutorials and Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="reference.html">Library Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Raw Data I/O</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#read-radolan-and-dx">Read RADOLAN and DX</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.io.radolan.readDX.html">wradlib.io.radolan.readDX</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.io.radolan.read_RADOLAN_composite.html">wradlib.io.radolan.read_RADOLAN_composite</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.io.radolan.get_radolan_filehandle.html">wradlib.io.radolan.get_radolan_filehandle</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.io.radolan.read_radolan_header.html">wradlib.io.radolan.read_radolan_header</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.io.radolan.parse_DWD_quant_composite_header.html">wradlib.io.radolan.parse_DWD_quant_composite_header</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.io.radolan.read_radolan_binary_array.html">wradlib.io.radolan.read_radolan_binary_array</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.io.radolan.decode_radolan_runlength_array.html">wradlib.io.radolan.decode_radolan_runlength_array</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#hdf-data-i-o">HDF Data I/O</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.io.hdf.read_generic_hdf5.html">wradlib.io.hdf.read_generic_hdf5</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.io.hdf.read_OPERA_hdf5.html">wradlib.io.hdf.read_OPERA_hdf5</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.io.hdf.read_GAMIC_hdf5.html">wradlib.io.hdf.read_GAMIC_hdf5</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.io.hdf.to_hdf5.html">wradlib.io.hdf.to_hdf5</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.io.hdf.from_hdf5.html">wradlib.io.hdf.from_hdf5</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#read-netcdf">Read NetCDF</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.io.netcdf.read_EDGE_netcdf.html">wradlib.io.netcdf.read_EDGE_netcdf</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.io.netcdf.read_generic_netcdf.html">wradlib.io.netcdf.read_generic_netcdf</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#read-rainbow">Read Rainbow</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.io.rainbow.read_Rainbow.html">wradlib.io.rainbow.read_Rainbow</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#raster-and-vector-i-o-using-gdal">Raster and Vector I/O using GDAL</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.io.gdal.open_shape.html">wradlib.io.gdal.open_shape</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.io.gdal.open_vector.html">wradlib.io.gdal.open_vector</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.io.gdal.open_raster.html">wradlib.io.gdal.open_raster</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.io.gdal.read_safnwc.html">wradlib.io.gdal.read_safnwc</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.io.gdal.write_raster_dataset.html">wradlib.io.gdal.write_raster_dataset</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#read-iris-data-format">Read IRIS Data Format</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.io.iris.IrisRecord.html">wradlib.io.iris.IrisRecord</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.io.iris.IrisFile.html">wradlib.io.iris.IrisFile</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.io.iris.read_iris.html">wradlib.io.iris.read_iris</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#miscellaneous-data-i-o">Miscellaneous Data I/O</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.io.misc.writePolygon2Text.html">wradlib.io.misc.writePolygon2Text</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.io.misc.to_pickle.html">wradlib.io.misc.to_pickle</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.io.misc.from_pickle.html">wradlib.io.misc.from_pickle</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="trafo.html">Data Transformation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zr.html">Z-R Conversions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="georef.html">Georeferencing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipol.html">Interpolation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qual.html">Data Quality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="comp.html">Composition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clutter.html">Clutter Identification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dp.html">Dual-Pol and Differential Phase</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fill.html">Filling Missing Values</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vpr.html">Vertical Profile of Reflectivity (VPR)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="atten.html">Attenuation Correction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="adjust.html">Gage adjustment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="verify.html">Verification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vis.html">Visualisation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zonalstats.html">Zonal Statistics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="util.html">Utility functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dev_setup.html">For Developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="zreferences.html">Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="release_notes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">wradlib</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="reference.html">Library Reference</a> &raquo;</li>
+        
+      <li>Raw Data I/O</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/io.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+/* nice headers on first paragraph of info/warning boxes */
+.admonition .first {
+    margin: -12px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1;
+    display: block;
+}
+.admonition.warning .first {
+    background: #f0b37e;
+}
+.admonition.note .first {
+    background: #6ab0de;
+}
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<span class="target" id="module-wradlib.io"></span><div class="section" id="raw-data-i-o">
+<h1>Raw Data I/O<a class="headerlink" href="#raw-data-i-o" title="Permalink to this headline">¶</a></h1>
+<p>Please have a look at the tutorial <a class="reference internal" href="notebooks/fileio/wradlib_radar_formats.html"><span class="std std-ref">Supported radar data formats</span></a>
+for an introduction on how to deal with different file formats.</p>
+<div class="toctree-wrapper compound">
+</div>
+<span class="target" id="module-wradlib.io.radolan"></span><div class="section" id="read-radolan-and-dx">
+<h2>Read RADOLAN and DX<a class="headerlink" href="#read-radolan-and-dx" title="Permalink to this headline">¶</a></h2>
+<p>Reading DX and RADOLAN data from German Weather Service</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/wradlib.io.radolan.readDX.html#wradlib.io.radolan.readDX" title="wradlib.io.radolan.readDX"><code class="xref py py-obj docutils literal"><span class="pre">readDX</span></code></a></td>
+<td>Data reader for German Weather Service DX product raw radar data files.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/wradlib.io.radolan.read_RADOLAN_composite.html#wradlib.io.radolan.read_RADOLAN_composite" title="wradlib.io.radolan.read_RADOLAN_composite"><code class="xref py py-obj docutils literal"><span class="pre">read_RADOLAN_composite</span></code></a></td>
+<td>Read quantitative radar composite format of the German Weather Service</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/wradlib.io.radolan.get_radolan_filehandle.html#wradlib.io.radolan.get_radolan_filehandle" title="wradlib.io.radolan.get_radolan_filehandle"><code class="xref py py-obj docutils literal"><span class="pre">get_radolan_filehandle</span></code></a></td>
+<td>Opens radolan file and returns file handle</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/wradlib.io.radolan.read_radolan_header.html#wradlib.io.radolan.read_radolan_header" title="wradlib.io.radolan.read_radolan_header"><code class="xref py py-obj docutils literal"><span class="pre">read_radolan_header</span></code></a></td>
+<td>Reads radolan ASCII header and returns it as string</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/wradlib.io.radolan.parse_DWD_quant_composite_header.html#wradlib.io.radolan.parse_DWD_quant_composite_header" title="wradlib.io.radolan.parse_DWD_quant_composite_header"><code class="xref py py-obj docutils literal"><span class="pre">parse_DWD_quant_composite_header</span></code></a></td>
+<td>Parses the ASCII header of a DWD quantitative composite file</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/wradlib.io.radolan.read_radolan_binary_array.html#wradlib.io.radolan.read_radolan_binary_array" title="wradlib.io.radolan.read_radolan_binary_array"><code class="xref py py-obj docutils literal"><span class="pre">read_radolan_binary_array</span></code></a></td>
+<td>Read binary data from file given by filehandle</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/wradlib.io.radolan.decode_radolan_runlength_array.html#wradlib.io.radolan.decode_radolan_runlength_array" title="wradlib.io.radolan.decode_radolan_runlength_array"><code class="xref py py-obj docutils literal"><span class="pre">decode_radolan_runlength_array</span></code></a></td>
+<td>Decodes the binary runlength coded section from DWD composite</td>
+</tr>
+</tbody>
+</table>
+</div>
+<span class="target" id="module-wradlib.io.hdf"></span><div class="section" id="hdf-data-i-o">
+<h2>HDF Data I/O<a class="headerlink" href="#hdf-data-i-o" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/wradlib.io.hdf.read_generic_hdf5.html#wradlib.io.hdf.read_generic_hdf5" title="wradlib.io.hdf.read_generic_hdf5"><code class="xref py py-obj docutils literal"><span class="pre">read_generic_hdf5</span></code></a></td>
+<td>Reads hdf5 files according to their structure</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/wradlib.io.hdf.read_OPERA_hdf5.html#wradlib.io.hdf.read_OPERA_hdf5" title="wradlib.io.hdf.read_OPERA_hdf5"><code class="xref py py-obj docutils literal"><span class="pre">read_OPERA_hdf5</span></code></a></td>
+<td>Reads hdf5 files according to OPERA conventions</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/wradlib.io.hdf.read_GAMIC_hdf5.html#wradlib.io.hdf.read_GAMIC_hdf5" title="wradlib.io.hdf.read_GAMIC_hdf5"><code class="xref py py-obj docutils literal"><span class="pre">read_GAMIC_hdf5</span></code></a></td>
+<td>Data reader for hdf5 files produced by the commercial</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/wradlib.io.hdf.to_hdf5.html#wradlib.io.hdf.to_hdf5" title="wradlib.io.hdf.to_hdf5"><code class="xref py py-obj docutils literal"><span class="pre">to_hdf5</span></code></a></td>
+<td>Quick storage of one &lt;data&gt; array and a &lt;metadata&gt; dict in an hdf5 file</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/wradlib.io.hdf.from_hdf5.html#wradlib.io.hdf.from_hdf5" title="wradlib.io.hdf.from_hdf5"><code class="xref py py-obj docutils literal"><span class="pre">from_hdf5</span></code></a></td>
+<td>Loading data from hdf5 files that was stored by     <code class="xref py py-meth docutils literal"><span class="pre">to_hdf5</span></code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<span class="target" id="module-wradlib.io.netcdf"></span><div class="section" id="read-netcdf">
+<h2>Read NetCDF<a class="headerlink" href="#read-netcdf" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/wradlib.io.netcdf.read_EDGE_netcdf.html#wradlib.io.netcdf.read_EDGE_netcdf" title="wradlib.io.netcdf.read_EDGE_netcdf"><code class="xref py py-obj docutils literal"><span class="pre">read_EDGE_netcdf</span></code></a></td>
+<td>Data reader for netCDF files exported by the EDGE radar software</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/wradlib.io.netcdf.read_generic_netcdf.html#wradlib.io.netcdf.read_generic_netcdf" title="wradlib.io.netcdf.read_generic_netcdf"><code class="xref py py-obj docutils literal"><span class="pre">read_generic_netcdf</span></code></a></td>
+<td>Reads netcdf files and returns a dictionary with corresponding structure.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<span class="target" id="module-wradlib.io.rainbow"></span><div class="section" id="read-rainbow">
+<h2>Read Rainbow<a class="headerlink" href="#read-rainbow" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/wradlib.io.rainbow.read_Rainbow.html#wradlib.io.rainbow.read_Rainbow" title="wradlib.io.rainbow.read_Rainbow"><code class="xref py py-obj docutils literal"><span class="pre">read_Rainbow</span></code></a></td>
+<td>Reads Rainbow files files according to their structure</td>
+</tr>
+</tbody>
+</table>
+</div>
+<span class="target" id="module-wradlib.io.gdal"></span><div class="section" id="raster-and-vector-i-o-using-gdal">
+<h2>Raster and Vector I/O using GDAL<a class="headerlink" href="#raster-and-vector-i-o-using-gdal" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/wradlib.io.gdal.open_shape.html#wradlib.io.gdal.open_shape" title="wradlib.io.gdal.open_shape"><code class="xref py py-obj docutils literal"><span class="pre">open_shape</span></code></a></td>
+<td>Open shapefile, return gdal.Dataset and OGR.Layer</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/wradlib.io.gdal.open_vector.html#wradlib.io.gdal.open_vector" title="wradlib.io.gdal.open_vector"><code class="xref py py-obj docutils literal"><span class="pre">open_vector</span></code></a></td>
+<td>Open vector file, return gdal.Dataset and OGR.Layer</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/wradlib.io.gdal.open_raster.html#wradlib.io.gdal.open_raster" title="wradlib.io.gdal.open_raster"><code class="xref py py-obj docutils literal"><span class="pre">open_raster</span></code></a></td>
+<td>Open raster file, return gdal.Dataset</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/wradlib.io.gdal.read_safnwc.html#wradlib.io.gdal.read_safnwc" title="wradlib.io.gdal.read_safnwc"><code class="xref py py-obj docutils literal"><span class="pre">read_safnwc</span></code></a></td>
+<td>Read MSG SAFNWC hdf5 file into a gdal georeferenced object</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/wradlib.io.gdal.write_raster_dataset.html#wradlib.io.gdal.write_raster_dataset" title="wradlib.io.gdal.write_raster_dataset"><code class="xref py py-obj docutils literal"><span class="pre">write_raster_dataset</span></code></a></td>
+<td>Write raster dataset to file format</td>
+</tr>
+</tbody>
+</table>
+</div>
+<span class="target" id="module-wradlib.io.iris"></span><div class="section" id="read-iris-data-format">
+<h2>Read IRIS Data Format<a class="headerlink" href="#read-iris-data-format" title="Permalink to this headline">¶</a></h2>
+<p>Reads data from Vaisala’s IRIS data formats</p>
+<p>IRIS (Vaisala Sigmet Interactive Radar Information System)</p>
+<p>See M211318EN-F Programming Guide <a class="reference external" href="ftp://ftp.sigmet.com/outgoing/manuals/">ftp://ftp.sigmet.com/outgoing/manuals/</a></p>
+<p>To read from IRIS files numpy.memmap is used to get access to the data.
+The IRIS header (PRODUCT_HDR, INGEST_HEADER) is read in any case into dedicated
+OrderedDict’s. Reading sweep data can be skipped by setting <cite>loaddata=False</cite>.
+By default the data is decoded on the fly. Using <cite>rawdata=True</cite> the data will
+be kept undecoded.</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/wradlib.io.iris.IrisRecord.html#wradlib.io.iris.IrisRecord" title="wradlib.io.iris.IrisRecord"><code class="xref py py-obj docutils literal"><span class="pre">IrisRecord</span></code></a></td>
+<td>Class holding a single record from a Sigmet IRIS file.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/wradlib.io.iris.IrisFile.html#wradlib.io.iris.IrisFile" title="wradlib.io.iris.IrisFile"><code class="xref py py-obj docutils literal"><span class="pre">IrisFile</span></code></a></td>
+<td>Class for retrieving data from Sigmet IRIS files.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/wradlib.io.iris.read_iris.html#wradlib.io.iris.read_iris" title="wradlib.io.iris.read_iris"><code class="xref py py-obj docutils literal"><span class="pre">read_iris</span></code></a></td>
+<td>Read Iris file and return dictionary.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<span class="target" id="module-wradlib.io.misc"></span><div class="section" id="miscellaneous-data-i-o">
+<h2>Miscellaneous Data I/O<a class="headerlink" href="#miscellaneous-data-i-o" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/wradlib.io.misc.writePolygon2Text.html#wradlib.io.misc.writePolygon2Text" title="wradlib.io.misc.writePolygon2Text"><code class="xref py py-obj docutils literal"><span class="pre">writePolygon2Text</span></code></a></td>
+<td>Writes Polygons to a Text file which can be interpreted by ESRI     ArcGIS’s “Create Features from Text File (Samples)” tool.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/wradlib.io.misc.to_pickle.html#wradlib.io.misc.to_pickle" title="wradlib.io.misc.to_pickle"><code class="xref py py-obj docutils literal"><span class="pre">to_pickle</span></code></a></td>
+<td>Pickle object &lt;obj&gt; to file &lt;fpath&gt;</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/wradlib.io.misc.from_pickle.html#wradlib.io.misc.from_pickle" title="wradlib.io.misc.from_pickle"><code class="xref py py-obj docutils literal"><span class="pre">from_pickle</span></code></a></td>
+<td>Return pickled object from file &lt;fpath&gt;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="generated/wradlib.io.radolan.readDX.html" class="btn btn-neutral float-right" title="wradlib.io.radolan.readDX" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="reference.html" class="btn btn-neutral" title="Library Reference" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2011-2016, wradlib developers.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.11.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

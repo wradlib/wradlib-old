@@ -1,0 +1,13 @@
+wradlib\.vpr\.CAPPI
+===================
+
+.. currentmodule:: wradlib.vpr
+
+.. autoclass:: CAPPI
+
+   
+
+
+
+   
+

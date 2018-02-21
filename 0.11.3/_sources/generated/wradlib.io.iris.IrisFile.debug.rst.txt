@@ -1,0 +1,6 @@
+wradlib.io.iris.IrisFile.debug
+==============================
+
+.. currentmodule:: wradlib.io.iris
+
+.. autoattribute:: IrisFile.debug

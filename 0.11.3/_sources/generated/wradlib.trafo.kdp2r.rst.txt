@@ -1,0 +1,6 @@
+wradlib.trafo.kdp2r
+===================
+
+.. currentmodule:: wradlib.trafo
+
+.. autofunction:: kdp2r

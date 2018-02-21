@@ -1,0 +1,6 @@
+wradlib.zonalstats.grid\_centers\_to\_vertices
+==============================================
+
+.. currentmodule:: wradlib.zonalstats
+
+.. autofunction:: grid_centers_to_vertices

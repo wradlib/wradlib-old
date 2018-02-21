@@ -1,0 +1,6 @@
+wradlib\.comp\.extract\_circle
+==============================
+
+.. currentmodule:: wradlib.comp
+
+.. autofunction:: extract_circle

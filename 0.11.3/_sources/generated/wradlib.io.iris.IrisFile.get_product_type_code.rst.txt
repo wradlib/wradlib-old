@@ -1,0 +1,6 @@
+wradlib.io.iris.IrisFile.get\_product\_type\_code
+=================================================
+
+.. currentmodule:: wradlib.io.iris
+
+.. automethod:: IrisFile.get_product_type_code

@@ -1,0 +1,6 @@
+wradlib.atten.constraint\_pia
+=============================
+
+.. currentmodule:: wradlib.atten
+
+.. autofunction:: constraint_pia

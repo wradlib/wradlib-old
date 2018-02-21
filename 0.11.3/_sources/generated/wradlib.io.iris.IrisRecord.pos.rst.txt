@@ -1,0 +1,6 @@
+wradlib.io.iris.IrisRecord.pos
+==============================
+
+.. currentmodule:: wradlib.io.iris
+
+.. autoattribute:: IrisRecord.pos

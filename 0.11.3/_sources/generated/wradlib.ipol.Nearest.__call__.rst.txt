@@ -1,0 +1,6 @@
+wradlib.ipol.Nearest.\_\_call\_\_
+=================================
+
+.. currentmodule:: wradlib.ipol
+
+.. automethod:: Nearest.__call__

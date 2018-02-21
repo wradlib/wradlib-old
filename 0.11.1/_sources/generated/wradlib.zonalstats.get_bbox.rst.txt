@@ -1,0 +1,6 @@
+wradlib\.zonalstats\.get\_bbox
+==============================
+
+.. currentmodule:: wradlib.zonalstats
+
+.. autofunction:: get_bbox

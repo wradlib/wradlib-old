@@ -1,0 +1,6 @@
+wradlib.qual.get\_bb\_ratio
+===========================
+
+.. currentmodule:: wradlib.qual
+
+.. autofunction:: get_bb_ratio

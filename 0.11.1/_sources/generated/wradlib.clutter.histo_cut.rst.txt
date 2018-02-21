@@ -1,0 +1,6 @@
+wradlib\.clutter\.histo\_cut
+============================
+
+.. currentmodule:: wradlib.clutter
+
+.. autofunction:: histo_cut

@@ -1,0 +1,6 @@
+wradlib\.qual\.beam\_height\_ft\_doviak
+=======================================
+
+.. currentmodule:: wradlib.qual
+
+.. autofunction:: beam_height_ft_doviak

@@ -1,0 +1,13 @@
+wradlib\.io\.iris\.IrisFile
+===========================
+
+.. currentmodule:: wradlib.io.iris
+
+.. autoclass:: IrisFile
+
+   
+
+
+
+   
+

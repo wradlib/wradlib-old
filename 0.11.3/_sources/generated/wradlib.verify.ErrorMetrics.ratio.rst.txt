@@ -1,0 +1,6 @@
+wradlib.verify.ErrorMetrics.ratio
+=================================
+
+.. currentmodule:: wradlib.verify
+
+.. automethod:: ErrorMetrics.ratio

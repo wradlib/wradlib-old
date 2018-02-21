@@ -1,0 +1,6 @@
+wradlib.adjust.AdjustMFB.\_\_call\_\_
+=====================================
+
+.. currentmodule:: wradlib.adjust
+
+.. automethod:: AdjustMFB.__call__

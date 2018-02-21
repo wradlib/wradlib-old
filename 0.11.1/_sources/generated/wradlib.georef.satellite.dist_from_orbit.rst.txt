@@ -1,0 +1,6 @@
+wradlib\.georef\.satellite\.dist\_from\_orbit
+=============================================
+
+.. currentmodule:: wradlib.georef.satellite
+
+.. autofunction:: dist_from_orbit

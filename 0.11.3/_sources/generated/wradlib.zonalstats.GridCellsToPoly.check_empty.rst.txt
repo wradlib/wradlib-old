@@ -1,0 +1,6 @@
+wradlib.zonalstats.GridCellsToPoly.check\_empty
+===============================================
+
+.. currentmodule:: wradlib.zonalstats
+
+.. automethod:: GridCellsToPoly.check_empty

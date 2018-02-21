@@ -1,0 +1,394 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Vertical Profile of Reflectivity (VPR) &mdash; wradlib</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/wradlib.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="wradlib" href="index.html"/>
+        <link rel="up" title="Library Reference" href="reference.html"/>
+        <link rel="next" title="wradlib.vpr.volcoords_from_polar" href="generated/wradlib.vpr.volcoords_from_polar.html"/>
+        <link rel="prev" title="Filling Missing Values" href="fill.html"/>
+    
+    <link href="_static/wradlib.css" rel="stylesheet" type="text/css">
+
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+  <a href="index.html" class="icon icon-home"> wradlib
+
+
+
+</a>
+
+
+
+  <div class="version">
+    
+    <button class="verbtn">0.11.1</button>
+    <div class="version-content">
+      
+        <a href="../latest/">latest</a>
+        <a href="../0.11.1/">0.11.1</a>
+    </div>
+  </div>
+
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="gettingstarted.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks.html">Tutorials and Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="reference.html">Library Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="io.html">Raw Data I/O</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trafo.html">Data Transformation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zr.html">Z-R Conversions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="georef.html">Georeferencing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipol.html">Interpolation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qual.html">Data Quality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="comp.html">Composition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clutter.html">Clutter Identification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dp.html">Dual-Pol and Differential Phase</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fill.html">Filling Missing Values</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Vertical Profile of Reflectivity (VPR)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/wradlib.vpr.volcoords_from_polar.html">wradlib.vpr.volcoords_from_polar</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/wradlib.vpr.make_3D_grid.html">wradlib.vpr.make_3D_grid</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/wradlib.vpr.CartesianVolume.html">wradlib.vpr.CartesianVolume</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/wradlib.vpr.CAPPI.html">wradlib.vpr.CAPPI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/wradlib.vpr.PseudoCAPPI.html">wradlib.vpr.PseudoCAPPI</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="atten.html">Attenuation Correction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="adjust.html">Gage adjustment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="verify.html">Verification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vis.html">Visualisation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zonalstats.html">Zonal Statistics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="util.html">Utility functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dev_setup.html">For Developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="zreferences.html">Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="release_notes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">wradlib</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="reference.html">Library Reference</a> &raquo;</li>
+        
+      <li>Vertical Profile of Reflectivity (VPR)</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/vpr.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+/* nice headers on first paragraph of info/warning boxes */
+.admonition .first {
+    margin: -12px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1;
+    display: block;
+}
+.admonition.warning .first {
+    background: #f0b37e;
+}
+.admonition.note .first {
+    background: #6ab0de;
+}
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<span class="target" id="module-wradlib.vpr"></span><div class="section" id="vertical-profile-of-reflectivity-vpr">
+<h1>Vertical Profile of Reflectivity (VPR)<a class="headerlink" href="#vertical-profile-of-reflectivity-vpr" title="Permalink to this headline">¶</a></h1>
+<p>Precipitation is 3-dimensional in space. The vertical distribution of
+precipitation (and thus reflectivity) is typically non-uniform. As the height
+of the radar beam increases with the distance from the radar location
+(beam elevation, earth curvature), one sweep samples from different heights.
+The effects of the non-uniform VPR and the different sampling heights need to
+be accounted for if we are interested in the precipitation near the ground or
+in defined heights. This module is intended to provide a set of tools to
+account for these effects.</p>
+<p>The first step will normally be to reference the polar volume data in a
+3-dimensional Cartesian coordinate system. The three dimensional Cartesian
+coordinates of the original polar volume data can be computed using
+<a class="reference internal" href="generated/wradlib.vpr.volcoords_from_polar.html#wradlib.vpr.volcoords_from_polar" title="wradlib.vpr.volcoords_from_polar"><code class="xref py py-meth docutils literal"><span class="pre">wradlib.vpr.volcoords_from_polar</span></code></a>.</p>
+<p>Then, we can create regular 3-D grids in order to analyse the vertical profile
+of reflectivity or rainfall intensity. For some applications you might want
+to create so-called <a class="reference external" href="https://en.wikipedia.org/wiki/Constant_altitude_plan_position_indicator">Constant Altitude Plan Position Indicators (CAPPI)</a>
+in order to make radar observations at different distances from the radar more
+comparable. Basically, a CAPPI is simply one slice out of a 3-D volume grid.
+Analoguous, we will refer to the elements in a three dimensional Cartesian grid
+as <em>voxels</em>. In wradlib, you can create
+CAPPIS (<a class="reference internal" href="generated/wradlib.vpr.CAPPI.html#wradlib.vpr.CAPPI" title="wradlib.vpr.CAPPI"><code class="xref py py-meth docutils literal"><span class="pre">wradlib.vpr.CAPPI</span></code></a>) and Pseudo CAPPIs
+(:meth:wradlib.vpr.PseudoCAPPI`) for different altitudes at once.</p>
+<p>Here’s an example how a set of CAPPIs can be created from synthetic polar
+volume data:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">wradlib</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># define elevation and azimuth angles, ranges, radar site coordinates,</span>
+<span class="c1"># projection</span>
+<span class="n">elevs</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">1.5</span><span class="p">,</span><span class="mf">2.4</span><span class="p">,</span><span class="mf">3.4</span><span class="p">,</span><span class="mf">4.3</span><span class="p">,</span><span class="mf">5.3</span><span class="p">,</span><span class="mf">6.2</span><span class="p">,</span><span class="mf">7.5</span><span class="p">,</span><span class="mf">8.7</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">14</span><span class="p">,</span><span class="mf">16.7</span><span class="p">,</span><span class="mf">19.5</span><span class="p">])</span>
+<span class="n">azims</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">360.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">)</span>
+<span class="n">ranges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">120000.</span><span class="p">,</span> <span class="mf">1000.</span><span class="p">)</span>
+<span class="n">sitecoords</span> <span class="o">=</span> <span class="p">(</span><span class="mf">14.924218</span><span class="p">,</span><span class="mf">120.255547</span><span class="p">,</span><span class="mf">500.</span><span class="p">)</span>
+<span class="n">proj</span> <span class="o">=</span> <span class="n">osr</span><span class="o">.</span><span class="n">SpatialReference</span><span class="p">()</span>
+<span class="n">proj</span><span class="o">.</span><span class="n">ImportFromEPSG</span><span class="p">(</span><span class="mi">32651</span><span class="p">)</span>
+
+<span class="c1"># create Cartesian coordinates corresponding the location of the</span>
+<span class="c1"># polar volume bins</span>
+<span class="n">polxyz</span>  <span class="o">=</span> <span class="n">wradlib</span><span class="o">.</span><span class="n">vpr</span><span class="o">.</span><span class="n">volcoords_from_polar</span><span class="p">(</span><span class="n">sitecoords</span><span class="p">,</span> <span class="n">elevs</span><span class="p">,</span>
+                                           <span class="n">azims</span><span class="p">,</span> <span class="n">ranges</span><span class="p">,</span> <span class="n">proj</span><span class="p">)</span>  <span class="c1"># noqa</span>
+<span class="n">poldata</span> <span class="o">=</span> <span class="n">wradlib</span><span class="o">.</span><span class="n">vpr</span><span class="o">.</span><span class="n">synthetic_polar_volume</span><span class="p">(</span><span class="n">polxyz</span><span class="p">)</span>
+<span class="c1"># this is the shape of our polar volume</span>
+<span class="n">polshape</span> <span class="o">=</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">elevs</span><span class="p">),</span><span class="nb">len</span><span class="p">(</span><span class="n">azims</span><span class="p">),</span><span class="nb">len</span><span class="p">(</span><span class="n">ranges</span><span class="p">))</span>
+
+<span class="c1"># now we define the coordinates for the 3-D grid (the CAPPI layers)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">polxyz</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">polxyz</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="mi">120</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">polxyz</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">polxyz</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="mi">120</span><span class="p">)</span>
+<span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">500.</span><span class="p">,</span><span class="mf">10500.</span><span class="p">,</span><span class="mf">500.</span><span class="p">)</span>
+<span class="n">xyz</span> <span class="o">=</span> <span class="n">wradlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">gridaspoints</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
+<span class="n">gridshape</span> <span class="o">=</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">z</span><span class="p">))</span>
+
+<span class="c1"># create an instance of the CAPPI class and</span>
+<span class="c1"># use it to create a series of CAPPIs</span>
+<span class="n">gridder</span> <span class="o">=</span> <span class="n">wradlib</span><span class="o">.</span><span class="n">vpr</span><span class="o">.</span><span class="n">CAPPI</span><span class="p">(</span><span class="n">polxyz</span><span class="p">,</span> <span class="n">xyz</span><span class="p">,</span> <span class="n">maxrange</span><span class="o">=</span><span class="n">ranges</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span>
+                            <span class="n">gridshape</span><span class="o">=</span><span class="n">gridshape</span><span class="p">,</span> <span class="n">Ipclass</span><span class="o">=</span><span class="n">wradlib</span><span class="o">.</span><span class="n">ipol</span><span class="o">.</span><span class="n">Idw</span><span class="p">)</span>
+<span class="n">gridded</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">masked_invalid</span><span class="p">(</span> <span class="n">gridder</span><span class="p">(</span><span class="n">poldata</span><span class="p">)</span> <span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">gridshape</span><span class="p">)</span>
+
+<span class="c1"># plot results</span>
+<span class="n">levels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="mi">25</span><span class="p">)</span>
+<span class="n">wradlib</span><span class="o">.</span><span class="n">vis</span><span class="o">.</span><span class="n">plot_max_plan_and_vert</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">gridded</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="n">levels</span><span class="p">,</span>
+                                   <span class="n">cmap</span><span class="o">=</span><span class="n">pl</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">spectral</span><span class="p">)</span>
+</pre></div>
+</div>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/wradlib.vpr.volcoords_from_polar.html#wradlib.vpr.volcoords_from_polar" title="wradlib.vpr.volcoords_from_polar"><code class="xref py py-obj docutils literal"><span class="pre">volcoords_from_polar</span></code></a></td>
+<td>Create Cartesian coordinates for the polar volume bins</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/wradlib.vpr.make_3D_grid.html#wradlib.vpr.make_3D_grid" title="wradlib.vpr.make_3D_grid"><code class="xref py py-obj docutils literal"><span class="pre">make_3D_grid</span></code></a></td>
+<td>Generate Cartesian coordinates for a regular 3-D grid based on radar specs.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/wradlib.vpr.CartesianVolume.html#wradlib.vpr.CartesianVolume" title="wradlib.vpr.CartesianVolume"><code class="xref py py-obj docutils literal"><span class="pre">CartesianVolume</span></code></a></td>
+<td>Create 3-D regular volume grid in Cartesian coordinates from polar data</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/wradlib.vpr.CAPPI.html#wradlib.vpr.CAPPI" title="wradlib.vpr.CAPPI"><code class="xref py py-obj docutils literal"><span class="pre">CAPPI</span></code></a></td>
+<td>Create a Constant Altitude Plan Position Indicator (CAPPI)</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/wradlib.vpr.PseudoCAPPI.html#wradlib.vpr.PseudoCAPPI" title="wradlib.vpr.PseudoCAPPI"><code class="xref py py-obj docutils literal"><span class="pre">PseudoCAPPI</span></code></a></td>
+<td>Create a Pseudo-CAPPI Constant Altitude Plan Position Indicator (CAPPI)</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="generated/wradlib.vpr.volcoords_from_polar.html" class="btn btn-neutral float-right" title="wradlib.vpr.volcoords_from_polar" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="fill.html" class="btn btn-neutral" title="Filling Missing Values" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2011-2016, wradlib developers.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.11.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

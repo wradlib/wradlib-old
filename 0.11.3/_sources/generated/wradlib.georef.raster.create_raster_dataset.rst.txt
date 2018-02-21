@@ -1,0 +1,6 @@
+wradlib.georef.raster.create\_raster\_dataset
+=============================================
+
+.. currentmodule:: wradlib.georef.raster
+
+.. autofunction:: create_raster_dataset

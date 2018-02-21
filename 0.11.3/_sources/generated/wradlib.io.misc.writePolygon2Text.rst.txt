@@ -1,0 +1,6 @@
+wradlib.io.misc.writePolygon2Text
+=================================
+
+.. currentmodule:: wradlib.io.misc
+
+.. autofunction:: writePolygon2Text

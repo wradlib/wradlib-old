@@ -1,0 +1,1352 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Match spaceborn PR (GPM/TRMM) with ground radars &mdash; wradlib</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/wradlib.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="wradlib" href="../../index.html"/>
+        <link rel="up" title="Tutorials and Examples" href="../../notebooks.html"/>
+        <link rel="next" title="For Developers" href="../develop.html"/>
+        <link rel="prev" title="Zonal Statistics" href="../zonalstats/wradlib_zonalstats_classes.html"/>
+    
+    <link href="../../_static/wradlib.css" rel="stylesheet" type="text/css">
+
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+  <a href="../../index.html" class="icon icon-home"> wradlib
+
+
+
+</a>
+
+
+
+  <div class="version">
+    
+    <button class="verbtn">0.11.1</button>
+    <div class="version-content">
+      
+        <a href="../latest/">latest</a>
+        <a href="../0.11.1/">0.11.1</a>
+    </div>
+  </div>
+
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../gettingstarted.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../notebooks.html">Tutorials and Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../jupyter.html">How to use the tutorials and examples?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../learnpython.html">An incomplete introduction to Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics.html">Getting started with wradlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../fileio.html">Data Input - Data Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../attenuation/wradlib_attenuation.html">Attenuation correction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../beamblockage/wradlib_beamblock.html">Beam Blockage Calculation using a DEM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../classify.html">Clutter and Echo Classification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../georeferencing.html">Georeferencing</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Match spaceborn PR (GPM/TRMM) with ground radars</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Conventions">Conventions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Data-Input">Data Input</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Read-and-organize-the-data">Read and organize the data</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Extract-relevant-GR-data-and-meta-data">Extract relevant GR data and meta-data</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Extract-relevant-PR-data-and-meta-data">Extract relevant PR data and meta-data</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#Georeferencing">Georeferencing</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Set-fundamental-georeferencing-parameters">Set fundamental georeferencing parameters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Georeference-GR-data">Georeference GR data</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Georeference-PR-data">Georeference PR data</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#Data-handling">Data handling</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Subset-relevant-PR-data">Subset relevant PR data</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#PR-Parallax-Correction">PR Parallax Correction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Compute-spherical-coordinates-of-PR-bins-with-regard-to-GR">Compute spherical coordinates of PR bins with regard to GR</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Compute-PR-and-GR-pulse-volumes">Compute PR and GR pulse volumes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Median-Brightband-Width/Height">Median Brightband Width/Height</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Convert-PR-Ku-reflectivities-to-S-band">Convert PR Ku reflectivities to S-band</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Convert-S-band-GR-reflectivities-to-Ku-band">Convert S-band GR reflectivities to Ku-band</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#Matching-PR/GR">Matching PR/GR</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Identify-which-PR-rays-actually-intersect-with-the-GR-sweep">Identify which PR rays actually intersect with the GR sweep</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../develop.html">For Developers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interpolation/wradlib_ipol_example.html">How to use wradlib’s ipol module for interpolation tasks?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../multisensor/wradlib_adjust_example.html">Adjusting radar-base rainfall estimates by rain gauge observations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../verification/wradlib_verify_example.html">Routine verification measures for radar-based precipitation estimates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../recipes.html">Recipes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../radolan.html">RADOLAN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zonalstats/wradlib_zonalstats_classes.html">Zonal Statistics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference.html">Library Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev_setup.html">For Developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zreferences.html">Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../release_notes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">wradlib</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../notebooks.html">Tutorials and Examples</a> &raquo;</li>
+        
+      <li>Match spaceborn PR (GPM/TRMM) with ground radars</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/notebooks/match3d/wradlib_match_workflow.ipynb.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #303F9F;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #D84315;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 8ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+/* nice headers on first paragraph of info/warning boxes */
+.admonition .first {
+    margin: -12px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1;
+    display: block;
+}
+.admonition.warning .first {
+    background: #f0b37e;
+}
+.admonition.note .first {
+    background: #6ab0de;
+}
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="Match-spaceborn-PR-(GPM/TRMM)-with-ground-radars">
+<h1>Match spaceborn PR (GPM/TRMM) with ground radars<a class="headerlink" href="#Match-spaceborn-PR-(GPM/TRMM)-with-ground-radars" title="Permalink to this headline">¶</a></h1>
+<p>The idea is to match ground radar (GR) and space-born radar (PR)
+measurements in order to create spatially and temporally coicident
+samples without interpolation. The procedure had been suggested
+<a class="reference external" href="http://journals.ametsoc.org/doi/pdf/10.1175/2010JTECHA1403.1">Schwaller and Morris
+(2011)</a>,
+and is based on IDL code provided by Rob Warren (Monash University,
+Australia).</p>
+<p>The basic principle is illustrated in Fig. 2 of the original paper of
+Schwaller and Morris (2011):</p>
+<div class="figure" id="id1">
+<img alt="image" src="../../_images/fig2_schwaller_morris_2011.png" />
+<p class="caption"><span class="caption-text">image</span></p>
+</div>
+<p><em>Quote: “[…] The matchup method averages PR and GR full-resolution space
+and ground radar bins within the minimum volume needed to produce a
+spatially coincident sample. The along-ray PR data are averaged only in
+the vertical, between the top and bottom height of each GR elevation
+sweep it intersects […] The GR data are averaged only in the horizontal
+within the individual elevation sweep surfaces, over an approximately
+circular area centered on each intersecting PR ray’s parallax-adjusted
+profile […]”.</em></p>
+<p>This becomes clearer in Fig. 3: <img alt="image" src="../../_images/fig3_schwaller_morris_2011.png" /></p>
+<p>Schwaller, MR, and Morris, KR. 2011. A ground validation network for the
+Global Precipitation Measurement mission. J. Atmos. Oceanic Technol.,
+28, 301-319.</p>
+<div class="section" id="Conventions">
+<h2>Conventions<a class="headerlink" href="#Conventions" title="Permalink to this headline">¶</a></h2>
+<p>This code is based on the following conventions:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">gr</span></code> indicates <strong>g</strong>round <strong>r</strong>adar</li>
+<li><code class="docutils literal"><span class="pre">pr</span></code> indicates space-born <strong>p</strong>recipitation <strong>r</strong>adar (TRMM or
+GPM)</li>
+</ul>
+<p>The base routines are designed to process one GR sweep at a time. If a
+full GR volume with <code class="docutils literal"><span class="pre">nelev</span></code> of sweeps is available, you can iterate
+over each sweep. In this code, <code class="docutils literal"><span class="pre">ee</span></code> is an index that points to one of
+the <code class="docutils literal"><span class="pre">nelev</span></code> sweeps/elevation angles. Accordingly, a <strong>GR</strong> data set
+will be organised as an array of shape
+<code class="docutils literal"><span class="pre">(nelev_gr,</span> <span class="pre">nray_gr,</span> <span class="pre">ngate_gr)</span></code>.</p>
+<p>A <strong>PR</strong> data set is typically organised as arrays with dimensions
+<code class="docutils literal"><span class="pre">(nscan_pr,</span> <span class="pre">nray_pr,</span> <span class="pre">ngate_pr)</span></code>.</p>
+<p><em>Please note</em>: the GR and PR datasets are managed by using convenience
+functions from the module file <code class="docutils literal"><span class="pre">io_func.py</span></code> located in the same
+directory as this notebook.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">wradlib</span> <span class="kn">as</span> <span class="nn">wradlib</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">pl</span>
+<span class="kn">import</span> <span class="nn">matplotlib</span> <span class="kn">as</span> <span class="nn">mpl</span>
+<span class="kn">from</span> <span class="nn">matplotlib.collections</span> <span class="kn">import</span> <span class="n">PatchCollection</span>
+<span class="kn">from</span> <span class="nn">matplotlib.colors</span> <span class="kn">import</span> <span class="n">from_levels_and_colors</span>
+<span class="kn">from</span> <span class="nn">matplotlib.path</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span> <span class="nn">matplotlib.patches</span> <span class="kn">as</span> <span class="nn">patches</span>
+<span class="kn">import</span> <span class="nn">matplotlib.cm</span> <span class="kn">as</span> <span class="nn">cm</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">get_ipython</span><span class="p">()</span><span class="o">.</span><span class="n">magic</span><span class="p">(</span><span class="s2">&quot;matplotlib inline&quot;</span><span class="p">)</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="n">pl</span><span class="o">.</span><span class="n">ion</span><span class="p">()</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">datetime</span> <span class="kn">as</span> <span class="nn">dt</span>
+<span class="kn">from</span> <span class="nn">osgeo</span> <span class="kn">import</span> <span class="n">osr</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="c1"># Import from external libraries</span>
+<span class="c1">#    these functions and objects will finally have to be moved to wradlib!</span>
+<span class="c1"># use relative import</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">io_func</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">.</span> <span class="nn">io_func</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="c1"># Space-born precipitation radar parameters</span>
+<span class="n">pr_pars</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;trmm&quot;</span><span class="p">:</span> <span class="p">{</span>
+   <span class="s2">&quot;zt&quot;</span><span class="p">:</span> <span class="mf">402500.</span><span class="p">,</span>  <span class="c1"># orbital height of TRMM (post boost)   APPROXIMATION!</span>
+   <span class="s2">&quot;dr&quot;</span><span class="p">:</span> <span class="mf">250.</span><span class="p">,</span>     <span class="c1"># gate spacing of TRMM</span>
+    <span class="p">},</span> <span class="s2">&quot;gpm&quot;</span><span class="p">:</span> <span class="p">{</span>
+   <span class="s2">&quot;zt&quot;</span><span class="p">:</span> <span class="mf">407000.</span><span class="p">,</span>  <span class="c1"># orbital height of GPM                 APPROXIMATION!</span>
+   <span class="s2">&quot;dr&quot;</span><span class="p">:</span> <span class="mf">125.</span>      <span class="c1"># gate spacing of GPM</span>
+<span class="p">}}</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="c1"># Set parameters for this procedure</span>
+<span class="n">bw_pr</span> <span class="o">=</span> <span class="mf">0.71</span>                  <span class="c1"># PR beam width</span>
+<span class="n">platf</span> <span class="o">=</span> <span class="s2">&quot;gpm&quot;</span>                 <span class="c1"># PR platform/product: one out of [&quot;gpm&quot;, &quot;trmm_2a23&quot;, &quot;trmm_2a25&quot;]</span>
+<span class="n">zt</span> <span class="o">=</span> <span class="n">pr_pars</span><span class="p">[</span><span class="n">platf</span><span class="p">][</span><span class="s2">&quot;zt&quot;</span><span class="p">]</span>     <span class="c1"># PR orbit height (meters)</span>
+<span class="n">dr_pr</span> <span class="o">=</span> <span class="n">pr_pars</span><span class="p">[</span><span class="n">platf</span><span class="p">][</span><span class="s2">&quot;dr&quot;</span><span class="p">]</span>  <span class="c1"># PR gate length (meters)</span>
+<span class="n">ee</span> <span class="o">=</span> <span class="mi">2</span>                        <span class="c1"># Index that points to the GR elevation angle to be used</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="c1"># define GPM data set</span>
+<span class="n">gpm_file</span> <span class="o">=</span> <span class="n">wradlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">get_wradlib_data_file</span><span class="p">(</span><span class="s1">&#39;gpm/2A-RW-BRS.GPM.Ku.V6-20160118.20141206-S095002-E095137.004383.V04A.HDF5&#39;</span><span class="p">)</span>
+
+<span class="c1"># define matching ground radar file</span>
+<span class="n">gr2gpm_file</span> <span class="o">=</span> <span class="n">wradlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">get_wradlib_data_file</span><span class="p">(</span><span class="s1">&#39;hdf5/IDR66_20141206_094829.vol.h5&#39;</span><span class="p">)</span>
+
+<span class="c1"># define TRMM data sets</span>
+<span class="n">trmm_2a23_file</span> <span class="o">=</span> <span class="n">wradlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">get_wradlib_data_file</span><span class="p">(</span><span class="s1">&#39;trmm/2A-RW-BRS.TRMM.PR.2A23.20100206-S111422-E111519.069662.7.HDF&#39;</span><span class="p">)</span>
+<span class="n">trmm_2a25_file</span> <span class="o">=</span> <span class="n">wradlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">get_wradlib_data_file</span><span class="p">(</span><span class="s1">&#39;trmm/2A-RW-BRS.TRMM.PR.2A25.20100206-S111422-E111519.069662.7.HDF&#39;</span><span class="p">)</span>
+
+<span class="c1"># define matching ground radar file</span>
+<span class="n">gr2trmm_file</span> <span class="o">=</span> <span class="n">wradlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">get_wradlib_data_file</span><span class="p">(</span><span class="s1">&#39;hdf5/IDR66_20100206_111233.vol.h5&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Data-Input">
+<h2>Data Input<a class="headerlink" href="#Data-Input" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="Read-and-organize-the-data">
+<h3>Read and organize the data<a class="headerlink" href="#Read-and-organize-the-data" title="Permalink to this headline">¶</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="c1"># read spaceborn PR data</span>
+<span class="k">if</span> <span class="n">platf</span> <span class="o">==</span> <span class="s2">&quot;gpm&quot;</span><span class="p">:</span>
+    <span class="n">pr_data</span> <span class="o">=</span> <span class="n">read_gpm</span><span class="p">(</span><span class="n">gpm_file</span><span class="p">)</span>
+<span class="k">elif</span> <span class="n">platf</span> <span class="o">==</span> <span class="s2">&quot;trmm&quot;</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">pr_data</span> <span class="o">=</span> <span class="n">read_trmm</span><span class="p">(</span><span class="n">trmm_2a23_file</span><span class="p">,</span> <span class="n">trmm_2a25_file</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;test&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+        <span class="c1"># Mostly needed on Windows Anaconda (netcdf4 without hdf4 support)</span>
+        <span class="n">pr_data</span> <span class="o">=</span> <span class="n">read_trmm_gdal</span><span class="p">(</span><span class="n">trmm_2a23_file</span><span class="p">,</span> <span class="n">trmm_2a25_file</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">raise</span><span class="p">(</span><span class="s2">&quot;Invalid platform&quot;</span><span class="p">)</span>
+<span class="c1"># read matching GR data</span>
+<span class="k">if</span> <span class="n">platf</span> <span class="o">==</span> <span class="s2">&quot;gpm&quot;</span><span class="p">:</span>
+    <span class="n">gr_data</span> <span class="o">=</span> <span class="n">read_gr2</span><span class="p">(</span><span class="n">gr2gpm_file</span><span class="p">)</span>
+<span class="k">elif</span> <span class="n">platf</span><span class="o">==</span><span class="s2">&quot;trmm&quot;</span><span class="p">:</span>
+    <span class="n">gr_data</span> <span class="o">=</span> <span class="n">read_gr2</span><span class="p">(</span><span class="n">gr2trmm_file</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">raise</span><span class="p">(</span><span class="s2">&quot;Invalid platform&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+float32
+ntilt: 14
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Extract-relevant-GR-data-and-meta-data">
+<h3>Extract relevant GR data and meta-data<a class="headerlink" href="#Extract-relevant-GR-data-and-meta-data" title="Permalink to this headline">¶</a></h3>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="c1"># number of rays in gr sweep</span>
+<span class="n">nray_gr</span> <span class="o">=</span> <span class="n">gr_data</span><span class="p">[</span><span class="s1">&#39;nbeam&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;i4&quot;</span><span class="p">)[</span><span class="n">ee</span><span class="p">]</span>
+<span class="c1"># number of gates in gr beam</span>
+<span class="n">ngate_gr</span> <span class="o">=</span> <span class="n">gr_data</span><span class="p">[</span><span class="s1">&#39;ngate&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;i4&quot;</span><span class="p">)[</span><span class="n">ee</span><span class="p">]</span>
+<span class="c1"># number of sweeps</span>
+<span class="n">nelev</span> <span class="o">=</span> <span class="n">gr_data</span><span class="p">[</span><span class="s1">&#39;ntilt&#39;</span><span class="p">]</span>
+<span class="c1"># elevation of sweep (degree)</span>
+<span class="n">elev</span> <span class="o">=</span> <span class="n">gr_data</span><span class="p">[</span><span class="s1">&#39;elang&#39;</span><span class="p">][</span><span class="n">ee</span><span class="p">]</span>
+<span class="c1"># gate length (meters)</span>
+<span class="n">dr_gr</span> <span class="o">=</span> <span class="n">gr_data</span><span class="p">[</span><span class="s1">&#39;dr&#39;</span><span class="p">][</span><span class="n">ee</span><span class="p">]</span>
+<span class="c1"># reflectivity array of sweep</span>
+<span class="n">ref_gr</span> <span class="o">=</span> <span class="n">gr_data</span><span class="p">[</span><span class="s1">&#39;refl&#39;</span><span class="p">][</span><span class="n">ee</span><span class="p">]</span>
+<span class="c1"># sweep datetime stamp</span>
+<span class="n">date_gr</span> <span class="o">=</span> <span class="n">gr_data</span><span class="p">[</span><span class="s1">&#39;sdate&#39;</span><span class="p">][</span><span class="n">ee</span><span class="p">]</span>
+<span class="c1"># range of first gate</span>
+<span class="n">r0_gr</span> <span class="o">=</span> <span class="n">gr_data</span><span class="p">[</span><span class="s1">&#39;r0&#39;</span><span class="p">][</span><span class="n">ee</span><span class="p">]</span>
+<span class="c1"># azimuth angle of first beam</span>
+<span class="n">a0_gr</span> <span class="o">=</span> <span class="n">gr_data</span><span class="p">[</span><span class="s1">&#39;a0&#39;</span><span class="p">][</span><span class="n">ee</span><span class="p">]</span>
+<span class="c1"># Longitude of GR</span>
+<span class="n">lon0_gr</span> <span class="o">=</span> <span class="n">gr_data</span><span class="p">[</span><span class="s1">&#39;lon&#39;</span><span class="p">]</span>
+<span class="c1"># Latitude of GR</span>
+<span class="n">lat0_gr</span> <span class="o">=</span> <span class="n">gr_data</span><span class="p">[</span><span class="s1">&#39;lat&#39;</span><span class="p">]</span>
+<span class="c1"># Altitude of GR (meters)</span>
+<span class="n">alt0_gr</span> <span class="o">=</span> <span class="n">gr_data</span><span class="p">[</span><span class="s1">&#39;alt&#39;</span><span class="p">]</span>
+<span class="c1"># Beam width of GR (degree)</span>
+<span class="n">bw_gr</span> <span class="o">=</span> <span class="mf">1.</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Extract-relevant-PR-data-and-meta-data">
+<h3>Extract relevant PR data and meta-data<a class="headerlink" href="#Extract-relevant-PR-data-and-meta-data" title="Permalink to this headline">¶</a></h3>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="c1"># Longitudes of PR scans</span>
+<span class="n">pr_lon</span> <span class="o">=</span> <span class="n">pr_data</span><span class="p">[</span><span class="s1">&#39;lon&#39;</span><span class="p">]</span>
+<span class="c1"># Latitudes of PR scans</span>
+<span class="n">pr_lat</span> <span class="o">=</span> <span class="n">pr_data</span><span class="p">[</span><span class="s1">&#39;lat&#39;</span><span class="p">]</span>
+<span class="c1"># Precip flag</span>
+<span class="n">pflag</span> <span class="o">=</span> <span class="n">pr_data</span><span class="p">[</span><span class="s1">&#39;pflag&#39;</span><span class="p">]</span>
+<span class="c1"># Number of scans on PR data</span>
+<span class="n">nscan_pr</span><span class="o">=</span> <span class="n">pr_data</span><span class="p">[</span><span class="s1">&#39;nscan&#39;</span><span class="p">]</span>
+<span class="c1"># Number of rays in one PR scan</span>
+<span class="n">nray_pr</span> <span class="o">=</span> <span class="n">pr_data</span><span class="p">[</span><span class="s1">&#39;nray&#39;</span><span class="p">]</span>
+<span class="c1"># Number of gates in one PR ray</span>
+<span class="n">ngate_pr</span> <span class="o">=</span> <span class="n">pr_data</span><span class="p">[</span><span class="s1">&#39;nbin&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="Georeferencing">
+<h2>Georeferencing<a class="headerlink" href="#Georeferencing" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="Set-fundamental-georeferencing-parameters">
+<h3>Set fundamental georeferencing parameters<a class="headerlink" href="#Set-fundamental-georeferencing-parameters" title="Permalink to this headline">¶</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="c1"># Calculate equivalent earth radius</span>
+<span class="n">wgs84</span> <span class="o">=</span> <span class="n">wradlib</span><span class="o">.</span><span class="n">georef</span><span class="o">.</span><span class="n">get_default_projection</span><span class="p">()</span>
+<span class="n">re1</span> <span class="o">=</span> <span class="n">wradlib</span><span class="o">.</span><span class="n">georef</span><span class="o">.</span><span class="n">get_earth_radius</span><span class="p">(</span><span class="n">lat0_gr</span><span class="p">,</span> <span class="n">wgs84</span><span class="p">)</span> <span class="o">*</span> <span class="mf">4.</span><span class="o">/</span><span class="mf">3.</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;eff. Earth radius 1:&quot;</span><span class="p">,</span> <span class="n">re1</span><span class="p">)</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">wgs84</span><span class="o">.</span><span class="n">GetSemiMajor</span><span class="p">()</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">wgs84</span><span class="o">.</span><span class="n">GetSemiMinor</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;SemiMajor, SemiMinor:&quot;</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+
+<span class="c1"># Set up aeqd-projection gr-centered</span>
+<span class="n">rad</span> <span class="o">=</span> <span class="n">wradlib</span><span class="o">.</span><span class="n">georef</span><span class="o">.</span><span class="n">proj4_to_osr</span><span class="p">((</span><span class="s1">&#39;+proj=aeqd +lon_0={lon:f} &#39;</span> <span class="o">+</span>
+                                   <span class="s1">&#39;+lat_0={lat:f} +a={a:f} &#39;</span> <span class="o">+</span>
+                                   <span class="s1">&#39;+b={b:f}&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">lon</span><span class="o">=</span><span class="n">lon0_gr</span><span class="p">,</span>
+                                                      <span class="n">lat</span><span class="o">=</span><span class="n">lat0_gr</span><span class="p">,</span>
+                                                      <span class="n">a</span><span class="o">=</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="n">b</span><span class="p">))</span>
+<span class="n">re2</span> <span class="o">=</span> <span class="n">wradlib</span><span class="o">.</span><span class="n">georef</span><span class="o">.</span><span class="n">get_earth_radius</span><span class="p">(</span><span class="n">lat0_gr</span><span class="p">,</span> <span class="n">rad</span><span class="p">)</span> <span class="o">*</span> <span class="mf">4.</span><span class="o">/</span><span class="mf">3.</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;eff. Earth radius 2:&quot;</span><span class="p">,</span> <span class="n">re2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+eff. Earth radius 1: 8498054.71975
+SemiMajor, SemiMinor: 6378137.0 6356752.314245179
+eff. Earth radius 2: 8498054.71975
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Georeference-GR-data">
+<h3>Georeference GR data<a class="headerlink" href="#Georeference-GR-data" title="Permalink to this headline">¶</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="c1"># create gr range and azimuth arrays</span>
+<span class="n">rmax_gr</span> <span class="o">=</span> <span class="n">r0_gr</span> <span class="o">+</span> <span class="n">ngate_gr</span> <span class="o">*</span> <span class="n">dr_gr</span>
+<span class="n">r_gr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">ngate_gr</span><span class="p">)</span> <span class="o">*</span> <span class="n">dr_gr</span> <span class="o">+</span> <span class="n">dr_gr</span><span class="o">/</span><span class="mf">2.</span>
+<span class="n">az_gr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">nray_gr</span><span class="p">)</span> <span class="o">-</span> <span class="n">a0_gr</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Range/Azi-Shape:&quot;</span><span class="p">,</span> <span class="n">r_gr</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">az_gr</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="c1"># create gr lonlat grid</span>
+<span class="n">gr_polargrid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">r_gr</span><span class="p">,</span> <span class="n">az_gr</span><span class="p">)</span>
+<span class="n">gr_lon</span><span class="p">,</span> <span class="n">gr_lat</span><span class="p">,</span> <span class="n">gr_alt</span> <span class="o">=</span> <span class="n">wradlib</span><span class="o">.</span><span class="n">georef</span><span class="o">.</span><span class="n">polar2lonlatalt_n</span><span class="p">(</span><span class="n">gr_polargrid</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">gr_polargrid</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">elev</span><span class="p">,</span> <span class="p">(</span><span class="n">lon0_gr</span><span class="p">,</span> <span class="n">lat0_gr</span><span class="p">,</span> <span class="n">alt0_gr</span> <span class="p">))</span>
+<span class="n">gr_ll</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dstack</span><span class="p">((</span><span class="n">gr_lon</span><span class="p">,</span> <span class="n">gr_lat</span><span class="p">,</span> <span class="n">gr_alt</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;LonLatAlt-Grid-Shape&quot;</span><span class="p">,</span> <span class="n">gr_ll</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="c1"># reproject to xyz</span>
+<span class="n">gr_xyz</span> <span class="o">=</span> <span class="n">wradlib</span><span class="o">.</span><span class="n">georef</span><span class="o">.</span><span class="n">reproject</span><span class="p">(</span><span class="n">gr_ll</span><span class="p">,</span> <span class="n">projection_source</span><span class="o">=</span><span class="n">wgs84</span><span class="p">,</span> <span class="n">projection_target</span><span class="o">=</span><span class="n">rad</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;XYZ-Grid-Shape:&quot;</span><span class="p">,</span> <span class="n">gr_xyz</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="c1"># get radar domain (outer ring)</span>
+<span class="n">gr_domain</span> <span class="o">=</span> <span class="n">gr_xyz</span><span class="p">[:,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">gr_domain</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">gr_domain</span><span class="p">,</span> <span class="n">gr_domain</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Domain-Shape:&quot;</span><span class="p">,</span> <span class="n">gr_domain</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Range/Azi-Shape: (600,) (360,)
+LonLatAlt-Grid-Shape (360, 600, 3)
+XYZ-Grid-Shape: (360, 600, 3)
+Domain-Shape: (361, 2)
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Georeference-PR-data">
+<h3>Georeference PR data<a class="headerlink" href="#Georeference-PR-data" title="Permalink to this headline">¶</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="n">pr_x</span><span class="p">,</span> <span class="n">pr_y</span> <span class="o">=</span> <span class="n">wradlib</span><span class="o">.</span><span class="n">georef</span><span class="o">.</span><span class="n">reproject</span><span class="p">(</span><span class="n">pr_lon</span><span class="p">,</span> <span class="n">pr_lat</span><span class="p">,</span>
+                                      <span class="n">projection_source</span><span class="o">=</span><span class="n">wgs84</span><span class="p">,</span>
+                                      <span class="n">projection_target</span><span class="o">=</span><span class="n">rad</span><span class="p">)</span>
+<span class="n">pr_xy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dstack</span><span class="p">((</span><span class="n">pr_x</span><span class="p">,</span> <span class="n">pr_y</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;PR-GRID-Shapes:&quot;</span><span class="p">,</span> <span class="n">pr_x</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">pr_y</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">pr_xy</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+PR-GRID-Shapes: (137, 49) (137, 49) (137, 49, 2)
+</pre></div></div>
+</div>
+</div>
+</div>
+<div class="section" id="Data-handling">
+<h2>Data handling<a class="headerlink" href="#Data-handling" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="Subset-relevant-PR-data">
+<h3>Subset relevant PR data<a class="headerlink" href="#Subset-relevant-PR-data" title="Permalink to this headline">¶</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="c1"># Create ZonalData for spatial subsetting (inside GR range domain)</span>
+
+<span class="c1"># get precip indexes</span>
+<span class="n">precip_mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">pflag</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">wradlib</span><span class="o">.</span><span class="n">zonalstats</span><span class="o">.</span><span class="n">get_clip_mask</span><span class="p">(</span><span class="n">pr_xy</span><span class="p">,</span> <span class="n">gr_domain</span><span class="p">,</span> <span class="n">rad</span><span class="p">)</span>
+
+<span class="c1"># get iscan/iray boolean arrays</span>
+<span class="c1">#iscan = precip_idx.nonzero()[0]</span>
+<span class="c1">#iray = precip_idx.nonzero()[1]</span>
+<span class="c1">#print(iscan, iray)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">precip_mask</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">pr_xy</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">pflag</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">pr_xy</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">pr_xy</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">precip_mask</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Calculate Intersection source/target-layers
+(137, 49) (137, 49, 2)
+(137, 49) (6713, 2)
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[12]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>&lt;matplotlib.image.AxesImage at 0x7fd86d1b1e10&gt;
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_match3d_wradlib_match_workflow_25_2.png" src="../../_images/notebooks_match3d_wradlib_match_workflow_25_2.png" />
+</div>
+</div>
+</div>
+<div class="section" id="PR-Parallax-Correction">
+<h3>PR Parallax Correction<a class="headerlink" href="#PR-Parallax-Correction" title="Permalink to this headline">¶</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="k">print</span><span class="p">(</span><span class="s2">&quot;NRAY&quot;</span><span class="p">,</span> <span class="n">nray_pr</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;NBIN&quot;</span><span class="p">,</span> <span class="n">ngate_pr</span><span class="p">)</span>
+
+<span class="c1"># Approximation!</span>
+<span class="n">alpha</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="o">-</span><span class="mf">17.04</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">nray_pr</span><span class="p">)</span> <span class="o">*</span> <span class="n">bw_pr</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">alpha</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="c1"># Correct for parallax, get 3D-XYZ-Array</span>
+<span class="c1">#   xyzp_pr: Parallax corrected xyz coordinates</span>
+<span class="c1">#   r_pr_inv: range array from ground to PR platform</span>
+<span class="c1">#   zp: PR bin altitudes</span>
+<span class="n">xyp_pr</span><span class="p">,</span> <span class="n">r_pr_inv</span><span class="p">,</span> <span class="n">z_pr</span> <span class="o">=</span> <span class="n">wradlib</span><span class="o">.</span><span class="n">georef</span><span class="o">.</span><span class="n">correct_parallax</span><span class="p">(</span><span class="n">pr_xy</span><span class="p">,</span> <span class="n">ngate_pr</span><span class="p">,</span> <span class="n">dr_pr</span><span class="p">,</span> <span class="n">alpha</span><span class="p">)</span>
+<span class="n">xyzp_pr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">xyp_pr</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">z_pr</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span> <span class="n">xyp_pr</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span>
+                   <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">pr_xy</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;PR_XYP:&quot;</span><span class="p">,</span> <span class="n">xyp_pr</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">xyzp_pr</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">r_pr_inv</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">z_pr</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+NRAY 49
+NBIN 176
+(49,)
+(137, 49, 2)
+PR_XYP: (137, 49, 176, 2) (137, 49, 176, 3) (176,) (49, 176)
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Compute-spherical-coordinates-of-PR-bins-with-regard-to-GR">
+<h3>Compute spherical coordinates of PR bins with regard to GR<a class="headerlink" href="#Compute-spherical-coordinates-of-PR-bins-with-regard-to-GR" title="Permalink to this headline">¶</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="n">r_pr</span><span class="p">,</span> <span class="n">elev_pr</span><span class="p">,</span> <span class="n">az_pr</span> <span class="o">=</span> <span class="n">wradlib</span><span class="o">.</span><span class="n">georef</span><span class="o">.</span><span class="n">sat2pol</span><span class="p">(</span><span class="n">xyzp_pr</span><span class="p">,</span> <span class="n">alt0_gr</span><span class="p">,</span> <span class="n">re1</span><span class="p">)</span>
+<span class="n">mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">elev_pr</span> <span class="o">&gt;</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">bw_gr</span><span class="o">/</span><span class="mf">2.</span><span class="p">))</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">elev_pr</span> <span class="o">&lt;</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">bw_gr</span><span class="o">/</span><span class="mf">2.</span><span class="p">))</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">mask</span><span class="p">[</span><span class="mi">90</span><span class="p">,:,:]</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[14]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>&lt;matplotlib.collections.QuadMesh at 0x7fd86d2d7e80&gt;
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_match3d_wradlib_match_workflow_29_1.png" src="../../_images/notebooks_match3d_wradlib_match_workflow_29_1.png" />
+</div>
+</div>
+</div>
+<div class="section" id="Compute-PR-and-GR-pulse-volumes">
+<h3>Compute PR and GR pulse volumes<a class="headerlink" href="#Compute-PR-and-GR-pulse-volumes" title="Permalink to this headline">¶</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="c1"># PR pulse volumes</span>
+
+<span class="c1"># Range of PR bins</span>
+<span class="n">dists</span> <span class="o">=</span> <span class="n">wradlib</span><span class="o">.</span><span class="n">georef</span><span class="o">.</span><span class="n">dist_from_orbit</span><span class="p">(</span><span class="n">zt</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">r_pr_inv</span><span class="p">)</span>
+<span class="n">vol_pr2</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">dr_pr</span> <span class="o">*</span> <span class="p">(</span><span class="n">dists</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">bw_pr</span> <span class="o">/</span> <span class="mf">2.</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span>
+
+<span class="c1"># Or using wradlib&#39;s native function</span>
+<span class="n">vol_pr</span> <span class="o">=</span> <span class="n">wradlib</span><span class="o">.</span><span class="n">qual</span><span class="o">.</span><span class="n">pulse_volume</span><span class="p">(</span><span class="n">dists</span><span class="p">,</span> <span class="n">dr_pr</span><span class="p">,</span> <span class="n">bw_pr</span><span class="p">)</span>
+<span class="c1">#vol_pr = np.pi * dr_pr * (dists ** 2) * (np.tan(np.radians(bw_pr/2.))) ** 2</span>
+
+<span class="c1"># Evaluate difference between both approaches</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Min. difference (m3):&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">vol_pr</span> <span class="o">-</span> <span class="n">vol_pr2</span><span class="p">)</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Max. difference (m3): &quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">vol_pr</span> <span class="o">-</span> <span class="n">vol_pr2</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Average rel. difference (%):&quot;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">vol_pr</span><span class="o">-</span><span class="n">vol_pr2</span><span class="p">)</span><span class="o">*</span><span class="mf">100.</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">vol_pr2</span><span class="p">)),</span> <span class="mi">4</span><span class="p">))</span>
+
+<span class="c1"># Verdict: differences are negligble - use wradlibs&#39;s native function!</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Min. difference (m3): 57227.4480252
+Max. difference (m3):  69916.9971285
+Average rel. difference (%): 0.0026
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="c1"># GR pulse volumes</span>
+<span class="c1">#   along one beam</span>
+<span class="n">vol_gr</span> <span class="o">=</span> <span class="n">wradlib</span><span class="o">.</span><span class="n">qual</span><span class="o">.</span><span class="n">pulse_volume</span><span class="p">(</span><span class="n">r_gr</span><span class="p">,</span> <span class="n">dr_gr</span><span class="p">,</span> <span class="n">bw_gr</span><span class="p">)</span>
+<span class="c1">#   with shape (nray_gr, ngate_gr)</span>
+<span class="n">vol_gr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">vol_gr</span><span class="p">,</span> <span class="n">nray_gr</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">nray_gr</span><span class="p">,</span><span class="n">ngate_gr</span><span class="p">),</span> <span class="n">order</span><span class="o">=</span><span class="s2">&quot;F&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Median-Brightband-Width/Height">
+<h3>Median Brightband Width/Height<a class="headerlink" href="#Median-Brightband-Width/Height" title="Permalink to this headline">¶</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="k">print</span><span class="p">(</span><span class="n">z_pr</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">pr_data</span><span class="p">[</span><span class="s1">&#39;zbb&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">pr_data</span><span class="p">[</span><span class="s1">&#39;bbwidth&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">pr_data</span><span class="p">[</span><span class="s1">&#39;quality&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">ratio</span><span class="p">,</span> <span class="n">ibb</span> <span class="o">=</span> <span class="n">wradlib</span><span class="o">.</span><span class="n">qual</span><span class="o">.</span><span class="n">get_bb_ratio</span><span class="p">(</span><span class="n">pr_data</span><span class="p">[</span><span class="s1">&#39;zbb&#39;</span><span class="p">],</span> <span class="n">pr_data</span><span class="p">[</span><span class="s1">&#39;bbwidth&#39;</span><span class="p">],</span> <span class="n">pr_data</span><span class="p">[</span><span class="s1">&#39;quality&#39;</span><span class="p">],</span> <span class="n">z_pr</span><span class="p">)</span>
+<span class="n">zbb</span> <span class="o">=</span> <span class="n">pr_data</span><span class="p">[</span><span class="s1">&#39;zbb&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">zbb</span><span class="p">[</span><span class="o">~</span><span class="n">ibb</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(49, 176)
+(137, 49) (137, 49) (137, 49)
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Convert-PR-Ku-reflectivities-to-S-band">
+<h3>Convert PR Ku reflectivities to S-band<a class="headerlink" href="#Convert-PR-Ku-reflectivities-to-S-band" title="Permalink to this headline">¶</a></h3>
+<p>Based on <a class="reference external" href="http://dx.doi.org/10.1002/jgrd.50138">Cao et.al (2013)</a></p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="n">refp</span> <span class="o">=</span> <span class="n">pr_data</span><span class="p">[</span><span class="s1">&#39;refl&#39;</span><span class="p">][:,:,::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="n">refp_ss</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">refp</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+<span class="n">refp_sh</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">refp</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+
+<span class="n">a_s</span><span class="p">,</span> <span class="n">a_h</span> <span class="o">=</span> <span class="p">(</span><span class="n">wradlib</span><span class="o">.</span><span class="n">trafo</span><span class="o">.</span><span class="n">ku2s</span><span class="o">.</span><span class="n">snow</span><span class="p">,</span> <span class="n">wradlib</span><span class="o">.</span><span class="n">trafo</span><span class="o">.</span><span class="n">ku2s</span><span class="o">.</span><span class="n">hail</span><span class="p">)</span>
+
+<span class="n">ia</span> <span class="o">=</span> <span class="p">(</span><span class="n">ratio</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">refp_ss</span><span class="p">[</span><span class="n">ia</span><span class="p">]</span> <span class="o">=</span> <span class="n">refp</span><span class="p">[</span><span class="n">ia</span><span class="p">]</span> <span class="o">+</span> <span class="n">wradlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">calculate_polynomial</span><span class="p">(</span><span class="n">refp</span><span class="p">[</span><span class="n">ia</span><span class="p">],</span> <span class="n">a_s</span><span class="p">[:,</span><span class="mi">10</span><span class="p">])</span>
+<span class="n">refp_sh</span><span class="p">[</span><span class="n">ia</span><span class="p">]</span> <span class="o">=</span> <span class="n">refp</span><span class="p">[</span><span class="n">ia</span><span class="p">]</span> <span class="o">+</span> <span class="n">wradlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">calculate_polynomial</span><span class="p">(</span><span class="n">refp</span><span class="p">[</span><span class="n">ia</span><span class="p">],</span> <span class="n">a_h</span><span class="p">[:,</span><span class="mi">10</span><span class="p">])</span>
+<span class="n">ib</span> <span class="o">=</span> <span class="p">(</span><span class="n">ratio</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">refp_ss</span><span class="p">[</span><span class="n">ib</span><span class="p">]</span> <span class="o">=</span> <span class="n">refp</span><span class="p">[</span><span class="n">ib</span><span class="p">]</span> <span class="o">+</span> <span class="n">wradlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">calculate_polynomial</span><span class="p">(</span><span class="n">refp</span><span class="p">[</span><span class="n">ib</span><span class="p">],</span> <span class="n">a_s</span><span class="p">[:,</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">refp_sh</span><span class="p">[</span><span class="n">ib</span><span class="p">]</span> <span class="o">=</span> <span class="n">refp</span><span class="p">[</span><span class="n">ib</span><span class="p">]</span> <span class="o">+</span> <span class="n">wradlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">calculate_polynomial</span><span class="p">(</span><span class="n">refp</span><span class="p">[</span><span class="n">ib</span><span class="p">],</span> <span class="n">a_h</span><span class="p">[:,</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">im</span> <span class="o">=</span> <span class="p">(</span><span class="n">ratio</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">ratio</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">ind</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">ratio</span><span class="p">[</span><span class="n">im</span><span class="p">]</span> <span class="o">*</span> <span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>
+<span class="n">refp_ss</span><span class="p">[</span><span class="n">im</span><span class="p">]</span> <span class="o">=</span> <span class="n">refp</span><span class="p">[</span><span class="n">im</span><span class="p">]</span> <span class="o">+</span> <span class="n">wradlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">calculate_polynomial</span><span class="p">(</span><span class="n">refp</span><span class="p">[</span><span class="n">im</span><span class="p">],</span> <span class="n">a_s</span><span class="p">[:,</span><span class="n">ind</span><span class="p">])</span>
+<span class="n">refp_sh</span><span class="p">[</span><span class="n">im</span><span class="p">]</span> <span class="o">=</span> <span class="n">refp</span><span class="p">[</span><span class="n">im</span><span class="p">]</span> <span class="o">+</span> <span class="n">wradlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">calculate_polynomial</span><span class="p">(</span><span class="n">refp</span><span class="p">[</span><span class="n">im</span><span class="p">],</span> <span class="n">a_h</span><span class="p">[:,</span><span class="n">ind</span><span class="p">])</span>
+
+<span class="c1"># Jackson Tan&#39;s fix for C-band</span>
+<span class="n">is_cband</span> <span class="o">=</span> <span class="bp">False</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">is_cband</span><span class="p">):</span>
+    <span class="n">deltas</span> <span class="o">=</span> <span class="p">(</span><span class="n">refp_ss</span> <span class="o">-</span> <span class="n">refp</span><span class="p">)</span> <span class="o">*</span> <span class="mf">5.3</span> <span class="o">/</span> <span class="mf">10.0</span>
+    <span class="n">refp_ss</span> <span class="o">=</span> <span class="n">refp</span> <span class="o">+</span> <span class="n">deltas</span>
+    <span class="n">deltah</span> <span class="o">=</span> <span class="p">(</span><span class="n">refp_sh</span> <span class="o">-</span> <span class="n">refp</span><span class="p">)</span> <span class="o">*</span> <span class="mf">5.3</span> <span class="o">/</span> <span class="mf">10.0</span>
+    <span class="n">refp_sh</span> <span class="o">=</span> <span class="n">refp</span> <span class="o">+</span> <span class="n">deltah</span>
+
+<span class="n">refp_ss</span><span class="p">[</span><span class="n">refp</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+<span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">masked_invalid</span><span class="p">(</span><span class="n">refp_ss</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Convert-S-band-GR-reflectivities-to-Ku-band">
+<h3>Convert S-band GR reflectivities to Ku-band<a class="headerlink" href="#Convert-S-band-GR-reflectivities-to-Ku-band" title="Permalink to this headline">¶</a></h3>
+<p>Using the method of <a class="reference external" href="http://dx.doi.org/10.1175/2008JAMC1974.1">Liao and Meneghini
+(2009)</a></p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="c1"># Convert S-band GR reflectivities to Ku-band using method of Liao and Meneghini (2009)</span>
+<span class="n">ref_gr_ku</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">ref_gr</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+
+<span class="c1"># Which zbb value should we take here???</span>
+<span class="c1">#    Q&#39;n&#39;Dirty: just take the mean of all PR profiles</span>
+<span class="c1">#    TODO: Consider zbb for each profile during the matching process</span>
+
+<span class="c1"># Snow</span>
+<span class="n">ia</span> <span class="o">=</span> <span class="p">(</span> <span class="n">gr_xyz</span><span class="p">[</span><span class="o">...</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">zbb</span><span class="p">)</span> <span class="p">)</span>
+<span class="c1">#ref_gr_ku[ia] = wradlib.trafo.ku2s.snow[0] + wradlib.trafo.ku2s.snow[1]*ref_gr[ia] + wradlib.trafo.ku2s.snow[2]*ref_gr[ia]**2</span>
+<span class="n">ref_gr_ku</span><span class="p">[</span><span class="n">ia</span><span class="p">]</span> <span class="o">=</span> <span class="n">wradlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">calculate_polynomial</span><span class="p">(</span><span class="n">ref_gr</span><span class="p">[</span><span class="n">ia</span><span class="p">],</span> <span class="n">wradlib</span><span class="o">.</span><span class="n">trafo</span><span class="o">.</span><span class="n">s2ku</span><span class="o">.</span><span class="n">snow</span><span class="p">)</span>
+<span class="c1"># Rain</span>
+<span class="n">ib</span> <span class="o">=</span> <span class="p">(</span> <span class="n">gr_xyz</span><span class="p">[</span><span class="o">...</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">zbb</span><span class="p">)</span> <span class="p">)</span>
+<span class="c1">#ref_gr_ku[ib] = wradlib.trafo.ku2s.rain[0] + wradlib.trafo.ku2s.rain[1]*ref_gr[ia] + wradlib.trafo.ku2s.rain[2]*ref_gr[ia]**2</span>
+<span class="n">ref_gr_ku</span><span class="p">[</span><span class="n">ib</span><span class="p">]</span> <span class="o">=</span> <span class="n">wradlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">calculate_polynomial</span><span class="p">(</span><span class="n">ref_gr</span><span class="p">[</span><span class="n">ib</span><span class="p">],</span> <span class="n">wradlib</span><span class="o">.</span><span class="n">trafo</span><span class="o">.</span><span class="n">s2ku</span><span class="o">.</span><span class="n">rain</span><span class="p">)</span>
+
+<span class="c1"># Jackson Tan&#39;s fix for C-band</span>
+<span class="n">is_cband</span> <span class="o">=</span> <span class="bp">False</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">is_cband</span><span class="p">):</span>
+    <span class="n">delta</span> <span class="o">=</span> <span class="p">(</span><span class="n">ref_gr_ku</span> <span class="o">-</span> <span class="n">ref_gr</span><span class="p">)</span> <span class="o">*</span> <span class="mf">5.3</span><span class="o">/</span><span class="mf">10.0</span>
+    <span class="n">ref_gr_ku</span> <span class="o">=</span> <span class="n">ref_gr</span> <span class="o">+</span> <span class="n">delta</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="Matching-PR/GR">
+<h2>Matching PR/GR<a class="headerlink" href="#Matching-PR/GR" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="Identify-which-PR-rays-actually-intersect-with-the-GR-sweep">
+<h3>Identify which PR rays actually intersect with the GR sweep<a class="headerlink" href="#Identify-which-PR-rays-actually-intersect-with-the-GR-sweep" title="Permalink to this headline">¶</a></h3>
+<p>Based on the above criteria (in radar range, precipitating PR profile)
+and based on PR elevation angle (with regard to GR).</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="c1"># First assumption: no valid PR bins (all False)</span>
+<span class="n">valid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">elev_pr</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">bool</span><span class="p">)</span><span class="o">==</span><span class="bp">False</span>
+<span class="k">print</span><span class="p">(</span><span class="n">valid</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">precip_mask</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="c1"># PR is inside GR range and is precipitating</span>
+<span class="n">iscan</span> <span class="o">=</span> <span class="n">precip_mask</span><span class="o">.</span><span class="n">nonzero</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">iray</span> <span class="o">=</span> <span class="n">precip_mask</span><span class="o">.</span><span class="n">nonzero</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">valid</span><span class="p">[</span><span class="n">iscan</span><span class="p">,</span><span class="n">iray</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="c1"># PR bins intersect with GR sweep</span>
+<span class="n">valid</span> <span class="o">=</span> <span class="n">valid</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">elev_pr</span> <span class="o">&gt;=</span> <span class="n">elev</span><span class="o">-</span><span class="n">bw_gr</span><span class="o">/</span><span class="mf">2.</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">elev_pr</span> <span class="o">&lt;=</span> <span class="n">elev</span><span class="o">+</span><span class="n">bw_gr</span><span class="o">/</span><span class="mf">2.</span><span class="p">)</span>
+<span class="c1">#valid = precip_mask[..., np.newaxis] &amp; (elev_pr &gt;= elev-bw_gr/2.) &amp; (elev_pr &lt;= elev+bw_gr/2.)</span>
+<span class="c1"># Number of matching PR bins per profile</span>
+<span class="n">nvalids</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">valid</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="c1"># scan and ray indices for profiles with at least one valid bin</span>
+<span class="n">vscan</span><span class="p">,</span> <span class="n">vray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">nvalids</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span>
+<span class="c1"># number of profiles with at least one valid bin</span>
+<span class="n">nprof</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vscan</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(137, 49, 176) (137, 49)
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="c1"># Lots of containers to store samples (only for one GR sweep angle!)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">nprof</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span>        <span class="c1"># x coordinate of sample</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">nprof</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span>        <span class="c1"># y coordinate of sample</span>
+<span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">nprof</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span>        <span class="c1"># z coordinate of sample</span>
+<span class="n">dz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">nprof</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span>       <span class="c1"># depth of sample</span>
+<span class="n">ds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">nprof</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span>       <span class="c1"># width of sample</span>
+<span class="n">rs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">nprof</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span>       <span class="c1"># range of sample from GR</span>
+<span class="n">refpr1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">nprof</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span>     <span class="c1"># PR reflectivity</span>
+<span class="n">refpr2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">nprof</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span>     <span class="c1"># PR reflectivity (S-band, snow)</span>
+<span class="n">refpr3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">nprof</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span>     <span class="c1"># PR reflectivity (S-band, hail)</span>
+<span class="n">refgr1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">nprof</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span>     <span class="c1"># GR reflectivity</span>
+<span class="n">refgr2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">nprof</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span>     <span class="c1"># GR reflectivity (Ku-band)</span>
+<span class="n">ntotpr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">nprof</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;i4&quot;</span><span class="p">)</span><span class="c1"># total number of PR bins in sample</span>
+<span class="n">nrej1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">nprof</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;i4&quot;</span><span class="p">)</span><span class="c1"># number of rejected PR bins in sample</span>
+<span class="n">ntotgr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">nprof</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;i4&quot;</span><span class="p">)</span><span class="c1"># total number of GR bins in sample</span>
+<span class="n">nrej2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">nprof</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="s2">&quot;i4&quot;</span><span class="p">)</span><span class="c1"># number of rejected GR bins in sample</span>
+<span class="n">iref1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">nprof</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span>    <span class="c1"># path-integrated PR reflectivity</span>
+<span class="n">iref2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">nprof</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span>    <span class="c1"># path-integrated GR reflectivity</span>
+<span class="n">stdv1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">nprof</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span>    <span class="c1"># std. dev. of PR reflectivity in sample</span>
+<span class="n">stdv2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">nprof</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span>    <span class="c1"># std. dev. of GR reflectivity in sample</span>
+<span class="n">volpr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">nprof</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span>     <span class="c1"># total volume of PR bins in sample</span>
+<span class="n">volgr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">nprof</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span>     <span class="c1"># total volume of GR bins in sample</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [22]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="c1"># Loop over relevant PR profiles</span>
+<span class="k">for</span> <span class="n">ii</span><span class="p">,</span> <span class="p">(</span><span class="n">ss</span><span class="p">,</span> <span class="n">rr</span><span class="p">)</span>  <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">vscan</span><span class="p">,</span><span class="n">vray</span><span class="p">)):</span>
+    <span class="c1"># Index and count valid bins in each profile</span>
+    <span class="n">ip</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">valid</span><span class="p">[</span><span class="n">ss</span><span class="p">,</span><span class="n">rr</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">numbins</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span>
+    <span class="n">ntotpr</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span><span class="o">=</span><span class="n">numbins</span>
+    <span class="k">if</span> <span class="n">numbins</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">continue</span>
+    <span class="c1"># Compute the mean position of these bins</span>
+    <span class="n">x</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">xyzp_pr</span><span class="p">[</span><span class="n">ss</span><span class="p">,</span><span class="n">rr</span><span class="p">,</span><span class="n">ip</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">y</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">xyzp_pr</span><span class="p">[</span><span class="n">ss</span><span class="p">,</span><span class="n">rr</span><span class="p">,</span><span class="n">ip</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">z</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">xyzp_pr</span><span class="p">[</span><span class="n">ss</span><span class="p">,</span><span class="n">rr</span><span class="p">,</span><span class="n">ip</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+
+    <span class="c1">#np.stack((pr_xp, pr_yp,</span>
+    <span class="c1">#          np.repeat(zp[np.newaxis, ...], pr_xp.shape[0], axis=0)),</span>
+    <span class="c1">#          axis=3)</span>
+
+    <span class="c1"># Thickness of the layer</span>
+    <span class="n">dz</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span><span class="o">=</span><span class="p">(</span><span class="n">numbins</span> <span class="o">*</span> <span class="n">dr_pr</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span> <span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">alpha</span><span class="p">[</span><span class="n">rr</span><span class="p">])</span> <span class="p">)</span>
+
+    <span class="c1"># PR averaging volume</span>
+    <span class="n">volpr</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">vol_pr2</span><span class="p">[</span><span class="n">rr</span><span class="p">,</span><span class="n">ip</span><span class="p">])</span>
+
+    <span class="c1"># Note mean TRMM beam diameter</span>
+    <span class="n">ds</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">bw_pr</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span> <span class="p">(</span> <span class="p">(</span><span class="n">zt</span><span class="o">-</span><span class="n">z</span><span class="p">[</span><span class="n">ii</span><span class="p">])</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span> <span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">alpha</span><span class="p">[</span><span class="n">rr</span><span class="p">])</span> <span class="p">)</span> <span class="p">)</span> <span class="p">)</span>
+
+    <span class="c1"># Note distance from radar</span>
+    <span class="n">s</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="n">y</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">rs</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span><span class="o">=</span><span class="p">(</span><span class="n">re2</span><span class="o">+</span><span class="n">z</span><span class="p">[</span><span class="n">ii</span><span class="p">])</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">s</span><span class="o">/</span><span class="n">re2</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">elev</span><span class="p">))</span>
+
+    <span class="c1"># This should not be required because we applied ZonalData</span>
+    <span class="c1">### Check that sample is within radar range</span>
+    <span class="c1">##if r[ii,jj]+ds[ii,jj]/2. gt rmax then continue</span>
+
+    <span class="c1">## THIS IS THE ORIGINAL IDL CODE - IS THIS A BUG???</span>
+    <span class="c1">##ref1[ii,jj]=MEAN(refp1,/nan)</span>
+    <span class="c1">##ref3[ii,jj]=MEAN(refp2,/nan)</span>
+    <span class="c1">##ref4[ii,jj]=MEAN(refp3,/nan)</span>
+
+    <span class="c1"># Simple linear average of reflectivity</span>
+    <span class="c1">#   - we can become fancier in the next step</span>
+    <span class="c1"># ATTENTION: NEED TO FLIP ARRAY</span>
+    <span class="n">refpr1</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">flipud</span><span class="p">(</span><span class="n">refp</span><span class="p">)</span>   <span class="p">[</span><span class="n">ss</span><span class="p">,</span><span class="n">rr</span><span class="p">,</span><span class="n">ip</span><span class="p">])</span>
+    <span class="n">refpr2</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">flipud</span><span class="p">(</span><span class="n">refp_ss</span><span class="p">)[</span><span class="n">ss</span><span class="p">,</span><span class="n">rr</span><span class="p">,</span><span class="n">ip</span><span class="p">])</span>
+    <span class="n">refpr3</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">flipud</span><span class="p">(</span><span class="n">refp_sh</span><span class="p">)[</span><span class="n">ss</span><span class="p">,</span><span class="n">rr</span><span class="p">,</span><span class="n">ip</span><span class="p">])</span>
+
+    <span class="c1">## Not sure why we need this...</span>
+    <span class="c1">### Note the number of rejected bins</span>
+    <span class="c1">##nrej1[ii,jj]=ROUND(TOTAL(FINITE(refp1,/nan)))</span>
+    <span class="c1">##if FINITE(stdv1[ii,jj]) eq 0 and np-nrej1[ii,jj] gt 1 then STOP</span>
+
+    <span class="c1"># SHOULD WE USE ZONALDATA INSTEAD? COULD BE MORE ACCURATE, BUT ALSO SLOWER</span>
+    <span class="c1"># WE COULD BASICALLY START A NEW LOOP HERE AND RUN ZONALDATA BEFORE</span>
+
+    <span class="c1"># Compute the horizontal distance to all the GR bins</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">gr_xyz</span><span class="p">[</span><span class="o">...</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">x</span><span class="p">[</span><span class="n">ii</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">gr_xyz</span><span class="p">[</span><span class="o">...</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">y</span><span class="p">[</span><span class="n">ii</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="c1"># Find all GR bins within the SR beam</span>
+    <span class="n">aa</span><span class="p">,</span> <span class="n">bb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">d</span> <span class="o">&lt;=</span> <span class="n">ds</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span><span class="o">/</span><span class="mf">2.</span><span class="p">)</span>
+
+    <span class="c1"># Store the number of bins</span>
+    <span class="n">ntotgr</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">aa</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">aa</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">continue</span>
+
+    <span class="c1"># Extract the relevant GR bins</span>
+
+    <span class="c1"># Compute the GR averaging volume</span>
+    <span class="n">volgr</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">vol_gr</span><span class="p">[</span><span class="n">aa</span><span class="p">,</span><span class="n">bb</span><span class="p">])</span>
+
+    <span class="c1"># Average over those bins that exceed the reflectivity threshold</span>
+    <span class="c1">#   IDL code does exponential distance and volume weighting</span>
+    <span class="c1">#   Let&#39;s try simple mean first,</span>
+    <span class="c1">#   THEN ZonalStats!</span>
+    <span class="n">refgr1</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">ref_gr</span><span class="p">[</span><span class="n">aa</span><span class="p">,</span><span class="n">bb</span><span class="p">])</span>
+    <span class="n">refgr2</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">ref_gr_ku</span><span class="p">[</span><span class="n">aa</span><span class="p">,</span><span class="n">bb</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [23]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">121</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s2">&quot;equal&quot;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">refgr1</span><span class="p">,</span> <span class="n">refpr1</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;+&quot;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">60</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">60</span><span class="p">],</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;solid&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">50</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">50</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;GR reflectivity (dBZ)&quot;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;PR reflectivity (dBZ)&quot;</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">122</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">refgr1</span><span class="p">[</span><span class="n">refpr1</span><span class="o">&gt;-</span><span class="mi">10</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span><span class="mi">50</span><span class="p">,</span><span class="mi">5</span><span class="p">),</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;None&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;GR&quot;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">refpr1</span><span class="p">[</span><span class="n">refpr1</span><span class="o">&gt;-</span><span class="mi">10</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span><span class="mi">50</span><span class="p">,</span><span class="mi">5</span><span class="p">),</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s2">&quot;None&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;PR&quot;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Reflectivity (dBZ)&quot;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[23]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>&lt;matplotlib.legend.Legend at 0x7fd86d280630&gt;
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_match3d_wradlib_match_workflow_44_1.png" src="../../_images/notebooks_match3d_wradlib_match_workflow_44_1.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [24]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">12</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">121</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s2">&quot;equal&quot;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">refpr1</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">pl</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">jet</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;None&quot;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;PR reflectivity&quot;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">122</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s2">&quot;equal&quot;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">refgr1</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">pl</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">jet</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;None&quot;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;GR reflectivity&quot;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_match3d_wradlib_match_workflow_45_0.png" src="../../_images/notebooks_match3d_wradlib_match_workflow_45_0.png" />
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../develop.html" class="btn btn-neutral float-right" title="For Developers" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../zonalstats/wradlib_zonalstats_classes.html" class="btn btn-neutral" title="Zonal Statistics" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2011-2016, wradlib developers.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.11.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

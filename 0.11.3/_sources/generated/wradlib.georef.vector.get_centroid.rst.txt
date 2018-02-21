@@ -1,0 +1,6 @@
+wradlib.georef.vector.get\_centroid
+===================================
+
+.. currentmodule:: wradlib.georef.vector
+
+.. autofunction:: get_centroid

@@ -1,0 +1,13 @@
+wradlib\.ipol\.Nearest
+======================
+
+.. currentmodule:: wradlib.ipol
+
+.. autoclass:: Nearest
+
+   
+
+
+
+   
+

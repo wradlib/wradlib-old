@@ -1,0 +1,6 @@
+wradlib\.io\.gdal\.open\_shape
+==============================
+
+.. currentmodule:: wradlib.io.gdal
+
+.. autofunction:: open_shape

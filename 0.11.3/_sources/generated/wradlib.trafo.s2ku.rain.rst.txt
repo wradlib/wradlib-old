@@ -1,0 +1,6 @@
+wradlib.trafo.s2ku.rain
+=======================
+
+.. currentmodule:: wradlib.trafo
+
+.. autoattribute:: s2ku.rain

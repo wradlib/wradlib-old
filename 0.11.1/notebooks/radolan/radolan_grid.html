@@ -1,0 +1,846 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>RADOLAN Grid &mdash; wradlib</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/wradlib.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="wradlib" href="../../index.html"/>
+        <link rel="up" title="Georeferencing" href="../georeferencing.html"/>
+        <link rel="next" title="Plot additional geodata" href="../visualisation/wradlib_overlay.html"/>
+        <link rel="prev" title="Example for georeferencing a radar dataset" href="../georeferencing/wradlib_georef_example.html"/>
+    
+    <link href="../../_static/wradlib.css" rel="stylesheet" type="text/css">
+
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+  <a href="../../index.html" class="icon icon-home"> wradlib
+
+
+
+</a>
+
+
+
+  <div class="version">
+    
+    <button class="verbtn">0.11.1</button>
+    <div class="version-content">
+      
+        <a href="../latest/">latest</a>
+        <a href="../0.11.1/">0.11.1</a>
+    </div>
+  </div>
+
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../gettingstarted.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../notebooks.html">Tutorials and Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../jupyter.html">How to use the tutorials and examples?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../learnpython.html">An incomplete introduction to Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics.html">Getting started with wradlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../fileio.html">Data Input - Data Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../attenuation/wradlib_attenuation.html">Attenuation correction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../beamblockage/wradlib_beamblock.html">Beam Blockage Calculation using a DEM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../classify.html">Clutter and Echo Classification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../georeferencing.html">Georeferencing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../match3d/wradlib_match_workflow.html">Match spaceborn PR (GPM/TRMM) with ground radars</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../develop.html">For Developers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interpolation/wradlib_ipol_example.html">How to use wradlib’s ipol module for interpolation tasks?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../multisensor/wradlib_adjust_example.html">Adjusting radar-base rainfall estimates by rain gauge observations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../verification/wradlib_verify_example.html">Routine verification measures for radar-based precipitation estimates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../recipes.html">Recipes</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../radolan.html">RADOLAN</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="radolan_quickstart.html">RADOLAN Quick Start</a></li>
+<li class="toctree-l3"><a class="reference internal" href="radolan_format.html">RADOLAN Binary Data Format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="radolan_showcase.html">RADOLAN Product Showcase</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">RADOLAN Grid</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Polar-Stereographic-Projection">Polar Stereographic Projection</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Inverse-Polar-Stereographic-Projection">Inverse Polar Stereographic Projection</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Standard-Formats">Standard Formats</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Grid-Reprojection">Grid Reprojection</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="radolan_network.html">DWD Radar Network</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../zonalstats/wradlib_zonalstats_classes.html">Zonal Statistics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference.html">Library Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev_setup.html">For Developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zreferences.html">Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../release_notes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">wradlib</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../notebooks.html">Tutorials and Examples</a> &raquo;</li>
+        
+          <li><a href="../georeferencing.html">Georeferencing</a> &raquo;</li>
+        
+      <li>RADOLAN Grid</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/notebooks/radolan/radolan_grid.ipynb.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #303F9F;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #D84315;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 8ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+/* nice headers on first paragraph of info/warning boxes */
+.admonition .first {
+    margin: -12px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1;
+    display: block;
+}
+.admonition.warning .first {
+    background: #f0b37e;
+}
+.admonition.note .first {
+    background: #6ab0de;
+}
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="RADOLAN-Grid">
+<h1>RADOLAN Grid<a class="headerlink" href="#RADOLAN-Grid" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="Polar-Stereographic-Projection">
+<h2>Polar Stereographic Projection<a class="headerlink" href="#Polar-Stereographic-Projection" title="Permalink to this headline">¶</a></h2>
+<p>The projected composite raster is equidistant with a grid-spacing of 1.0
+km in most cases. There are composites which have 2.0 km grid-spacing
+(e.g.&nbsp;PC).</p>
+<p>There are three different grid sizes, the well-known 900 rows by 900
+columns (normal), 1500 rows by 1400 columns (extended, european) and 460
+rows by 460 columns (small).</p>
+<p>Common to all is that the plane of projection intersects the earth
+sphere at <span class="math">\(\phi_0 = 60.0^{\circ}N\)</span>. The cartesian co-ordinate
+system is aligned parallel to the <span class="math">\(\lambda_0 = 10.0^{\circ}E\)</span>
+meridian.</p>
+<p>The reference point (<span class="math">\(\lambda_m\)</span>, <span class="math">\(\phi_m\)</span>) is
+<span class="math">\(9.0^{\circ}E\)</span> and <span class="math">\(51.0^{\circ}N\)</span>, which is the center of
+the two smaller grids. The extended grid has an offset in respect to
+this reference point of 350km by 150km.</p>
+<p>The earth as sphere with an radius of 6370.04 km is used for all
+calculations.</p>
+<p>With formulas (1), (2) and (3) the geographic reference points
+(<span class="math">\(\lambda\)</span>, <span class="math">\(\phi\)</span>) can be converted to projected cartesian
+coordinates. The calculated (x y) is the distance vector to the origign
+of the cartesian coordinate system (north pole).</p>
+<p><span class="math">\(\begin{equation} x = R * M(\phi) * cos(\phi) * sin(\lambda - \lambda_0) \tag{1} \end{equation}\)</span></p>
+<p><span class="math">\(\begin{equation} y = -R * M(\phi) * cos(\phi) * cos(\lambda - \lambda_0) \tag{2} \end{equation}\)</span></p>
+<p><span class="math">\(\begin{equation} M(\phi) = \frac {1 + sin(\phi_0)} {1 + sin(\phi)} \tag{3} \end{equation}\)</span></p>
+<p>Assumed the point (<span class="math">\(10.0^{\circ}E\)</span>, <span class="math">\(90.0^{\circ}N\)</span>) is
+defined as coordinate system origin. Then all ccordinates can be
+calculated with the known grid-spacing d as:</p>
+<p><span class="math">\(\begin{equation} x = x_0 + d * (j - j_0) \tag{4} \end{equation}\)</span></p>
+<p><span class="math">\(\begin{equation} y = y_0 + d * (i - i_0) \tag{5} \end{equation}\)</span></p>
+<p>with i, j as cartesian indices.</p>
+<p><span class="math">\(\omega radlib\)</span> provides the convenience function
+<a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/generated/wradlib.georef.get_radolan_grid.html">wradlib.georef.get_radolan_grid()</a>
+which returns the radolan grid for further processing. It takes
+<code class="docutils literal"><span class="pre">nrows</span></code> and <code class="docutils literal"><span class="pre">ncols</span></code> as parameters and returns the projected
+cartesian coordinates or the wgs84 coordinates (keyword arg wgs84=True)
+as numpy ndarray (nrows x ncols x 2).</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">wradlib</span> <span class="kn">as</span> <span class="nn">wrl</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">pl</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">get_ipython</span><span class="p">()</span><span class="o">.</span><span class="n">magic</span><span class="p">(</span><span class="s2">&quot;matplotlib inline&quot;</span><span class="p">)</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="n">pl</span><span class="o">.</span><span class="n">ion</span><span class="p">()</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="n">radolan_grid_xy</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">georef</span><span class="o">.</span><span class="n">get_radolan_grid</span><span class="p">(</span><span class="mi">900</span><span class="p">,</span><span class="mi">900</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;{0}, ({1:.4f}, {2:.4f})&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">radolan_grid_xy</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="o">*</span><span class="n">radolan_grid_xy</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,:]))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(900, 900, 2), (-523.4622, -4658.6447)
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="n">radolan_grid_ll</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">georef</span><span class="o">.</span><span class="n">get_radolan_grid</span><span class="p">(</span><span class="mi">900</span><span class="p">,</span><span class="mi">900</span><span class="p">,</span> <span class="n">wgs84</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;{0}, ({1:.4f}, {2:.4f})&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">radolan_grid_ll</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="o">*</span><span class="n">radolan_grid_ll</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,:]))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(900, 900, 2), (3.5889, 46.9526)
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Inverse-Polar-Stereographic-Projection">
+<h2>Inverse Polar Stereographic Projection<a class="headerlink" href="#Inverse-Polar-Stereographic-Projection" title="Permalink to this headline">¶</a></h2>
+<p>The geographic coordinates of specific datapoints can be calculated by
+using the cartesian coordinates (x,y) and the following formulas:</p>
+<p><span class="math">\(\begin{equation} \lambda = \arctan\left(\frac {-x} {y}\right) + \lambda_0 \tag{6} \end{equation}\)</span></p>
+<p><span class="math">\(\begin{equation} \phi = \arcsin\left(\frac {R^2 * \left(1 + \sin\phi_0\right)^2 - \left(x^2 + y^2\right)} {R^2 * \left(1 + \sin\phi_0\right)^2 + \left(x^2 + y^2\right)}\right) \tag{7} \end{equation}\)</span></p>
+</div>
+<div class="section" id="Standard-Formats">
+<h2>Standard Formats<a class="headerlink" href="#Standard-Formats" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="WKT-String">
+<h3>WKT-String<a class="headerlink" href="#WKT-String" title="Permalink to this headline">¶</a></h3>
+<p>The German Weather Service provides a
+<a class="reference external" href="https://kunden.dwd.de/geoserver/web/?wicket:bookmarkablePage=:org.geoserver.web.demo.SRSDescriptionPage&amp;code=EPSG:1000001">WKT-string</a>.
+This WKT (well known text) is used to create the osr-object
+representation of the radolan projection.</p>
+<p>For the scale_factor the intersection of the projection plane with the
+earth sphere at <span class="math">\(60.0^{\circ}N\)</span> has to be taken into account:</p>
+<p><span class="math">\(\begin{equation} scale\_factor = \frac {1 + \sin\left(60.^{\circ}\right)} {1 + \sin\left(90.^{\circ}\right)} = 0.93301270189 \tag{8} \end{equation}\)</span></p>
+<p>Also, the <code class="docutils literal"><span class="pre">PROJECTION[&quot;Stereographic_North_Pole&quot;]</span></code> isn’t known within
+GDAL/OSR. It has to be changed to the known
+<code class="docutils literal"><span class="pre">PROJECTION[&quot;polar_stereographic&quot;]</span></code>.</p>
+<p>With these adaptions we finally yield the Radolan Projection as
+WKT-string. This WKT-string is used within <span class="math">\(\omega radlib\)</span> to
+create the osr-object by using the helper-function
+<a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/generated/wradlib.georef.create_osr.html">wradlib.georef.create_osr()</a>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="n">proj_stereo</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">georef</span><span class="o">.</span><span class="n">create_osr</span><span class="p">(</span><span class="s2">&quot;dwd-radolan&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">proj_stereo</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+PROJCS[&#34;Radolan projection&#34;,
+    GEOGCS[&#34;Radolan Coordinate System&#34;,
+        DATUM[&#34;Radolan Kugel&#34;,
+            SPHEROID[&#34;Erdkugel&#34;,6370040.0,0.0]],
+        PRIMEM[&#34;Greenwich&#34;,0.0,
+            AUTHORITY[&#34;EPSG&#34;,&#34;8901&#34;]],
+        UNIT[&#34;degree&#34;,0.017453292519943295],
+        AXIS[&#34;Longitude&#34;,EAST],
+        AXIS[&#34;Latitude&#34;,NORTH]],
+    PROJECTION[&#34;polar_stereographic&#34;],
+    PARAMETER[&#34;central_meridian&#34;,10.0],
+    PARAMETER[&#34;latitude_of_origin&#34;,60.0],
+    PARAMETER[&#34;scale_factor&#34;,0.9330127019],
+    PARAMETER[&#34;false_easting&#34;,0.0],
+    PARAMETER[&#34;false_northing&#34;,0.0],
+    UNIT[&#34;m*1000.0&#34;,1000.0],
+    AXIS[&#34;X&#34;,EAST],
+    AXIS[&#34;Y&#34;,NORTH]]
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="PROJ.4">
+<h3>PROJ.4<a class="headerlink" href="#PROJ.4" title="Permalink to this headline">¶</a></h3>
+<p>Using the above WKT-String the PROJ.4 representation can be derived as:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="o">+</span><span class="n">proj</span><span class="o">=</span><span class="n">stere</span> <span class="o">+</span><span class="n">lat_0</span><span class="o">=</span><span class="mi">90</span> <span class="o">+</span><span class="n">lat_ts</span><span class="o">=</span><span class="mi">90</span> <span class="o">+</span><span class="n">lon_0</span><span class="o">=</span><span class="mi">10</span> <span class="o">+</span><span class="n">k</span><span class="o">=</span><span class="mf">0.93301270189</span>
+<span class="o">+</span><span class="n">x_0</span><span class="o">=</span><span class="mi">0</span> <span class="o">+</span><span class="n">y_0</span><span class="o">=</span><span class="mi">0</span> <span class="o">+</span><span class="n">a</span><span class="o">=</span><span class="mi">6370040</span> <span class="o">+</span><span class="n">b</span><span class="o">=</span><span class="mi">6370040</span> <span class="o">+</span><span class="n">to_meter</span><span class="o">=</span><span class="mi">1000</span> <span class="o">+</span><span class="n">no_defs</span>
+</pre></div>
+</div>
+<p>This PROJ.4-string can also be used to create the osr-object by using
+the helper-function
+<a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/generated/wradlib.georef.proj4_to_osr.html">wradlib.georef.proj4_to_osr()</a>:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="c1"># create radolan projection osr object</span>
+<span class="n">dwd_string</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;+proj=stere +lat_0=90 +lat_ts=90 +lon_0=10 +k=0.93301270189&#39;</span>
+              <span class="s1">&#39;+x_0=0 +y_0=0 +a=6370040 +b=6370040 +to_meter=1000 +no_defs&#39;</span><span class="p">)</span>
+<span class="n">proj_stereo</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">georef</span><span class="o">.</span><span class="n">proj4_to_osr</span><span class="p">(</span><span class="n">dwd_string</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">proj_stereo</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+PROJCS[&#34;unnamed&#34;,
+    GEOGCS[&#34;unnamed ellipse&#34;,
+        DATUM[&#34;unknown&#34;,
+            SPHEROID[&#34;unnamed&#34;,6370040,0]],
+        PRIMEM[&#34;Greenwich&#34;,0],
+        UNIT[&#34;degree&#34;,0.0174532925199433]],
+    PROJECTION[&#34;Polar_Stereographic&#34;],
+    PARAMETER[&#34;latitude_of_origin&#34;,90],
+    PARAMETER[&#34;central_meridian&#34;,10],
+    PARAMETER[&#34;scale_factor&#34;,0.93301270189],
+    PARAMETER[&#34;false_easting&#34;,0],
+    PARAMETER[&#34;false_northing&#34;,0],
+    UNIT[&#34;kilometre&#34;,1000]]
+</pre></div></div>
+</div>
+</div>
+</div>
+<div class="section" id="Grid-Reprojection">
+<h2>Grid Reprojection<a class="headerlink" href="#Grid-Reprojection" title="Permalink to this headline">¶</a></h2>
+<p>Within <span class="math">\(\omega radlib\)</span> the
+<a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/generated/wradlib.georef.reproject.html">wradlib.georef.reproject()</a>
+function can be used to convert the radolan grid data from xy-space to
+lonlat-space and back. First, we need to create the necessary Spatial
+Reference Objects for the RADOLAN-projection and wgs84.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">osgeo</span> <span class="kn">import</span> <span class="n">osr</span>
+<span class="n">proj_stereo</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">georef</span><span class="o">.</span><span class="n">create_osr</span><span class="p">(</span><span class="s2">&quot;dwd-radolan&quot;</span><span class="p">)</span>
+<span class="n">proj_wgs</span> <span class="o">=</span> <span class="n">osr</span><span class="o">.</span><span class="n">SpatialReference</span><span class="p">()</span>
+<span class="n">proj_wgs</span><span class="o">.</span><span class="n">ImportFromEPSG</span><span class="p">(</span><span class="mi">4326</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">proj_wgs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+GEOGCS[&#34;WGS 84&#34;,
+    DATUM[&#34;WGS_1984&#34;,
+        SPHEROID[&#34;WGS 84&#34;,6378137,298.257223563,
+            AUTHORITY[&#34;EPSG&#34;,&#34;7030&#34;]],
+        AUTHORITY[&#34;EPSG&#34;,&#34;6326&#34;]],
+    PRIMEM[&#34;Greenwich&#34;,0,
+        AUTHORITY[&#34;EPSG&#34;,&#34;8901&#34;]],
+    UNIT[&#34;degree&#34;,0.0174532925199433,
+        AUTHORITY[&#34;EPSG&#34;,&#34;9122&#34;]],
+    AUTHORITY[&#34;EPSG&#34;,&#34;4326&#34;]]
+</pre></div></div>
+</div>
+<p>Then, we call <code class="docutils literal"><span class="pre">reproject</span></code> with the osr-objects as
+<code class="docutils literal"><span class="pre">projection_source</span></code> and <code class="docutils literal"><span class="pre">projection_target</span></code> parameters.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="n">radolan_grid_ll</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">georef</span><span class="o">.</span><span class="n">reproject</span><span class="p">(</span><span class="n">radolan_grid_xy</span><span class="p">,</span> <span class="n">projection_source</span><span class="o">=</span><span class="n">proj_stereo</span><span class="p">,</span> <span class="n">projection_target</span><span class="o">=</span><span class="n">proj_wgs</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;{0}, ({1:.4f}, {2:.4f})&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">radolan_grid_ll</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="o">*</span><span class="n">radolan_grid_ll</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,:]))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(900, 900, 2), (3.5889, 46.9526)
+</pre></div></div>
+</div>
+<p>And the other way round.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="n">radolan_grid_xy</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">georef</span><span class="o">.</span><span class="n">reproject</span><span class="p">(</span><span class="n">radolan_grid_ll</span><span class="p">,</span> <span class="n">projection_source</span><span class="o">=</span><span class="n">proj_wgs</span><span class="p">,</span> <span class="n">projection_target</span><span class="o">=</span><span class="n">proj_stereo</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;{0}, ({1:.4f}, {2:.4f})&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">radolan_grid_xy</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="o">*</span><span class="n">radolan_grid_xy</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,:]))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(900, 900, 2), (-523.4622, -4658.6447)
+</pre></div></div>
+</div>
+<p>In the following example the RADOLAN grid is projected to wgs84 and
+GaussKrüger Zone3.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="c1"># create Gauss Krueger zone 3 projection osr object</span>
+<span class="n">proj_gk3</span> <span class="o">=</span> <span class="n">osr</span><span class="o">.</span><span class="n">SpatialReference</span><span class="p">()</span>
+<span class="n">proj_gk3</span><span class="o">.</span><span class="n">ImportFromEPSG</span><span class="p">(</span><span class="mi">31467</span><span class="p">)</span>
+
+<span class="c1"># transform radolan polar stereographic projection to wgs84 and then to gk3</span>
+<span class="n">radolan_grid_ll</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">georef</span><span class="o">.</span><span class="n">reproject</span><span class="p">(</span><span class="n">radolan_grid_xy</span><span class="p">,</span>
+                                       <span class="n">projection_source</span><span class="o">=</span><span class="n">proj_stereo</span><span class="p">,</span>
+                                       <span class="n">projection_target</span><span class="o">=</span><span class="n">proj_wgs</span><span class="p">)</span>
+<span class="n">radolan_grid_gk</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">georef</span><span class="o">.</span><span class="n">reproject</span><span class="p">(</span><span class="n">radolan_grid_ll</span><span class="p">,</span>
+                                       <span class="n">projection_source</span><span class="o">=</span><span class="n">proj_wgs</span><span class="p">,</span>
+                                       <span class="n">projection_target</span><span class="o">=</span><span class="n">proj_gk3</span><span class="p">)</span>
+
+<span class="n">lon_wgs0</span> <span class="o">=</span> <span class="n">radolan_grid_ll</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">lat_wgs0</span> <span class="o">=</span> <span class="n">radolan_grid_ll</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">1</span><span class="p">]</span>
+
+<span class="n">x_gk3</span> <span class="o">=</span> <span class="n">radolan_grid_gk</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">y_gk3</span> <span class="o">=</span> <span class="n">radolan_grid_gk</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">1</span><span class="p">]</span>
+
+<span class="n">x_rad</span> <span class="o">=</span> <span class="n">radolan_grid_xy</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">y_rad</span> <span class="o">=</span> <span class="n">radolan_grid_xy</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">1</span><span class="p">]</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">------------------------------&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;source radolan x,y-coordinates&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="sa">u</span><span class="s2">&quot;       {0}      {1} &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;x [km]&#39;</span><span class="p">,</span> <span class="s1">&#39;y [km]&#39;</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;ll: {:10.4f} {:10.3f} &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x_rad</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">y_rad</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]))</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;lr: {:10.4f} {:10.3f} &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x_rad</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">y_rad</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;ur: {:10.4f} {:10.3f} &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x_rad</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">y_rad</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;ul: {:10.4f} {:10.3f} &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x_rad</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">y_rad</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]))</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--------------------------------------&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;transformed radolan lonlat-coordinates&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="sa">u</span><span class="s2">&quot;      {0}  {1} &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;lon [degE]&#39;</span><span class="p">,</span> <span class="s1">&#39;lat [degN]&#39;</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;ll: {:10.4f}  {:10.4f} &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">lon_wgs0</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">lat_wgs0</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]))</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;lr: {:10.4f}  {:10.4f} &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">lon_wgs0</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">lat_wgs0</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;ur: {:10.4f}  {:10.4f} &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">lon_wgs0</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">lat_wgs0</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;ul: {:10.4f}  {:10.4f} &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">lon_wgs0</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">lat_wgs0</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]))</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">-----------------------------------&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;transformed radolan gk3-coordinates&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="sa">u</span><span class="s2">&quot;     {0}   {1} &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;easting [m]&#39;</span><span class="p">,</span> <span class="s1">&#39;northing [m]&#39;</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;ll: {:10.0f}   {:10.0f} &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x_gk3</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">y_gk3</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]))</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;lr: {:10.0f}   {:10.0f} &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x_gk3</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">y_gk3</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;ur: {:10.0f}   {:10.0f} &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x_gk3</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">y_gk3</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;ul: {:10.0f}   {:10.0f} &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x_gk3</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">y_gk3</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+
+------------------------------
+source radolan x,y-coordinates
+       x [km]      y [km]
+ll:  -523.4622  -4658.645
+lr:   375.5378  -4658.645
+ur:   375.5378  -3759.645
+ul:  -523.4622  -3759.645
+
+--------------------------------------
+transformed radolan lonlat-coordinates
+      lon [degE]  lat [degN]
+ll:     3.5889     46.9526
+lr:    14.6087     47.0711
+ur:    15.7042     54.7327
+ul:     2.0736     54.5790
+
+-----------------------------------
+transformed radolan gk3-coordinates
+     easting [m]   northing [m]
+ll:    3088210      5215765
+lr:    3926038      5230008
+ur:    3931614      6087692
+ul:    3052550      6072015
+</pre></div></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../visualisation/wradlib_overlay.html" class="btn btn-neutral float-right" title="Plot additional geodata" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../georeferencing/wradlib_georef_example.html" class="btn btn-neutral" title="Example for georeferencing a radar dataset" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2011-2016, wradlib developers.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.11.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

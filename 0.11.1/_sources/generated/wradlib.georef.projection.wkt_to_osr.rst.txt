@@ -1,0 +1,6 @@
+wradlib\.georef\.projection\.wkt\_to\_osr
+=========================================
+
+.. currentmodule:: wradlib.georef.projection
+
+.. autofunction:: wkt_to_osr

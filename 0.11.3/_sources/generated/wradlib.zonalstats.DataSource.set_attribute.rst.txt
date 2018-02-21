@@ -1,0 +1,6 @@
+wradlib.zonalstats.DataSource.set\_attribute
+============================================
+
+.. currentmodule:: wradlib.zonalstats
+
+.. automethod:: DataSource.set_attribute

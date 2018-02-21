@@ -1,0 +1,355 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Getting started with wradlib &mdash; wradlib</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/wradlib.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="wradlib" href="../index.html"/>
+        <link rel="up" title="Tutorials and Examples" href="../notebooks.html"/>
+        <link rel="next" title="Import wradlib and check its version" href="basics/wradlib_introduction.html"/>
+        <link rel="prev" title="Integrated Development Environments for Python" href="../ide.html"/>
+    
+    <link href="../_static/wradlib.css" rel="stylesheet" type="text/css">
+
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+  <a href="../index.html" class="icon icon-home"> wradlib
+
+
+
+</a>
+
+
+
+  <div class="version">
+    
+    <button class="verbtn">0.11.3</button>
+    <div class="version-content">
+      
+        <a href="../latest/">latest</a>
+        <a href="../0.11.3/">0.11.3</a>
+        <a href="../0.11.1/">0.11.1</a>
+    </div>
+  </div>
+
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../gettingstarted.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../notebooks.html">Tutorials and Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../jupyter.html">How to use the tutorials and examples?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="learnpython.html">An incomplete introduction to Python</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Getting started with wradlib</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="basics/wradlib_introduction.html">Get wradlib version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basics/wradlib_workflow.html">Typical Workflow for Radar-Based RainfallEstimation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basics/wradlib_get_rainfall.html">From Reflectivity toRainfall</a></li>
+<li class="toctree-l3"><a class="reference internal" href="visualisation/wradlib_plot_ppi_example.html">Plot Polar Data asPPI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="visualisation/wradlib_plot_curvelinear_grids.html">Plot PolarData on CurvelinearGrids</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fileio.html">Data Input - Data Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="attenuation/wradlib_attenuation.html">Attenuation correction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="beamblockage/wradlib_beamblock.html">Beam Blockage Calculation using a DEM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="classify.html">Clutter and Echo Classification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="georeferencing.html">Georeferencing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="match3d/wradlib_match_workflow.html">Match spaceborn SR (GPM/TRMM) with ground radars GR</a></li>
+<li class="toctree-l2"><a class="reference internal" href="develop.html">For Developers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="interpolation/wradlib_ipol_example.html">How to use wradlib’s ipol module for interpolation tasks?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="multisensor/wradlib_adjust_example.html">Adjusting radar-base rainfall estimates by rain gauge observations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="verification/wradlib_verify_example.html">Routine verification measures for radar-based precipitation estimates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="recipes.html">Recipes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="radolan.html">RADOLAN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zonalstats/wradlib_zonalstats_classes.html">Zonal Statistics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../reference.html">Library Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_setup.html">For Developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zreferences.html">Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">wradlib</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../notebooks.html">Tutorials and Examples</a> &raquo;</li>
+        
+      <li>Getting started with wradlib</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/notebooks/basics.ipynb.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+/* nice headers on first paragraph of info/warning boxes */
+.admonition .first {
+    margin: -12px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1;
+    display: block;
+}
+.admonition.warning .first {
+    background: #f0b37e;
+}
+.admonition.note .first {
+    background: #6ab0de;
+}
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="Getting-started-with-wradlib">
+<h1>Getting started with wradlib<a class="headerlink" href="#Getting-started-with-wradlib" title="Permalink to this headline">¶</a></h1>
+<p>This section provides a collection of example code snippets to make
+users familiar with <span class="math notranslate">\(\omega radlib\)</span>.</p>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Examples List</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="basics/wradlib_introduction.html">Get wradlib version</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basics/wradlib_workflow.html">Typical Workflow for Radar-Based RainfallEstimation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="basics/wradlib_workflow.html#Introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basics/wradlib_workflow.html#Reading-the-data">Reading the data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basics/wradlib_workflow.html#Clutter-removal">Clutter removal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basics/wradlib_workflow.html#Attenuation-correction">Attenuation correction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basics/wradlib_workflow.html#Vertical-Profile-of-Reflectivity">Vertical Profile of Reflectivity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basics/wradlib_workflow.html#Conversion-of-Reflectivity-into-Rainfall">Conversion of Reflectivity into Rainfall</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basics/wradlib_workflow.html#Rainfall-accumulation">Rainfall accumulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basics/wradlib_workflow.html#Georeferencing-and-Projection">Georeferencing and Projection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basics/wradlib_workflow.html#Gridding">Gridding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basics/wradlib_workflow.html#Adjustment-by-rain-gage-observations">Adjustment by rain gage observations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basics/wradlib_workflow.html#Verification-and-quality-control">Verification and quality control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basics/wradlib_workflow.html#Visualisation-and-mapping">Visualisation and mapping</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basics/wradlib_workflow.html#Data-export-to-other-applications">Data export to other applications</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="basics/wradlib_get_rainfall.html">From Reflectivity toRainfall</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="basics/wradlib_get_rainfall.html#An-example-with-real-radar-data">An example with real radar data</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="visualisation/wradlib_plot_ppi_example.html">Plot Polar Data asPPI</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="visualisation/wradlib_plot_ppi_example.html#Read-a-polar-data-set-from-the-German-Weather-Service">Read a polar data set from the German Weather Service</a></li>
+<li class="toctree-l2"><a class="reference internal" href="visualisation/wradlib_plot_ppi_example.html#The-simplest-way-to-plot-this-dataset">The simplest way to plot this dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="visualisation/wradlib_plot_ppi_example.html#Plotting-just-one-sector">Plotting just one sector</a></li>
+<li class="toctree-l2"><a class="reference internal" href="visualisation/wradlib_plot_ppi_example.html#Adding-a-crosshair-to-the-PPI">Adding a crosshair to the PPI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="visualisation/wradlib_plot_ppi_example.html#Placing-the-polar-data-in-a-projected-Cartesian-reference-system">Placing the polar data in a projected Cartesian reference system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="visualisation/wradlib_plot_ppi_example.html#Some-side-effects-of-georeferencing">Some side effects of georeferencing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="visualisation/wradlib_plot_ppi_example.html#More-decorations-and-annotations">More decorations and annotations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="visualisation/wradlib_plot_curvelinear_grids.html">Plot PolarData on CurvelinearGrids</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="visualisation/wradlib_plot_curvelinear_grids.html#Preface">Preface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="visualisation/wradlib_plot_curvelinear_grids.html#Create-Curvelinear-Grid">Create Curvelinear Grid</a></li>
+<li class="toctree-l2"><a class="reference internal" href="visualisation/wradlib_plot_curvelinear_grids.html#Plotting-on-Curvelinear-Grids">Plotting on Curvelinear Grids</a></li>
+<li class="toctree-l2"><a class="reference internal" href="visualisation/wradlib_plot_curvelinear_grids.html#Plot-CG-RHI">Plot CG RHI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="visualisation/wradlib_plot_curvelinear_grids.html#Plotting-on-Grids">Plotting on Grids</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="basics/wradlib_introduction.html" class="btn btn-neutral float-right" title="Import wradlib and check its version" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../ide.html" class="btn btn-neutral" title="Integrated Development Environments for Python" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2011-2016, wradlib developers.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.11.3',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,389 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>wradlib.util.aggregate_equidistant_tseries &mdash; wradlib</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/wradlib.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="wradlib" href="../index.html"/>
+        <link rel="up" title="Utility functions" href="../util.html"/>
+        <link rel="next" title="wradlib.util.from_to" href="wradlib.util.from_to.html"/>
+        <link rel="prev" title="wradlib.util.aggregate_in_time" href="wradlib.util.aggregate_in_time.html"/>
+    
+    <link href="../_static/wradlib.css" rel="stylesheet" type="text/css">
+
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+  <a href="../index.html" class="icon icon-home"> wradlib
+
+
+
+</a>
+
+
+
+  <div class="version">
+    
+    <button class="verbtn">0.11.3</button>
+    <div class="version-content">
+      
+        <a href="../latest/">latest</a>
+        <a href="../0.11.3/">0.11.3</a>
+        <a href="../0.11.1/">0.11.1</a>
+    </div>
+  </div>
+
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../gettingstarted.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks.html">Tutorials and Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../reference.html">Library Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../io.html">Raw Data I/O</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../trafo.html">Data Transformation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zr.html">Z-R Conversions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../georef.html">Georeferencing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ipol.html">Interpolation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../qual.html">Data Quality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../comp.html">Composition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../clutter.html">Clutter Identification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dp.html">Dual-Pol and Differential Phase</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../fill.html">Filling Missing Values</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../vpr.html">Vertical Profile of Reflectivity (VPR)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../atten.html">Attenuation Correction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../adjust.html">Gage adjustment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../verify.html">Verification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../vis.html">Visualisation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zonalstats.html">Zonal Statistics</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../util.html">Utility functions</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="wradlib.util.aggregate_in_time.html">wradlib.util.aggregate_in_time</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">wradlib.util.aggregate_equidistant_tseries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wradlib.util.from_to.html">wradlib.util.from_to</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wradlib.util.filter_window_polar.html">wradlib.util.filter_window_polar</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wradlib.util.filter_window_cartesian.html">wradlib.util.filter_window_cartesian</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wradlib.util.find_bbox_indices.html">wradlib.util.find_bbox_indices</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wradlib.util.get_raster_origin.html">wradlib.util.get_raster_origin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wradlib.util.calculate_polynomial.html">wradlib.util.calculate_polynomial</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_setup.html">For Developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zreferences.html">Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">wradlib</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../reference.html">Library Reference</a> &raquo;</li>
+        
+          <li><a href="../util.html">Utility functions</a> &raquo;</li>
+        
+      <li>wradlib.util.aggregate_equidistant_tseries</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/generated/wradlib.util.aggregate_equidistant_tseries.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+/* nice headers on first paragraph of info/warning boxes */
+.admonition .first {
+    margin: -12px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1;
+    display: block;
+}
+.admonition.warning .first {
+    background: #f0b37e;
+}
+.admonition.note .first {
+    background: #6ab0de;
+}
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="wradlib-util-aggregate-equidistant-tseries">
+<h1>wradlib.util.aggregate_equidistant_tseries<a class="headerlink" href="#wradlib-util-aggregate-equidistant-tseries" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="wradlib.util.aggregate_equidistant_tseries">
+<code class="descclassname">wradlib.util.</code><code class="descname">aggregate_equidistant_tseries</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#wradlib.util.aggregate_equidistant_tseries" title="Permalink to this definition">¶</a></dt>
+<dd><p>Aggregates an equidistant time series to equidistant target time windows.</p>
+<div class="deprecated">
+<p><span class="versionmodified">Deprecated since version 0.11.3: </span>This will be removed in 1.0.0.</p>
+</div>
+<p>This function aggregates time series data under the assumption that the
+source and the target time series are equidistant, and that the source time
+steps regularly fit into the target time steps (no shifts at the
+boundaries). This is the most trivial aggregation scenario.</p>
+<p>However, the function allows for gaps in the source data. This means, we
+assume the data to be equidistant (each item represents a time step with
+the same length), but it does not need to be contiguous. NaN values in the
+source data are allowed, too.</p>
+<p>The output, though, will be a contiguous time series. This series will have
+NaN values for those target time steps which were not sufficiently
+supported by source data. The decision whether the support was “sufficient”
+is based on the argument <em>minpercvalid</em>. This argument specifies the
+minimum percentage of valid source time steps inside one target time step
+(valid meaning not NaN and not missing) which is required to compute an
+aggregate. The default value of minpercvalid is 100 percent. This means no
+gaps are allowed, and a target time step will be NaN if only one source
+time step is missing.</p>
+<p>Aggregation methods at the moment are “sum” and “mean” of the source data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>tstart</strong> (<em>isostring</em><em> or </em><em>datetime object</em>) – start of the target time series</li>
+<li><strong>tend</strong> (<em>isostring</em><em> or </em><em>datetime object</em>) – end of the target time series</li>
+<li><strong>tdelta</strong> (<em>integer</em>) – resolution of the target time series (seconds)</li>
+<li><strong>tends_src</strong> (<em>sequence of isostrings</em><em> or </em><em>datetime objects</em>) – timestamps which define the END of the source time steps</li>
+<li><strong>tdelta_src</strong> (<em>integer</em>) – resolution of the source data (seconds)</li>
+<li><strong>src</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.14)"><code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>) – 1-d array of floats source values</li>
+<li><strong>method</strong> (<em>string</em>) – Method of aggregation (either “sum” or “mean”)</li>
+<li><strong>minpercvalid</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) – Minimum percentage of valid source values within target interval that
+are required to compute an aggregate target value. If set to 100
+percent, the target value wil be NaN if only one source value is
+missing or NaN. If set to 90 percent, target value will be NaN if more
+than 10 percent of the source values are missing or NaN.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>tstarts</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.14)"><code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>) – Array of datetime objects
+array of timestamps which defines the start of each target time
+step/window</li>
+<li><strong>tends</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.14)"><code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>) – Array of datetime objects
+array of timestamps which defines the end of each target time
+step/window</li>
+<li><strong>agg</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.14)"><code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>) – Array of aggregated values
+aggregated values for each target time step</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">tstart</span> <span class="o">=</span> <span class="s2">&quot;2000-01-01 00:00:00&quot;</span>  <span class="c1"># noqa</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tend</span> <span class="o">=</span> <span class="s2">&quot;2000-01-02 00:00:00&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tdelta</span> <span class="o">=</span> <span class="mi">3600</span> <span class="o">*</span> <span class="mi">6</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tends_src</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;2000-01-01 02:00:00&quot;</span><span class="p">,</span> <span class="s2">&quot;2000-01-01 03:00:00&quot;</span><span class="p">,</span>     <span class="s2">&quot;2000-01-01 04:00:00&quot;</span><span class="p">,</span> <span class="s2">&quot;2000-01-01 05:00:00&quot;</span><span class="p">,</span> <span class="s2">&quot;2000-01-01 12:00:00&quot;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tdelta_src</span> <span class="o">=</span> <span class="mi">3600</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">src</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tstarts</span><span class="p">,</span> <span class="n">tends</span><span class="p">,</span> <span class="n">agg</span> <span class="o">=</span> <span class="n">aggregate_equidistant_tseries</span><span class="p">(</span><span class="n">tstart</span><span class="p">,</span> <span class="n">tend</span><span class="p">,</span>     <span class="n">tdelta</span><span class="p">,</span> <span class="n">tends_src</span><span class="p">,</span> <span class="n">tdelta_src</span><span class="p">,</span> <span class="n">src</span><span class="p">,</span> <span class="n">minpercvalid</span><span class="o">=</span><span class="mf">50.</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">agg</span><span class="p">)</span> 
+<span class="go">[  4.  nan  nan  nan]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="wradlib.util.from_to.html" class="btn btn-neutral float-right" title="wradlib.util.from_to" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="wradlib.util.aggregate_in_time.html" class="btn btn-neutral" title="wradlib.util.aggregate_in_time" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2011-2016, wradlib developers.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.11.3',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

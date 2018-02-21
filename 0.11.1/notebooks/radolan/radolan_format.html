@@ -1,0 +1,660 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>RADOLAN binary data format &mdash; wradlib</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/wradlib.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="wradlib" href="../../index.html"/>
+        <link rel="up" title="Data Input - Data Output" href="../fileio.html"/>
+        <link rel="next" title="Reading NetCDF files with a generic reader" href="../fileio/wradlib_generic_netcdf_example.html"/>
+        <link rel="prev" title="Handling DX Radar Data (German Weather Service)" href="../fileio/wradlib_reading_dx.html"/>
+    
+    <link href="../../_static/wradlib.css" rel="stylesheet" type="text/css">
+
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+  <a href="../../index.html" class="icon icon-home"> wradlib
+
+
+
+</a>
+
+
+
+  <div class="version">
+    
+    <button class="verbtn">0.11.1</button>
+    <div class="version-content">
+      
+        <a href="../latest/">latest</a>
+        <a href="../0.11.1/">0.11.1</a>
+    </div>
+  </div>
+
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../gettingstarted.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../notebooks.html">Tutorials and Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../jupyter.html">How to use the tutorials and examples?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../learnpython.html">An incomplete introduction to Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics.html">Getting started with wradlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../fileio.html">Data Input - Data Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../attenuation/wradlib_attenuation.html">Attenuation correction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../beamblockage/wradlib_beamblock.html">Beam Blockage Calculation using a DEM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../classify.html">Clutter and Echo Classification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../georeferencing.html">Georeferencing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../match3d/wradlib_match_workflow.html">Match spaceborn PR (GPM/TRMM) with ground radars</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../develop.html">For Developers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interpolation/wradlib_ipol_example.html">How to use wradlib’s ipol module for interpolation tasks?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../multisensor/wradlib_adjust_example.html">Adjusting radar-base rainfall estimates by rain gauge observations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../verification/wradlib_verify_example.html">Routine verification measures for radar-based precipitation estimates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../recipes.html">Recipes</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../radolan.html">RADOLAN</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="radolan_quickstart.html">RADOLAN Quick Start</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">RADOLAN Binary Data Format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="radolan_showcase.html">RADOLAN Product Showcase</a></li>
+<li class="toctree-l3"><a class="reference internal" href="radolan_grid.html">RADOLAN Grid</a></li>
+<li class="toctree-l3"><a class="reference internal" href="radolan_network.html">DWD Radar Network</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../zonalstats/wradlib_zonalstats_classes.html">Zonal Statistics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference.html">Library Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev_setup.html">For Developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zreferences.html">Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../release_notes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">wradlib</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../notebooks.html">Tutorials and Examples</a> &raquo;</li>
+        
+          <li><a href="../fileio.html">Data Input - Data Output</a> &raquo;</li>
+        
+      <li>RADOLAN binary data format</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/notebooks/radolan/radolan_format.ipynb.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #303F9F;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #D84315;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 8ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+/* nice headers on first paragraph of info/warning boxes */
+.admonition .first {
+    margin: -12px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1;
+    display: block;
+}
+.admonition.warning .first {
+    background: #f0b37e;
+}
+.admonition.note .first {
+    background: #6ab0de;
+}
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="RADOLAN-binary-data-format">
+<h1>RADOLAN binary data format<a class="headerlink" href="#RADOLAN-binary-data-format" title="Permalink to this headline">¶</a></h1>
+<p>The RADOLAN binary data file format is described in the RADOLAN
+Kompositformat. The radolan composite files consists of an ascii header
+containing all needed information to decode the following binary data
+block. <span class="math">\(\omega radlib\)</span> provides
+<a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/generated/wradlib.io.read_RADOLAN_composite.html">wradlib.io.read_RADOLAN_composite()</a>
+to read the data.</p>
+<p>The function <code class="docutils literal"><span class="pre">wradlib.io.parse_DWD_quant_composite_header()</span></code> takes
+care of correctly decoding the ascii header. All available header
+information is transferred into the metadata dictionary.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">wradlib</span> <span class="kn">as</span> <span class="nn">wrl</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">pl</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">get_ipython</span><span class="p">()</span><span class="o">.</span><span class="n">magic</span><span class="p">(</span><span class="s2">&quot;matplotlib inline&quot;</span><span class="p">)</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="n">pl</span><span class="o">.</span><span class="n">ion</span><span class="p">()</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="c1"># load radolan files</span>
+<span class="n">rw_filename</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">get_wradlib_data_file</span><span class="p">(</span><span class="s1">&#39;radolan/misc/raa01-rw_10000-1408102050-dwd---bin.gz&#39;</span><span class="p">)</span>
+<span class="n">filehandle</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">get_radolan_filehandle</span><span class="p">(</span><span class="n">rw_filename</span><span class="p">)</span>
+<span class="n">header</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_radolan_header</span><span class="p">(</span><span class="n">filehandle</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">header</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+RW102050100000814BY1620134VS 3SW   2.13.1PR E-01INT  60GP 900x 900MS 62&lt;boo,ros,emd,hnr,umd,pro,ess,asd,neu,nhb,oft,tur,isn,fbg,mem&gt;
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="n">attrs</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">parse_DWD_quant_composite_header</span><span class="p">(</span><span class="n">header</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">attrs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;producttype&#39;: &#39;RW&#39;, &#39;datetime&#39;: datetime.datetime(2014, 8, 10, 20, 50), &#39;radarid&#39;: &#39;10000&#39;, &#39;datasize&#39;: 1620000, &#39;maxrange&#39;: &#39;150 km&#39;, &#39;radolanversion&#39;: &#39;2.13.1&#39;, &#39;precision&#39;: 0.1, &#39;intervalseconds&#39;: 3600, &#39;nrow&#39;: 900, &#39;ncol&#39;: 900, &#39;radarlocations&#39;: [&#39;boo&#39;, &#39;ros&#39;, &#39;emd&#39;, &#39;hnr&#39;, &#39;umd&#39;, &#39;pro&#39;, &#39;ess&#39;, &#39;asd&#39;, &#39;neu&#39;, &#39;nhb&#39;, &#39;oft&#39;, &#39;tur&#39;, &#39;isn&#39;, &#39;fbg&#39;, &#39;mem&#39;]}
+</pre></div></div>
+</div>
+<p>In the following example, the header information of four different
+composites is extracted.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="c1"># load radolan file</span>
+<span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;radolan/showcase/raa01-rx_10000-1408102050-dwd---bin.gz&#39;</span>
+<span class="n">rx_filename</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">get_wradlib_data_file</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+<span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;radolan/showcase/raa01-ex_10000-1408102050-dwd---bin.gz&#39;</span>
+<span class="n">ex_filename</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">get_wradlib_data_file</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+<span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;radolan/showcase/raa01-rw_10000-1408102050-dwd---bin.gz&#39;</span>
+<span class="n">rw_filename</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">get_wradlib_data_file</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+<span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;radolan/showcase/raa01-sf_10000-1408102050-dwd---bin.gz&#39;</span>
+<span class="n">sf_filename</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">get_wradlib_data_file</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+<span class="n">rxdata</span><span class="p">,</span> <span class="n">rxattrs</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_RADOLAN_composite</span><span class="p">(</span><span class="n">rx_filename</span><span class="p">)</span>
+<span class="n">exdata</span><span class="p">,</span> <span class="n">exattrs</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_RADOLAN_composite</span><span class="p">(</span><span class="n">ex_filename</span><span class="p">)</span>
+<span class="n">rwdata</span><span class="p">,</span> <span class="n">rwattrs</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_RADOLAN_composite</span><span class="p">(</span><span class="n">rw_filename</span><span class="p">)</span>
+<span class="n">sfdata</span><span class="p">,</span> <span class="n">sfattrs</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_RADOLAN_composite</span><span class="p">(</span><span class="n">sf_filename</span><span class="p">)</span>
+
+<span class="c1"># print the available attributes</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;RX Attributes:&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">rxattrs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">key</span> <span class="o">+</span> <span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;----------------------------------------------------------------&quot;</span><span class="p">)</span>
+<span class="c1"># print the available attributes</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;EX Attributes:&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">exattrs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">key</span> <span class="o">+</span> <span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;----------------------------------------------------------------&quot;</span><span class="p">)</span>
+
+<span class="c1"># print the available attributes</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;RW Attributes:&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">rwattrs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">key</span> <span class="o">+</span> <span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;----------------------------------------------------------------&quot;</span><span class="p">)</span>
+
+<span class="c1"># print the available attributes</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;SF Attributes:&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">sfattrs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">key</span> <span class="o">+</span> <span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;----------------------------------------------------------------&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+RX Attributes:
+producttype: RX
+datetime: 2014-08-10 20:50:00
+radarid: 10000
+datasize: 810000
+maxrange: 150 km
+radolanversion: 2.13.1
+precision: 1.0
+intervalseconds: 300
+nrow: 900
+ncol: 900
+radarlocations: [&#39;boo&#39;, &#39;ros&#39;, &#39;emd&#39;, &#39;hnr&#39;, &#39;umd&#39;, &#39;pro&#39;, &#39;ess&#39;, &#39;asd&#39;, &#39;neu&#39;, &#39;nhb&#39;, &#39;oft&#39;, &#39;tur&#39;, &#39;isn&#39;, &#39;fbg&#39;, &#39;mem&#39;, &#39;bdy&#39;]
+nodataflag: -9999
+cluttermask: []
+----------------------------------------------------------------
+EX Attributes:
+producttype: EX
+datetime: 2014-08-10 20:50:00
+radarid: 10000
+datasize: 2100000
+maxrange: 128 km
+radolanversion: 2.13.1
+precision: 1.0
+intervalseconds: 300
+nrow: 1500
+ncol: 1400
+radarlocations: [&#39;sin&#39;, &#39;rom&#39;, &#39;vir&#39;, &#39;bor&#39;, &#39;nld&#39;, &#39;zav&#39;, &#39;wid&#39;, &#39;sui&#39;, &#39;abv&#39;, &#39;ave&#39;, &#39;tra&#39;, &#39;arc&#39;, &#39;ncy&#39;, &#39;bgs&#39;, &#39;bla&#39;, &#39;sly&#39;, &#39;sem&#39;, &#39;boo&#39;, &#39;ros&#39;, &#39;emd&#39;, &#39;hnr&#39;, &#39;umd&#39;, &#39;pro&#39;, &#39;ess&#39;, &#39;asd&#39;, &#39;neu&#39;, &#39;nhb&#39;, &#39;oft&#39;, &#39;tur&#39;, &#39;isn&#39;, &#39;fbg&#39;, &#39;mem&#39;, &#39;bdy&#39;, &#39;ska&#39;]
+nodataflag: -9999
+cluttermask: []
+----------------------------------------------------------------
+RW Attributes:
+producttype: RW
+datetime: 2014-08-10 20:50:00
+radarid: 10000
+datasize: 1620000
+maxrange: 150 km
+radolanversion: 2.13.1
+precision: 0.1
+intervalseconds: 3600
+nrow: 900
+ncol: 900
+radarlocations: [&#39;boo&#39;, &#39;ros&#39;, &#39;emd&#39;, &#39;hnr&#39;, &#39;umd&#39;, &#39;pro&#39;, &#39;ess&#39;, &#39;asd&#39;, &#39;neu&#39;, &#39;nhb&#39;, &#39;oft&#39;, &#39;tur&#39;, &#39;isn&#39;, &#39;fbg&#39;, &#39;mem&#39;]
+nodataflag: -9999
+secondary: [   799    800    801 ..., 806263 806264 807163]
+cluttermask: []
+----------------------------------------------------------------
+SF Attributes:
+producttype: SF
+datetime: 2014-08-10 20:50:00
+radarid: 10000
+datasize: 1620000
+maxrange: 150 km
+radolanversion: 2.13.1
+precision: 0.1
+intervalseconds: 86400
+nrow: 900
+ncol: 900
+radarlocations: [&#39;boo&#39;, &#39;ros&#39;, &#39;emd&#39;, &#39;hnr&#39;, &#39;umd&#39;, &#39;pro&#39;, &#39;ess&#39;, &#39;asd&#39;, &#39;neu&#39;, &#39;nhb&#39;, &#39;oft&#39;, &#39;tur&#39;, &#39;isn&#39;, &#39;fbg&#39;, &#39;mem&#39;]
+radardays: [&#39;asd 24&#39;, &#39;boo 24&#39;, &#39;emd 24&#39;, &#39;ess 24&#39;, &#39;fbg 24&#39;, &#39;hnr 24&#39;, &#39;isn 24&#39;, &#39;mem 24&#39;, &#39;neu 24&#39;, &#39;nhb 24&#39;, &#39;oft 24&#39;, &#39;pro 24&#39;, &#39;ros 24&#39;, &#39;tur 24&#39;, &#39;umd 24&#39;]
+nodataflag: -9999
+secondary: [   188    189    190 ..., 809566 809567 809568]
+cluttermask: []
+----------------------------------------------------------------
+</pre></div></div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../fileio/wradlib_generic_netcdf_example.html" class="btn btn-neutral float-right" title="Reading NetCDF files with a generic reader" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../fileio/wradlib_reading_dx.html" class="btn btn-neutral" title="Handling DX Radar Data (German Weather Service)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2011-2016, wradlib developers.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.11.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

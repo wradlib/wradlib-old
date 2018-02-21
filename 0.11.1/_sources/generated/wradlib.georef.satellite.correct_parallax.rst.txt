@@ -1,0 +1,6 @@
+wradlib\.georef\.satellite\.correct\_parallax
+=============================================
+
+.. currentmodule:: wradlib.georef.satellite
+
+.. autofunction:: correct_parallax

@@ -1,0 +1,6 @@
+wradlib\.comp\.compose\_ko
+==========================
+
+.. currentmodule:: wradlib.comp
+
+.. autofunction:: compose_ko

@@ -1,0 +1,580 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Georeferencing &mdash; wradlib</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/wradlib.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="wradlib" href="index.html"/>
+        <link rel="up" title="Library Reference" href="reference.html"/>
+        <link rel="next" title="wradlib.georef.misc.beam_height_n" href="generated/wradlib.georef.misc.beam_height_n.html"/>
+        <link rel="prev" title="wradlib.zr.z2rEnhanced" href="generated/wradlib.zr.z2rEnhanced.html"/>
+    
+    <link href="_static/wradlib.css" rel="stylesheet" type="text/css">
+
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+  <a href="index.html" class="icon icon-home"> wradlib
+
+
+
+</a>
+
+
+
+  <div class="version">
+    
+    <button class="verbtn">0.11.1</button>
+    <div class="version-content">
+      
+        <a href="../latest/">latest</a>
+        <a href="../0.11.1/">0.11.1</a>
+    </div>
+  </div>
+
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="gettingstarted.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks.html">Tutorials and Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="reference.html">Library Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="io.html">Raw Data I/O</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trafo.html">Data Transformation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zr.html">Z-R Conversions</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Georeferencing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#miscellaneous">Miscellaneous</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.georef.misc.beam_height_n.html">wradlib.georef.misc.beam_height_n</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.georef.misc.arc_distance_n.html">wradlib.georef.misc.arc_distance_n</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.georef.misc.get_earth_radius.html">wradlib.georef.misc.get_earth_radius</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#polar-grid-functions">Polar Grid Functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.georef.polar.polar2lonlat.html">wradlib.georef.polar.polar2lonlat</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.georef.polar.polar2lonlatalt.html">wradlib.georef.polar.polar2lonlatalt</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.georef.polar.polar2lonlatalt_n.html">wradlib.georef.polar.polar2lonlatalt_n</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.georef.polar.polar2centroids.html">wradlib.georef.polar.polar2centroids</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.georef.polar.polar2polyvert.html">wradlib.georef.polar.polar2polyvert</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.georef.polar.centroid2polyvert.html">wradlib.georef.polar.centroid2polyvert</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.georef.polar.projected_bincoords_from_radarspecs.html">wradlib.georef.polar.projected_bincoords_from_radarspecs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.georef.polar.sweep_centroids.html">wradlib.georef.polar.sweep_centroids</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#projection-functions">Projection Functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.georef.projection.reproject.html">wradlib.georef.projection.reproject</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.georef.projection.create_osr.html">wradlib.georef.projection.create_osr</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.georef.projection.proj4_to_osr.html">wradlib.georef.projection.proj4_to_osr</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.georef.projection.epsg_to_osr.html">wradlib.georef.projection.epsg_to_osr</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.georef.projection.wkt_to_osr.html">wradlib.georef.projection.wkt_to_osr</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#raster-functions">Raster Functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.georef.raster.read_gdal_values.html">wradlib.georef.raster.read_gdal_values</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.georef.raster.read_gdal_projection.html">wradlib.georef.raster.read_gdal_projection</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.georef.raster.read_gdal_coordinates.html">wradlib.georef.raster.read_gdal_coordinates</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.georef.raster.pixel_to_map3d.html">wradlib.georef.raster.pixel_to_map3d</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.georef.raster.pixel_to_map.html">wradlib.georef.raster.pixel_to_map</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.georef.raster.pixel_coordinates.html">wradlib.georef.raster.pixel_coordinates</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.georef.raster.reproject_raster_dataset.html">wradlib.georef.raster.reproject_raster_dataset</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.georef.raster.create_raster_dataset.html">wradlib.georef.raster.create_raster_dataset</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.georef.raster.set_raster_origin.html">wradlib.georef.raster.set_raster_origin</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.georef.raster.extract_raster_dataset.html">wradlib.georef.raster.extract_raster_dataset</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#vector-functions-gdal">Vector Functions (GDAL)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.georef.vector.get_shape_coordinates.html">wradlib.georef.vector.get_shape_coordinates</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.georef.vector.get_shape_points.html">wradlib.georef.vector.get_shape_points</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.georef.vector.transform_geometry.html">wradlib.georef.vector.transform_geometry</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.georef.vector.get_shape_coordinates.html">wradlib.georef.vector.get_shape_coordinates</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.georef.vector.ogr_create_layer.html">wradlib.georef.vector.ogr_create_layer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.georef.vector.ogr_copy_layer.html">wradlib.georef.vector.ogr_copy_layer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.georef.vector.ogr_copy_layer_by_name.html">wradlib.georef.vector.ogr_copy_layer_by_name</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.georef.vector.ogr_add_feature.html">wradlib.georef.vector.ogr_add_feature</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.georef.vector.ogr_add_geometry.html">wradlib.georef.vector.ogr_add_geometry</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.georef.vector.numpy_to_ogr.html">wradlib.georef.vector.numpy_to_ogr</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.georef.vector.ogr_to_numpy.html">wradlib.georef.vector.ogr_to_numpy</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.georef.vector.ogr_geocol_to_numpy.html">wradlib.georef.vector.ogr_geocol_to_numpy</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.georef.vector.get_centroid.html">wradlib.georef.vector.get_centroid</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#rectangular-grid-functions">Rectangular Grid Functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.georef.rect.get_radolan_coords.html">wradlib.georef.rect.get_radolan_coords</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.georef.rect.get_radolan_grid.html">wradlib.georef.rect.get_radolan_grid</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#satellite-functions">Satellite Functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.georef.satellite.correct_parallax.html">wradlib.georef.satellite.correct_parallax</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.georef.satellite.sat2pol.html">wradlib.georef.satellite.sat2pol</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/wradlib.georef.satellite.dist_from_orbit.html">wradlib.georef.satellite.dist_from_orbit</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ipol.html">Interpolation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qual.html">Data Quality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="comp.html">Composition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clutter.html">Clutter Identification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dp.html">Dual-Pol and Differential Phase</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fill.html">Filling Missing Values</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vpr.html">Vertical Profile of Reflectivity (VPR)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="atten.html">Attenuation Correction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="adjust.html">Gage adjustment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="verify.html">Verification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vis.html">Visualisation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zonalstats.html">Zonal Statistics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="util.html">Utility functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dev_setup.html">For Developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="zreferences.html">Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="release_notes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">wradlib</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="reference.html">Library Reference</a> &raquo;</li>
+        
+      <li>Georeferencing</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/georef.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+/* nice headers on first paragraph of info/warning boxes */
+.admonition .first {
+    margin: -12px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1;
+    display: block;
+}
+.admonition.warning .first {
+    background: #f0b37e;
+}
+.admonition.note .first {
+    background: #6ab0de;
+}
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<span class="target" id="module-wradlib.georef"></span><div class="section" id="georeferencing">
+<h1>Georeferencing<a class="headerlink" href="#georeferencing" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<span class="target" id="module-wradlib.georef.misc"></span><div class="section" id="miscellaneous">
+<h2>Miscellaneous<a class="headerlink" href="#miscellaneous" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/wradlib.georef.misc.beam_height_n.html#wradlib.georef.misc.beam_height_n" title="wradlib.georef.misc.beam_height_n"><code class="xref py py-obj docutils literal"><span class="pre">beam_height_n</span></code></a></td>
+<td>Calculates the height of a radar beam taking the refractivity of the atmosphere into account.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/wradlib.georef.misc.arc_distance_n.html#wradlib.georef.misc.arc_distance_n" title="wradlib.georef.misc.arc_distance_n"><code class="xref py py-obj docutils literal"><span class="pre">arc_distance_n</span></code></a></td>
+<td>Calculates the great circle distance of a radar beam over a sphere, taking the refractivity of the atmosphere into account.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/wradlib.georef.misc.get_earth_radius.html#wradlib.georef.misc.get_earth_radius" title="wradlib.georef.misc.get_earth_radius"><code class="xref py py-obj docutils literal"><span class="pre">get_earth_radius</span></code></a></td>
+<td>Get the radius of the Earth (in km) for a given Spheroid model (sr) at a</td>
+</tr>
+</tbody>
+</table>
+</div>
+<span class="target" id="module-wradlib.georef.polar"></span><div class="section" id="polar-grid-functions">
+<h2>Polar Grid Functions<a class="headerlink" href="#polar-grid-functions" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/wradlib.georef.polar.polar2lonlat.html#wradlib.georef.polar.polar2lonlat" title="wradlib.georef.polar.polar2lonlat"><code class="xref py py-obj docutils literal"><span class="pre">polar2lonlat</span></code></a></td>
+<td>Transforms polar coordinates (of a PPI) to longitude/latitude     coordinates.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/wradlib.georef.polar.polar2lonlatalt.html#wradlib.georef.polar.polar2lonlatalt" title="wradlib.georef.polar.polar2lonlatalt"><code class="xref py py-obj docutils literal"><span class="pre">polar2lonlatalt</span></code></a></td>
+<td>Transforms polar coordinates to lon/lat/altitude coordinates.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/wradlib.georef.polar.polar2lonlatalt_n.html#wradlib.georef.polar.polar2lonlatalt_n" title="wradlib.georef.polar.polar2lonlatalt_n"><code class="xref py py-obj docutils literal"><span class="pre">polar2lonlatalt_n</span></code></a></td>
+<td>Transforms polar coordinates (of a PPI) to longitude/latitude     coordinates taking elevation angle and refractivity into account.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/wradlib.georef.polar.polar2centroids.html#wradlib.georef.polar.polar2centroids" title="wradlib.georef.polar.polar2centroids"><code class="xref py py-obj docutils literal"><span class="pre">polar2centroids</span></code></a></td>
+<td>Computes the lat/lon centroids of the radar bins from the polar coordinates.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/wradlib.georef.polar.polar2polyvert.html#wradlib.georef.polar.polar2polyvert" title="wradlib.georef.polar.polar2polyvert"><code class="xref py py-obj docutils literal"><span class="pre">polar2polyvert</span></code></a></td>
+<td>Generate 2-D polygon vertices directly from polar coordinates.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/wradlib.georef.polar.centroid2polyvert.html#wradlib.georef.polar.centroid2polyvert" title="wradlib.georef.polar.centroid2polyvert"><code class="xref py py-obj docutils literal"><span class="pre">centroid2polyvert</span></code></a></td>
+<td>Calculates the 2-D Polygon vertices necessary to form a rectangular polygon around the centroid’s coordinates.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/wradlib.georef.polar.projected_bincoords_from_radarspecs.html#wradlib.georef.polar.projected_bincoords_from_radarspecs" title="wradlib.georef.polar.projected_bincoords_from_radarspecs"><code class="xref py py-obj docutils literal"><span class="pre">projected_bincoords_from_radarspecs</span></code></a></td>
+<td>Convenience function to compute projected bin coordinates directly from</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/wradlib.georef.polar.sweep_centroids.html#wradlib.georef.polar.sweep_centroids" title="wradlib.georef.polar.sweep_centroids"><code class="xref py py-obj docutils literal"><span class="pre">sweep_centroids</span></code></a></td>
+<td>Construct sweep centroids native coordinates.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<span class="target" id="module-wradlib.georef.projection"></span><div class="section" id="projection-functions">
+<h2>Projection Functions<a class="headerlink" href="#projection-functions" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/wradlib.georef.projection.reproject.html#wradlib.georef.projection.reproject" title="wradlib.georef.projection.reproject"><code class="xref py py-obj docutils literal"><span class="pre">reproject</span></code></a></td>
+<td>Transform coordinates from a source projection to a target projection.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/wradlib.georef.projection.create_osr.html#wradlib.georef.projection.create_osr" title="wradlib.georef.projection.create_osr"><code class="xref py py-obj docutils literal"><span class="pre">create_osr</span></code></a></td>
+<td>Conveniently supports the construction of osr spatial reference objects</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/wradlib.georef.projection.proj4_to_osr.html#wradlib.georef.projection.proj4_to_osr" title="wradlib.georef.projection.proj4_to_osr"><code class="xref py py-obj docutils literal"><span class="pre">proj4_to_osr</span></code></a></td>
+<td>Transform a proj4 string to an osr spatial reference object</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/wradlib.georef.projection.epsg_to_osr.html#wradlib.georef.projection.epsg_to_osr" title="wradlib.georef.projection.epsg_to_osr"><code class="xref py py-obj docutils literal"><span class="pre">epsg_to_osr</span></code></a></td>
+<td>Create osr spatial reference object from EPSG number</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/wradlib.georef.projection.wkt_to_osr.html#wradlib.georef.projection.wkt_to_osr" title="wradlib.georef.projection.wkt_to_osr"><code class="xref py py-obj docutils literal"><span class="pre">wkt_to_osr</span></code></a></td>
+<td>Create osr spatial reference object from WKT string</td>
+</tr>
+</tbody>
+</table>
+</div>
+<span class="target" id="module-wradlib.georef.raster"></span><div class="section" id="raster-functions">
+<h2>Raster Functions<a class="headerlink" href="#raster-functions" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/wradlib.georef.raster.read_gdal_values.html#wradlib.georef.raster.read_gdal_values" title="wradlib.georef.raster.read_gdal_values"><code class="xref py py-obj docutils literal"><span class="pre">read_gdal_values</span></code></a></td>
+<td>Read values from a gdal object.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/wradlib.georef.raster.read_gdal_projection.html#wradlib.georef.raster.read_gdal_projection" title="wradlib.georef.raster.read_gdal_projection"><code class="xref py py-obj docutils literal"><span class="pre">read_gdal_projection</span></code></a></td>
+<td>Get a projection (OSR object) from a GDAL dataset.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/wradlib.georef.raster.read_gdal_coordinates.html#wradlib.georef.raster.read_gdal_coordinates" title="wradlib.georef.raster.read_gdal_coordinates"><code class="xref py py-obj docutils literal"><span class="pre">read_gdal_coordinates</span></code></a></td>
+<td>Get the projected coordinates from a GDAL dataset.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/wradlib.georef.raster.pixel_to_map3d.html#wradlib.georef.raster.pixel_to_map3d" title="wradlib.georef.raster.pixel_to_map3d"><code class="xref py py-obj docutils literal"><span class="pre">pixel_to_map3d</span></code></a></td>
+<td>Apply a geographical transformation to return 3D map coordinates from pixel coordinates.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/wradlib.georef.raster.pixel_to_map.html#wradlib.georef.raster.pixel_to_map" title="wradlib.georef.raster.pixel_to_map"><code class="xref py py-obj docutils literal"><span class="pre">pixel_to_map</span></code></a></td>
+<td>Apply a geographical transformation to return map coordinates from pixel coordinates.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/wradlib.georef.raster.pixel_coordinates.html#wradlib.georef.raster.pixel_coordinates" title="wradlib.georef.raster.pixel_coordinates"><code class="xref py py-obj docutils literal"><span class="pre">pixel_coordinates</span></code></a></td>
+<td>Get pixel coordinates from a regular grid with dimension nx by ny.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/wradlib.georef.raster.reproject_raster_dataset.html#wradlib.georef.raster.reproject_raster_dataset" title="wradlib.georef.raster.reproject_raster_dataset"><code class="xref py py-obj docutils literal"><span class="pre">reproject_raster_dataset</span></code></a></td>
+<td>Reproject/Resample given dataset according to keyword arguments</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/wradlib.georef.raster.create_raster_dataset.html#wradlib.georef.raster.create_raster_dataset" title="wradlib.georef.raster.create_raster_dataset"><code class="xref py py-obj docutils literal"><span class="pre">create_raster_dataset</span></code></a></td>
+<td>Create In-Memory Raster Dataset</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/wradlib.georef.raster.set_raster_origin.html#wradlib.georef.raster.set_raster_origin" title="wradlib.georef.raster.set_raster_origin"><code class="xref py py-obj docutils literal"><span class="pre">set_raster_origin</span></code></a></td>
+<td>Converts Data and Coordinates Origin</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/wradlib.georef.raster.extract_raster_dataset.html#wradlib.georef.raster.extract_raster_dataset" title="wradlib.georef.raster.extract_raster_dataset"><code class="xref py py-obj docutils literal"><span class="pre">extract_raster_dataset</span></code></a></td>
+<td>Extract data, coordinates and projection information</td>
+</tr>
+</tbody>
+</table>
+</div>
+<span class="target" id="module-wradlib.georef.vector"></span><div class="section" id="vector-functions-gdal">
+<h2>Vector Functions (GDAL)<a class="headerlink" href="#vector-functions-gdal" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/wradlib.georef.vector.get_shape_coordinates.html#wradlib.georef.vector.get_shape_coordinates" title="wradlib.georef.vector.get_shape_coordinates"><code class="xref py py-obj docutils literal"><span class="pre">get_shape_coordinates</span></code></a></td>
+<td>Function iterates over gdal ogr layer features and packs extracted shape</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/wradlib.georef.vector.get_shape_points.html#wradlib.georef.vector.get_shape_points" title="wradlib.georef.vector.get_shape_points"><code class="xref py py-obj docutils literal"><span class="pre">get_shape_points</span></code></a></td>
+<td>Extract coordinate points from given ogr geometry as generator object</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/wradlib.georef.vector.transform_geometry.html#wradlib.georef.vector.transform_geometry" title="wradlib.georef.vector.transform_geometry"><code class="xref py py-obj docutils literal"><span class="pre">transform_geometry</span></code></a></td>
+<td>Perform geotransformation to given destination SpatialReferenceSystem</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/wradlib.georef.vector.get_shape_coordinates.html#wradlib.georef.vector.get_shape_coordinates" title="wradlib.georef.vector.get_shape_coordinates"><code class="xref py py-obj docutils literal"><span class="pre">get_shape_coordinates</span></code></a></td>
+<td>Function iterates over gdal ogr layer features and packs extracted shape</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/wradlib.georef.vector.ogr_create_layer.html#wradlib.georef.vector.ogr_create_layer" title="wradlib.georef.vector.ogr_create_layer"><code class="xref py py-obj docutils literal"><span class="pre">ogr_create_layer</span></code></a></td>
+<td>Creates OGR.Layer objects in gdal.Dataset object.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/wradlib.georef.vector.ogr_copy_layer.html#wradlib.georef.vector.ogr_copy_layer" title="wradlib.georef.vector.ogr_copy_layer"><code class="xref py py-obj docutils literal"><span class="pre">ogr_copy_layer</span></code></a></td>
+<td>Copy OGR.Layer object.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/wradlib.georef.vector.ogr_copy_layer_by_name.html#wradlib.georef.vector.ogr_copy_layer_by_name" title="wradlib.georef.vector.ogr_copy_layer_by_name"><code class="xref py py-obj docutils literal"><span class="pre">ogr_copy_layer_by_name</span></code></a></td>
+<td>Copy OGR.Layer object.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/wradlib.georef.vector.ogr_add_feature.html#wradlib.georef.vector.ogr_add_feature" title="wradlib.georef.vector.ogr_add_feature"><code class="xref py py-obj docutils literal"><span class="pre">ogr_add_feature</span></code></a></td>
+<td>Creates OGR.Feature objects in OGR.Layer object.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/wradlib.georef.vector.ogr_add_geometry.html#wradlib.georef.vector.ogr_add_geometry" title="wradlib.georef.vector.ogr_add_geometry"><code class="xref py py-obj docutils literal"><span class="pre">ogr_add_geometry</span></code></a></td>
+<td>Copies single OGR.Geometry object to an OGR.Layer object.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/wradlib.georef.vector.numpy_to_ogr.html#wradlib.georef.vector.numpy_to_ogr" title="wradlib.georef.vector.numpy_to_ogr"><code class="xref py py-obj docutils literal"><span class="pre">numpy_to_ogr</span></code></a></td>
+<td>Convert a vertex array to gdal/ogr geometry.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/wradlib.georef.vector.ogr_to_numpy.html#wradlib.georef.vector.ogr_to_numpy" title="wradlib.georef.vector.ogr_to_numpy"><code class="xref py py-obj docutils literal"><span class="pre">ogr_to_numpy</span></code></a></td>
+<td>Backconvert a gdal/ogr geometry to a numpy vertex array.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/wradlib.georef.vector.ogr_geocol_to_numpy.html#wradlib.georef.vector.ogr_geocol_to_numpy" title="wradlib.georef.vector.ogr_geocol_to_numpy"><code class="xref py py-obj docutils literal"><span class="pre">ogr_geocol_to_numpy</span></code></a></td>
+<td>Backconvert a gdal/ogr geometry Collection to a numpy vertex array.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/wradlib.georef.vector.get_centroid.html#wradlib.georef.vector.get_centroid" title="wradlib.georef.vector.get_centroid"><code class="xref py py-obj docutils literal"><span class="pre">get_centroid</span></code></a></td>
+<td>Return centroid of a polygon</td>
+</tr>
+</tbody>
+</table>
+</div>
+<span class="target" id="module-wradlib.georef.rect"></span><div class="section" id="rectangular-grid-functions">
+<h2>Rectangular Grid Functions<a class="headerlink" href="#rectangular-grid-functions" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/wradlib.georef.rect.get_radolan_coords.html#wradlib.georef.rect.get_radolan_coords" title="wradlib.georef.rect.get_radolan_coords"><code class="xref py py-obj docutils literal"><span class="pre">get_radolan_coords</span></code></a></td>
+<td>Calculates x,y coordinates of radolan grid from lon, lat</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/wradlib.georef.rect.get_radolan_grid.html#wradlib.georef.rect.get_radolan_grid" title="wradlib.georef.rect.get_radolan_grid"><code class="xref py py-obj docutils literal"><span class="pre">get_radolan_grid</span></code></a></td>
+<td>Calculates x/y coordinates of radolan grid of the German Weather Service</td>
+</tr>
+</tbody>
+</table>
+</div>
+<span class="target" id="module-wradlib.georef.satellite"></span><div class="section" id="satellite-functions">
+<h2>Satellite Functions<a class="headerlink" href="#satellite-functions" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/wradlib.georef.satellite.correct_parallax.html#wradlib.georef.satellite.correct_parallax" title="wradlib.georef.satellite.correct_parallax"><code class="xref py py-obj docutils literal"><span class="pre">correct_parallax</span></code></a></td>
+<td>Adjust the geo-locations of the PR pixels</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/wradlib.georef.satellite.sat2pol.html#wradlib.georef.satellite.sat2pol" title="wradlib.georef.satellite.sat2pol"><code class="xref py py-obj docutils literal"><span class="pre">sat2pol</span></code></a></td>
+<td>Returns spherical coordinates of PR bins as seen from the GR location.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/wradlib.georef.satellite.dist_from_orbit.html#wradlib.georef.satellite.dist_from_orbit" title="wradlib.georef.satellite.dist_from_orbit"><code class="xref py py-obj docutils literal"><span class="pre">dist_from_orbit</span></code></a></td>
+<td>Returns range distances of PR bins (in meters) as seen from the orbit</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="generated/wradlib.georef.misc.beam_height_n.html" class="btn btn-neutral float-right" title="wradlib.georef.misc.beam_height_n" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="generated/wradlib.zr.z2rEnhanced.html" class="btn btn-neutral" title="wradlib.zr.z2rEnhanced" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2011-2016, wradlib developers.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.11.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

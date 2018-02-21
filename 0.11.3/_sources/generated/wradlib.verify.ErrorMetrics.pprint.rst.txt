@@ -1,0 +1,6 @@
+wradlib.verify.ErrorMetrics.pprint
+==================================
+
+.. currentmodule:: wradlib.verify
+
+.. automethod:: ErrorMetrics.pprint

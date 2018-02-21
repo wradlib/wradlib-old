@@ -1,0 +1,6 @@
+wradlib\.io\.radolan\.get\_radolan\_filehandle
+==============================================
+
+.. currentmodule:: wradlib.io.radolan
+
+.. autofunction:: get_radolan_filehandle

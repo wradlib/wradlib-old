@@ -1,0 +1,6 @@
+wradlib.ipol.Linear.\_\_call\_\_
+================================
+
+.. currentmodule:: wradlib.ipol
+
+.. automethod:: Linear.__call__

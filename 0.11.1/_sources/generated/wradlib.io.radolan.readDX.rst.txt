@@ -1,0 +1,6 @@
+wradlib\.io\.radolan\.readDX
+============================
+
+.. currentmodule:: wradlib.io.radolan
+
+.. autofunction:: readDX

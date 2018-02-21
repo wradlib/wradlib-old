@@ -1,0 +1,804 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>RADOLAN Radar Network &mdash; wradlib</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/wradlib.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="wradlib" href="../../index.html"/>
+        <link rel="up" title="RADOLAN" href="../radolan.html"/>
+        <link rel="next" title="Library Reference" href="../../reference.html"/>
+        <link rel="prev" title="RADOLAN Product Showcase" href="radolan_showcase.html"/>
+    
+    <link href="../../_static/wradlib.css" rel="stylesheet" type="text/css">
+
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+  <a href="../../index.html" class="icon icon-home"> wradlib
+
+
+
+</a>
+
+
+
+  <div class="version">
+    
+    <button class="verbtn">0.11.3</button>
+    <div class="version-content">
+      
+        <a href="../latest/">latest</a>
+        <a href="../0.11.3/">0.11.3</a>
+        <a href="../0.11.1/">0.11.1</a>
+    </div>
+  </div>
+
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../gettingstarted.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../notebooks.html">Tutorials and Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../jupyter.html">How to use the tutorials and examples?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../learnpython.html">An incomplete introduction to Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics.html">Getting started with wradlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../fileio.html">Data Input - Data Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../attenuation/wradlib_attenuation.html">Attenuation correction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../beamblockage/wradlib_beamblock.html">Beam Blockage Calculation using a DEM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../classify.html">Clutter and Echo Classification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../georeferencing.html">Georeferencing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../match3d/wradlib_match_workflow.html">Match spaceborn SR (GPM/TRMM) with ground radars GR</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../develop.html">For Developers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interpolation/wradlib_ipol_example.html">How to use wradlib’s ipol module for interpolation tasks?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../multisensor/wradlib_adjust_example.html">Adjusting radar-base rainfall estimates by rain gauge observations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../verification/wradlib_verify_example.html">Routine verification measures for radar-based precipitation estimates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../recipes.html">Recipes</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../radolan.html">RADOLAN</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="radolan_quickstart.html">RADOLAN Quick Start</a></li>
+<li class="toctree-l3"><a class="reference internal" href="radolan_format.html">RADOLAN Binary Data Format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="radolan_showcase.html">RADOLAN Product Showcase</a></li>
+<li class="toctree-l3"><a class="reference internal" href="radolan_grid.html">RADOLAN Grid</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">DWD Radar Network</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../zonalstats/wradlib_zonalstats_classes.html">Zonal Statistics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference.html">Library Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev_setup.html">For Developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zreferences.html">Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../release_notes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">wradlib</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../notebooks.html">Tutorials and Examples</a> &raquo;</li>
+        
+          <li><a href="../radolan.html">RADOLAN</a> &raquo;</li>
+        
+      <li>RADOLAN Radar Network</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/notebooks/radolan/radolan_network.ipynb.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #303F9F;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #D84315;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 8ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+/* nice headers on first paragraph of info/warning boxes */
+.admonition .first {
+    margin: -12px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1;
+    display: block;
+}
+.admonition.warning .first {
+    background: #f0b37e;
+}
+.admonition.note .first {
+    background: #6ab0de;
+}
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="RADOLAN-Radar-Network">
+<h1>RADOLAN Radar Network<a class="headerlink" href="#RADOLAN-Radar-Network" title="Permalink to this headline">¶</a></h1>
+<p>In this chapter the RW-product is shown in WGS84 and the RADOLAN <a class="reference internal" href="radolan_grid.html#Polar-Stereographic-Projection"><span class="std std-ref">Polar
+Stereographic
+Projection</span></a>. All
+for the compositing process used radars are extracted from the metadata
+and plotted with their respective maximum range rings and location
+information.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">wradlib</span> <span class="kn">as</span> <span class="nn">wrl</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">pl</span>
+<span class="kn">import</span> <span class="nn">matplotlib</span> <span class="kn">as</span> <span class="nn">mpl</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">get_ipython</span><span class="p">()</span><span class="o">.</span><span class="n">magic</span><span class="p">(</span><span class="s2">&quot;matplotlib inline&quot;</span><span class="p">)</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="n">pl</span><span class="o">.</span><span class="n">ion</span><span class="p">()</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">osgeo</span> <span class="kn">import</span> <span class="n">osr</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="stderr output_area docutils container">
+<div class="highlight"><pre>
+/home/travis/miniconda/envs/wradlib/lib/python2.7/site-packages/h5py/__init__.py:36: FutureWarning: Conversion of the second argument of issubdtype from `float` to `np.floating` is deprecated. In future, it will be treated as `np.float64 == np.dtype(float).type`.
+  from ._conv import register_converters as _register_converters
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">get_radar_locations</span><span class="p">():</span>
+    <span class="n">radars</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">radar</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;ASR Dresden&#39;</span><span class="p">,</span> <span class="s1">&#39;wmo&#39;</span><span class="p">:</span> <span class="mi">10487</span><span class="p">,</span> <span class="s1">&#39;lon&#39;</span><span class="p">:</span> <span class="mf">13.76347</span><span class="p">,</span>
+             <span class="s1">&#39;lat&#39;</span><span class="p">:</span> <span class="mf">51.12404</span><span class="p">,</span> <span class="s1">&#39;alt&#39;</span><span class="p">:</span> <span class="mi">261</span><span class="p">}</span>
+    <span class="n">radars</span><span class="p">[</span><span class="s1">&#39;ASD&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">radar</span>
+
+    <span class="n">radar</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Boostedt&#39;</span><span class="p">,</span> <span class="s1">&#39;wmo&#39;</span><span class="p">:</span> <span class="mi">10132</span><span class="p">,</span> <span class="s1">&#39;lon&#39;</span><span class="p">:</span> <span class="mf">10.04687</span><span class="p">,</span>
+             <span class="s1">&#39;lat&#39;</span><span class="p">:</span> <span class="mf">54.00438</span><span class="p">,</span> <span class="s1">&#39;alt&#39;</span><span class="p">:</span> <span class="mf">124.56</span><span class="p">}</span>
+    <span class="n">radars</span><span class="p">[</span><span class="s1">&#39;BOO&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">radar</span>
+
+    <span class="n">radar</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Dresden&#39;</span><span class="p">,</span> <span class="s1">&#39;wmo&#39;</span><span class="p">:</span> <span class="mi">10488</span><span class="p">,</span> <span class="s1">&#39;lon&#39;</span><span class="p">:</span> <span class="mf">13.76865</span><span class="p">,</span> <span class="s1">&#39;lat&#39;</span><span class="p">:</span> <span class="mf">51.12465</span><span class="p">,</span>
+             <span class="s1">&#39;alt&#39;</span><span class="p">:</span> <span class="mf">263.36</span><span class="p">}</span>
+    <span class="n">radars</span><span class="p">[</span><span class="s1">&#39;DRS&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">radar</span>
+
+    <span class="n">radar</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Eisberg&#39;</span><span class="p">,</span> <span class="s1">&#39;wmo&#39;</span><span class="p">:</span> <span class="mi">10780</span><span class="p">,</span> <span class="s1">&#39;lon&#39;</span><span class="p">:</span> <span class="mf">12.40278</span><span class="p">,</span> <span class="s1">&#39;lat&#39;</span><span class="p">:</span> <span class="mf">49.54066</span><span class="p">,</span>
+             <span class="s1">&#39;alt&#39;</span><span class="p">:</span> <span class="mf">798.79</span><span class="p">}</span>
+    <span class="n">radars</span><span class="p">[</span><span class="s1">&#39;EIS&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">radar</span>
+
+    <span class="n">radar</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Emden&#39;</span><span class="p">,</span> <span class="s1">&#39;wmo&#39;</span><span class="p">:</span> <span class="mi">10204</span><span class="p">,</span> <span class="s1">&#39;lon&#39;</span><span class="p">:</span> <span class="mf">7.02377</span><span class="p">,</span> <span class="s1">&#39;lat&#39;</span><span class="p">:</span> <span class="mf">53.33872</span><span class="p">,</span>
+             <span class="s1">&#39;alt&#39;</span><span class="p">:</span> <span class="mi">58</span><span class="p">}</span>
+    <span class="n">radars</span><span class="p">[</span><span class="s1">&#39;EMD&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">radar</span>
+
+    <span class="n">radar</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Essen&#39;</span><span class="p">,</span> <span class="s1">&#39;wmo&#39;</span><span class="p">:</span> <span class="mi">10410</span><span class="p">,</span> <span class="s1">&#39;lon&#39;</span><span class="p">:</span> <span class="mf">6.96712</span><span class="p">,</span> <span class="s1">&#39;lat&#39;</span><span class="p">:</span> <span class="mf">51.40563</span><span class="p">,</span>
+             <span class="s1">&#39;alt&#39;</span><span class="p">:</span> <span class="mf">185.10</span><span class="p">}</span>
+    <span class="n">radars</span><span class="p">[</span><span class="s1">&#39;ESS&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">radar</span>
+
+    <span class="n">radar</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Feldberg&#39;</span><span class="p">,</span> <span class="s1">&#39;wmo&#39;</span><span class="p">:</span> <span class="mi">10908</span><span class="p">,</span> <span class="s1">&#39;lon&#39;</span><span class="p">:</span> <span class="mf">8.00361</span><span class="p">,</span> <span class="s1">&#39;lat&#39;</span><span class="p">:</span> <span class="mf">47.87361</span><span class="p">,</span>
+             <span class="s1">&#39;alt&#39;</span><span class="p">:</span> <span class="mf">1516.10</span><span class="p">}</span>
+    <span class="n">radars</span><span class="p">[</span><span class="s1">&#39;FBG&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">radar</span>
+
+    <span class="n">radar</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Flechtdorf&#39;</span><span class="p">,</span> <span class="s1">&#39;wmo&#39;</span><span class="p">:</span> <span class="mi">10440</span><span class="p">,</span> <span class="s1">&#39;lon&#39;</span><span class="p">:</span> <span class="mf">8.802</span><span class="p">,</span> <span class="s1">&#39;lat&#39;</span><span class="p">:</span> <span class="mf">51.3112</span><span class="p">,</span>
+             <span class="s1">&#39;alt&#39;</span><span class="p">:</span> <span class="mf">627.88</span><span class="p">}</span>
+    <span class="n">radars</span><span class="p">[</span><span class="s1">&#39;FLD&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">radar</span>
+
+    <span class="n">radar</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Hannover&#39;</span><span class="p">,</span> <span class="s1">&#39;wmo&#39;</span><span class="p">:</span> <span class="mi">10339</span><span class="p">,</span> <span class="s1">&#39;lon&#39;</span><span class="p">:</span> <span class="mf">9.69452</span><span class="p">,</span> <span class="s1">&#39;lat&#39;</span><span class="p">:</span> <span class="mf">52.46008</span><span class="p">,</span>
+             <span class="s1">&#39;alt&#39;</span><span class="p">:</span> <span class="mf">97.66</span><span class="p">}</span>
+    <span class="n">radars</span><span class="p">[</span><span class="s1">&#39;HNR&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">radar</span>
+
+    <span class="n">radar</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Neuhaus&#39;</span><span class="p">,</span> <span class="s1">&#39;wmo&#39;</span><span class="p">:</span> <span class="mi">10557</span><span class="p">,</span> <span class="s1">&#39;lon&#39;</span><span class="p">:</span> <span class="mf">11.13504</span><span class="p">,</span> <span class="s1">&#39;lat&#39;</span><span class="p">:</span> <span class="mf">50.50012</span><span class="p">,</span>
+             <span class="s1">&#39;alt&#39;</span><span class="p">:</span> <span class="mf">878.04</span><span class="p">}</span>
+    <span class="n">radars</span><span class="p">[</span><span class="s1">&#39;NEU&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">radar</span>
+
+    <span class="n">radar</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Neuheilenbach&#39;</span><span class="p">,</span> <span class="s1">&#39;wmo&#39;</span><span class="p">:</span> <span class="mi">10605</span><span class="p">,</span> <span class="s1">&#39;lon&#39;</span><span class="p">:</span> <span class="mf">6.54853</span><span class="p">,</span>
+             <span class="s1">&#39;lat&#39;</span><span class="p">:</span> <span class="mf">50.10965</span><span class="p">,</span> <span class="s1">&#39;alt&#39;</span><span class="p">:</span> <span class="mf">585.84</span><span class="p">}</span>
+    <span class="n">radars</span><span class="p">[</span><span class="s1">&#39;NHB&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">radar</span>
+
+    <span class="n">radar</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Offenthal&#39;</span><span class="p">,</span> <span class="s1">&#39;wmo&#39;</span><span class="p">:</span> <span class="mi">10629</span><span class="p">,</span> <span class="s1">&#39;lon&#39;</span><span class="p">:</span> <span class="mf">8.71293</span><span class="p">,</span> <span class="s1">&#39;lat&#39;</span><span class="p">:</span> <span class="mf">49.9847</span><span class="p">,</span>
+             <span class="s1">&#39;alt&#39;</span><span class="p">:</span> <span class="mf">245.80</span><span class="p">}</span>
+    <span class="n">radars</span><span class="p">[</span><span class="s1">&#39;OFT&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">radar</span>
+
+    <span class="n">radar</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Proetzel&#39;</span><span class="p">,</span> <span class="s1">&#39;wmo&#39;</span><span class="p">:</span> <span class="mi">10392</span><span class="p">,</span> <span class="s1">&#39;lon&#39;</span><span class="p">:</span> <span class="mf">13.85821</span><span class="p">,</span>
+             <span class="s1">&#39;lat&#39;</span><span class="p">:</span> <span class="mf">52.64867</span><span class="p">,</span> <span class="s1">&#39;alt&#39;</span><span class="p">:</span> <span class="mf">193.92</span><span class="p">}</span>
+    <span class="n">radars</span><span class="p">[</span><span class="s1">&#39;PRO&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">radar</span>
+
+    <span class="n">radar</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Memmingen&#39;</span><span class="p">,</span> <span class="s1">&#39;wmo&#39;</span><span class="p">:</span> <span class="mi">10950</span><span class="p">,</span> <span class="s1">&#39;lon&#39;</span><span class="p">:</span> <span class="mf">10.21924</span><span class="p">,</span>
+             <span class="s1">&#39;lat&#39;</span><span class="p">:</span> <span class="mf">48.04214</span><span class="p">,</span> <span class="s1">&#39;alt&#39;</span><span class="p">:</span> <span class="mf">724.40</span><span class="p">}</span>
+    <span class="n">radars</span><span class="p">[</span><span class="s1">&#39;MEM&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">radar</span>
+
+    <span class="n">radar</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Rostock&#39;</span><span class="p">,</span> <span class="s1">&#39;wmo&#39;</span><span class="p">:</span> <span class="mi">10169</span><span class="p">,</span> <span class="s1">&#39;lon&#39;</span><span class="p">:</span> <span class="mf">12.05808</span><span class="p">,</span> <span class="s1">&#39;lat&#39;</span><span class="p">:</span> <span class="mf">54.17566</span><span class="p">,</span>
+             <span class="s1">&#39;alt&#39;</span><span class="p">:</span> <span class="mi">37</span><span class="p">}</span>
+    <span class="n">radars</span><span class="p">[</span><span class="s1">&#39;ROS&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">radar</span>
+
+    <span class="n">radar</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Isen&#39;</span><span class="p">,</span> <span class="s1">&#39;wmo&#39;</span><span class="p">:</span> <span class="mi">10873</span><span class="p">,</span> <span class="s1">&#39;lon&#39;</span><span class="p">:</span> <span class="mf">12.10177</span><span class="p">,</span> <span class="s1">&#39;lat&#39;</span><span class="p">:</span> <span class="mf">48.1747</span><span class="p">,</span>
+             <span class="s1">&#39;alt&#39;</span><span class="p">:</span> <span class="mf">677.77</span><span class="p">}</span>
+    <span class="n">radars</span><span class="p">[</span><span class="s1">&#39;ISN&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">radar</span>
+
+    <span class="n">radar</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Tuerkheim&#39;</span><span class="p">,</span> <span class="s1">&#39;wmo&#39;</span><span class="p">:</span> <span class="mi">10832</span><span class="p">,</span> <span class="s1">&#39;lon&#39;</span><span class="p">:</span> <span class="mf">9.78278</span><span class="p">,</span>
+             <span class="s1">&#39;lat&#39;</span><span class="p">:</span> <span class="mf">48.58528</span><span class="p">,</span> <span class="s1">&#39;alt&#39;</span><span class="p">:</span> <span class="mf">767.62</span><span class="p">}</span>
+    <span class="n">radars</span><span class="p">[</span><span class="s1">&#39;TUR&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">radar</span>
+
+    <span class="n">radar</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;Ummendorf&#39;</span><span class="p">,</span> <span class="s1">&#39;wmo&#39;</span><span class="p">:</span> <span class="mi">10356</span><span class="p">,</span> <span class="s1">&#39;lon&#39;</span><span class="p">:</span> <span class="mf">11.17609</span><span class="p">,</span>
+             <span class="s1">&#39;lat&#39;</span><span class="p">:</span> <span class="mf">52.16009</span><span class="p">,</span> <span class="s1">&#39;alt&#39;</span><span class="p">:</span> <span class="mi">183</span><span class="p">}</span>
+    <span class="n">radars</span><span class="p">[</span><span class="s1">&#39;UMM&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">radar</span>
+
+    <span class="k">return</span> <span class="n">radars</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># load radolan file</span>
+<span class="n">rw_filename</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">get_wradlib_data_file</span><span class="p">(</span><span class="s1">&#39;radolan/showcase/raa01-rw_10000-1408102050-dwd---bin.gz&#39;</span><span class="p">)</span>
+<span class="n">rwdata</span><span class="p">,</span> <span class="n">rwattrs</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_RADOLAN_composite</span><span class="p">(</span><span class="n">rw_filename</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># print the available attributes</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;RW Attributes:&quot;</span><span class="p">,</span> <span class="n">rwattrs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(&#39;RW Attributes:&#39;, {&#39;maxrange&#39;: &#39;150 km&#39;, &#39;producttype&#39;: &#39;RW&#39;, &#39;nrow&#39;: 900, &#39;intervalseconds&#39;: 3600, &#39;cluttermask&#39;: array([], dtype=int64), &#39;precision&#39;: 0.1, &#39;datetime&#39;: datetime.datetime(2014, 8, 10, 20, 50), &#39;ncol&#39;: 900, &#39;radolanversion&#39;: &#39;2.13.1&#39;, &#39;radarlocations&#39;: [&#39;boo&#39;, &#39;ros&#39;, &#39;emd&#39;, &#39;hnr&#39;, &#39;umd&#39;, &#39;pro&#39;, &#39;ess&#39;, &#39;asd&#39;, &#39;neu&#39;, &#39;nhb&#39;, &#39;oft&#39;, &#39;tur&#39;, &#39;isn&#39;, &#39;fbg&#39;, &#39;mem&#39;], &#39;nodataflag&#39;: -9999, &#39;datasize&#39;: 1620000, &#39;radarid&#39;: &#39;10000&#39;, &#39;secondary&#39;: array([   799,    800,    801, ..., 806263, 806264, 807163])})
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># mask data</span>
+<span class="n">sec</span> <span class="o">=</span> <span class="n">rwattrs</span><span class="p">[</span><span class="s1">&#39;secondary&#39;</span><span class="p">]</span>
+<span class="n">rwdata</span><span class="o">.</span><span class="n">flat</span><span class="p">[</span><span class="n">sec</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">9999</span>
+<span class="n">rwdata</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">masked_equal</span><span class="p">(</span><span class="n">rwdata</span><span class="p">,</span> <span class="o">-</span><span class="mi">9999</span><span class="p">)</span>
+
+<span class="c1"># create radolan projection object</span>
+<span class="n">proj_stereo</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">georef</span><span class="o">.</span><span class="n">create_osr</span><span class="p">(</span><span class="s2">&quot;dwd-radolan&quot;</span><span class="p">)</span>
+
+<span class="c1"># create wgs84 projection object</span>
+<span class="n">proj_wgs</span> <span class="o">=</span> <span class="n">osr</span><span class="o">.</span><span class="n">SpatialReference</span><span class="p">()</span>
+<span class="n">proj_wgs</span><span class="o">.</span><span class="n">ImportFromEPSG</span><span class="p">(</span><span class="mi">4326</span><span class="p">)</span>
+
+<span class="c1"># get radolan grid</span>
+<span class="n">radolan_grid_xy</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">georef</span><span class="o">.</span><span class="n">get_radolan_grid</span><span class="p">(</span><span class="mi">900</span><span class="p">,</span> <span class="mi">900</span><span class="p">)</span>
+<span class="n">x1</span> <span class="o">=</span> <span class="n">radolan_grid_xy</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">y1</span> <span class="o">=</span> <span class="n">radolan_grid_xy</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">1</span><span class="p">]</span>
+
+<span class="c1"># convert to lonlat</span>
+<span class="n">radolan_grid_ll</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">georef</span><span class="o">.</span><span class="n">reproject</span><span class="p">(</span><span class="n">radolan_grid_xy</span><span class="p">,</span>
+                                       <span class="n">projection_source</span><span class="o">=</span><span class="n">proj_stereo</span><span class="p">,</span>
+                                       <span class="n">projection_target</span><span class="o">=</span><span class="n">proj_wgs</span><span class="p">)</span>
+<span class="n">lon1</span> <span class="o">=</span> <span class="n">radolan_grid_ll</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">lat1</span> <span class="o">=</span> <span class="n">radolan_grid_ll</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># range array 150 km</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Max Range: &quot;</span><span class="p">,</span> <span class="n">rwattrs</span><span class="p">[</span><span class="s1">&#39;maxrange&#39;</span><span class="p">])</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">151</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1000</span>
+<span class="c1"># azimuth array 1 degree spacing</span>
+<span class="n">az</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">360</span><span class="p">,</span> <span class="mi">361</span><span class="p">)[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(&#39;Max Range: &#39;, &#39;150 km&#39;)
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># get radar dict</span>
+<span class="n">radars</span> <span class="o">=</span> <span class="n">get_radar_locations</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">plot_radar</span><span class="p">(</span><span class="n">radar</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">reproject</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+
+    <span class="n">x_loc</span><span class="p">,</span> <span class="n">y_loc</span> <span class="o">=</span> <span class="p">(</span><span class="n">radar</span><span class="p">[</span><span class="s1">&#39;lon&#39;</span><span class="p">],</span> <span class="n">radar</span><span class="p">[</span><span class="s1">&#39;lat&#39;</span><span class="p">])</span>
+
+    <span class="c1"># build polygons for maxrange rangering</span>
+    <span class="n">polygons</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">georef</span><span class="o">.</span><span class="n">polar2polyvert</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">az</span><span class="p">,</span>
+                                         <span class="p">(</span><span class="n">x_loc</span><span class="p">,</span> <span class="n">y_loc</span><span class="p">))</span>
+    <span class="n">polygons</span><span class="o">.</span><span class="n">shape</span> <span class="o">=</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">az</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">r</span><span class="p">),</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">polygons</span> <span class="o">=</span> <span class="n">polygons</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span>
+
+
+
+    <span class="k">if</span> <span class="n">reproject</span><span class="p">:</span>
+        <span class="c1"># reproject to radolan polar stereographic projection</span>
+        <span class="n">polygons</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">georef</span><span class="o">.</span><span class="n">reproject</span><span class="p">(</span><span class="n">polygons</span><span class="p">,</span>
+                                        <span class="n">projection_source</span><span class="o">=</span><span class="n">proj_wgs</span><span class="p">,</span>
+                                        <span class="n">projection_target</span><span class="o">=</span><span class="n">proj_stereo</span><span class="p">)</span>
+
+        <span class="c1"># reproject lonlat radar location coordinates to</span>
+        <span class="c1"># polar stereographic projection</span>
+        <span class="n">x_loc</span><span class="p">,</span> <span class="n">y_loc</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">georef</span><span class="o">.</span><span class="n">reproject</span><span class="p">(</span><span class="n">x_loc</span><span class="p">,</span> <span class="n">y_loc</span><span class="p">,</span>
+                                            <span class="n">projection_source</span><span class="o">=</span><span class="n">proj_wgs</span><span class="p">,</span>
+                                            <span class="n">projection_target</span><span class="o">=</span><span class="n">proj_stereo</span><span class="p">)</span>
+
+
+    <span class="c1"># create PolyCollections and add to respective axes</span>
+    <span class="n">polycoll</span> <span class="o">=</span> <span class="n">mpl</span><span class="o">.</span><span class="n">collections</span><span class="o">.</span><span class="n">PolyCollection</span><span class="p">(</span><span class="n">polygons</span><span class="p">,</span> <span class="n">closed</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                                              <span class="n">edgecolors</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span>
+                                              <span class="n">facecolors</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">add_collection</span><span class="p">(</span><span class="n">polycoll</span><span class="p">,</span> <span class="n">autolim</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+    <span class="c1"># plot radar location and information text</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_loc</span><span class="p">,</span> <span class="n">y_loc</span><span class="p">,</span> <span class="s1">&#39;r+&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">x_loc</span><span class="p">,</span> <span class="n">y_loc</span><span class="p">,</span> <span class="n">radar</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># plot two projections side by side</span>
+<span class="n">fig1</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">ax1</span> <span class="o">=</span> <span class="n">fig1</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">pm</span> <span class="o">=</span> <span class="n">ax1</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">lon1</span><span class="p">,</span> <span class="n">lat1</span><span class="p">,</span> <span class="n">rwdata</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;spectral&#39;</span><span class="p">)</span>
+<span class="n">cb</span> <span class="o">=</span> <span class="n">fig1</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">pm</span><span class="p">,</span> <span class="n">shrink</span><span class="o">=</span><span class="mf">0.75</span><span class="p">)</span>
+<span class="n">cb</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="s2">&quot;mm/h&quot;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Longitude &quot;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Latitude&quot;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">title</span><span class="p">(</span>
+    <span class="s1">&#39;RADOLAN RW Product </span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">rwattrs</span><span class="p">[</span><span class="s1">&#39;datetime&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1"> WGS84&#39;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">xlim</span><span class="p">((</span><span class="n">lon1</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">lon1</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">ylim</span><span class="p">((</span><span class="n">lat1</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">lat1</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">radar_id</span> <span class="ow">in</span> <span class="n">rwattrs</span><span class="p">[</span><span class="s1">&#39;radarlocations&#39;</span><span class="p">]:</span>
+    <span class="c1"># get radar coords etc from dict</span>
+    <span class="c1"># repair Ummendorf ID</span>
+    <span class="k">if</span> <span class="n">radar_id</span> <span class="o">==</span> <span class="s1">&#39;umd&#39;</span><span class="p">:</span>
+        <span class="n">radar_id</span> <span class="o">=</span> <span class="s1">&#39;umm&#39;</span>
+    <span class="n">radar</span> <span class="o">=</span> <span class="n">radars</span><span class="p">[</span><span class="n">radar_id</span><span class="o">.</span><span class="n">upper</span><span class="p">()]</span>
+    <span class="n">plot_radar</span><span class="p">(</span><span class="n">radar</span><span class="p">,</span> <span class="n">ax1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_radolan_radolan_network_11_0.png" src="../../_images/notebooks_radolan_radolan_network_11_0.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">fig2</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">ax2</span> <span class="o">=</span> <span class="n">fig2</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">pm</span> <span class="o">=</span> <span class="n">ax2</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">rwdata</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;spectral&#39;</span><span class="p">)</span>
+<span class="n">cb</span> <span class="o">=</span> <span class="n">fig2</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">pm</span><span class="p">,</span> <span class="n">shrink</span><span class="o">=</span><span class="mf">0.75</span><span class="p">)</span>
+<span class="n">cb</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="s2">&quot;mm/h&quot;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;x [km]&quot;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;y [km]&quot;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;RADOLAN RW Product </span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">rwattrs</span><span class="p">[</span>
+    <span class="s1">&#39;datetime&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1"> Polar Stereographic Projection&#39;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">xlim</span><span class="p">((</span><span class="n">x1</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">x1</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">ylim</span><span class="p">((</span><span class="n">y1</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">y1</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">radar_id</span> <span class="ow">in</span> <span class="n">rwattrs</span><span class="p">[</span><span class="s1">&#39;radarlocations&#39;</span><span class="p">]:</span>
+    <span class="c1"># get radar coords etc from dict</span>
+    <span class="c1"># repair Ummendorf ID</span>
+    <span class="k">if</span> <span class="n">radar_id</span> <span class="o">==</span> <span class="s1">&#39;umd&#39;</span><span class="p">:</span>
+        <span class="n">radar_id</span> <span class="o">=</span> <span class="s1">&#39;umm&#39;</span>
+    <span class="n">radar</span> <span class="o">=</span> <span class="n">radars</span><span class="p">[</span><span class="n">radar_id</span><span class="o">.</span><span class="n">upper</span><span class="p">()]</span>
+    <span class="n">plot_radar</span><span class="p">(</span><span class="n">radar</span><span class="p">,</span> <span class="n">ax2</span><span class="p">,</span> <span class="n">reproject</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_radolan_radolan_network_12_0.png" src="../../_images/notebooks_radolan_radolan_network_12_0.png" />
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../../reference.html" class="btn btn-neutral float-right" title="Library Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="radolan_showcase.html" class="btn btn-neutral" title="RADOLAN Product Showcase" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2011-2016, wradlib developers.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.11.3',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

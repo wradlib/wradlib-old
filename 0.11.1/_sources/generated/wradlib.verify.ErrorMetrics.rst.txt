@@ -1,0 +1,13 @@
+wradlib\.verify\.ErrorMetrics
+=============================
+
+.. currentmodule:: wradlib.verify
+
+.. autoclass:: ErrorMetrics
+
+   
+
+
+
+   
+

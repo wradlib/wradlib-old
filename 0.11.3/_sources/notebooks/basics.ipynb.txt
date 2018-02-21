@@ -1,0 +1,67 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "nbsphinx": "hidden"
+   },
+   "source": [
+    "This notebook is part of the $\\omega radlib$ documentation: http://wradlib.org/wradlib-docs.\n",
+    "\n",
+    "Copyright (c) 2016, $\\omega radlib$ developers.\n",
+    "Distributed under the MIT License. See LICENSE.txt for more info."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Getting started with wradlib"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "This section provides a collection of example code snippets to make users familiar with $\\omega radlib$.\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "nbsphinx-toctree": {
+     "maxdepth": 2
+    }
+   },
+   "source": [
+    "## Examples List\n",
+    "\n",
+    "- [Get wradlib version](basics/wradlib_introduction.ipynb)\n",
+    "- [Typical Workflow for Radar-Based Rainfall Estimation](basics/wradlib_workflow.ipynb)\n",
+    "- [From Reflectivity to Rainfall](basics/wradlib_get_rainfall.ipynb)- [Plot Polar Data as PPI](visualisation/wradlib_plot_ppi_example.ipynb)- [Plot Polar Data on Curvelinear Grids](visualisation/wradlib_plot_curvelinear_grids.ipynb)"
+   ]
+  }
+ ],
+ "metadata": {
+  "celltoolbar": "Edit Metadata",
+  "kernelspec": {
+   "display_name": "Python 2",
+   "language": "python",
+   "name": "python2"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 2
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython2",
+   "version": "2.7.12"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 0
+}

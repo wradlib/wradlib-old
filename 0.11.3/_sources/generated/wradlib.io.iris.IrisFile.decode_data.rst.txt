@@ -1,0 +1,6 @@
+wradlib.io.iris.IrisFile.decode\_data
+=====================================
+
+.. currentmodule:: wradlib.io.iris
+
+.. automethod:: IrisFile.decode_data

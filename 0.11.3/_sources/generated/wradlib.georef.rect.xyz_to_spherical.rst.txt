@@ -1,0 +1,6 @@
+wradlib.georef.rect.xyz\_to\_spherical
+======================================
+
+.. currentmodule:: wradlib.georef.rect
+
+.. autofunction:: xyz_to_spherical

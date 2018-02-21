@@ -1,0 +1,6 @@
+wradlib.trafo.s2ku.snow
+=======================
+
+.. currentmodule:: wradlib.trafo
+
+.. autoattribute:: s2ku.snow

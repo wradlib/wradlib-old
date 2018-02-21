@@ -1,0 +1,6 @@
+wradlib\.atten\.correctAttenuationConstrained2
+==============================================
+
+.. currentmodule:: wradlib.atten
+
+.. autofunction:: correctAttenuationConstrained2

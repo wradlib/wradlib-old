@@ -1,0 +1,6 @@
+wradlib.zonalstats.ZonalStatsBase.zdata
+=======================================
+
+.. currentmodule:: wradlib.zonalstats
+
+.. autoattribute:: ZonalStatsBase.zdata

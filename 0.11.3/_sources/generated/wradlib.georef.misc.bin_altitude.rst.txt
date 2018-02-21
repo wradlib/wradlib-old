@@ -1,0 +1,6 @@
+wradlib.georef.misc.bin\_altitude
+=================================
+
+.. currentmodule:: wradlib.georef.misc
+
+.. autofunction:: bin_altitude

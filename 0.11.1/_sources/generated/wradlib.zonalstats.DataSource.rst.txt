@@ -1,0 +1,13 @@
+wradlib\.zonalstats\.DataSource
+===============================
+
+.. currentmodule:: wradlib.zonalstats
+
+.. autoclass:: DataSource
+
+   
+
+
+
+   
+

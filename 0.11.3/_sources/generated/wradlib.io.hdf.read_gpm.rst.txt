@@ -1,0 +1,6 @@
+wradlib.io.hdf.read\_gpm
+========================
+
+.. currentmodule:: wradlib.io.hdf
+
+.. autofunction:: read_gpm

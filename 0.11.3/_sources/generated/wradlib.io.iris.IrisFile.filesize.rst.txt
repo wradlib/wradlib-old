@@ -1,0 +1,6 @@
+wradlib.io.iris.IrisFile.filesize
+=================================
+
+.. currentmodule:: wradlib.io.iris
+
+.. autoattribute:: IrisFile.filesize

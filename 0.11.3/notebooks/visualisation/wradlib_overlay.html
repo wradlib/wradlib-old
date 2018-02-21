@@ -1,0 +1,988 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Plot additional geodata &mdash; wradlib</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/wradlib.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="wradlib" href="../../index.html"/>
+        <link rel="up" title="Georeferencing" href="../georeferencing.html"/>
+        <link rel="next" title="Zonal Statistics" href="../zonalstats/wradlib_zonalstats_classes.html"/>
+        <link rel="prev" title="RADOLAN Grid" href="../radolan/radolan_grid.html"/>
+    
+    <link href="../../_static/wradlib.css" rel="stylesheet" type="text/css">
+
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+  <a href="../../index.html" class="icon icon-home"> wradlib
+
+
+
+</a>
+
+
+
+  <div class="version">
+    
+    <button class="verbtn">0.11.3</button>
+    <div class="version-content">
+      
+        <a href="../latest/">latest</a>
+        <a href="../0.11.3/">0.11.3</a>
+        <a href="../0.11.1/">0.11.1</a>
+    </div>
+  </div>
+
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../gettingstarted.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../notebooks.html">Tutorials and Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../jupyter.html">How to use the tutorials and examples?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../learnpython.html">An incomplete introduction to Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics.html">Getting started with wradlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../fileio.html">Data Input - Data Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../attenuation/wradlib_attenuation.html">Attenuation correction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../beamblockage/wradlib_beamblock.html">Beam Blockage Calculation using a DEM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../classify.html">Clutter and Echo Classification</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../georeferencing.html">Georeferencing</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../georeferencing/wradlib_coords_example.html">Computing Cartesian Coordinates from PolarData</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../georeferencing/wradlib_georef_example.html">Georeferencing a RadarDataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../radolan/radolan_grid.html">RADOLAN Grid Calculations</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Overlay Ancillary Data</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Plotting-a-Digital-Elevation-Model-(DEM)">Plotting a Digital Elevation Model (DEM)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Plotting-borders">Plotting borders</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Plotting-Rivers">Plotting Rivers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Plotting-Cities">Plotting Cities</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Plotting-country-patches">Plotting country patches</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../zonalstats/wradlib_zonalstats_classes.html">Managing GeoreferencedData</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../match3d/wradlib_match_workflow.html">Match spaceborn SR (GPM/TRMM) with ground radars GR</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../develop.html">For Developers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interpolation/wradlib_ipol_example.html">How to use wradlib’s ipol module for interpolation tasks?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../multisensor/wradlib_adjust_example.html">Adjusting radar-base rainfall estimates by rain gauge observations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../verification/wradlib_verify_example.html">Routine verification measures for radar-based precipitation estimates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../recipes.html">Recipes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../radolan.html">RADOLAN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zonalstats/wradlib_zonalstats_classes.html">Zonal Statistics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference.html">Library Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev_setup.html">For Developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zreferences.html">Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../release_notes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">wradlib</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../notebooks.html">Tutorials and Examples</a> &raquo;</li>
+        
+          <li><a href="../georeferencing.html">Georeferencing</a> &raquo;</li>
+        
+      <li>Plot additional geodata</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/notebooks/visualisation/wradlib_overlay.ipynb.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #303F9F;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #D84315;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 8ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+/* nice headers on first paragraph of info/warning boxes */
+.admonition .first {
+    margin: -12px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1;
+    display: block;
+}
+.admonition.warning .first {
+    background: #f0b37e;
+}
+.admonition.note .first {
+    background: #6ab0de;
+}
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="Plot-additional-geodata">
+<h1>Plot additional geodata<a class="headerlink" href="#Plot-additional-geodata" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><strong>underlay</strong> e.g.&nbsp;terrain data from a Digital Elevation Model (DEM)</li>
+<li><strong>overlay</strong> features such as administrative borders, rivers,
+catchments, rain gauges, cities, …</li>
+</ul>
+<p><em>Here, we create a map without radar data to concentrate on the other
+layers.</em></p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">wradlib</span> <span class="kn">as</span> <span class="nn">wrl</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">pl</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">get_ipython</span><span class="p">()</span><span class="o">.</span><span class="n">magic</span><span class="p">(</span><span class="s2">&quot;matplotlib inline&quot;</span><span class="p">)</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="n">pl</span><span class="o">.</span><span class="n">ion</span><span class="p">()</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="c1"># Some more matplotlib tools we will need...</span>
+<span class="kn">import</span> <span class="nn">matplotlib.ticker</span> <span class="kn">as</span> <span class="nn">ticker</span>
+<span class="kn">from</span> <span class="nn">matplotlib.colors</span> <span class="kn">import</span> <span class="n">LogNorm</span>
+<span class="kn">from</span> <span class="nn">mpl_toolkits.axes_grid1</span> <span class="kn">import</span> <span class="n">make_axes_locatable</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="stderr output_area docutils container">
+<div class="highlight"><pre>
+/home/travis/miniconda/envs/wradlib/lib/python2.7/site-packages/h5py/__init__.py:36: FutureWarning: Conversion of the second argument of issubdtype from `float` to `np.floating` is deprecated. In future, it will be treated as `np.float64 == np.dtype(float).type`.
+  from ._conv import register_converters as _register_converters
+</pre></div></div>
+</div>
+<div class="section" id="Plotting-a-Digital-Elevation-Model-(DEM)">
+<h2>Plotting a Digital Elevation Model (DEM)<a class="headerlink" href="#Plotting-a-Digital-Elevation-Model-(DEM)" title="Permalink to this headline">¶</a></h2>
+<p>We use a preprocessed geotiff which was created from
+<a class="reference external" href="http://www2.jpl.nasa.gov/srtm">**SRTM**</a> data via <code class="docutils literal notranslate"><span class="pre">gdal</span></code></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>gdalwarp -te <span class="m">88</span>. <span class="m">20</span>. <span class="m">93</span>. <span class="m">27</span>. srtm_54_07.tif srtm_55_07.tif srtm_54_08.tif srtm_55_08.tif bangladesh.tif
+</pre></div>
+</div>
+<p>Here we - read the DEM via
+<a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/generated/wradlib.io.open_raster.html">wradlib.io.open_raster</a>
+and extracted via
+<a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/generated/wradlib.georef.extract_raster_dataset.html">wradlib.georef.extract_raster_dataset</a>.;
+- resample the data to a (lon/lat) grid with <code class="docutils literal notranslate"><span class="pre">spacing=0.005</span></code>.</p>
+<p><em>Note: we organise the code in functions which we can re-use in this
+notebook.</em></p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">plot_dem</span><span class="p">(</span><span class="n">ax</span><span class="p">):</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">get_wradlib_data_file</span><span class="p">(</span><span class="s1">&#39;geo/bangladesh.tif&#39;</span><span class="p">)</span>
+    <span class="n">ds</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">open_raster</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="c1"># pixel_spacing is in output units (lonlat)</span>
+    <span class="n">ds</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">georef</span><span class="o">.</span><span class="n">reproject_raster_dataset</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="n">spacing</span><span class="o">=</span><span class="mf">0.005</span><span class="p">)</span>
+    <span class="n">rastervalues</span><span class="p">,</span> <span class="n">rastercoords</span><span class="p">,</span> <span class="n">proj</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">georef</span><span class="o">.</span><span class="n">extract_raster_dataset</span><span class="p">(</span><span class="n">ds</span><span class="p">)</span>
+    <span class="c1"># specify kwargs for plotting, using terrain colormap and LogNorm</span>
+    <span class="n">dem</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">rastercoords</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">rastercoords</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+                        <span class="n">rastervalues</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">pl</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">terrain</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">LogNorm</span><span class="p">(),</span>
+                        <span class="n">vmin</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">3000</span><span class="p">)</span>
+    <span class="c1"># make some space on the right for colorbar axis</span>
+    <span class="n">div1</span> <span class="o">=</span> <span class="n">make_axes_locatable</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
+    <span class="n">cax1</span> <span class="o">=</span> <span class="n">div1</span><span class="o">.</span><span class="n">append_axes</span><span class="p">(</span><span class="s2">&quot;right&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="s2">&quot;5%&quot;</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+    <span class="c1"># add colorbar and title</span>
+    <span class="c1"># we use LogLocator for colorbar</span>
+    <span class="n">cb</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">dem</span><span class="p">,</span> <span class="n">cax</span><span class="o">=</span><span class="n">cax1</span><span class="p">,</span>
+                           <span class="n">ticks</span><span class="o">=</span><span class="n">ticker</span><span class="o">.</span><span class="n">LogLocator</span><span class="p">(</span><span class="n">subs</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)))</span>
+    <span class="n">cb</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="s1">&#39;terrain height [m]&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">plot_dem</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_visualisation_wradlib_overlay_10_0.png" src="../../_images/notebooks_visualisation_wradlib_overlay_10_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="Plotting-borders">
+<h2>Plotting borders<a class="headerlink" href="#Plotting-borders" title="Permalink to this headline">¶</a></h2>
+<p>For country borders, we use <a class="reference external" href="https://de.wikipedia.org/wiki/Shapefile">ESRI
+Shapfiles</a> from <a class="reference external" href="http://www.naturalearthdata.com/">Natural
+Earth Data</a>.</p>
+<p>We extract features using - the <code class="docutils literal notranslate"><span class="pre">OGR.Layer</span></code> <code class="docutils literal notranslate"><span class="pre">AttributeFilter</span></code> and -
+the
+<a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/generated/wradlib.georef.get_shape_coordinates.html">wradlib.georef.get_shape_coordinates</a>
+function.</p>
+<p>The plot overlay is done via
+<a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/generated/wradlib.vis.add_lines.html">wradlib.vis.add_lines</a>.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">plot_borders</span><span class="p">(</span><span class="n">ax</span><span class="p">):</span>
+    <span class="c1"># country list</span>
+    <span class="n">countries</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;India&#39;</span><span class="p">,</span> <span class="s1">&#39;Nepal&#39;</span><span class="p">,</span> <span class="s1">&#39;Bhutan&#39;</span><span class="p">,</span> <span class="s1">&#39;Myanmar&#39;</span><span class="p">]</span>
+    <span class="c1"># open the input data source and get the layer</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">get_wradlib_data_file</span><span class="p">(</span><span class="s1">&#39;geo/ne_10m_admin_0_boundary_&#39;</span>
+                                              <span class="s1">&#39;lines_land.shp&#39;</span><span class="p">)</span>
+    <span class="n">dataset</span><span class="p">,</span> <span class="n">inLayer</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">open_shape</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="c1"># iterate over countries, filter accordingly, get coordinates and plot</span>
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">countries</span><span class="p">:</span>
+        <span class="c1"># SQL-like selection syntax</span>
+        <span class="n">fattr</span> <span class="o">=</span> <span class="s2">&quot;(adm0_left = &#39;&quot;</span> <span class="o">+</span> <span class="n">item</span> <span class="o">+</span> <span class="s2">&quot;&#39; or adm0_right = &#39;&quot;</span> <span class="o">+</span> <span class="n">item</span> <span class="o">+</span> <span class="s2">&quot;&#39;)&quot;</span>
+        <span class="n">inLayer</span><span class="o">.</span><span class="n">SetAttributeFilter</span><span class="p">(</span><span class="n">fattr</span><span class="p">)</span>
+        <span class="c1"># get borders and names</span>
+        <span class="n">borders</span><span class="p">,</span> <span class="n">keys</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">georef</span><span class="o">.</span><span class="n">get_shape_coordinates</span><span class="p">(</span><span class="n">inLayer</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s1">&#39;name&#39;</span><span class="p">)</span>
+        <span class="n">wrl</span><span class="o">.</span><span class="n">vis</span><span class="o">.</span><span class="n">add_lines</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">borders</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">autoscale</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">plot_dem</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">plot_borders</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">((</span><span class="mi">88</span><span class="p">,</span> <span class="mi">93</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">((</span><span class="mi">20</span><span class="p">,</span> <span class="mi">27</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[6]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>(20, 27)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_visualisation_wradlib_overlay_15_1.png" src="../../_images/notebooks_visualisation_wradlib_overlay_15_1.png" />
+</div>
+</div>
+</div>
+<div class="section" id="Plotting-Rivers">
+<h2>Plotting Rivers<a class="headerlink" href="#Plotting-Rivers" title="Permalink to this headline">¶</a></h2>
+<p>For rivers, we use <a class="reference external" href="https://de.wikipedia.org/wiki/Shapefile">ESRI
+Shapfiles</a> from
+<a class="reference external" href="http://www.fao.org/geonetwork/srv/en/metadata.show?id=37331">FAO</a>
+and <a class="reference external" href="http://www.naturalearthdata.com/">Natural Earth Data</a>.</p>
+<p>We extract features using - the <code class="docutils literal notranslate"><span class="pre">OGR.Layer</span></code> <code class="docutils literal notranslate"><span class="pre">SpatialFilter</span></code> and -
+the
+<a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/generated/wradlib.georef.get_shape_coordinates.html">wradlib.georef.get_shape_coordinates</a>
+function.</p>
+<p>Then we use
+<a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/generated/wradlib.vis.add_lines.html">wradlib.vis.add_lines</a>
+again for the overlay.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">plot_rivers</span><span class="p">(</span><span class="n">ax</span><span class="p">):</span>
+    <span class="c1"># plot rivers from esri vector shape, filter spatially</span>
+    <span class="c1"># http://www.fao.org/geonetwork/srv/en/metadata.show?id=37331</span>
+
+    <span class="c1"># open the input data source and get the layer</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">get_wradlib_data_file</span><span class="p">(</span><span class="s1">&#39;geo/rivers_asia_37331.shp&#39;</span><span class="p">)</span>
+    <span class="n">dataset</span><span class="p">,</span> <span class="n">inLayer</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">open_shape</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+    <span class="c1"># do spatial filtering to get only geometries inside bounding box</span>
+    <span class="n">inLayer</span><span class="o">.</span><span class="n">SetSpatialFilterRect</span><span class="p">(</span><span class="mi">88</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">93</span><span class="p">,</span> <span class="mi">27</span><span class="p">)</span>
+    <span class="n">rivers</span><span class="p">,</span> <span class="n">keys</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">georef</span><span class="o">.</span><span class="n">get_shape_coordinates</span><span class="p">(</span><span class="n">inLayer</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s1">&#39;MAJ_NAME&#39;</span><span class="p">)</span>
+
+    <span class="c1"># plot on ax1, and ax4</span>
+    <span class="n">wrl</span><span class="o">.</span><span class="n">vis</span><span class="o">.</span><span class="n">add_lines</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">rivers</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">pl</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">terrain</span><span class="p">(</span><span class="mf">0.</span><span class="p">),</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">plot_dem</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">plot_borders</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">plot_rivers</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">((</span><span class="mi">88</span><span class="p">,</span> <span class="mi">93</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">((</span><span class="mi">20</span><span class="p">,</span> <span class="mi">27</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[8]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>(20, 27)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_visualisation_wradlib_overlay_20_1.png" src="../../_images/notebooks_visualisation_wradlib_overlay_20_1.png" />
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">plot_water</span><span class="p">(</span><span class="n">ax</span><span class="p">):</span>
+    <span class="c1"># plot rivers from esri vector shape, filter spatially</span>
+    <span class="c1"># plot rivers from NED</span>
+    <span class="c1"># open the input data source and get the layer</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">get_wradlib_data_file</span><span class="p">(</span><span class="s1">&#39;geo/ne_10m_rivers_lake_&#39;</span>
+                                              <span class="s1">&#39;centerlines.shp&#39;</span><span class="p">)</span>
+    <span class="n">dataset</span><span class="p">,</span> <span class="n">inLayer</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">open_shape</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="n">inLayer</span><span class="o">.</span><span class="n">SetSpatialFilterRect</span><span class="p">(</span><span class="mi">88</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">93</span><span class="p">,</span> <span class="mi">27</span><span class="p">)</span>
+    <span class="n">rivers</span><span class="p">,</span> <span class="n">keys</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">georef</span><span class="o">.</span><span class="n">get_shape_coordinates</span><span class="p">(</span><span class="n">inLayer</span><span class="p">)</span>
+    <span class="n">wrl</span><span class="o">.</span><span class="n">vis</span><span class="o">.</span><span class="n">add_lines</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">rivers</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">pl</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">terrain</span><span class="p">(</span><span class="mf">0.</span><span class="p">),</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">plot_dem</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">plot_borders</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">plot_rivers</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">plot_water</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">((</span><span class="mi">88</span><span class="p">,</span> <span class="mi">93</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">((</span><span class="mi">20</span><span class="p">,</span> <span class="mi">27</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[10]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>(20, 27)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_visualisation_wradlib_overlay_22_1.png" src="../../_images/notebooks_visualisation_wradlib_overlay_22_1.png" />
+</div>
+</div>
+</div>
+<div class="section" id="Plotting-Cities">
+<h2>Plotting Cities<a class="headerlink" href="#Plotting-Cities" title="Permalink to this headline">¶</a></h2>
+<p>The 5 biggest cities of bangladesh are added using simple matplotlib
+functions.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">plot_cities</span><span class="p">(</span><span class="n">ax</span><span class="p">):</span>
+    <span class="c1"># plot city dots with annotation, finalize plot</span>
+    <span class="c1"># lat/lon coordinates of five cities in Bangladesh</span>
+    <span class="n">lats</span> <span class="o">=</span> <span class="p">[</span><span class="mf">23.73</span><span class="p">,</span> <span class="mf">22.32</span><span class="p">,</span> <span class="mf">22.83</span><span class="p">,</span> <span class="mf">24.37</span><span class="p">,</span> <span class="mf">24.90</span><span class="p">]</span>
+    <span class="n">lons</span> <span class="o">=</span> <span class="p">[</span><span class="mf">90.40</span><span class="p">,</span> <span class="mf">91.82</span><span class="p">,</span> <span class="mf">89.55</span><span class="p">,</span> <span class="mf">88.60</span><span class="p">,</span> <span class="mf">91.87</span><span class="p">]</span>
+    <span class="n">cities</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Dhaka&#39;</span><span class="p">,</span> <span class="s1">&#39;Chittagong&#39;</span><span class="p">,</span> <span class="s1">&#39;Khulna&#39;</span><span class="p">,</span> <span class="s1">&#39;Rajshahi&#39;</span><span class="p">,</span> <span class="s1">&#39;Sylhet&#39;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">city</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">lons</span><span class="p">,</span> <span class="n">lats</span><span class="p">,</span> <span class="n">cities</span><span class="p">):</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="s1">&#39;ro&#39;</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">lon</span> <span class="o">+</span> <span class="mf">0.01</span><span class="p">,</span> <span class="n">lat</span> <span class="o">+</span> <span class="mf">0.01</span><span class="p">,</span> <span class="n">city</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="s1">&#39;large&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">plot_dem</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">plot_borders</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">plot_rivers</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">plot_water</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">plot_cities</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">((</span><span class="mi">88</span><span class="p">,</span> <span class="mi">93</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">((</span><span class="mi">20</span><span class="p">,</span> <span class="mi">27</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Longitude&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Latitude&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Bangladesh&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Out[12]:
+</pre></div>
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>Text(0.5,1,u&#39;Bangladesh&#39;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_visualisation_wradlib_overlay_26_1.png" src="../../_images/notebooks_visualisation_wradlib_overlay_26_1.png" />
+</div>
+</div>
+</div>
+<div class="section" id="Plotting-country-patches">
+<h2>Plotting country patches<a class="headerlink" href="#Plotting-country-patches" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="Plotting-in-“geographic-projection”-(WGS84)">
+<h3>Plotting in “geographic projection” (WGS84)<a class="headerlink" href="#Plotting-in-“geographic-projection”-(WGS84)" title="Permalink to this headline">¶</a></h3>
+<p>Here, we plot countries as <code class="docutils literal notranslate"><span class="pre">patches</span></code> on a lat/lon (WGS84) map (data
+from <a class="reference external" href="http://www.naturalearthdata.com/">Natural Earth Data</a> again).</p>
+<p>We again extract the features using - the <code class="docutils literal notranslate"><span class="pre">OGR.Layer</span></code>
+<code class="docutils literal notranslate"><span class="pre">SpatialFilter</span></code> and -
+<a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/generated/wradlib.georef.get_shape_coordinates.html">wradlib.georef.get_shape_coordinates</a>.</p>
+<p>Then the patches are added one by one via
+<a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/generated/wradlib.vis.add_patches.html">wradlib.vis.add_patches</a>.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">plot_wgs84</span><span class="p">(</span><span class="n">ax</span><span class="p">):</span>
+    <span class="kn">from</span> <span class="nn">osgeo</span> <span class="kn">import</span> <span class="n">osr</span>
+    <span class="n">wgs84</span> <span class="o">=</span> <span class="n">osr</span><span class="o">.</span><span class="n">SpatialReference</span><span class="p">()</span>
+    <span class="n">wgs84</span><span class="o">.</span><span class="n">ImportFromEPSG</span><span class="p">(</span><span class="mi">4326</span><span class="p">)</span>
+    <span class="c1"># some testing on additional axes</span>
+    <span class="c1"># add Bangladesh to countries</span>
+    <span class="n">countries</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;India&#39;</span><span class="p">,</span> <span class="s1">&#39;Nepal&#39;</span><span class="p">,</span> <span class="s1">&#39;Bhutan&#39;</span><span class="p">,</span> <span class="s1">&#39;Myanmar&#39;</span><span class="p">,</span> <span class="s1">&#39;Bangladesh&#39;</span><span class="p">]</span>
+    <span class="c1"># create colors for country-patches</span>
+    <span class="n">cm</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">jet</span>
+    <span class="n">colors</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">countries</span><span class="p">)):</span>
+        <span class="n">colors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cm</span><span class="p">(</span><span class="mf">1.</span> <span class="o">*</span> <span class="n">i</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">countries</span><span class="p">)))</span>
+
+    <span class="c1"># open the input data source and get the layer</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">get_wradlib_data_file</span><span class="p">(</span><span class="s1">&#39;geo/ne_10m_admin_0_&#39;</span>
+                                              <span class="s1">&#39;countries.shp&#39;</span><span class="p">)</span>
+    <span class="n">dataset</span><span class="p">,</span> <span class="n">layer</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">open_shape</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+    <span class="c1"># filter spatially and plot as PatchCollection on ax3</span>
+    <span class="n">layer</span><span class="o">.</span><span class="n">SetSpatialFilterRect</span><span class="p">(</span><span class="mi">88</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">93</span><span class="p">,</span> <span class="mi">27</span><span class="p">)</span>
+    <span class="n">patches</span><span class="p">,</span> <span class="n">keys</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">georef</span><span class="o">.</span><span class="n">get_shape_coordinates</span><span class="p">(</span><span class="n">layer</span><span class="p">,</span>
+                                                     <span class="n">dest_srs</span><span class="o">=</span><span class="n">wgs84</span><span class="p">,</span>
+                                                     <span class="n">key</span><span class="o">=</span><span class="s1">&#39;name&#39;</span><span class="p">)</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">patch</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">keys</span><span class="p">,</span> <span class="n">patches</span><span class="p">):</span>
+        <span class="c1"># why comes the US in here?</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">countries</span><span class="p">:</span>
+            <span class="n">wrl</span><span class="o">.</span><span class="n">vis</span><span class="o">.</span><span class="n">add_patches</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">patch</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+                                <span class="n">cmap</span><span class="o">=</span><span class="n">pl</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">jet</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>
+            <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">autoscale</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Longitude&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Latitude&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;South Asia - WGS 84&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">plot_wgs84</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_visualisation_wradlib_overlay_33_0.png" src="../../_images/notebooks_visualisation_wradlib_overlay_33_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="Plotting-with-a-map-projection">
+<h3>Plotting with a map projection<a class="headerlink" href="#Plotting-with-a-map-projection" title="Permalink to this headline">¶</a></h3>
+<p>Here, we plot countries as patches on a projected map.</p>
+<p>We extract the features using - the <code class="docutils literal notranslate"><span class="pre">OGR.Layer</span></code> <code class="docutils literal notranslate"><span class="pre">AttributeFilter</span></code>
+and - the
+<a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/generated/wradlib.georef.get_shape_coordinates.html">wradlib.georef.get_shape_coordinates</a>
+function.</p>
+<p>The coordinates of the features are reprojected on the fly using the
+<code class="docutils literal notranslate"><span class="pre">dest_srs</span></code> keyword of
+<a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/generated/wradlib.georef.get_shape_coordinates.html">wradlib.georef.get_shape_coordinates</a>.</p>
+<p>Then, the patches are added to the map via
+<a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/generated/wradlib.vis.add_patches.html">wradlib.vis.add_patches</a>.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">plot_mercator</span><span class="p">(</span><span class="n">ax</span><span class="p">):</span>
+    <span class="kn">from</span> <span class="nn">osgeo</span> <span class="kn">import</span> <span class="n">osr</span>
+    <span class="n">proj</span> <span class="o">=</span> <span class="n">osr</span><span class="o">.</span><span class="n">SpatialReference</span><span class="p">()</span>
+    <span class="c1"># &quot;Web Mercator&quot; projection (used by GoogleMaps, OSM, ...)</span>
+    <span class="n">proj</span><span class="o">.</span><span class="n">ImportFromEPSG</span><span class="p">(</span><span class="mi">3857</span><span class="p">)</span>
+
+    <span class="c1"># add Bangladesh to countries</span>
+    <span class="n">countries</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;India&#39;</span><span class="p">,</span> <span class="s1">&#39;Nepal&#39;</span><span class="p">,</span> <span class="s1">&#39;Bhutan&#39;</span><span class="p">,</span> <span class="s1">&#39;Myanmar&#39;</span><span class="p">,</span> <span class="s1">&#39;Bangladesh&#39;</span><span class="p">]</span>
+    <span class="c1"># create colors for country-patches</span>
+    <span class="n">cm</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">jet</span>
+    <span class="n">colors</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">countries</span><span class="p">)):</span>
+        <span class="n">colors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cm</span><span class="p">(</span><span class="mf">1.</span> <span class="o">*</span> <span class="n">i</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">countries</span><span class="p">)))</span>
+
+    <span class="c1"># open the input data source and get the layer</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">get_wradlib_data_file</span><span class="p">(</span><span class="s1">&#39;geo/ne_10m_admin_0_&#39;</span>
+                                              <span class="s1">&#39;countries.shp&#39;</span><span class="p">)</span>
+    <span class="n">dataset</span><span class="p">,</span> <span class="n">layer</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">open_shape</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="c1"># iterate over countries, filter by attribute,</span>
+    <span class="c1"># plot single patches on ax2</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">countries</span><span class="p">):</span>
+        <span class="n">fattr</span> <span class="o">=</span> <span class="s2">&quot;name = &#39;&quot;</span> <span class="o">+</span> <span class="n">item</span> <span class="o">+</span> <span class="s2">&quot;&#39;&quot;</span>
+        <span class="n">layer</span><span class="o">.</span><span class="n">SetAttributeFilter</span><span class="p">(</span><span class="n">fattr</span><span class="p">)</span>
+        <span class="c1"># get country patches and geotransform to destination srs</span>
+        <span class="n">patches</span><span class="p">,</span> <span class="n">keys</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">georef</span><span class="o">.</span><span class="n">get_shape_coordinates</span><span class="p">(</span><span class="n">layer</span><span class="p">,</span>
+                                                         <span class="n">dest_srs</span><span class="o">=</span><span class="n">proj</span><span class="p">,</span>
+                                                         <span class="n">key</span><span class="o">=</span><span class="s1">&#39;name&#39;</span><span class="p">)</span>
+        <span class="n">wrl</span><span class="o">.</span><span class="n">vis</span><span class="o">.</span><span class="n">add_patches</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">gca</span><span class="p">(),</span> <span class="n">patches</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">autoscale</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;X - Coordinate&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Y - Coordinate&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">ticklabel_format</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;sci&#39;</span><span class="p">,</span> <span class="n">scilimits</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;South Asia in Web Mercator Projection &#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">plot_mercator</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_visualisation_wradlib_overlay_39_0.png" src="../../_images/notebooks_visualisation_wradlib_overlay_39_0.png" />
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../zonalstats/wradlib_zonalstats_classes.html" class="btn btn-neutral float-right" title="Zonal Statistics" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../radolan/radolan_grid.html" class="btn btn-neutral" title="RADOLAN Grid" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2011-2016, wradlib developers.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.11.3',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

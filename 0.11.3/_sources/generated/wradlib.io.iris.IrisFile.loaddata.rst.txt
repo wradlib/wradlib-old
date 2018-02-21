@@ -1,0 +1,6 @@
+wradlib.io.iris.IrisFile.loaddata
+=================================
+
+.. currentmodule:: wradlib.io.iris
+
+.. autoattribute:: IrisFile.loaddata

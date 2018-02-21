@@ -1,0 +1,487 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Getting Started &mdash; wradlib</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/wradlib.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="wradlib" href="index.html"/>
+        <link rel="next" title="Tutorials and Examples" href="notebooks.html"/>
+        <link rel="prev" title="wradlib: An Open Source Library for Weather Radar Data Processing" href="index.html"/>
+    
+    <link href="_static/wradlib.css" rel="stylesheet" type="text/css">
+
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+  <a href="index.html" class="icon icon-home"> wradlib
+
+
+
+</a>
+
+
+
+  <div class="version">
+    
+    <button class="verbtn">0.11.3</button>
+    <div class="version-content">
+      
+        <a href="../latest/">latest</a>
+        <a href="../0.11.3/">0.11.3</a>
+        <a href="../0.11.1/">0.11.1</a>
+    </div>
+  </div>
+
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Getting Started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#bleeding-edge-code">Bleeding edge code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installing-via-easy-install">Installing via easy_install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dependencies">Dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#optional-dependencies">Optional Dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#known-issues">Known Issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#community">Community</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks.html">Tutorials and Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference.html">Library Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dev_setup.html">For Developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="zreferences.html">Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="release_notes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">wradlib</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Getting Started</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/gettingstarted.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+/* nice headers on first paragraph of info/warning boxes */
+.admonition .first {
+    margin: -12px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1;
+    display: block;
+}
+.admonition.warning .first {
+    background: #f0b37e;
+}
+.admonition.note .first {
+    background: #6ab0de;
+}
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="getting-started">
+<h1>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="installation">
+<span id="ref-installation"></span><h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>In order to run <span class="math notranslate">\(\omega radlib\)</span>, you need to have a Python interpreter installed on your local computer, as well as a number of Python packages (<a class="reference internal" href="#dependencies">Dependencies</a>). We recommend to install <a class="reference external" href="https://www.continuum.io/why-anaconda/">Anaconda</a> as it installs Python, a number of required packages, and other useful tools (e.g. spyder).</p>
+<p>Using Anaconda the installation process is harmonised across platforms. Download and install the latest Anaconda distribution from <a class="reference external" href="https://www.continuum.io/downloads">https://www.continuum.io/downloads</a> for your specific OS.
+We are constantly performing tests with these distributions (for python2.7 and python3 respectively).</p>
+<p>If your Anaconda Python installation is working, the following command (in a console) should work:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python --version
+Python 3.5.1 :: Continuum Analytics, Inc.
+</pre></div>
+</div>
+<p>Now you can use the <code class="docutils literal notranslate"><span class="pre">conda</span></code> package and environment manager (<a class="reference external" href="http://conda.pydata.org/docs/#">conda documentation</a>) to setup your <span class="math notranslate">\(\omega radlib\)</span> installation.</p>
+<ol class="arabic">
+<li><p class="first">Add the conda-forge channel, where <span class="math notranslate">\(\omega radlib\)</span> and its dependencies are located. Read more about the community effort <a class="reference external" href="https://conda-forge.github.io/">conda-forge</a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ conda config --add channels conda-forge
+</pre></div>
+</div>
+</li>
+<li><p class="first">Create a new environment from scratch:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ conda create --name wradlib python=3.6
+</pre></div>
+</div>
+</li>
+<li><p class="first">Activate the <span class="math notranslate">\(\omega radlib\)</span> environment</p>
+<blockquote>
+<div><p>Linux:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ source activate wradlib
+</pre></div>
+</div>
+<p>Windows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">activate</span> <span class="n">wradlib</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">Install <span class="math notranslate">\(\omega radlib\)</span> and its dependencies:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>(wradlib) $ conda install wradlib
+</pre></div>
+</div>
+</li>
+<li><p class="first">Make sure the GDAL_DATA environment variable (needed for georeferencing) is set within your environment.</p>
+<blockquote>
+<div><p>Linux/OSX:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>(wradlib) $ echo $GDAL_DATA
+</pre></div>
+</div>
+<p>Windows CMD.exe:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">wradlib</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">echo</span> <span class="o">%</span><span class="n">GDAL_DATA</span><span class="o">%</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">If not, you can set it like this:</p>
+<blockquote>
+<div><p>Linux/OSX:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>(wradlib) $ export GDAL_DATA=/path/to/anaconda/envs/wradlib/share/gdal
+</pre></div>
+</div>
+<p>Windows CMD.exe:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">wradlib</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">setx</span> <span class="n">GDAL_DATA</span> <span class="n">C</span><span class="p">:</span>\<span class="n">path</span>\<span class="n">to</span>\<span class="n">anaconda</span>\<span class="n">envs</span>\<span class="n">wradlib</span>\<span class="n">Library</span>\<span class="n">share</span>\<span class="n">gdal</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ol>
+<p>Now you have a <code class="docutils literal notranslate"><span class="pre">conda</span></code> environment with a working <span class="math notranslate">\(\omega radlib\)</span> installation.</p>
+<p>Test the integrity of your <span class="math notranslate">\(\omega radlib\)</span> installation by opening a console window and typing calling the python interpreter:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python
+Python 3.6.2 | packaged by conda-forge | (default, Jul 23 2017, 22:59:30)
+[GCC 4.8.2 20140120 (Red Hat 4.8.2-15)] on linux
+Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.
+</pre></div>
+</div>
+<p>The Python prompt should appear. Then type:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">wradlib</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">wradlib</span><span class="o">.</span><span class="n">__version__</span>
+<span class="go">&#39;0.10.1&#39;</span>
+</pre></div>
+</div>
+<p>If everything is ok, this will show the running <span class="math notranslate">\(\omega radlib\)</span> version. If the <span class="math notranslate">\(\omega radlib\)</span> package is not found by the interpreter, you will get:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">wradlib</span>
+<span class="go">ImportError: No module named wradlib</span>
+</pre></div>
+</div>
+<p>Alternatively, you can install the <a class="reference internal" href="#bleeding-edge-code">Bleeding edge code</a>, but you have to keep track of <span class="math notranslate">\(\omega radlib's\)</span> dependencies yourself.</p>
+</div>
+<div class="section" id="bleeding-edge-code">
+<h2>Bleeding edge code<a class="headerlink" href="#bleeding-edge-code" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">The <span class="math notranslate">\(\omega radlib\)</span> version on <a class="reference external" href="https://pypi.python.org/pypi/wradlib">PyPI</a> might lag behind the actual developments. You can use the bleeding edge code from the <span class="math notranslate">\(\omega radlib\)</span> <a class="reference external" href="https://github.com/wradlib/wradlib">repository</a>. Note, however, that you need to make sure yourself that all <a class="reference internal" href="#dependencies">Dependencies</a> are met (see below).</p>
+</div>
+<p><a class="reference external" href="https://github.com/wradlib/wradlib/archive/master.zip">Download</a> the source, unzip, and run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python setup.py install
+</pre></div>
+</div>
+<p>Alternatively, you can add the <span class="math notranslate">\(\omega radlib\)</span> directory to your environment variable <code class="docutils literal notranslate"><span class="pre">PYTHONPATH</span></code>.</p>
+</div>
+<div class="section" id="installing-via-easy-install">
+<h2>Installing via easy_install<a class="headerlink" href="#installing-via-easy-install" title="Permalink to this headline">¶</a></h2>
+<p>Although we recommend using the Anaconda Python Environment you can install <span class="math notranslate">\(\omega radlib\)</span> from PyPi via easy_install.</p>
+<p>Open a terminal and run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ easy_install wradlib
+</pre></div>
+</div>
+<p>Depending on your system you might need to be root (or sudo the above command) for this to work.
+easy_install will then fetch the source distribution from the Python Package Index and run the installation.</p>
+<p>Afterwards it will check for any dependencies not met, yet.</p>
+<p>Be aware that with easy_install we can only look for python-module dependencies.
+For example the numpy module itself depends on some other libraries, which need to be present in order for the module to compile properly after being downloaded by easy_install. We have no control over these dependencies and it is rather hard to give a complete overview.</p>
+<p>Therefore we recommend trying to satisfy the dependencies using your favorite package management system.</p>
+</div>
+<div class="section" id="dependencies">
+<span id="ref-dependencies"></span><h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
+<p><span class="math notranslate">\(\omega radlib\)</span> was not designed to be a self-contained library. Besides extensive use of Numpy and Scipy, <span class="math notranslate">\(\omega radlib\)</span> uses additional libraries, which you will need to install before you can use <span class="math notranslate">\(\omega radlib\)</span>.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="33%" />
+<col width="31%" />
+<col width="36%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Package</th>
+<th class="head">min</th>
+<th class="head">recommended</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>numpy</td>
+<td>&gt;= 1.6.1</td>
+<td>&gt;= 1.10.1</td>
+</tr>
+<tr class="row-odd"><td>matplotlib</td>
+<td>&gt;= 1.1.0</td>
+<td>&gt;= 1.5.1</td>
+</tr>
+<tr class="row-even"><td>scipy</td>
+<td>&gt;= 0.9</td>
+<td>&gt;= 0.17.0</td>
+</tr>
+<tr class="row-odd"><td>h5py</td>
+<td>&gt;= 2.0.1</td>
+<td>&gt;= 2.5.0</td>
+</tr>
+<tr class="row-even"><td>netCDF4</td>
+<td>&gt;= 1.0</td>
+<td>&gt;= 1.2.2</td>
+</tr>
+<tr class="row-odd"><td>gdal</td>
+<td>&gt;= 1.9</td>
+<td>&gt;= 2.1.0</td>
+</tr>
+</tbody>
+</table>
+<p>You can check whether the required <a class="reference internal" href="#dependencies">Dependencies</a> are available on your computer by opening a Python console and enter:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="o">&lt;</span><span class="n">package_name</span><span class="o">&gt;</span>
+<span class="go">ImportError: No module named &lt;package_name&gt;</span>
+</pre></div>
+</div>
+<p>This will be the response in case the package is not available.</p>
+<p>In case the import is successful, you should also check the version number:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">package_name</span><span class="o">.</span><span class="n">__version__</span>
+<span class="go">some version number</span>
+</pre></div>
+</div>
+<p>The version number should be consistent with the above <a class="reference internal" href="#dependencies">Dependencies</a>.</p>
+</div>
+<div class="section" id="optional-dependencies">
+<h2>Optional Dependencies<a class="headerlink" href="#optional-dependencies" title="Permalink to this headline">¶</a></h2>
+<p>Apart from the obligatory <a class="reference internal" href="#dependencies">Dependencies</a>, some dependencies in <span class="math notranslate">\(\omega radlib\)</span> are optional. This is because the installation of these dependencies can be somewhat tedious while many <span class="math notranslate">\(\omega radlib\)</span> users will not need them anyway. In case users use a <span class="math notranslate">\(\omega radlib\)</span> function that requires an optional dependency, and this dependency is not satisfied in the local environment, <span class="math notranslate">\(\omega radlib\)</span> will raise an exception.</p>
+<p>As for now, the following dependencies are defined as optional:</p>
+<p><strong>The speedup module</strong></p>
+<p>The speedup module is intended as a collection of Fortran code in order to speed up specific <span class="math notranslate">\(\omega radlib\)</span> function that are critical for performance.
+In order to build the speedup module as a shared library, you need to use f2py (<a class="reference external" href="https://sysbio.ioc.ee/projects/f2py2e/">https://sysbio.ioc.ee/projects/f2py2e/</a>). f2py usually ships with numpy and should be available via the command line. To test whether f2py is available on your system, execute <code class="docutils literal notranslate"><span class="pre">f2py</span></code> on the system console. Or, alternatively, <code class="docutils literal notranslate"><span class="pre">f2py.py</span></code>. If it is available, you should get a bunch of help instructions. Now change to the <span class="math notranslate">\(\omega radlib\)</span> module directory and execute on the system console:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ f2py.py -c -m speedup speedup.f
+</pre></div>
+</div>
+<p>Now the speedup module should be available.</p>
+<p><strong>xmltodict</strong></p>
+<p>We use xmltodict to convert the Rainbow Data Files (which have a metadata XML header) to an ordered dict. It is easily installed with <cite>pip</cite>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pip install xmltodict
+</pre></div>
+</div>
+</div>
+<div class="section" id="known-issues">
+<span id="ref-knownissues"></span><h2>Known Issues<a class="headerlink" href="#known-issues" title="Permalink to this headline">¶</a></h2>
+<p>Depending on your OS and installation method you may encounter different problems. Here are some guidelines for attacking them.</p>
+<p>Generally it is a good idea to use your systems package manager to install dependencies. This will also take account for other needed bindings, libs etc. Windows user should install one of the (scientific) python packages to resolve the problems there.</p>
+<p>We recommend using the Anaconda conda package and environment manager (see <a class="reference internal" href="#installation">Installation</a>).</p>
+<p>If you encounter problems installing <span class="math notranslate">\(\omega radlib\)</span>, check on your favorite search engine or create an issue <a class="reference external" href="https://github.com/wradlib/wradlib/issues">here</a> with details on the problem or send an email on the <a class="reference external" href="https://groups.google.com/forum/?fromgroups=#!forum/wradlib-users">wradlib-users</a> mailing list.</p>
+</div>
+<div class="section" id="community">
+<h2>Community<a class="headerlink" href="#community" title="Permalink to this headline">¶</a></h2>
+<p><span class="math notranslate">\(\omega radlib\)</span> is intended to be a community effort, and community needs communication.</p>
+<p>The key communication platform for <span class="math notranslate">\(\omega radlib\)</span> is the  <a class="reference external" href="https://groups.google.com/forum/?fromgroups=#!forum/wradlib-users">wradlib-users</a> mailing list and forum. Through this forum, you can help to improve <span class="math notranslate">\(\omega radlib\)</span> by reporting bugs, proposing enhancements, or by contributing code snippets (in any programming language) and documentation of algorithms.</p>
+<p>You can also ask other users and developers for help, or use your own knowledge and experience to help other users. We strongly encourage you to <a class="reference external" href="https://groups.google.com/forum/#!forum/wradlib-users/join">subscribe</a> to this list. Check it out!</p>
+<p>Learn more about <span class="math notranslate">\(\omega radlib\)</span> as a community effort <a class="reference internal" href="community.html"><span class="doc">here</span></a>!</p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="notebooks.html" class="btn btn-neutral float-right" title="Tutorials and Examples" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="wradlib: An Open Source Library for Weather Radar Data Processing" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2011-2016, wradlib developers.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.11.3',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

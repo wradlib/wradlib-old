@@ -1,0 +1,6 @@
+wradlib.adjust.AdjustAdd.xvalidate
+==================================
+
+.. currentmodule:: wradlib.adjust
+
+.. automethod:: AdjustAdd.xvalidate

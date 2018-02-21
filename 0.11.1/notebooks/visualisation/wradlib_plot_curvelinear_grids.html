@@ -1,0 +1,1237 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Plot data to curvelinear grid &mdash; wradlib</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/wradlib.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="wradlib" href="../../index.html"/>
+        <link rel="up" title="Getting started with wradlib" href="../basics.html"/>
+        <link rel="next" title="Data Input - Data Output" href="../fileio.html"/>
+        <link rel="prev" title="A simple function to plot polar data in cartesian coordinate systems" href="wradlib_plot_ppi_example.html"/>
+    
+    <link href="../../_static/wradlib.css" rel="stylesheet" type="text/css">
+
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+  <a href="../../index.html" class="icon icon-home"> wradlib
+
+
+
+</a>
+
+
+
+  <div class="version">
+    
+    <button class="verbtn">0.11.1</button>
+    <div class="version-content">
+      
+        <a href="../latest/">latest</a>
+        <a href="../0.11.1/">0.11.1</a>
+    </div>
+  </div>
+
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../gettingstarted.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../notebooks.html">Tutorials and Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../jupyter.html">How to use the tutorials and examples?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../learnpython.html">An incomplete introduction to Python</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../basics.html">Getting started with wradlib</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../basics/wradlib_introduction.html">Get wradlib version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/wradlib_workflow.html">Typical Workflow for Radar-Based RainfallEstimation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/wradlib_get_rainfall.html">From Reflectivity toRainfall</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wradlib_plot_ppi_example.html">Plot Polar Data asPPI</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Plot PolarData on CurvelinearGrids</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Preface">Preface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Create-Curvelinear-Grid">Create Curvelinear Grid</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Plotting-on-Curvelinear-Grids">Plotting on Curvelinear Grids</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Plot-CG-RHI">Plot CG RHI</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Plotting-on-Grids">Plotting on Grids</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../fileio.html">Data Input - Data Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../attenuation/wradlib_attenuation.html">Attenuation correction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../beamblockage/wradlib_beamblock.html">Beam Blockage Calculation using a DEM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../classify.html">Clutter and Echo Classification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../georeferencing.html">Georeferencing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../match3d/wradlib_match_workflow.html">Match spaceborn PR (GPM/TRMM) with ground radars</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../develop.html">For Developers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interpolation/wradlib_ipol_example.html">How to use wradlib’s ipol module for interpolation tasks?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../multisensor/wradlib_adjust_example.html">Adjusting radar-base rainfall estimates by rain gauge observations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../verification/wradlib_verify_example.html">Routine verification measures for radar-based precipitation estimates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../recipes.html">Recipes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../radolan.html">RADOLAN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zonalstats/wradlib_zonalstats_classes.html">Zonal Statistics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference.html">Library Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev_setup.html">For Developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zreferences.html">Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../release_notes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">wradlib</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../notebooks.html">Tutorials and Examples</a> &raquo;</li>
+        
+          <li><a href="../basics.html">Getting started with wradlib</a> &raquo;</li>
+        
+      <li>Plot data to curvelinear grid</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/notebooks/visualisation/wradlib_plot_curvelinear_grids.ipynb.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #303F9F;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #D84315;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 8ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+/* nice headers on first paragraph of info/warning boxes */
+.admonition .first {
+    margin: -12px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1;
+    display: block;
+}
+.admonition.warning .first {
+    background: #f0b37e;
+}
+.admonition.note .first {
+    background: #6ab0de;
+}
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="Plot-data-to-curvelinear-grid">
+<h1>Plot data to curvelinear grid<a class="headerlink" href="#Plot-data-to-curvelinear-grid" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="Preface">
+<h2>Preface<a class="headerlink" href="#Preface" title="Permalink to this headline">¶</a></h2>
+<p>If you are working with radar station data, it is almost ever only
+available as polar data. This means you have a 2D-array, one dimension
+holding the azimuth (<strong>PPI</strong>) or elevation (<strong>RHI</strong>) angle values and
+the other holding the range values.</p>
+<p>In <span class="math">\(\omega radlib\)</span> it is assumed that the first dimension is over
+the azimuth/elevation angles, while the second dimension is over the
+range bins.</p>
+</div>
+<div class="section" id="Create-Curvelinear-Grid">
+<h2>Create Curvelinear Grid<a class="headerlink" href="#Create-Curvelinear-Grid" title="Permalink to this headline">¶</a></h2>
+<p>The creation process of the curvelinear grid is bundled in the helper
+function
+<a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/generated/wradlib.vis.create_cg.html">wradlib.vis.create_cg()</a>.
+I will not dwell too much on that, just this far
+<a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/generated/wradlib.vis.create_cg.html">wradlib.vis.create_cg()</a>
+uses a derived Axes implementation.</p>
+<p><a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/generated/wradlib.vis.create_cg.html">wradlib.vis.create_cg()</a>
+takes scan type (‘PPI’ or ‘RHI’) as argument, figure object and grid
+definition are optional. The grid creation process generates three axes
+objects and set some reasonable starting values for labeling.</p>
+<p>The returned objects are <code class="docutils literal"><span class="pre">cgax</span></code>, <code class="docutils literal"><span class="pre">caax</span></code> and <code class="docutils literal"><span class="pre">paax</span></code>.</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">cgax</span></code>: matplotlib toolkit axisartist Axes object, Curvelinear Axes
+which holds the angle-range-grid</li>
+<li><code class="docutils literal"><span class="pre">caax</span></code>: matplotlib Axes object (twin to cgax), Cartesian Axes
+(x-y-grid) for plotting cartesian data</li>
+<li><code class="docutils literal"><span class="pre">paax</span></code>: matplotlib Axes object (parasite to cgax), The parasite
+axes object for plotting polar data</li>
+</ul>
+<p>A typical invocation of
+<a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/generated/wradlib.vis.create_cg.html">wradlib.vis.create_cg()</a>
+for a <strong>PPI</strong> is:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># create curvelinear axes</span>
+<span class="n">cgax</span><span class="p">,</span> <span class="n">caax</span><span class="p">,</span> <span class="n">paax</span> <span class="o">=</span> <span class="n">create_cg</span><span class="p">(</span><span class="s1">&#39;PPI&#39;</span><span class="p">,</span> <span class="n">fig</span><span class="p">,</span> <span class="n">subplot</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>For plotting actual polar data two functions exist, depending on whether
+your data holds a <strong>PPI</strong>
+<a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/generated/wradlib.vis.plot_ppi.html">wradlib.vis.plot_ppi()</a>
+or an <strong>RHI</strong>
+(<a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/generated/wradlib.vis.plot_rhi.html">wradlib.vis.plot_rhi()</a>).</p>
+<div class="admonition note">
+<strong>Note</strong> 1. Other than most plotting functions you cannot give an axes
+object as an argument. All necessary axes objects are created on the
+fly. You may give an figure object and/or an subplot specification as
+parameter. For further information on howto plot multiple cg plots in
+one figure, have a look at the special section <a class="reference external" href="#Plotting-on-Grids">Plotting on
+Grids</a>. 2. When using the <code class="docutils literal"><span class="pre">refrac</span></code> keyword with
+<a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/generated/wradlib.vis.plot_rhi.html">wradlib.vis.plot_rhi()</a>
+the data is plotted to the cartesian axis <code class="docutils literal"><span class="pre">caax</span></code>.</div>
+<div class="admonition note">
+<strong>Seealso</strong> -
+<a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/generated/wradlib.vis.create_cg.html">wradlib.vis.create_cg()</a>
+-
+<a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/generated/wradlib.vis.plot_ppi.html">wradlib.vis.plot_ppi()</a>
+-
+<a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/generated/wradlib.vis.plot_rhi.html">wradlib.vis.plot_rhi()</a>
+If you want to learn more about the matplotlib features used with
+<a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/generated/wradlib.vis.create_cg.html">wradlib.vis.create_cg()</a>,
+have a look into - <a class="reference external" href="http://matplotlib.org/mpl_toolkits/axes_grid/users/axisartist.html">Matplotlib AXISARTIST
+namespace</a>
+- <a class="reference external" href="http://matplotlib.org/mpl_toolkits/axes_grid/index.html">Matplotlib AxesGrid
+Toolkit</a> -
+<a class="reference external" href="http://matplotlib.org/mpl_toolkits/axes_grid/users/index.html">The Matplotlib AxesGrid Toolkit User’s
+Guide</a></div>
+</div>
+<div class="section" id="Plotting-on-Curvelinear-Grids">
+<h2>Plotting on Curvelinear Grids<a class="headerlink" href="#Plotting-on-Curvelinear-Grids" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="Plot-CG-PPI">
+<h3>Plot CG PPI<a class="headerlink" href="#Plot-CG-PPI" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/generated/wradlib.vis.plot_ppi.html">wradlib.vis.plot_ppi()</a>
+with keyword <code class="docutils literal"><span class="pre">cg=True</span></code> is used in this section.</p>
+<div class="section" id="Simple-CG-PPI">
+<h4>Simple CG PPI<a class="headerlink" href="#Simple-CG-PPI" title="Permalink to this headline">¶</a></h4>
+<p>First we will look into plotting a <strong>PPI</strong>. We start with importing the
+necessary modules:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">wradlib</span> <span class="kn">as</span> <span class="nn">wrl</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">pl</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">get_ipython</span><span class="p">()</span><span class="o">.</span><span class="n">magic</span><span class="p">(</span><span class="s2">&quot;matplotlib inline&quot;</span><span class="p">)</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="n">pl</span><span class="o">.</span><span class="n">ion</span><span class="p">()</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+</pre></div>
+</div>
+</div>
+<p>Next, we will load a polar scan from the WRADLIB_DATA folder and prepare
+it:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="c1"># load a polar scan and create range and azimuth arrays accordingly</span>
+<span class="n">filename</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">get_wradlib_data_file</span><span class="p">(</span><span class="s1">&#39;misc/polar_dBZ_tur.gz&#39;</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">az</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="c1"># mask data array for better presentation</span>
+<span class="n">mask_ind</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data</span> <span class="o">&lt;=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmin</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+<span class="n">data</span><span class="p">[</span><span class="n">mask_ind</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+<span class="n">ma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<p>For this simple example, we do not need the returned axes. The plotting
+routine would be invoked like this:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">wrl</span><span class="o">.</span><span class="n">vis</span><span class="o">.</span><span class="n">plot_ppi</span><span class="p">(</span><span class="n">ma</span><span class="p">,</span> <span class="n">fig</span><span class="o">=</span><span class="n">fig</span><span class="p">,</span> <span class="n">refrac</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">cg</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Simple CG PPI&#39;</span><span class="p">)</span>
+<span class="n">t</span><span class="o">.</span><span class="n">set_y</span><span class="p">(</span><span class="mf">1.05</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_visualisation_wradlib_plot_curvelinear_grids_17_0.png" src="../../_images/notebooks_visualisation_wradlib_plot_curvelinear_grids_17_0.png" />
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="Decorated-CG-PPI">
+<h3>Decorated CG PPI<a class="headerlink" href="#Decorated-CG-PPI" title="Permalink to this headline">¶</a></h3>
+<p>Now we will make use of some of the capabilities of this curvelinear
+axes.</p>
+<p>You see, that for labeling x- and y-axis the cartesian axis is used. The
+<code class="docutils literal"><span class="pre">azimuth</span></code> label is set via :func:<code class="docutils literal"><span class="pre">text</span></code>. Also a colorbar is easily
+added. The plotting routine would be invoked like this, adding range and
+azimuth arrays and using the <code class="docutils literal"><span class="pre">autoext</span></code> feature:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">cgax</span><span class="p">,</span> <span class="n">pm</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">vis</span><span class="o">.</span><span class="n">plot_ppi</span><span class="p">(</span><span class="n">ma</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">az</span><span class="p">,</span> <span class="n">autoext</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                            <span class="n">fig</span><span class="o">=</span><span class="n">fig</span><span class="p">,</span> <span class="n">refrac</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">cg</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">caax</span> <span class="o">=</span> <span class="n">cgax</span><span class="o">.</span><span class="n">parasites</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Decorated CG PPI&#39;</span><span class="p">)</span>
+<span class="n">t</span><span class="o">.</span><span class="n">set_y</span><span class="p">(</span><span class="mf">1.05</span><span class="p">)</span>
+<span class="n">cbar</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">pm</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mf">0.075</span><span class="p">)</span>
+<span class="n">caax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x_range [km]&#39;</span><span class="p">)</span>
+<span class="n">caax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;y_range [km]&#39;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.05</span><span class="p">,</span> <span class="s1">&#39;azimuth&#39;</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">caax</span><span class="o">.</span><span class="n">transAxes</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;bottom&#39;</span><span class="p">,</span>
+        <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">)</span>
+<span class="n">cbar</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="s1">&#39;reflectivity [dBZ]&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_visualisation_wradlib_plot_curvelinear_grids_20_0.png" src="../../_images/notebooks_visualisation_wradlib_plot_curvelinear_grids_20_0.png" />
+</div>
+</div>
+<p>And, we will use <code class="docutils literal"><span class="pre">grid_helper</span></code> to set the starting value for the
+curvelinear grid. This is because data at the center of the image is
+obscured by the gridlines.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">cgax</span><span class="p">,</span> <span class="n">pm</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">vis</span><span class="o">.</span><span class="n">plot_ppi</span><span class="p">(</span><span class="n">ma</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">az</span><span class="p">,</span> <span class="n">autoext</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                            <span class="n">fig</span><span class="o">=</span><span class="n">fig</span><span class="p">,</span> <span class="n">refrac</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">cg</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">caax</span> <span class="o">=</span> <span class="n">cgax</span><span class="o">.</span><span class="n">parasites</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Decorated CG PPI&#39;</span><span class="p">)</span>
+<span class="n">t</span><span class="o">.</span><span class="n">set_y</span><span class="p">(</span><span class="mf">1.05</span><span class="p">)</span>
+<span class="n">cbar</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">pm</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mf">0.075</span><span class="p">)</span>
+<span class="n">caax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x_range [km]&#39;</span><span class="p">)</span>
+<span class="n">caax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;y_range [km]&#39;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.05</span><span class="p">,</span> <span class="s1">&#39;azimuth&#39;</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">caax</span><span class="o">.</span><span class="n">transAxes</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;bottom&#39;</span><span class="p">,</span>
+        <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">)</span>
+<span class="n">cbar</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="s1">&#39;reflectivity [dBZ]&#39;</span><span class="p">)</span>
+
+<span class="c1"># set appropriate value for lat_minmax</span>
+<span class="n">gh</span> <span class="o">=</span> <span class="n">cgax</span><span class="o">.</span><span class="n">get_grid_helper</span><span class="p">()</span>
+<span class="n">latlim</span> <span class="o">=</span> <span class="n">gh</span><span class="o">.</span><span class="n">grid_finder</span><span class="o">.</span><span class="n">extreme_finder</span><span class="o">.</span><span class="n">lat_minmax</span>
+<span class="n">latlim</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="n">latlim</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">gh</span><span class="o">.</span><span class="n">grid_finder</span><span class="o">.</span><span class="n">extreme_finder</span><span class="o">.</span><span class="n">lat_minmax</span> <span class="o">=</span> <span class="n">latlim</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_visualisation_wradlib_plot_curvelinear_grids_22_0.png" src="../../_images/notebooks_visualisation_wradlib_plot_curvelinear_grids_22_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="Sector-CG-PPI">
+<h3>Sector CG PPI<a class="headerlink" href="#Sector-CG-PPI" title="Permalink to this headline">¶</a></h3>
+<p>What if I want to plot only an interesting sector of the whole <strong>PPI</strong>?
+Not as easy, one might think. We also can generate a so called floating
+axis using the <code class="docutils literal"><span class="pre">cgax</span></code> now. Here we go:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">cgax</span><span class="p">,</span> <span class="n">pm</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">vis</span><span class="o">.</span><span class="n">plot_ppi</span><span class="p">(</span><span class="n">ma</span><span class="p">[</span><span class="mi">200</span><span class="p">:</span><span class="mi">250</span><span class="p">,</span> <span class="mi">40</span><span class="p">:</span><span class="mi">80</span><span class="p">],</span>
+                            <span class="n">r</span><span class="p">[</span><span class="mi">40</span><span class="p">:</span><span class="mi">81</span><span class="p">],</span> <span class="n">az</span><span class="p">[</span><span class="mi">200</span><span class="p">:</span><span class="mi">251</span><span class="p">],</span>
+                            <span class="n">autoext</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">refrac</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                            <span class="n">fig</span><span class="o">=</span><span class="n">fig</span><span class="p">,</span> <span class="n">cg</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">caax</span> <span class="o">=</span> <span class="n">cgax</span><span class="o">.</span><span class="n">parasites</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Decorated Sector CG PPI&#39;</span><span class="p">)</span>
+<span class="n">t</span><span class="o">.</span><span class="n">set_y</span><span class="p">(</span><span class="mf">1.05</span><span class="p">)</span>
+<span class="n">cbar</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">pm</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mf">0.075</span><span class="p">)</span>
+<span class="n">caax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x_range [km]&#39;</span><span class="p">)</span>
+<span class="n">caax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;y_range [km]&#39;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.05</span><span class="p">,</span> <span class="s1">&#39;azimuth&#39;</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">caax</span><span class="o">.</span><span class="n">transAxes</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;bottom&#39;</span><span class="p">,</span>
+        <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">)</span>
+<span class="n">cbar</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="s1">&#39;reflectivity [dBZ]&#39;</span><span class="p">)</span>
+
+<span class="c1"># add floating axis</span>
+<span class="n">cgax</span><span class="o">.</span><span class="n">axis</span><span class="p">[</span><span class="s2">&quot;lat&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cgax</span><span class="o">.</span><span class="n">new_floating_axis</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">240</span><span class="p">)</span>
+<span class="n">cgax</span><span class="o">.</span><span class="n">axis</span><span class="p">[</span><span class="s2">&quot;lat&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">set_ticklabel_direction</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">)</span>
+<span class="n">cgax</span><span class="o">.</span><span class="n">axis</span><span class="p">[</span><span class="s2">&quot;lat&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="s2">&quot;range [km]&quot;</span><span class="p">)</span>
+<span class="n">cgax</span><span class="o">.</span><span class="n">axis</span><span class="p">[</span><span class="s2">&quot;lat&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">set_rotation</span><span class="p">(</span><span class="mi">180</span><span class="p">)</span>
+<span class="n">cgax</span><span class="o">.</span><span class="n">axis</span><span class="p">[</span><span class="s2">&quot;lat&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">set_pad</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_visualisation_wradlib_plot_curvelinear_grids_25_0.png" src="../../_images/notebooks_visualisation_wradlib_plot_curvelinear_grids_25_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="Special-Markers">
+<h3>Special Markers<a class="headerlink" href="#Special-Markers" title="Permalink to this headline">¶</a></h3>
+<p>One more good thing about curvelinear axes is that you can plot polar as
+well as cartesian data. However, you have to be careful, where to plot.
+Polar data has to be plottet to the parasite axis (<code class="docutils literal"><span class="pre">paax</span></code>). Cartesian
+data can be plottet to <code class="docutils literal"><span class="pre">caax</span></code>, although you can also plot cartesian
+data to the main <code class="docutils literal"><span class="pre">cgax</span></code>.</p>
+<p>Anyway, it is easy to overlay your polar data, with other station data
+(e.g.&nbsp;gauges). Taking the former sector example, we can plot some
+additional <strong>stations</strong>:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">cgax</span><span class="p">,</span> <span class="n">pm</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">vis</span><span class="o">.</span><span class="n">plot_ppi</span><span class="p">(</span><span class="n">ma</span><span class="p">[</span><span class="mi">200</span><span class="p">:</span><span class="mi">250</span><span class="p">,</span> <span class="mi">40</span><span class="p">:</span><span class="mi">80</span><span class="p">],</span>
+                            <span class="n">r</span><span class="p">[</span><span class="mi">40</span><span class="p">:</span><span class="mi">81</span><span class="p">],</span> <span class="n">az</span><span class="p">[</span><span class="mi">200</span><span class="p">:</span><span class="mi">251</span><span class="p">],</span>
+                            <span class="n">autoext</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">refrac</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                            <span class="n">fig</span><span class="o">=</span><span class="n">fig</span><span class="p">,</span> <span class="n">cg</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">caax</span> <span class="o">=</span> <span class="n">cgax</span><span class="o">.</span><span class="n">parasites</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">paax</span> <span class="o">=</span> <span class="n">cgax</span><span class="o">.</span><span class="n">parasites</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Decorated Sector CG PPI&#39;</span><span class="p">)</span>
+<span class="n">t</span><span class="o">.</span><span class="n">set_y</span><span class="p">(</span><span class="mf">1.05</span><span class="p">)</span>
+<span class="n">cbar</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">pm</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mf">0.075</span><span class="p">)</span>
+<span class="n">caax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x_range [km]&#39;</span><span class="p">)</span>
+<span class="n">caax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;y_range [km]&#39;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.05</span><span class="p">,</span> <span class="s1">&#39;azimuth&#39;</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">caax</span><span class="o">.</span><span class="n">transAxes</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;bottom&#39;</span><span class="p">,</span>
+        <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">)</span>
+<span class="n">cbar</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="s1">&#39;reflectivity [dBZ]&#39;</span><span class="p">)</span>
+<span class="n">cgax</span><span class="o">.</span><span class="n">axis</span><span class="p">[</span><span class="s2">&quot;lat&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cgax</span><span class="o">.</span><span class="n">new_floating_axis</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">240</span><span class="p">)</span>
+<span class="n">cgax</span><span class="o">.</span><span class="n">axis</span><span class="p">[</span><span class="s2">&quot;lat&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">set_ticklabel_direction</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">)</span>
+<span class="n">cgax</span><span class="o">.</span><span class="n">axis</span><span class="p">[</span><span class="s2">&quot;lat&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="s2">&quot;range [km]&quot;</span><span class="p">)</span>
+<span class="n">cgax</span><span class="o">.</span><span class="n">axis</span><span class="p">[</span><span class="s2">&quot;lat&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">set_rotation</span><span class="p">(</span><span class="mi">180</span><span class="p">)</span>
+<span class="n">cgax</span><span class="o">.</span><span class="n">axis</span><span class="p">[</span><span class="s2">&quot;lat&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">set_pad</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="c1">#plot on cartesian axis</span>
+<span class="n">caax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="o">-</span><span class="mi">60</span><span class="p">,</span> <span class="o">-</span><span class="mi">60</span><span class="p">,</span> <span class="s1">&#39;ro&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;caax&quot;</span><span class="p">)</span>
+<span class="n">caax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="o">-</span><span class="mi">50</span><span class="p">,</span> <span class="o">-</span><span class="mi">70</span><span class="p">,</span> <span class="s1">&#39;ro&#39;</span><span class="p">)</span>
+<span class="c1"># plot on polar axis</span>
+<span class="n">paax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="mi">220</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="s1">&#39;bo&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;paax&quot;</span><span class="p">)</span>
+<span class="c1"># plot on cg axis (same as on cartesian axis)</span>
+<span class="n">cgax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="o">-</span><span class="mi">50</span><span class="p">,</span> <span class="o">-</span><span class="mi">60</span><span class="p">,</span> <span class="s1">&#39;go&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;cgax&quot;</span><span class="p">)</span>
+<span class="c1"># legend on main cg axis</span>
+<span class="n">cgax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[7]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>&lt;matplotlib.legend.Legend at 0x7f1056287dd8&gt;
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_visualisation_wradlib_plot_curvelinear_grids_28_1.png" src="../../_images/notebooks_visualisation_wradlib_plot_curvelinear_grids_28_1.png" />
+</div>
+</div>
+</div>
+<div class="section" id="Special-Specials">
+<h3>Special Specials<a class="headerlink" href="#Special-Specials" title="Permalink to this headline">¶</a></h3>
+<p>But there is more to know, when using the curvelinear grids! As an
+example, you can get access to the underlying <code class="docutils literal"><span class="pre">cgax</span></code> and
+<code class="docutils literal"><span class="pre">grid_helper</span></code> to change the azimuth and range resolution:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">mpl_toolkits.axisartist.grid_finder</span> <span class="kn">import</span> <span class="n">FixedLocator</span><span class="p">,</span> <span class="n">DictFormatter</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">cgax</span><span class="p">,</span> <span class="n">pm</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">vis</span><span class="o">.</span><span class="n">plot_ppi</span><span class="p">(</span><span class="n">ma</span><span class="p">[</span><span class="mi">200</span><span class="p">:</span><span class="mi">250</span><span class="p">,</span> <span class="mi">40</span><span class="p">:</span><span class="mi">80</span><span class="p">],</span>
+                            <span class="n">r</span><span class="p">[</span><span class="mi">40</span><span class="p">:</span><span class="mi">81</span><span class="p">],</span> <span class="n">az</span><span class="p">[</span><span class="mi">200</span><span class="p">:</span><span class="mi">251</span><span class="p">],</span>
+                            <span class="n">autoext</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                            <span class="n">fig</span><span class="o">=</span><span class="n">fig</span><span class="p">,</span> <span class="n">refrac</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">cg</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">caax</span> <span class="o">=</span> <span class="n">cgax</span><span class="o">.</span><span class="n">parasites</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Decorated Sector CG PPI&#39;</span><span class="p">)</span>
+<span class="n">t</span><span class="o">.</span><span class="n">set_y</span><span class="p">(</span><span class="mf">1.05</span><span class="p">)</span>
+<span class="n">cbar</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">pm</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mf">0.075</span><span class="p">)</span>
+<span class="n">caax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x_range [km]&#39;</span><span class="p">)</span>
+<span class="n">caax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;y_range [km]&#39;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.05</span><span class="p">,</span> <span class="s1">&#39;azimuth&#39;</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">caax</span><span class="o">.</span><span class="n">transAxes</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;bottom&#39;</span><span class="p">,</span>
+        <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">)</span>
+<span class="n">cbar</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="s1">&#39;reflectivity [dBZ]&#39;</span><span class="p">)</span>
+<span class="n">gh</span> <span class="o">=</span> <span class="n">cgax</span><span class="o">.</span><span class="n">get_grid_helper</span><span class="p">()</span>
+<span class="c1"># set azimuth resolution to 15deg</span>
+<span class="n">locs</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">359.</span><span class="p">,</span> <span class="mf">5.</span><span class="p">)]</span>
+<span class="n">gh</span><span class="o">.</span><span class="n">grid_finder</span><span class="o">.</span><span class="n">grid_locator1</span> <span class="o">=</span> <span class="n">FixedLocator</span><span class="p">(</span><span class="n">locs</span><span class="p">)</span>
+<span class="n">gh</span><span class="o">.</span><span class="n">grid_finder</span><span class="o">.</span><span class="n">tick_formatter1</span> <span class="o">=</span> <span class="n">DictFormatter</span><span class="p">(</span><span class="nb">dict</span><span class="p">([(</span><span class="n">i</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;${0:.0f}^\circ$&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">locs</span><span class="p">]))</span>
+<span class="n">gh</span><span class="o">.</span><span class="n">grid_finder</span><span class="o">.</span><span class="n">grid_locator2</span><span class="o">.</span><span class="n">_nbins</span> <span class="o">=</span> <span class="mi">30</span>
+<span class="n">gh</span><span class="o">.</span><span class="n">grid_finder</span><span class="o">.</span><span class="n">grid_locator2</span><span class="o">.</span><span class="n">_steps</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
+<span class="n">cgax</span><span class="o">.</span><span class="n">axis</span><span class="p">[</span><span class="s2">&quot;lat&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cgax</span><span class="o">.</span><span class="n">new_floating_axis</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">240</span><span class="p">)</span>
+<span class="n">cgax</span><span class="o">.</span><span class="n">axis</span><span class="p">[</span><span class="s2">&quot;lat&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">set_ticklabel_direction</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">)</span>
+<span class="n">cgax</span><span class="o">.</span><span class="n">axis</span><span class="p">[</span><span class="s2">&quot;lat&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="s2">&quot;range [km]&quot;</span><span class="p">)</span>
+<span class="n">cgax</span><span class="o">.</span><span class="n">axis</span><span class="p">[</span><span class="s2">&quot;lat&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">set_rotation</span><span class="p">(</span><span class="mi">180</span><span class="p">)</span>
+<span class="n">cgax</span><span class="o">.</span><span class="n">axis</span><span class="p">[</span><span class="s2">&quot;lat&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">set_pad</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_visualisation_wradlib_plot_curvelinear_grids_31_0.png" src="../../_images/notebooks_visualisation_wradlib_plot_curvelinear_grids_31_0.png" />
+</div>
+</div>
+<p>The use of <code class="docutils literal"><span class="pre">FixedLocator</span></code> and <code class="docutils literal"><span class="pre">DictFormatter</span></code> should be clear. The
+use of <code class="docutils literal"><span class="pre">_nbins</span></code> and <code class="docutils literal"><span class="pre">_steps</span></code> is a bit of head-twisting. With
+<code class="docutils literal"><span class="pre">_steps</span></code> you can set the possible divisions of the range. In
+connection with the <code class="docutils literal"><span class="pre">_nbins</span></code> the range grid is created depending on
+maximum range. In the above situation with <code class="docutils literal"><span class="pre">_nbins</span></code> set to 10 we get
+an range grid resolution of 25 (divider 2.5). When setting steps to 20
+we get a resolution of 15 (divider 1.5). Choosing 30 lead to resolution
+of 10 (divider 1/10). So it may be good to play around a bit, for wanted
+results.</p>
+<p>As you might have noticed the cartesian grid remained the same and the
+azimuth labels are bit overplottet. But matplotlib would be not
+matplotlib if there would be no solution. First we take care of the
+labeling. We push the title a bit higher to get space and toggle the
+<code class="docutils literal"><span class="pre">caax</span></code> labels to right and top:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">t</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Very Special Sector CG PPI&#39;</span><span class="p">)</span>
+<span class="n">t</span><span class="o">.</span><span class="n">set_y</span><span class="p">(</span><span class="mf">1.1</span><span class="p">)</span>
+<span class="n">caax</span><span class="o">.</span><span class="n">toggle_axisline</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Then we <strong>toggle</strong> “left” and “right” and “top” and “bottom” axis
+behaviour. We also have to put the colorbar a bit to the side and alter
+the location of the azimuth label. And, not to forgot to adapt the
+ticklabels of the cartesian axes. With little effort we got a better
+(IMHO) representation.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">cgax</span><span class="p">,</span> <span class="n">pm</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">vis</span><span class="o">.</span><span class="n">plot_ppi</span><span class="p">(</span><span class="n">ma</span><span class="p">[</span><span class="mi">200</span><span class="p">:</span><span class="mi">250</span><span class="p">,</span> <span class="mi">40</span><span class="p">:</span><span class="mi">80</span><span class="p">],</span>
+                            <span class="n">r</span><span class="p">[</span><span class="mi">40</span><span class="p">:</span><span class="mi">81</span><span class="p">],</span> <span class="n">az</span><span class="p">[</span><span class="mi">200</span><span class="p">:</span><span class="mi">251</span><span class="p">],</span>
+                            <span class="n">autoext</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                            <span class="n">fig</span><span class="o">=</span><span class="n">fig</span><span class="p">,</span> <span class="n">refrac</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                            <span class="n">cg</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">caax</span> <span class="o">=</span> <span class="n">cgax</span><span class="o">.</span><span class="n">parasites</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Very Special Sector CG PPI&#39;</span><span class="p">)</span>
+<span class="n">t</span><span class="o">.</span><span class="n">set_y</span><span class="p">(</span><span class="mf">1.1</span><span class="p">)</span>
+<span class="n">cbar</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">pm</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">caax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x_range [km]&#39;</span><span class="p">)</span>
+<span class="n">caax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;y_range [km]&#39;</span><span class="p">)</span>
+<span class="n">caax</span><span class="o">.</span><span class="n">toggle_axisline</span><span class="p">()</span>
+<span class="n">caax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">matplotlib.ticker</span> <span class="kn">import</span> <span class="n">MaxNLocator</span>
+<span class="n">caax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_locator</span><span class="p">(</span><span class="n">MaxNLocator</span><span class="p">(</span><span class="mi">15</span><span class="p">))</span>
+<span class="n">caax</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_major_locator</span><span class="p">(</span><span class="n">MaxNLocator</span><span class="p">(</span><span class="mi">15</span><span class="p">))</span>
+
+<span class="c1"># make ticklabels of left and bottom axis visible,</span>
+<span class="n">cgax</span><span class="o">.</span><span class="n">axis</span><span class="p">[</span><span class="s2">&quot;left&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">major_ticklabels</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">cgax</span><span class="o">.</span><span class="n">axis</span><span class="p">[</span><span class="s2">&quot;bottom&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">major_ticklabels</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">cgax</span><span class="o">.</span><span class="n">axis</span><span class="p">[</span><span class="s2">&quot;left&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get_helper</span><span class="p">()</span><span class="o">.</span><span class="n">nth_coord_ticks</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">cgax</span><span class="o">.</span><span class="n">axis</span><span class="p">[</span><span class="s2">&quot;bottom&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">get_helper</span><span class="p">()</span><span class="o">.</span><span class="n">nth_coord_ticks</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="c1"># and also set tickmarklength to zero for better presentation</span>
+<span class="n">cgax</span><span class="o">.</span><span class="n">axis</span><span class="p">[</span><span class="s2">&quot;right&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">major_ticks</span><span class="o">.</span><span class="n">set_ticksize</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">cgax</span><span class="o">.</span><span class="n">axis</span><span class="p">[</span><span class="s2">&quot;top&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">major_ticks</span><span class="o">.</span><span class="n">set_ticksize</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="c1"># make ticklabels of left and bottom axis unvisible,</span>
+<span class="c1"># because we are drawing them</span>
+<span class="n">cgax</span><span class="o">.</span><span class="n">axis</span><span class="p">[</span><span class="s2">&quot;right&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">major_ticklabels</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">cgax</span><span class="o">.</span><span class="n">axis</span><span class="p">[</span><span class="s2">&quot;top&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">major_ticklabels</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+<span class="c1"># and also set tickmarklength to zero for better presentation</span>
+<span class="n">cgax</span><span class="o">.</span><span class="n">axis</span><span class="p">[</span><span class="s2">&quot;right&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">major_ticks</span><span class="o">.</span><span class="n">set_ticksize</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">cgax</span><span class="o">.</span><span class="n">axis</span><span class="p">[</span><span class="s2">&quot;top&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">major_ticks</span><span class="o">.</span><span class="n">set_ticksize</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.025</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.065</span><span class="p">,</span> <span class="s1">&#39;azimuth&#39;</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">caax</span><span class="o">.</span><span class="n">transAxes</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;bottom&#39;</span><span class="p">,</span>
+        <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">)</span>
+<span class="n">cbar</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="s1">&#39;reflectivity [dBZ]&#39;</span><span class="p">)</span>
+<span class="n">gh</span> <span class="o">=</span> <span class="n">cgax</span><span class="o">.</span><span class="n">get_grid_helper</span><span class="p">()</span>
+<span class="c1"># set azimuth resolution to 5deg</span>
+<span class="n">locs</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">359.</span><span class="p">,</span> <span class="mf">5.</span><span class="p">)]</span>
+<span class="n">gh</span><span class="o">.</span><span class="n">grid_finder</span><span class="o">.</span><span class="n">grid_locator1</span> <span class="o">=</span> <span class="n">FixedLocator</span><span class="p">(</span><span class="n">locs</span><span class="p">)</span>
+<span class="n">gh</span><span class="o">.</span><span class="n">grid_finder</span><span class="o">.</span><span class="n">tick_formatter1</span> <span class="o">=</span> <span class="n">DictFormatter</span><span class="p">(</span><span class="nb">dict</span><span class="p">([(</span><span class="n">i</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;${0:.0f}^\circ$&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">locs</span><span class="p">]))</span>
+<span class="c1">#gh.grid_finder.grid_locator1 = FixedLocator([i for i in np.arange(0, 359, 5, dtype=np.int32)])</span>
+<span class="c1">#gh.grid_finder.grid_locator1 = LocatorDMS(15)</span>
+<span class="n">gh</span><span class="o">.</span><span class="n">grid_finder</span><span class="o">.</span><span class="n">grid_locator2</span><span class="o">.</span><span class="n">_nbins</span> <span class="o">=</span> <span class="mi">30</span>
+<span class="n">gh</span><span class="o">.</span><span class="n">grid_finder</span><span class="o">.</span><span class="n">grid_locator2</span><span class="o">.</span><span class="n">_steps</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
+<span class="n">cgax</span><span class="o">.</span><span class="n">axis</span><span class="p">[</span><span class="s2">&quot;lat&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cgax</span><span class="o">.</span><span class="n">new_floating_axis</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">240</span><span class="p">)</span>
+<span class="n">cgax</span><span class="o">.</span><span class="n">axis</span><span class="p">[</span><span class="s2">&quot;lat&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">set_ticklabel_direction</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">)</span>
+<span class="n">cgax</span><span class="o">.</span><span class="n">axis</span><span class="p">[</span><span class="s2">&quot;lat&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="s2">&quot;range [km]&quot;</span><span class="p">)</span>
+<span class="n">cgax</span><span class="o">.</span><span class="n">axis</span><span class="p">[</span><span class="s2">&quot;lat&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">set_rotation</span><span class="p">(</span><span class="mi">180</span><span class="p">)</span>
+<span class="n">cgax</span><span class="o">.</span><span class="n">axis</span><span class="p">[</span><span class="s2">&quot;lat&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">set_pad</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_visualisation_wradlib_plot_curvelinear_grids_34_0.png" src="../../_images/notebooks_visualisation_wradlib_plot_curvelinear_grids_34_0.png" />
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="Plot-CG-RHI">
+<h2>Plot CG RHI<a class="headerlink" href="#Plot-CG-RHI" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/generated/wradlib.vis.plot_rhi.html">wradlib.vis.plot_rhi()</a>
+is used in this section. An CG RHI plot is a little different compared
+to an CG PPI plot. I covers only one quadrant and the data is plottet
+counterclockwise from “east” (3 o’clock) to “north” (12 o’clock).</p>
+<p>Everything else is much the same and you can do whatever you want as
+shown in the section <a class="reference external" href="#Plot-CG-PPI">Plot CG PPI</a>.</p>
+<p>So just a quick example of an cg rhi plot with some decorations. Note,
+the <code class="docutils literal"><span class="pre">grid_locator1</span></code> for the theta angles is overwritten and now the
+grid is much finer.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">mpl_toolkits.axisartist.grid_finder</span> <span class="kn">import</span> <span class="n">FixedLocator</span><span class="p">,</span> <span class="n">DictFormatter</span>
+<span class="c1"># reading in GAMIC hdf5 file</span>
+<span class="n">filename</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">get_wradlib_data_file</span><span class="p">(</span><span class="s1">&#39;hdf5/2014-06-09--185000.rhi.mvol&#39;</span><span class="p">)</span>
+<span class="n">data</span><span class="p">,</span> <span class="n">metadata</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_GAMIC_hdf5</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;SCAN0&#39;</span><span class="p">][</span><span class="s1">&#39;ZH&#39;</span><span class="p">][</span><span class="s1">&#39;data&#39;</span><span class="p">]</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;SCAN0&#39;</span><span class="p">][</span><span class="s1">&#39;r&#39;</span><span class="p">]</span>
+<span class="n">th</span> <span class="o">=</span> <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;SCAN0&#39;</span><span class="p">][</span><span class="s1">&#39;el&#39;</span><span class="p">]</span>
+<span class="c1"># mask data array for better presentation</span>
+<span class="n">mask_ind</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data</span> <span class="o">&lt;=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmin</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+<span class="n">data</span><span class="p">[</span><span class="n">mask_ind</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+<span class="n">ma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+<span class="c1">#----------------------------------------------------------------</span>
+<span class="c1"># the simplest call, plot cg rhi in new window</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">cgax</span><span class="p">,</span> <span class="n">pm</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">vis</span><span class="o">.</span><span class="n">plot_rhi</span><span class="p">(</span><span class="n">ma</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="n">r</span><span class="p">,</span> <span class="n">th</span><span class="o">=</span><span class="n">th</span><span class="p">,</span> <span class="n">rf</span><span class="o">=</span><span class="mf">1e3</span><span class="p">,</span> <span class="n">refrac</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                            <span class="n">fig</span><span class="o">=</span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="mi">111</span><span class="p">,</span> <span class="n">cg</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">caax</span> <span class="o">=</span> <span class="n">cgax</span><span class="o">.</span><span class="n">parasites</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Decorated CG RHI&#39;</span><span class="p">)</span>
+<span class="n">t</span><span class="o">.</span><span class="n">set_y</span><span class="p">(</span><span class="mf">1.05</span><span class="p">)</span>
+<span class="n">cgax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">cbar</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">pm</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
+<span class="n">cbar</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="s1">&#39;reflectivity [dBZ]&#39;</span><span class="p">)</span>
+<span class="n">caax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x_range [km]&#39;</span><span class="p">)</span>
+<span class="n">caax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;y_range [km]&#39;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.05</span><span class="p">,</span> <span class="s1">&#39;azimuth&#39;</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">caax</span><span class="o">.</span><span class="n">transAxes</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;bottom&#39;</span><span class="p">,</span>
+        <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">)</span>
+<span class="n">gh</span> <span class="o">=</span> <span class="n">cgax</span><span class="o">.</span><span class="n">get_grid_helper</span><span class="p">()</span>
+<span class="c1"># set theta to some nice values</span>
+<span class="c1">#gh.grid_finder.grid_locator1 = FixedLocator([i for i in np.arange(0, 359, 5)])</span>
+<span class="n">locs</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">,</span> <span class="mf">3.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">,</span> <span class="mf">5.</span><span class="p">,</span> <span class="mf">6.</span><span class="p">,</span> <span class="mf">7.</span><span class="p">,</span> <span class="mf">8.</span><span class="p">,</span> <span class="mf">9.</span><span class="p">,</span> <span class="mf">10.</span><span class="p">,</span> <span class="mf">11.</span><span class="p">,</span> <span class="mf">12.</span><span class="p">,</span> <span class="mf">13.</span><span class="p">,</span> <span class="mf">14.</span><span class="p">,</span>
+                <span class="mf">15.</span><span class="p">,</span> <span class="mf">16.</span><span class="p">,</span> <span class="mf">17.</span><span class="p">,</span> <span class="mf">18.</span><span class="p">,</span> <span class="mf">20.</span><span class="p">,</span> <span class="mf">22.</span><span class="p">,</span> <span class="mf">25.</span><span class="p">,</span> <span class="mf">30.</span><span class="p">,</span> <span class="mf">35.</span><span class="p">,</span>  <span class="mf">40.</span><span class="p">,</span> <span class="mf">50.</span><span class="p">,</span> <span class="mf">60.</span><span class="p">,</span> <span class="mf">70.</span><span class="p">,</span> <span class="mf">80.</span><span class="p">,</span> <span class="mf">90.</span><span class="p">]</span>
+<span class="n">gh</span><span class="o">.</span><span class="n">grid_finder</span><span class="o">.</span><span class="n">grid_locator1</span> <span class="o">=</span> <span class="n">FixedLocator</span><span class="p">(</span><span class="n">locs</span><span class="p">)</span>
+<span class="n">gh</span><span class="o">.</span><span class="n">grid_finder</span><span class="o">.</span><span class="n">tick_formatter1</span> <span class="o">=</span> <span class="n">DictFormatter</span><span class="p">(</span><span class="nb">dict</span><span class="p">([(</span><span class="n">i</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;${0:.0f}^\circ$&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">locs</span><span class="p">]))</span>
+
+<span class="c1"># set starting value of range grid</span>
+<span class="n">gh</span><span class="o">.</span><span class="n">grid_finder</span><span class="o">.</span><span class="n">extreme_finder</span><span class="o">.</span><span class="n">lat_minmax</span> <span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_visualisation_wradlib_plot_curvelinear_grids_37_0.png" src="../../_images/notebooks_visualisation_wradlib_plot_curvelinear_grids_37_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="Plotting-on-Grids">
+<h2>Plotting on Grids<a class="headerlink" href="#Plotting-on-Grids" title="Permalink to this headline">¶</a></h2>
+<p>There are serveral possibilities to plot multiple cg plots in one
+figure. Since both plotting routines are equipped with the same
+mechanisms it is concentrated mostly on <strong>RHI</strong> plots.</p>
+<div class="admonition note">
+<p class="first fa fa-exclamation-circle"><strong>Note</strong></p>
+<p class="last">Using the :func:<code class="docutils literal"><span class="pre">tight_layout</span></code> and :func:<code class="docutils literal"><span class="pre">subplots_adjust</span></code> functions
+most alignment problems can be avoided.</p>
+</div>
+<ul class="simple">
+<li><a class="reference external" href="#The-Built-In-Method">The Built-In Method</a></li>
+<li><a class="reference external" href="#The-GridSpec-Method">The GridSpec Method</a></li>
+<li><a class="reference external" href="#The-AxesDivider-Method">The AxesDivider Method</a></li>
+</ul>
+<div class="section" id="The-Built-In-Method">
+<h3>The Built-In Method<a class="headerlink" href="#The-Built-In-Method" title="Permalink to this headline">¶</a></h3>
+<p>Using the matplotlib grid definition for the parameter <code class="docutils literal"><span class="pre">subplot</span></code>, we
+can easily plot two or more plots in one figure on a regular grid:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="c1"># mask data array for better presentation</span>
+<span class="n">mask_ind</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data</span> <span class="o">&lt;=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmin</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+<span class="n">data</span><span class="p">[</span><span class="n">mask_ind</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+<span class="n">ma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+<span class="n">subplots</span> <span class="o">=</span> <span class="p">[</span><span class="mi">221</span><span class="p">,</span> <span class="mi">222</span><span class="p">,</span> <span class="mi">223</span><span class="p">,</span> <span class="mi">224</span><span class="p">]</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">sp</span> <span class="ow">in</span> <span class="n">subplots</span><span class="p">:</span>
+    <span class="n">cgax</span><span class="p">,</span> <span class="n">pm</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">vis</span><span class="o">.</span><span class="n">plot_rhi</span><span class="p">(</span><span class="n">ma</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">th</span><span class="p">,</span> <span class="n">rf</span><span class="o">=</span><span class="mf">1e3</span><span class="p">,</span> <span class="n">autoext</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                                <span class="n">refrac</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">sp</span><span class="p">,</span> <span class="n">cg</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">caax</span><span class="o">.</span><span class="n">parasites</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;CG RHI #</span><span class="si">%(sp)d</span><span class="s1">&#39;</span> <span class="o">%</span><span class="k">locals</span>())
+    <span class="n">t</span><span class="o">.</span><span class="n">set_y</span><span class="p">(</span><span class="mf">1.1</span><span class="p">)</span>
+    <span class="n">cgax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span>
+    <span class="n">cbar</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">pm</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mf">0.125</span><span class="p">)</span>
+    <span class="n">caax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;range [km]&#39;</span><span class="p">)</span>
+    <span class="n">caax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;height [km]&#39;</span><span class="p">)</span>
+    <span class="n">gh</span> <span class="o">=</span> <span class="n">cgax</span><span class="o">.</span><span class="n">get_grid_helper</span><span class="p">()</span>
+    <span class="c1"># set theta to some nice values</span>
+    <span class="n">locs</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">5.</span><span class="p">,</span> <span class="mf">10.</span><span class="p">,</span> <span class="mf">15.</span><span class="p">,</span> <span class="mf">20.</span><span class="p">,</span> <span class="mf">30.</span><span class="p">,</span> <span class="mf">40.</span><span class="p">,</span> <span class="mf">60.</span><span class="p">,</span> <span class="mf">90.</span><span class="p">]</span>
+    <span class="n">gh</span><span class="o">.</span><span class="n">grid_finder</span><span class="o">.</span><span class="n">grid_locator1</span> <span class="o">=</span> <span class="n">FixedLocator</span><span class="p">(</span><span class="n">locs</span><span class="p">)</span>
+    <span class="n">gh</span><span class="o">.</span><span class="n">grid_finder</span><span class="o">.</span><span class="n">tick_formatter1</span> <span class="o">=</span> <span class="n">DictFormatter</span><span class="p">(</span><span class="nb">dict</span><span class="p">([(</span><span class="n">i</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;${0:.0f}^\circ$&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">locs</span><span class="p">]))</span>
+    <span class="n">cbar</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="s1">&#39;reflectivity [dBZ]&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_visualisation_wradlib_plot_curvelinear_grids_44_0.png" src="../../_images/notebooks_visualisation_wradlib_plot_curvelinear_grids_44_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="The-GridSpec-Method">
+<h3>The GridSpec Method<a class="headerlink" href="#The-GridSpec-Method" title="Permalink to this headline">¶</a></h3>
+<p>Here the abilities of <a class="reference external" href="http://matplotlib.org/users/gridspec.html">Matplotlib
+GridSpec</a> are used. Now we
+can also plot on irregular grids. Just create your grid and take the
+GridSpec object as an input to the parameter <code class="docutils literal"><span class="pre">subplot</span></code> as follows
+(some padding has to be adjusted to get a nice plot):</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">matplotlib.gridspec</span> <span class="kn">as</span> <span class="nn">gridspec</span>
+<span class="n">gs</span> <span class="o">=</span> <span class="n">gridspec</span><span class="o">.</span><span class="n">GridSpec</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">subplots</span> <span class="o">=</span> <span class="p">[</span><span class="n">gs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:],</span> <span class="n">gs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">gs</span><span class="p">[</span><span class="mi">1</span><span class="p">:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">gs</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">gs</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">]]</span>
+<span class="n">cbarpad</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.075</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">]</span>
+<span class="n">labelpad</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.25</span><span class="p">,</span> <span class="mf">1.25</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span> <span class="mf">1.25</span><span class="p">,</span> <span class="mf">1.25</span><span class="p">]</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">sp</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">subplots</span><span class="p">):</span>
+    <span class="n">cgax</span><span class="p">,</span> <span class="n">pm</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">vis</span><span class="o">.</span><span class="n">plot_rhi</span><span class="p">(</span><span class="n">ma</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">th</span><span class="p">,</span> <span class="n">rf</span><span class="o">=</span><span class="mf">1e3</span><span class="p">,</span> <span class="n">autoext</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                                <span class="n">refrac</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">sp</span><span class="p">,</span> <span class="n">cg</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">caax</span> <span class="o">=</span> <span class="n">cgax</span><span class="o">.</span><span class="n">parasites</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;CG RHI #</span><span class="si">%(i)d</span><span class="s1">&#39;</span> <span class="o">%</span><span class="k">locals</span>())
+    <span class="n">t</span><span class="o">.</span><span class="n">set_y</span><span class="p">(</span><span class="n">labelpad</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">cgax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span>
+    <span class="n">cbar</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">pm</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="n">cbarpad</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">caax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;range [km]&#39;</span><span class="p">)</span>
+    <span class="n">caax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;height [km]&#39;</span><span class="p">)</span>
+    <span class="n">gh</span> <span class="o">=</span> <span class="n">cgax</span><span class="o">.</span><span class="n">get_grid_helper</span><span class="p">()</span>
+    <span class="c1"># set theta to some nice values</span>
+    <span class="n">locs</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">5.</span><span class="p">,</span> <span class="mf">10.</span><span class="p">,</span> <span class="mf">15.</span><span class="p">,</span> <span class="mf">20.</span><span class="p">,</span> <span class="mf">30.</span><span class="p">,</span> <span class="mf">40.</span><span class="p">,</span> <span class="mf">60.</span><span class="p">,</span> <span class="mf">90.</span><span class="p">]</span>
+    <span class="n">gh</span><span class="o">.</span><span class="n">grid_finder</span><span class="o">.</span><span class="n">grid_locator1</span> <span class="o">=</span> <span class="n">FixedLocator</span><span class="p">(</span><span class="n">locs</span><span class="p">)</span>
+    <span class="n">gh</span><span class="o">.</span><span class="n">grid_finder</span><span class="o">.</span><span class="n">tick_formatter1</span> <span class="o">=</span> <span class="n">DictFormatter</span><span class="p">(</span><span class="nb">dict</span><span class="p">([(</span><span class="n">i</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;${0:.0f}^\circ$&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">locs</span><span class="p">]))</span>
+    <span class="n">cbar</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="s1">&#39;reflectivity [dBZ]&#39;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_visualisation_wradlib_plot_curvelinear_grids_47_0.png" src="../../_images/notebooks_visualisation_wradlib_plot_curvelinear_grids_47_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="The-AxesDivider-Method">
+<h3>The AxesDivider Method<a class="headerlink" href="#The-AxesDivider-Method" title="Permalink to this headline">¶</a></h3>
+<p>Here the capabilities of <a class="reference external" href="http://matplotlib.org/mpl_toolkits/axes_grid/users/overview.html#axes-grid1">Matplotlib
+AxesGrid1</a>
+are used.</p>
+<p>We make a <strong>PPI</strong> now, it matches much better. Just plot your <strong>PPI</strong>
+data and create an axes divider:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mpl_toolkits.axes_grid1</span> <span class="kn">import</span> <span class="n">make_axes_locatable</span>
+<span class="kn">from</span> <span class="nn">matplotlib.ticker</span> <span class="kn">import</span> <span class="n">NullFormatter</span><span class="p">,</span> <span class="n">FuncFormatter</span><span class="p">,</span> <span class="n">MaxNLocator</span>
+<span class="n">divider</span> <span class="o">=</span> <span class="n">make_axes_locatable</span><span class="p">(</span><span class="n">cgax</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Now you can easily append more axes to plot some other things, eg a
+maximum intensity projection:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">axMipX</span> <span class="o">=</span> <span class="n">divider</span><span class="o">.</span><span class="n">append_axes</span><span class="p">(</span><span class="s2">&quot;top&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mf">1.2</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">sharex</span><span class="o">=</span><span class="n">cgax</span><span class="p">))</span>
+<span class="n">axMipY</span> <span class="o">=</span> <span class="n">divider</span><span class="o">.</span><span class="n">append_axes</span><span class="p">(</span><span class="s2">&quot;right&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mf">1.2</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="n">cgax</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>OK, we have to create the mip data, we use the
+<a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/generated/wradlib.util.maximum_intensity_projection.html">wradlib.util.maximum_intensity_projection()</a>:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="c1"># angle of *cut* through ppi and scan elev.</span>
+<span class="n">angle</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="n">elev</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+<span class="n">filename</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">get_wradlib_data_file</span><span class="p">(</span><span class="s1">&#39;misc/polar_dBZ_tur.gz&#39;</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+<span class="c1"># we need to have meter here for the georef function inside mip</span>
+<span class="n">d1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1000</span>
+<span class="n">d2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="p">(</span><span class="n">d2</span> <span class="o">&gt;=</span> <span class="n">angle</span><span class="p">)</span><span class="o">.</span><span class="n">nonzero</span><span class="p">()[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># calculate max intensity proj</span>
+<span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="n">mip1</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">maximum_intensity_projection</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="n">d1</span><span class="p">,</span> <span class="n">az</span><span class="o">=</span><span class="n">d2</span><span class="p">,</span> <span class="n">angle</span><span class="o">=</span><span class="n">angle</span><span class="p">,</span> <span class="n">elev</span><span class="o">=</span><span class="n">elev</span><span class="p">)</span>
+<span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="n">mip2</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">maximum_intensity_projection</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="n">d1</span><span class="p">,</span> <span class="n">az</span><span class="o">=</span><span class="n">d2</span><span class="p">,</span> <span class="n">angle</span><span class="o">=</span><span class="mi">90</span><span class="o">+</span><span class="n">angle</span><span class="p">,</span> <span class="n">elev</span><span class="o">=</span><span class="n">elev</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>We also need a new formatter:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">mip_formatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">/</span> <span class="mf">1000.</span>
+    <span class="n">fmt_str</span> <span class="o">=</span> <span class="s1">&#39;{:g}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">fmt_str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;0&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">fmt_str</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">mpl_toolkits.axes_grid1</span> <span class="kn">import</span> <span class="n">make_axes_locatable</span>
+<span class="kn">from</span> <span class="nn">matplotlib.ticker</span> <span class="kn">import</span> <span class="n">NullFormatter</span><span class="p">,</span> <span class="n">FuncFormatter</span><span class="p">,</span> <span class="n">MaxNLocator</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="c1"># normal cg plot</span>
+<span class="n">cgax</span><span class="p">,</span> <span class="n">pm</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">vis</span><span class="o">.</span><span class="n">plot_ppi</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="n">d1</span><span class="p">,</span> <span class="n">az</span><span class="o">=</span><span class="n">d2</span><span class="p">,</span> <span class="n">refrac</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">fig</span><span class="o">=</span><span class="n">fig</span><span class="p">,</span> <span class="n">cg</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">caax</span> <span class="o">=</span> <span class="n">cgax</span><span class="o">.</span><span class="n">parasites</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">cgax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">d1</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">d1</span><span class="p">))</span>
+<span class="n">cgax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">d1</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">d1</span><span class="p">))</span>
+<span class="n">caax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">FuncFormatter</span><span class="p">(</span><span class="n">mip_formatter</span><span class="p">))</span>
+<span class="n">caax</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">FuncFormatter</span><span class="p">(</span><span class="n">mip_formatter</span><span class="p">))</span>
+<span class="n">caax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x_range [km]&#39;</span><span class="p">)</span>
+<span class="n">caax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;y_range [km]&#39;</span><span class="p">)</span>
+
+<span class="c1"># axes divider section</span>
+<span class="n">divider</span> <span class="o">=</span> <span class="n">make_axes_locatable</span><span class="p">(</span><span class="n">cgax</span><span class="p">)</span>
+<span class="n">axMipX</span> <span class="o">=</span> <span class="n">divider</span><span class="o">.</span><span class="n">append_axes</span><span class="p">(</span><span class="s2">&quot;top&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mf">1.2</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">sharex</span><span class="o">=</span><span class="n">cgax</span><span class="p">)</span>
+<span class="n">axMipY</span> <span class="o">=</span> <span class="n">divider</span><span class="o">.</span><span class="n">append_axes</span><span class="p">(</span><span class="s2">&quot;right&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mf">1.2</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="n">cgax</span><span class="p">)</span>
+
+<span class="c1"># special handling for labels etc.</span>
+<span class="n">cgax</span><span class="o">.</span><span class="n">axis</span><span class="p">[</span><span class="s2">&quot;right&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">major_ticklabels</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">cgax</span><span class="o">.</span><span class="n">axis</span><span class="p">[</span><span class="s2">&quot;top&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">major_ticklabels</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">axMipX</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">NullFormatter</span><span class="p">())</span>
+<span class="n">axMipX</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">FuncFormatter</span><span class="p">(</span><span class="n">mip_formatter</span><span class="p">))</span>
+<span class="n">axMipX</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_major_locator</span><span class="p">(</span><span class="n">MaxNLocator</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">axMipY</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">NullFormatter</span><span class="p">())</span>
+<span class="n">axMipY</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">FuncFormatter</span><span class="p">(</span><span class="n">mip_formatter</span><span class="p">))</span>
+<span class="n">axMipY</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_locator</span><span class="p">(</span><span class="n">MaxNLocator</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+
+<span class="c1"># plot max intensity proj</span>
+<span class="n">ma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">mip1</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">mip1</span><span class="p">))</span>
+<span class="n">axMipX</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="n">ma</span><span class="p">)</span>
+<span class="n">ma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">mip2</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">mip2</span><span class="p">))</span>
+<span class="n">axMipY</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">ys</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">xs</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">ma</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+
+<span class="c1"># set labels, limits etc</span>
+<span class="n">axMipX</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">d1</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">d1</span><span class="p">))</span>
+<span class="n">axMipX</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">wrl</span><span class="o">.</span><span class="n">georef</span><span class="o">.</span><span class="n">beam_height_n</span><span class="p">(</span><span class="n">d1</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">],</span> <span class="n">elev</span><span class="p">))</span>
+<span class="n">axMipY</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">wrl</span><span class="o">.</span><span class="n">georef</span><span class="o">.</span><span class="n">beam_height_n</span><span class="p">(</span><span class="n">d1</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">],</span> <span class="n">elev</span><span class="p">))</span>
+<span class="n">axMipY</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">d1</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">d1</span><span class="p">))</span>
+<span class="n">axMipX</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;height [km]&#39;</span><span class="p">)</span>
+<span class="n">axMipY</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;height [km]&#39;</span><span class="p">)</span>
+<span class="n">axMipX</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">axMipY</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">&#39;AxesDivider CG-MIP Example&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_visualisation_wradlib_plot_curvelinear_grids_54_0.png" src="../../_images/notebooks_visualisation_wradlib_plot_curvelinear_grids_54_0.png" />
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../fileio.html" class="btn btn-neutral float-right" title="Data Input - Data Output" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="wradlib_plot_ppi_example.html" class="btn btn-neutral" title="A simple function to plot polar data in cartesian coordinate systems" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2011-2016, wradlib developers.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.11.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

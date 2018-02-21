@@ -1,0 +1,942 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Attenuation correction &mdash; wradlib</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/wradlib.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="wradlib" href="../../index.html"/>
+        <link rel="up" title="Tutorials and Examples" href="../../notebooks.html"/>
+        <link rel="next" title="Beam Blockage Calculation using a DEM" href="../beamblockage/wradlib_beamblock.html"/>
+        <link rel="prev" title="Export a dataset in GIS-compatible format" href="../fileio/wradlib_gis_export_example.html"/>
+    
+    <link href="../../_static/wradlib.css" rel="stylesheet" type="text/css">
+
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+  <a href="../../index.html" class="icon icon-home"> wradlib
+
+
+
+</a>
+
+
+
+  <div class="version">
+    
+    <button class="verbtn">0.11.1</button>
+    <div class="version-content">
+      
+        <a href="../latest/">latest</a>
+        <a href="../0.11.1/">0.11.1</a>
+    </div>
+  </div>
+
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../gettingstarted.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../notebooks.html">Tutorials and Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../jupyter.html">How to use the tutorials and examples?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../learnpython.html">An incomplete introduction to Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics.html">Getting started with wradlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../fileio.html">Data Input - Data Output</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Attenuation correction</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Introduction">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#The-Example-Event:-June-2nd,-2008,-SW-Germany">The Example Event: June 2nd, 2008, SW-Germany</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Examining-different-attenuation-correction-procedures">Examining different attenuation correction procedures</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Hitschfeld-and-Bordan-(1954):-Unconstrained-gate-by-gate-retrieval">Hitschfeld and Bordan (1954): Unconstrained gate-by-gate retrieval</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Harrison-et-al.-(2000):-Cap-PIA-at-a-factor-of-two">Harrison et al. (2000): Cap PIA at a factor of two</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Kraemer-et-al.-(2008):-Iterative-estimation-of-A(Z)-relationsip">Kraemer et al. (2008): Iterative estimation of A(Z) relationsip</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Generalised-Kraemer-procedure:-adding-additional-constraints">Generalised Kraemer procedure: adding additional constraints</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#Comparison-of-all-Methods">Comparison of all Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../beamblockage/wradlib_beamblock.html">Beam Blockage Calculation using a DEM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../classify.html">Clutter and Echo Classification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../georeferencing.html">Georeferencing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../match3d/wradlib_match_workflow.html">Match spaceborn PR (GPM/TRMM) with ground radars</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../develop.html">For Developers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interpolation/wradlib_ipol_example.html">How to use wradlib’s ipol module for interpolation tasks?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../multisensor/wradlib_adjust_example.html">Adjusting radar-base rainfall estimates by rain gauge observations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../verification/wradlib_verify_example.html">Routine verification measures for radar-based precipitation estimates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../recipes.html">Recipes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../radolan.html">RADOLAN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zonalstats/wradlib_zonalstats_classes.html">Zonal Statistics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference.html">Library Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev_setup.html">For Developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zreferences.html">Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../release_notes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">wradlib</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../notebooks.html">Tutorials and Examples</a> &raquo;</li>
+        
+      <li>Attenuation correction</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/notebooks/attenuation/wradlib_attenuation.ipynb.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #303F9F;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #D84315;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 8ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+/* nice headers on first paragraph of info/warning boxes */
+.admonition .first {
+    margin: -12px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1;
+    display: block;
+}
+.admonition.warning .first {
+    background: #f0b37e;
+}
+.admonition.note .first {
+    background: #6ab0de;
+}
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="Attenuation-correction">
+<h1>Attenuation correction<a class="headerlink" href="#Attenuation-correction" title="Permalink to this headline">¶</a></h1>
+<p>In this example, we will compare different approaches to <strong>constrain the
+gate-by-gate retrieval</strong> of path-integrated attenuation.</p>
+<div class="section" id="Introduction">
+<h2>Introduction<a class="headerlink" href="#Introduction" title="Permalink to this headline">¶</a></h2>
+<p>Rainfall-induced attenuation is a major source of underestimation for
+radar-based precipitation estimation at C-band and X-band. Unconstrained
+forward gate-by-gate correction is known to be inherently unstable and
+thus not suited for unsupervised quality control procedures. Ideally,
+reference measurements (e.g.&nbsp;from microwave links) should be used to
+constrain gate-by-gate procedures. However, such attenuation references
+are usually not available. <span class="math">\(\omega radlib\)</span> provides a pragmatic
+approach to constrain gate-by-gate correction procedures, inspired by
+the work of <a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/zreferences.html#kraemer2008">Kraemer et al.,
+2008</a>.
+It turned out that these procedures can effectively reduce the error
+introduced by attenuation, and, at the same time, minimize instability
+issues <a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/zreferences.html#jacobi2015">(Jacobi et al.,
+2016)</a>.</p>
+</div>
+<div class="section" id="The-Example-Event:-June-2nd,-2008,-SW-Germany">
+<h2>The Example Event: June 2nd, 2008, SW-Germany<a class="headerlink" href="#The-Example-Event:-June-2nd,-2008,-SW-Germany" title="Permalink to this headline">¶</a></h2>
+<p>Let’s have a look at the situation in South-West Germany on June 2nd,
+2008, at 16:55 UTC, as observed by the DWD C-band radar on mount
+Feldberg.</p>
+<p>The data can be read by the following lines and then visualized by
+<a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/generated/wradlib.vis.plot_ppi.html">wradlib.vis.plot_ppi()</a>:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="n">fpath</span> <span class="o">=</span> <span class="s1">&#39;dx/raa00-dx_10908-0806021655-fbg---bin.gz&#39;</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">get_wradlib_data_file</span><span class="p">(</span><span class="n">fpath</span><span class="p">)</span>
+<span class="n">data</span><span class="p">,</span> <span class="n">attrs</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">readDX</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="n">pl</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">ax</span><span class="p">,</span> <span class="n">cf</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">vis</span><span class="o">.</span><span class="n">plot_ppi</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;spectral&quot;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Easting from radar (km)&quot;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Northing from radar (km)&quot;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Radar Feldberg, 2008-06-02 16:55 UTC&quot;</span><span class="p">)</span>
+<span class="n">cb</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">cf</span><span class="p">,</span> <span class="n">shrink</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="n">cb</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="s2">&quot;dBZ&quot;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mf">105.6</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mf">73.4</span><span class="p">],</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">128</span><span class="p">,</span><span class="mi">128</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">128</span><span class="p">,</span><span class="mi">128</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;grey&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>&lt;matplotlib.figure.Figure at 0x7fc5774cb1d0&gt;
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_attenuation_wradlib_attenuation_9_1.png" src="../../_images/notebooks_attenuation_wradlib_attenuation_9_1.png" />
+</div>
+</div>
+<p>We see a set of convective cells with high rainfall intensity in the
+NE-sector of the Feldberg radar. Let us examine the reflectivity profile
+along <strong>three beams which at azimuths 53-55 degree</strong> (as marked by the
+white line in the PPI above).</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="c1"># just a little helper function</span>
+<span class="k">def</span> <span class="nf">plot_beams</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">mybeams</span><span class="p">,</span> <span class="n">sub</span><span class="o">=</span><span class="mi">111</span><span class="p">):</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">sub</span><span class="p">)</span>
+    <span class="n">labelsize</span><span class="o">=</span><span class="mi">13</span>
+    <span class="k">for</span> <span class="n">beam</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">mybeams</span><span class="o">.</span><span class="n">start</span><span class="p">,</span> <span class="n">mybeams</span><span class="o">.</span><span class="n">stop</span><span class="p">):</span>
+        <span class="n">pl</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">beam</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;{0} deg&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">beam</span><span class="p">))</span>
+    <span class="n">pl</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+    <span class="n">pl</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.99</span><span class="p">,</span> <span class="mf">0.88</span><span class="p">,</span> <span class="s2">&quot;Reflectivity along beams&quot;</span><span class="p">,</span>
+            <span class="n">horizontalalignment</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">,</span>
+            <span class="n">transform</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">transAxes</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="s2">&quot;large&quot;</span><span class="p">)</span>
+    <span class="n">pl</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;range (km)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="s2">&quot;large&quot;</span><span class="p">)</span>
+    <span class="n">pl</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Reflectivity (dBZ)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="s2">&quot;large&quot;</span><span class="p">)</span>
+    <span class="n">pl</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper left&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="n">labelsize</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="n">labelsize</span><span class="p">)</span>
+    <span class="n">pl</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">128</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="n">mybeams</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="mi">53</span><span class="p">,</span><span class="mi">56</span><span class="p">)</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">plot_beams</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">mybeams</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_attenuation_wradlib_attenuation_12_0.png" src="../../_images/notebooks_attenuation_wradlib_attenuation_12_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="Examining-different-attenuation-correction-procedures">
+<h2>Examining different attenuation correction procedures<a class="headerlink" href="#Examining-different-attenuation-correction-procedures" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="Hitschfeld-and-Bordan-(1954):-Unconstrained-gate-by-gate-retrieval">
+<h3>Hitschfeld and Bordan (1954): Unconstrained gate-by-gate retrieval<a class="headerlink" href="#Hitschfeld-and-Bordan-(1954):-Unconstrained-gate-by-gate-retrieval" title="Permalink to this headline">¶</a></h3>
+<p>First, we examine the behaviour of the “classical” unconstrained forward
+correction which is typically referred to <a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/zreferences.html#hitschfeld1954">Hitschfeld et al.,
+1954)</a>,
+although Hitschfeld and Bordan themselves rejected this approach. The
+Path Integrated Attenuation (PIA) according to this approach can be
+obtained as follows:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="n">pia_hibo</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">atten</span><span class="o">.</span><span class="n">correctAttenuationHB</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">,</span>
+    <span class="n">coefficients</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="mf">8.e-5</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mf">0.731</span><span class="p">,</span> <span class="n">gate_length</span><span class="o">=</span><span class="mf">1.0</span><span class="p">),</span>
+    <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;warn&quot;</span><span class="p">,</span>
+    <span class="n">thrs</span><span class="o">=</span><span class="mf">59.</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="stderr output_area docutils container">
+<div class="highlight"><pre>
+WARNING:attcorr:corrected signal over threshold (59.0)
+WARNING:attcorr:corrected signal over threshold (59.0)
+WARNING:attcorr:corrected signal over threshold (59.0)
+WARNING:attcorr:corrected signal over threshold (59.0)
+WARNING:attcorr:corrected signal over threshold (59.0)
+WARNING:attcorr:corrected signal over threshold (59.0)
+WARNING:attcorr:corrected signal over threshold (59.0)
+WARNING:attcorr:corrected signal over threshold (59.0)
+WARNING:attcorr:corrected signal over threshold (59.0)
+WARNING:attcorr:corrected signal over threshold (59.0)
+WARNING:attcorr:corrected signal over threshold (59.0)
+WARNING:attcorr:corrected signal over threshold (59.0)
+WARNING:attcorr:corrected signal over threshold (59.0)
+WARNING:attcorr:corrected signal over threshold (59.0)
+WARNING:attcorr:corrected signal over threshold (59.0)
+WARNING:attcorr:corrected signal over threshold (59.0)
+WARNING:attcorr:corrected signal over threshold (59.0)
+WARNING:attcorr:corrected signal over threshold (59.0)
+WARNING:attcorr:corrected signal over threshold (59.0)
+WARNING:attcorr:corrected signal over threshold (59.0)
+WARNING:attcorr:corrected signal over threshold (59.0)
+WARNING:attcorr:corrected signal over threshold (59.0)
+WARNING:attcorr:corrected signal over threshold (59.0)
+WARNING:attcorr:corrected signal over threshold (59.0)
+WARNING:attcorr:corrected signal over threshold (59.0)
+WARNING:attcorr:corrected signal over threshold (59.0)
+WARNING:attcorr:corrected signal over threshold (59.0)
+WARNING:attcorr:corrected signal over threshold (59.0)
+WARNING:attcorr:corrected signal over threshold (59.0)
+WARNING:attcorr:corrected signal over threshold (59.0)
+WARNING:attcorr:corrected signal over threshold (59.0)
+WARNING:attcorr:corrected signal over threshold (59.0)
+WARNING:attcorr:corrected signal over threshold (59.0)
+WARNING:attcorr:corrected signal over threshold (59.0)
+WARNING:attcorr:corrected signal over threshold (59.0)
+WARNING:attcorr:corrected signal over threshold (59.0)
+WARNING:attcorr:corrected signal over threshold (59.0)
+WARNING:attcorr:corrected signal over threshold (59.0)
+WARNING:attcorr:corrected signal over threshold (59.0)
+WARNING:attcorr:corrected signal over threshold (59.0)
+WARNING:attcorr:corrected signal over threshold (59.0)
+WARNING:attcorr:corrected signal over threshold (59.0)
+WARNING:attcorr:corrected signal over threshold (59.0)
+WARNING:attcorr:corrected signal over threshold (59.0)
+WARNING:attcorr:corrected signal over threshold (59.0)
+WARNING:attcorr:corrected signal over threshold (59.0)
+WARNING:attcorr:corrected signal over threshold (59.0)
+WARNING:attcorr:corrected signal over threshold (59.0)
+WARNING:attcorr:corrected signal over threshold (59.0)
+WARNING:attcorr:corrected signal over threshold (59.0)
+WARNING:attcorr:corrected signal over threshold (59.0)
+WARNING:attcorr:corrected signal over threshold (59.0)
+WARNING:attcorr:corrected signal over threshold (59.0)
+WARNING:attcorr:corrected signal over threshold (59.0)
+</pre></div></div>
+</div>
+<p>In the coefficients dictionary, we can pass the power law parameters of
+the A(Z) relation as well as the gate length (in km). If we pass “warn”
+as the mode argument, we will obtain a warning log in case the corrected
+reflectivity exceeds the value of argument <code class="docutils literal"><span class="pre">thrs</span></code> (dBZ).</p>
+<p>Plotting the result below the reflectivity profile, we obtain the
+following figure.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="c1"># another little helper function</span>
+<span class="k">def</span> <span class="nf">plot_pia</span><span class="p">(</span><span class="n">pia</span><span class="p">,</span> <span class="n">sub</span><span class="o">=</span><span class="mi">111</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">sub</span><span class="p">)</span>
+    <span class="n">labelsize</span><span class="o">=</span><span class="mi">13</span>
+    <span class="n">pl</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">pia</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+    <span class="n">pl</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+    <span class="n">pl</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">30</span><span class="p">)</span>
+    <span class="n">pl</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;PIA (dB)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="s2">&quot;large&quot;</span><span class="p">)</span>
+    <span class="n">pl</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.88</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span>
+            <span class="n">transform</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">transAxes</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="s2">&quot;large&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="n">labelsize</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="n">labelsize</span><span class="p">)</span>
+    <span class="n">pl</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">128</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">plot_beams</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">mybeams</span><span class="p">,</span> <span class="mi">211</span><span class="p">)</span>
+<span class="n">plot_pia</span><span class="p">(</span><span class="n">pia_hibo</span><span class="p">[</span><span class="n">mybeams</span><span class="p">],</span> <span class="mi">212</span><span class="p">,</span>
+         <span class="s2">&quot;PIA according to Hitchfeld and Bordan&quot;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_attenuation_wradlib_attenuation_19_0.png" src="../../_images/notebooks_attenuation_wradlib_attenuation_19_0.png" />
+</div>
+</div>
+<p>Apparently, slight differences in the reflectivity profile can cause a
+dramatic change in the behaviour. While at 54 and 55 degrees, the
+retrieval of PIA appears to be fairly stable, the profile of PIA for 53
+degree demonstrates a case of instability.</p>
+</div>
+<div class="section" id="Harrison-et-al.-(2000):-Cap-PIA-at-a-factor-of-two">
+<h3>Harrison et al. (2000): Cap PIA at a factor of two<a class="headerlink" href="#Harrison-et-al.-(2000):-Cap-PIA-at-a-factor-of-two" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/zreferences.html#harrison2000">Harrison et al.,
+2000</a>
+suggested to simply cap PIA in case it would cause a correction of
+rainfall intensity by more than a factor of two. Depending on the
+parameters of the Z(R) relationship, that would correpond to PIA values
+between 4 and 5 dB (4.8 dB if we assume exponent b=1.6).</p>
+<p>One way to implement this approach would be the following:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="n">pia_harrison</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">atten</span><span class="o">.</span><span class="n">correctAttenuationHB</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">,</span>
+    <span class="n">coefficients</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="mf">4.57e-5</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mf">0.731</span><span class="p">,</span> <span class="n">gate_length</span><span class="o">=</span><span class="mf">1.0</span><span class="p">),</span>
+    <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;warn&quot;</span><span class="p">,</span>
+    <span class="n">thrs</span><span class="o">=</span><span class="mf">59.</span><span class="p">)</span>
+<span class="n">pia_harrison</span><span class="p">[</span><span class="n">pia_harrison</span> <span class="o">&gt;</span> <span class="mf">4.8</span><span class="p">]</span> <span class="o">=</span> <span class="mf">4.8</span>
+</pre></div>
+</div>
+</div>
+<p>And the results would look like this:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+
+<span class="n">mybeams</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="mi">53</span><span class="p">,</span><span class="mi">56</span><span class="p">)</span>
+<span class="n">labelsize</span><span class="o">=</span><span class="mi">13</span>
+
+<span class="n">plot_beams</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">mybeams</span><span class="p">,</span> <span class="mi">211</span><span class="p">)</span>
+<span class="n">plot_pia</span><span class="p">(</span><span class="n">pia_harrison</span><span class="p">[</span><span class="n">mybeams</span><span class="p">],</span> <span class="mi">212</span><span class="p">,</span>
+         <span class="s2">&quot;PIA according to Harrison&quot;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_attenuation_wradlib_attenuation_25_0.png" src="../../_images/notebooks_attenuation_wradlib_attenuation_25_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="Kraemer-et-al.-(2008):-Iterative-estimation-of-A(Z)-relationsip">
+<h3>Kraemer et al. (2008): Iterative estimation of A(Z) relationsip<a class="headerlink" href="#Kraemer-et-al.-(2008):-Iterative-estimation-of-A(Z)-relationsip" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/zreferences.html#kraemer2008">Kraemer et al.,
+2008</a>
+suggested to iteratively determine the power law parameters of the A(Z).
+In particular, the power law coefficient is interatively decreased until
+the attenuation correction does not lead to reflectivity values above a
+given threshold (Kraemer suggested 59 dBZ). Using <span class="math">\(\omega radlib\)</span>,
+this would be called by using the function
+<a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/generated/wradlib.atten.correctAttenuationConstrained2.html">wradlib.atten.correctAttenuationConstrained2()</a>
+with a specific <code class="docutils literal"><span class="pre">constraints</span></code> argument:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="n">pia_kraemer</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">atten</span><span class="o">.</span><span class="n">correctAttenuationConstrained2</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">,</span>
+    <span class="n">a_max</span><span class="o">=</span><span class="mf">1.67e-4</span><span class="p">,</span>
+    <span class="n">a_min</span><span class="o">=</span><span class="mf">2.33e-5</span><span class="p">,</span>
+    <span class="n">n_a</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+    <span class="n">b_max</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span>
+    <span class="n">b_min</span><span class="o">=</span><span class="mf">0.65</span><span class="p">,</span>
+    <span class="n">n_b</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span>
+    <span class="n">gate_length</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span>
+    <span class="n">constraints</span><span class="o">=</span><span class="p">[</span><span class="n">wrl</span><span class="o">.</span><span class="n">atten</span><span class="o">.</span><span class="n">constraint_dBZ</span><span class="p">],</span>
+    <span class="n">constraint_args</span><span class="o">=</span><span class="p">[[</span><span class="mf">59.0</span><span class="p">]])</span>
+</pre></div>
+</div>
+</div>
+<p>In brief, this call specifies ranges of the power parameters a and b of
+the A(Z) relation. Beginning from the maximum values (<code class="docutils literal"><span class="pre">a_max</span></code> and
+<code class="docutils literal"><span class="pre">b_max</span></code>), the function searches for values of <code class="docutils literal"><span class="pre">a</span></code> and <code class="docutils literal"><span class="pre">b</span></code> so that
+the corrected reflectivity will not exceed the dBZ constraint of 59 dBZ.
+Compared to the previous results, the corresponding profiles of PIA look
+like this:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">plot_beams</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">mybeams</span><span class="p">,</span> <span class="mi">211</span><span class="p">)</span>
+<span class="n">plot_pia</span><span class="p">(</span><span class="n">pia_kraemer</span><span class="p">[</span><span class="n">mybeams</span><span class="p">],</span> <span class="mi">212</span><span class="p">,</span>
+         <span class="s2">&quot;PIA according to Kraemer&quot;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_attenuation_wradlib_attenuation_30_0.png" src="../../_images/notebooks_attenuation_wradlib_attenuation_30_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="Generalised-Kraemer-procedure:-adding-additional-constraints">
+<h3>Generalised Kraemer procedure: adding additional constraints<a class="headerlink" href="#Generalised-Kraemer-procedure:-adding-additional-constraints" title="Permalink to this headline">¶</a></h3>
+<p>The function
+<a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/generated/wradlib.atten.correctAttenuationConstrained2.html">wradlib.atten.correctAttenuationConstrained2()</a>
+allows us to pass any kind of constraint function or lists of constraint
+functions via the argument <code class="docutils literal"><span class="pre">constraints</span></code>. The arguments of these
+functions are passed via a nested list as argument <code class="docutils literal"><span class="pre">constraint_args</span></code>.
+For example, <a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/zreferences.html#jacobi2015">Jacobi et al.,
+2016</a>
+suggested to constrain <em>both</em> the corrected reflectivity (by a maximum
+of 59 dBZ) <em>and</em> the resulting path-intgrated attenuation PIA (by a
+maximum of 20 dB):</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="n">pia_mkraemer</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">atten</span><span class="o">.</span><span class="n">correctAttenuationConstrained2</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">,</span>
+    <span class="n">a_max</span><span class="o">=</span><span class="mf">1.67e-4</span><span class="p">,</span>
+    <span class="n">a_min</span><span class="o">=</span><span class="mf">2.33e-5</span><span class="p">,</span>
+    <span class="n">n_a</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+    <span class="n">b_max</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span>
+    <span class="n">b_min</span><span class="o">=</span><span class="mf">0.65</span><span class="p">,</span>
+    <span class="n">n_b</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span>
+    <span class="n">gate_length</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span>
+    <span class="n">constraints</span><span class="o">=</span><span class="p">[</span><span class="n">wrl</span><span class="o">.</span><span class="n">atten</span><span class="o">.</span><span class="n">constraint_dBZ</span><span class="p">,</span>
+                 <span class="n">wrl</span><span class="o">.</span><span class="n">atten</span><span class="o">.</span><span class="n">constraint_pia</span><span class="p">],</span>
+    <span class="n">constraint_args</span><span class="o">=</span><span class="p">[[</span><span class="mf">59.0</span><span class="p">],[</span><span class="mf">20.0</span><span class="p">]])</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">plot_beams</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">mybeams</span><span class="p">,</span> <span class="mi">211</span><span class="p">)</span>
+<span class="n">plot_pia</span><span class="p">(</span><span class="n">pia_mkraemer</span><span class="p">[</span><span class="n">mybeams</span><span class="p">],</span> <span class="mi">212</span><span class="p">,</span>
+         <span class="s2">&quot;PIA according to modified Kraemer&quot;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_attenuation_wradlib_attenuation_34_0.png" src="../../_images/notebooks_attenuation_wradlib_attenuation_34_0.png" />
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="Comparison-of-all-Methods">
+<h2>Comparison of all Methods<a class="headerlink" href="#Comparison-of-all-Methods" title="Permalink to this headline">¶</a></h2>
+<p>Plotting all of the above methods (<a class="reference external" href="#Hitschfeld-and-Bordan">Hitschfeld and
+Bordan</a>, <a class="reference external" href="#Harrison">Harrison</a>,
+<a class="reference external" href="#Kraemer">Kraemer</a>, <a class="reference external" href="#Modified-Kraemer">Modified Kraemer</a> allows
+for a better comparison of their behaviour. Please refer to <a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/zreferences.html#jacobi2015">Jacobi et
+al.,
+2016</a>
+for an in-depth discussion of this example.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">12</span><span class="p">))</span>
+
+<span class="n">plot_beams</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">mybeams</span><span class="p">,</span> <span class="mi">511</span><span class="p">)</span>
+<span class="n">plot_pia</span><span class="p">(</span><span class="n">pia_hibo</span><span class="p">[</span><span class="n">mybeams</span><span class="p">],</span> <span class="mi">512</span><span class="p">,</span>
+         <span class="s2">&quot;PIA according to Hitschfeld and Bordan&quot;</span> <span class="p">)</span>
+<span class="n">plot_pia</span><span class="p">(</span><span class="n">pia_harrison</span><span class="p">[</span><span class="n">mybeams</span><span class="p">],</span> <span class="mi">513</span><span class="p">,</span>
+         <span class="s2">&quot;PIA according to Harrison&quot;</span><span class="p">)</span>
+<span class="n">plot_pia</span><span class="p">(</span><span class="n">pia_kraemer</span><span class="p">[</span><span class="n">mybeams</span><span class="p">],</span> <span class="mi">514</span><span class="p">,</span>
+         <span class="s2">&quot;PIA according to Kraemer&quot;</span><span class="p">)</span>
+<span class="n">plot_pia</span><span class="p">(</span><span class="n">pia_mkraemer</span><span class="p">[</span><span class="n">mybeams</span><span class="p">],</span> <span class="mi">515</span><span class="p">,</span>
+         <span class="s2">&quot;PIA according to modified Kraemer&quot;</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_attenuation_wradlib_attenuation_37_0.png" src="../../_images/notebooks_attenuation_wradlib_attenuation_37_0.png" />
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../beamblockage/wradlib_beamblock.html" class="btn btn-neutral float-right" title="Beam Blockage Calculation using a DEM" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../fileio/wradlib_gis_export_example.html" class="btn btn-neutral" title="Export a dataset in GIS-compatible format" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2011-2016, wradlib developers.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.11.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

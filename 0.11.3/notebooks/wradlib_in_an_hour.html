@@ -1,0 +1,669 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>A one hour tour of wradlib &mdash; wradlib</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/wradlib.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="wradlib" href="../index.html"/>
+    
+    <link href="../_static/wradlib.css" rel="stylesheet" type="text/css">
+
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+  <a href="../index.html" class="icon icon-home"> wradlib
+
+
+
+</a>
+
+
+
+  <div class="version">
+    
+    <button class="verbtn">0.11.3</button>
+    <div class="version-content">
+      
+        <a href="../latest/">latest</a>
+        <a href="../0.11.3/">0.11.3</a>
+        <a href="../0.11.1/">0.11.1</a>
+    </div>
+  </div>
+
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../gettingstarted.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks.html">Tutorials and Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference.html">Library Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_setup.html">For Developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zreferences.html">Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">wradlib</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>A one hour tour of wradlib</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/notebooks/wradlib_in_an_hour.ipynb.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #303F9F;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #D84315;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 8ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+/* nice headers on first paragraph of info/warning boxes */
+.admonition .first {
+    margin: -12px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1;
+    display: block;
+}
+.admonition.warning .first {
+    background: #f0b37e;
+}
+.admonition.note .first {
+    background: #6ab0de;
+}
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="A-one-hour-tour-of-wradlib">
+<h1>A one hour tour of wradlib<a class="headerlink" href="#A-one-hour-tour-of-wradlib" title="Permalink to this headline">¶</a></h1>
+<div class="figure" id="id2">
+<img alt="caption" src="../_images/cover_image.png" />
+<p class="caption"><span class="caption-text">caption</span></p>
+</div>
+<p>This notebook provides a guided tour of some <span class="math notranslate">\(\omega radlib\)</span>
+notebooks.</p>
+<p><em>(find all wradlib notebooks in the
+`docs &lt;http://wradlib.org/wradlib-docs/$TAG/notebooks.html&gt;`__.)</em></p>
+<div class="section" id="Some-background,-first">
+<h2>Some background, first<a class="headerlink" href="#Some-background,-first" title="Permalink to this headline">¶</a></h2>
+<p>Development started in 2011…or more precisely:</p>
+<p><code class="docutils literal notranslate"><span class="pre">October</span> <span class="pre">26th,</span> <span class="pre">2011</span></code></p>
+<div class="section" id="Key-motivation">
+<h3>Key motivation<a class="headerlink" href="#Key-motivation" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">A</span> <span class="pre">community</span> <span class="pre">platform</span> <span class="pre">for</span> <span class="pre">collaborative</span> <span class="pre">development</span> <span class="pre">of</span> <span class="pre">algorithms</span></code></p>
+</div>
+</div>
+<div class="section" id="Development-team">
+<h2>Development team<a class="headerlink" href="#Development-team" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="Core-team-(in-aphabetical-order)">
+<h3>Core team (in aphabetical order)<a class="headerlink" href="#Core-team-(in-aphabetical-order)" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Maik Heistermann (University of Potsdam)</li>
+<li>Kai Muehlbauer (University of Bonn)</li>
+<li><em>Thomas Pfaff (retired from radar science)</em></li>
+</ul>
+</div>
+<div class="section" id="Contributions-from">
+<h3>Contributions from<a class="headerlink" href="#Contributions-from" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Irene Crisologo (University of Potsdam, Germany)</li>
+<li>Edouard Goudenhooft (RMI, Belgium)</li>
+<li>Stephan Jacobi (University of Potsdam, Germany)</li>
+<li>Jonathan J. Helmus (Argonne National Laboratory, USA)</li>
+<li>Scott Sinclair (University of Kwazulu-Natal, South Africa)</li>
+<li>…</li>
+</ul>
+</div>
+</div>
+<div class="section" id="Your-entry-points">
+<h2>Your entry points<a class="headerlink" href="#Your-entry-points" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="Just-start-out-from-wradlib.org">
+<h3>Just start out from <a class="reference external" href="http://wradlib.org">wradlib.org</a><a class="headerlink" href="#Just-start-out-from-wradlib.org" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="Documentation">
+<h3>Documentation<a class="headerlink" href="#Documentation" title="Permalink to this headline">¶</a></h3>
+<p>Check out the <a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/">online docs</a>
+with <a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/notebooks.html">tutorials and
+examples</a> and a
+comprehensive <a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/reference.html">library
+reference</a></p>
+</div>
+<div class="section" id="User-group">
+<h3>User group<a class="headerlink" href="#User-group" title="Permalink to this headline">¶</a></h3>
+<p>Get help and connect more than 120 users at the <a class="reference external" href="https://groups.google.com/forum/?fromgroups#!forum/wradlib-users">wradlib user
+group</a>!</p>
+</div>
+<div class="section" id="For-developers">
+<h3>For developers<a class="headerlink" href="#For-developers" title="Permalink to this headline">¶</a></h3>
+<p>Fork us from <a class="reference external" href="https://github.com/wradlib/wradlib">https://github.com/wradlib/wradlib</a> or <a class="reference external" href="https://github.com/wradlib/wradlib/issues">raise an
+issue</a>!</p>
+</div>
+</div>
+<div class="section" id="Installation">
+<h2>Installation<a class="headerlink" href="#Installation" title="Permalink to this headline">¶</a></h2>
+<p>The are many ways to install wradlib, but this is our recommendation:</p>
+<div class="section" id="1.-Install-Anaconda">
+<h3>1. Install Anaconda<a class="headerlink" href="#1.-Install-Anaconda" title="Permalink to this headline">¶</a></h3>
+<p>Get it <a class="reference external" href="https://www.continuum.io/why-anaconda/">here</a> for Windows,
+Linux, or Mac.</p>
+</div>
+<div class="section" id="2.-Create-a-fresh-environment-and-add-conda-forge-channel">
+<h3>2. Create a fresh environment and add conda-forge channel<a class="headerlink" href="#2.-Create-a-fresh-environment-and-add-conda-forge-channel" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ conda create --name wradlibenv <span class="nv">python</span><span class="o">=</span><span class="m">2</span>.7
+$ conda config --add channels conda-forge
+</pre></div>
+</div>
+</div>
+<div class="section" id="3.-Activate-environment-and-install-wradlib">
+<h3>3. Activate environment and install wradlib<a class="headerlink" href="#3.-Activate-environment-and-install-wradlib" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ activate wradlibenv
+$ <span class="o">(</span>wradlibenv<span class="o">)</span> conda install wradlib
+</pre></div>
+</div>
+</div>
+<div class="section" id="4.-Make-sure-GDAL_DATA-is-set">
+<h3>4. Make sure <code class="docutils literal notranslate"><span class="pre">GDAL_DATA</span></code> is set<a class="headerlink" href="#4.-Make-sure-GDAL_DATA-is-set" title="Permalink to this headline">¶</a></h3>
+<p>The environment variable <code class="docutils literal notranslate"><span class="pre">GDAL_DATA</span></code> should point to
+<code class="docutils literal notranslate"><span class="pre">.../anaconda/envs/wradlibenv/share/gdal</span></code></p>
+</div>
+</div>
+<div class="section" id="Download-the-sample-data">
+<h2>Download the sample data<a class="headerlink" href="#Download-the-sample-data" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="1.-Download-the-sample-data">
+<h3>1. Download the sample data<a class="headerlink" href="#1.-Download-the-sample-data" title="Permalink to this headline">¶</a></h3>
+<p>Download the data from
+<a class="reference external" href="https://github.com/wradlib/wradlib-data">here</a> either as a ziip
+archive or by <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span> <span class="pre">https://github.com/wradlib/wradlib-data</span></code></p>
+</div>
+<div class="section" id="2.-Set-the-environment-variable-WRADLIB_DATA">
+<h3>2. Set the environment variable <code class="docutils literal notranslate"><span class="pre">WRADLIB_DATA</span></code><a class="headerlink" href="#2.-Set-the-environment-variable-WRADLIB_DATA" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">WRADLIB_DATA</span></code> should point to the upper level <code class="docutils literal notranslate"><span class="pre">wradlib-data</span></code>
+directory in which you saved the data.</p>
+<p>Get more detailed instructions
+<a class="reference external" href="http://wradlib.org/wradlib-docs/$TAG/gettingstarted.html">here</a>!</p>
+</div>
+</div>
+<div class="section" id="Development-paradigm">
+<h2>Development paradigm<a class="headerlink" href="#Development-paradigm" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="Keep-the-magic-to-a-minimum">
+<h3>Keep the magic to a minimum<a class="headerlink" href="#Keep-the-magic-to-a-minimum" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>transparent</li>
+<li>flexible</li>
+<li>but also lower level</li>
+</ul>
+</div>
+<div class="section" id="Flat-(or-no)-data-model">
+<h3>Flat (or no) data model<a class="headerlink" href="#Flat-(or-no)-data-model" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>pass data as numpy arrays,</li>
+<li>and pass metadata as dictionaries.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="Import-wradlib">
+<h2>Import wradlib<a class="headerlink" href="#Import-wradlib" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">wradlib</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="stderr output_area docutils container">
+<div class="highlight"><pre>
+/home/travis/miniconda/envs/wradlib/lib/python2.7/site-packages/h5py/__init__.py:36: FutureWarning: Conversion of the second argument of issubdtype from `float` to `np.floating` is deprecated. In future, it will be treated as `np.float64 == np.dtype(float).type`.
+  from ._conv import register_converters as _register_converters
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># check installed version</span>
+<span class="k">print</span><span class="p">(</span><span class="n">wradlib</span><span class="o">.</span><span class="n">__version__</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+0.11.3
+</pre></div></div>
+</div>
+<p>In the next cell, type <code class="docutils literal notranslate"><span class="pre">wradlib.</span></code> and hit <code class="docutils literal notranslate"><span class="pre">Tab</span></code>.</p>
+<p><em>Inpect the available modules and functions.</em></p>
+</div>
+<div class="section" id="Reading-and-viewing-data">
+<h2>Reading and viewing data<a class="headerlink" href="#Reading-and-viewing-data" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Read and quick-view</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="visualisation/wradlib_plot_ppi_example.html">read and quick-view a radarscan</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="visualisation/wradlib_plot_ppi_example.html#Read-a-polar-data-set-from-the-German-Weather-Service">Read a polar data set from the German Weather Service</a></li>
+<li class="toctree-l2"><a class="reference internal" href="visualisation/wradlib_plot_ppi_example.html#The-simplest-way-to-plot-this-dataset">The simplest way to plot this dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="visualisation/wradlib_plot_ppi_example.html#Plotting-just-one-sector">Plotting just one sector</a></li>
+<li class="toctree-l2"><a class="reference internal" href="visualisation/wradlib_plot_ppi_example.html#Adding-a-crosshair-to-the-PPI">Adding a crosshair to the PPI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="visualisation/wradlib_plot_ppi_example.html#Placing-the-polar-data-in-a-projected-Cartesian-reference-system">Placing the polar data in a projected Cartesian reference system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="visualisation/wradlib_plot_ppi_example.html#Some-side-effects-of-georeferencing">Some side effects of georeferencing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="visualisation/wradlib_plot_ppi_example.html#More-decorations-and-annotations">More decorations and annotations</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="Zoo-of-file-formats">
+<h3>Zoo of file formats<a class="headerlink" href="#Zoo-of-file-formats" title="Permalink to this headline">¶</a></h3>
+<p>This notebook shows you how to access various file
+formats.</p>
+</div>
+</div>
+<div class="section" id="Addressing-errors">
+<h2>Addressing errors<a class="headerlink" href="#Addressing-errors" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="Attenuation">
+<h3>Attenuation<a class="headerlink" href="#Attenuation" title="Permalink to this headline">¶</a></h3>
+<p>In this example, we
+reconstruct path-integrated attenuation from single-pol data of the
+German Weather Service.</p>
+</div>
+<div class="section" id="Clutter-detection">
+<h3>Clutter detection<a class="headerlink" href="#Clutter-detection" title="Permalink to this headline">¶</a></h3>
+<p>wradlib provides several methods for clutter detection.
+Here, we look at an
+example that uses dual-pol moments and a simple fuzzy classification.</p>
+</div>
+<div class="section" id="Partial-beam-blockage">
+<h3>Partial beam blockage<a class="headerlink" href="#Partial-beam-blockage" title="Permalink to this headline">¶</a></h3>
+<p>In this example, wradlib
+attempts to quantify terrain-induced beam blockage from a DEM.</p>
+</div>
+</div>
+<div class="section" id="Integration-with-other-geodata">
+<h2>Integration with other geodata<a class="headerlink" href="#Integration-with-other-geodata" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="Average-precipitation-over-your-river-catchment">
+<h3>Average precipitation over your river catchment<a class="headerlink" href="#Average-precipitation-over-your-river-catchment" title="Permalink to this headline">¶</a></h3>
+<p>In this example, we compute zonal
+statistics over
+polygons imported in a shapefile.</p>
+</div>
+<div class="section" id="Over-and-underlay-of-other-geodata">
+<h3>Over and underlay of other geodata<a class="headerlink" href="#Over-and-underlay-of-other-geodata" title="Permalink to this headline">¶</a></h3>
+<p>Often, you need to present your radar data in context with other
+geodata (DEM, rivers, gauges,
+catchments, …).</p>
+</div>
+</div>
+<div class="section" id="Merging-with-other-sensors">
+<h2>Merging with other sensors<a class="headerlink" href="#Merging-with-other-sensors" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="Adjusting-radar-based-rainfall-estimates-by-rain-gauges">
+<h3>Adjusting radar-based rainfall estimates by rain gauges<a class="headerlink" href="#Adjusting-radar-based-rainfall-estimates-by-rain-gauges" title="Permalink to this headline">¶</a></h3>
+<p>In this example, we use
+synthetic radar and rain gauge observations and confront them with
+different adjustment techniques.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2011-2016, wradlib developers.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.11.3',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

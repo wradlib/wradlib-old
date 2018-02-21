@@ -1,0 +1,6 @@
+wradlib.vis.plot\_cg\_rhi
+=========================
+
+.. currentmodule:: wradlib.vis
+
+.. autofunction:: plot_cg_rhi

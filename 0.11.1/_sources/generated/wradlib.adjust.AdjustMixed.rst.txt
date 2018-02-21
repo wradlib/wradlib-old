@@ -1,0 +1,13 @@
+wradlib\.adjust\.AdjustMixed
+============================
+
+.. currentmodule:: wradlib.adjust
+
+.. autoclass:: AdjustMixed
+
+   
+
+
+
+   
+

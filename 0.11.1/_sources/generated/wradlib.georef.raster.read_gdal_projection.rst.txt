@@ -1,0 +1,6 @@
+wradlib\.georef\.raster\.read\_gdal\_projection
+===============================================
+
+.. currentmodule:: wradlib.georef.raster
+
+.. autofunction:: read_gdal_projection

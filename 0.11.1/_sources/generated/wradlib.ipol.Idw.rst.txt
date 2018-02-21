@@ -1,0 +1,13 @@
+wradlib\.ipol\.Idw
+==================
+
+.. currentmodule:: wradlib.ipol
+
+.. autoclass:: Idw
+
+   
+
+
+
+   
+

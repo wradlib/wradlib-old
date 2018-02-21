@@ -1,0 +1,6 @@
+wradlib.adjust.GageOnly.\_\_call\_\_
+====================================
+
+.. currentmodule:: wradlib.adjust
+
+.. automethod:: GageOnly.__call__

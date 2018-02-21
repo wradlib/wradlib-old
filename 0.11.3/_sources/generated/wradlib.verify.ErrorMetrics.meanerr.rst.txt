@@ -1,0 +1,6 @@
+wradlib.verify.ErrorMetrics.meanerr
+===================================
+
+.. currentmodule:: wradlib.verify
+
+.. automethod:: ErrorMetrics.meanerr

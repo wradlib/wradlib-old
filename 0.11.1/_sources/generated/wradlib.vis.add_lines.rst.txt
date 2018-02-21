@@ -1,0 +1,6 @@
+wradlib\.vis\.add\_lines
+========================
+
+.. currentmodule:: wradlib.vis
+
+.. autofunction:: add_lines

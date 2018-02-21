@@ -1,0 +1,13 @@
+wradlib\.ipol\.Linear
+=====================
+
+.. currentmodule:: wradlib.ipol
+
+.. autoclass:: Linear
+
+   
+
+
+
+   
+

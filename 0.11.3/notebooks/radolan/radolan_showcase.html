@@ -1,0 +1,1627 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>RADOLAN Product Showcase &mdash; wradlib</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/wradlib.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="wradlib" href="../../index.html"/>
+        <link rel="up" title="RADOLAN" href="../radolan.html"/>
+        <link rel="next" title="RADOLAN Radar Network" href="radolan_network.html"/>
+        <link rel="prev" title="RADOLAN Quick Start" href="radolan_quickstart.html"/>
+    
+    <link href="../../_static/wradlib.css" rel="stylesheet" type="text/css">
+
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+  <a href="../../index.html" class="icon icon-home"> wradlib
+
+
+
+</a>
+
+
+
+  <div class="version">
+    
+    <button class="verbtn">0.11.3</button>
+    <div class="version-content">
+      
+        <a href="../latest/">latest</a>
+        <a href="../0.11.3/">0.11.3</a>
+        <a href="../0.11.1/">0.11.1</a>
+    </div>
+  </div>
+
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../gettingstarted.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../notebooks.html">Tutorials and Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../jupyter.html">How to use the tutorials and examples?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../learnpython.html">An incomplete introduction to Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics.html">Getting started with wradlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../fileio.html">Data Input - Data Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../attenuation/wradlib_attenuation.html">Attenuation correction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../beamblockage/wradlib_beamblock.html">Beam Blockage Calculation using a DEM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../classify.html">Clutter and Echo Classification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../georeferencing.html">Georeferencing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../match3d/wradlib_match_workflow.html">Match spaceborn SR (GPM/TRMM) with ground radars GR</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../develop.html">For Developers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interpolation/wradlib_ipol_example.html">How to use wradlib’s ipol module for interpolation tasks?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../multisensor/wradlib_adjust_example.html">Adjusting radar-base rainfall estimates by rain gauge observations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../verification/wradlib_verify_example.html">Routine verification measures for radar-based precipitation estimates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../recipes.html">Recipes</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../radolan.html">RADOLAN</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="radolan_quickstart.html">RADOLAN Quick Start</a></li>
+<li class="toctree-l3"><a class="reference internal" href="radolan_format.html">RADOLAN Binary Data Format</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">RADOLAN Product Showcase</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Setup-Environment">Setup Environment</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#RADOLAN-Composite">RADOLAN Composite</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="radolan_grid.html">RADOLAN Grid</a></li>
+<li class="toctree-l3"><a class="reference internal" href="radolan_network.html">DWD Radar Network</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../zonalstats/wradlib_zonalstats_classes.html">Zonal Statistics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference.html">Library Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev_setup.html">For Developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zreferences.html">Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../release_notes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">wradlib</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../notebooks.html">Tutorials and Examples</a> &raquo;</li>
+        
+          <li><a href="../radolan.html">RADOLAN</a> &raquo;</li>
+        
+      <li>RADOLAN Product Showcase</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/notebooks/radolan/radolan_showcase.ipynb.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #303F9F;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #D84315;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 8ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+/* nice headers on first paragraph of info/warning boxes */
+.admonition .first {
+    margin: -12px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1;
+    display: block;
+}
+.admonition.warning .first {
+    background: #f0b37e;
+}
+.admonition.note .first {
+    background: #6ab0de;
+}
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="RADOLAN-Product-Showcase">
+<h1>RADOLAN Product Showcase<a class="headerlink" href="#RADOLAN-Product-Showcase" title="Permalink to this headline">¶</a></h1>
+<p>In this notebook an overview over the existing RADOLAN products is
+given.</p>
+<div class="section" id="Setup-Environment">
+<h2>Setup Environment<a class="headerlink" href="#Setup-Environment" title="Permalink to this headline">¶</a></h2>
+<p>Import modules, filter warnings to avoid cluttering output with
+DeprecationWarnings and use matplotlib inline or interactive mode if
+running in ipython or python respectively.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">wradlib</span> <span class="kn">as</span> <span class="nn">wrl</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">pl</span>
+<span class="kn">import</span> <span class="nn">matplotlib</span> <span class="kn">as</span> <span class="nn">mpl</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">get_ipython</span><span class="p">()</span><span class="o">.</span><span class="n">magic</span><span class="p">(</span><span class="s2">&quot;matplotlib inline&quot;</span><span class="p">)</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="n">pl</span><span class="o">.</span><span class="n">ion</span><span class="p">()</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="stderr output_area docutils container">
+<div class="highlight"><pre>
+/home/travis/miniconda/envs/wradlib/lib/python2.7/site-packages/h5py/__init__.py:36: FutureWarning: Conversion of the second argument of issubdtype from `float` to `np.floating` is deprecated. In future, it will be treated as `np.float64 == np.dtype(float).type`.
+  from ._conv import register_converters as _register_converters
+</pre></div></div>
+</div>
+<p>Get RADOLAN Grid and RADOLAN Extended Grid.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Get coordinates</span>
+<span class="n">radolan_grid_xy</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">georef</span><span class="o">.</span><span class="n">get_radolan_grid</span><span class="p">(</span><span class="mi">900</span><span class="p">,</span><span class="mi">900</span><span class="p">)</span>
+<span class="n">radolan_egrid_xy</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">georef</span><span class="o">.</span><span class="n">get_radolan_grid</span><span class="p">(</span><span class="mi">1500</span><span class="p">,</span><span class="mi">1400</span><span class="p">)</span>
+<span class="n">radolan_wgrid_xy</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">georef</span><span class="o">.</span><span class="n">get_radolan_grid</span><span class="p">(</span><span class="mi">1100</span><span class="p">,</span> <span class="mi">900</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">radolan_grid_xy</span><span class="p">[:,:,</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">radolan_grid_xy</span><span class="p">[:,:,</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="n">xe</span> <span class="o">=</span> <span class="n">radolan_egrid_xy</span><span class="p">[:,:,</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">ye</span> <span class="o">=</span> <span class="n">radolan_egrid_xy</span><span class="p">[:,:,</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="n">xw</span> <span class="o">=</span> <span class="n">radolan_wgrid_xy</span><span class="p">[:,:,</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">yw</span> <span class="o">=</span> <span class="n">radolan_wgrid_xy</span><span class="p">[:,:,</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<p>Define data reading function and plotting function.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">read_radolan</span><span class="p">(</span><span class="n">radfile</span><span class="p">):</span>
+    <span class="n">radfile</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">get_wradlib_data_file</span><span class="p">(</span><span class="s1">&#39;radolan/showcase/&#39;</span> <span class="o">+</span> <span class="n">radfile</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">wrl</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_RADOLAN_composite</span><span class="p">(</span><span class="n">radfile</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">plot_radolan</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">attrs</span><span class="p">,</span> <span class="n">grid</span><span class="p">,</span> <span class="n">clabel</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">grid</span><span class="p">[:,:,</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">grid</span><span class="p">[:,:,</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">pm</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;spectral&#39;</span><span class="p">)</span>
+    <span class="n">cb</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">pm</span><span class="p">,</span> <span class="n">shrink</span><span class="o">=</span><span class="mf">0.75</span><span class="p">)</span>
+    <span class="n">cb</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="n">clabel</span><span class="p">)</span>
+    <span class="n">pl</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;x [km]&quot;</span><span class="p">)</span>
+    <span class="n">pl</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;y [km]&quot;</span><span class="p">)</span>
+    <span class="n">pl</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;{0} Product</span><span class="se">\n</span><span class="s1">{1}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;producttype&#39;</span><span class="p">],</span>
+                                       <span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;datetime&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isoformat</span><span class="p">()))</span>
+    <span class="n">pl</span><span class="o">.</span><span class="n">xlim</span><span class="p">((</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span><span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+    <span class="n">pl</span><span class="o">.</span><span class="n">ylim</span><span class="p">((</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span><span class="n">y</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+    <span class="n">pl</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="RADOLAN-Composite">
+<h2>RADOLAN Composite<a class="headerlink" href="#RADOLAN-Composite" title="Permalink to this headline">¶</a></h2>
+<p>A few products including RW and SF are available free of charge at this
+<a class="reference external" href="ftp://ftp-cdc.dwd.de/pub/CDC/grids_germany/">DWD FTP Server</a>. A full
+list of RADOLAN products can be found in the <a class="reference external" href="https://www.dwd.de/DE/leistungen/radolan/radolan_info/radolan_radvor_op_komposit_format_pdf.pdf?__blob=publicationFile&amp;v=5">DWD RADOLAN/RADVOR-OP
+Kompositformat</a>.</p>
+<p>Currently, most of the RADOLAN composites have a spatial resolution of
+1km x 1km, with the <a class="reference external" href="#National-Composites">National Composites</a> (R-,
+S- and W-series) being 900 x 900 km grids, and the <a class="reference external" href="#Extended-RADOLAN-Composites">European
+Composites</a> 1500 x 1400 km grids. The
+polar-stereographic projection is described in the chapter RADOLAN
+Grid.</p>
+<p>One difference is the extended National Composite (only WX) with a 1100
+x 900 km grid.</p>
+<p>Also the <a class="reference external" href="#RADOLAN-PG/PC-Product">PG/PC-Product</a> with 460 x 460 km
+grid and runlength-coding is shortly described.</p>
+<div class="section" id="National-Composites">
+<h3>National Composites<a class="headerlink" href="#National-Composites" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="15%" />
+<col width="20%" />
+<col width="20%" />
+<col width="45%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">ID</th>
+<th class="head">INT</th>
+<th class="head">avail</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>RX/WX</td>
+<td>5 min</td>
+<td>5 min</td>
+<td>original radardata in
+qualitative RVP6-units (1
+byte coded)</td>
+</tr>
+<tr class="row-odd"><td>RZ</td>
+<td>5 min</td>
+<td>5 min</td>
+<td>radardata after correction
+of PBB converted to rainrate
+with improved Z-R-relation</td>
+</tr>
+<tr class="row-even"><td>RY</td>
+<td>5 min</td>
+<td>5 min</td>
+<td>radardata after correction
+with Quality-composit (QY)</td>
+</tr>
+<tr class="row-odd"><td>RH</td>
+<td>1 h</td>
+<td>5 min</td>
+<td>1 h summation of RZ-composit</td>
+</tr>
+<tr class="row-even"><td>RB</td>
+<td>1 h</td>
+<td>hh:50</td>
+<td>1 h summation with
+preadjustment</td>
+</tr>
+<tr class="row-odd"><td>RW</td>
+<td>1 h</td>
+<td>hh:50</td>
+<td>1 h summation with standard
+adjustment “best of two”</td>
+</tr>
+<tr class="row-even"><td>RL</td>
+<td>1 h</td>
+<td>hh:50</td>
+<td>1 h summation with
+adjustment by Merging</td>
+</tr>
+<tr class="row-odd"><td>RU</td>
+<td>1 h</td>
+<td>hh:50</td>
+<td>1 h summation with standard
+and merging adjustment “best
+of three”</td>
+</tr>
+<tr class="row-even"><td>SQ</td>
+<td>6 h</td>
+<td>hh:50</td>
+<td>6 h summation of RW</td>
+</tr>
+<tr class="row-odd"><td>SH</td>
+<td>12 h</td>
+<td>hh:50</td>
+<td>12 h summation of RW</td>
+</tr>
+<tr class="row-even"><td>SF</td>
+<td>24 h</td>
+<td>hh:50</td>
+<td>24 h summation of RW</td>
+</tr>
+<tr class="row-odd"><td>W1</td>
+<td>7 d</td>
+<td>05:50</td>
+<td>7 d summation of RW</td>
+</tr>
+<tr class="row-even"><td>W2</td>
+<td>14 d</td>
+<td>05:50</td>
+<td>14 d summation of RW</td>
+</tr>
+<tr class="row-odd"><td>W3</td>
+<td>21 d</td>
+<td>05:50</td>
+<td>21 d summation of RW</td>
+</tr>
+<tr class="row-even"><td>W4</td>
+<td>30 d</td>
+<td>05:50</td>
+<td>30 d summation of RW</td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="RADOLAN-RX-Product">
+<h4>RADOLAN RX Product<a class="headerlink" href="#RADOLAN-RX-Product" title="Permalink to this headline">¶</a></h4>
+<p>Load data from data source.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">data</span><span class="p">,</span> <span class="n">attrs</span> <span class="o">=</span> <span class="n">read_radolan</span><span class="p">(</span><span class="s1">&#39;raa01-rx_10000-1408102050-dwd---bin.gz&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Mask data and apply scale and offset</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">masked_equal</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">-</span><span class="mi">9999</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">-</span> <span class="mf">32.5</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">plot_radolan</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">attrs</span><span class="p">,</span> <span class="n">radolan_grid_xy</span><span class="p">,</span> <span class="n">clabel</span><span class="o">=</span><span class="s1">&#39;dBZ&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_radolan_radolan_showcase_20_0.png" src="../../_images/notebooks_radolan_radolan_showcase_20_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="RADOLAN-RZ-Product">
+<h4>RADOLAN RZ Product<a class="headerlink" href="#RADOLAN-RZ-Product" title="Permalink to this headline">¶</a></h4>
+<p>Load data from data source</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">data</span><span class="p">,</span> <span class="n">attrs</span> <span class="o">=</span> <span class="n">read_radolan</span><span class="p">(</span><span class="s1">&#39;raa01-rz_10000-1408102050-dwd---bin.gz&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Mask data</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">masked_equal</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">-</span><span class="mi">9999</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">plot_radolan</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">attrs</span><span class="p">,</span> <span class="n">radolan_grid_xy</span><span class="p">,</span> <span class="n">clabel</span><span class="o">=</span><span class="s1">&#39;mm * h-1&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_radolan_radolan_showcase_26_0.png" src="../../_images/notebooks_radolan_radolan_showcase_26_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="RADOLAN-RY-Product">
+<h4>RADOLAN RY Product<a class="headerlink" href="#RADOLAN-RY-Product" title="Permalink to this headline">¶</a></h4>
+<p>Load data from data source</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">data</span><span class="p">,</span> <span class="n">attrs</span> <span class="o">=</span> <span class="n">read_radolan</span><span class="p">(</span><span class="s1">&#39;raa01-ry_10000-1408102050-dwd---bin.gz&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Mask data</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">masked_equal</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">-</span><span class="mi">9999</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">plot_radolan</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">attrs</span><span class="p">,</span> <span class="n">radolan_grid_xy</span><span class="p">,</span> <span class="n">clabel</span><span class="o">=</span><span class="s1">&#39;mm * h-1&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_radolan_radolan_showcase_32_0.png" src="../../_images/notebooks_radolan_radolan_showcase_32_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="RADOLAN-RH-Product">
+<h4>RADOLAN RH Product<a class="headerlink" href="#RADOLAN-RH-Product" title="Permalink to this headline">¶</a></h4>
+<p>Load data from data source</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">data</span><span class="p">,</span> <span class="n">attrs</span> <span class="o">=</span> <span class="n">read_radolan</span><span class="p">(</span><span class="s1">&#39;raa01-rh_10000-1408102050-dwd---bin.gz&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Mask data</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">masked_equal</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">-</span><span class="mi">9999</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">-</span> <span class="mf">32.5</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">plot_radolan</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">attrs</span><span class="p">,</span> <span class="n">radolan_grid_xy</span><span class="p">,</span> <span class="n">clabel</span><span class="o">=</span><span class="s1">&#39;mm * h-1&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_radolan_radolan_showcase_38_0.png" src="../../_images/notebooks_radolan_radolan_showcase_38_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="RADOLAN-RB-Product">
+<h4>RADOLAN RB Product<a class="headerlink" href="#RADOLAN-RB-Product" title="Permalink to this headline">¶</a></h4>
+<p>Load data from data source</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">data</span><span class="p">,</span> <span class="n">attrs</span> <span class="o">=</span> <span class="n">read_radolan</span><span class="p">(</span><span class="s1">&#39;raa01-rb_10000-1408102050-dwd---bin.gz&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Mask data</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">masked_equal</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">-</span><span class="mi">9999</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">plot_radolan</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">attrs</span><span class="p">,</span> <span class="n">radolan_grid_xy</span><span class="p">,</span> <span class="n">clabel</span><span class="o">=</span><span class="s1">&#39;mm * h-1&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_radolan_radolan_showcase_44_0.png" src="../../_images/notebooks_radolan_radolan_showcase_44_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="RADOLAN-RL-Product">
+<h4>RADOLAN RL Product<a class="headerlink" href="#RADOLAN-RL-Product" title="Permalink to this headline">¶</a></h4>
+<p>Load data from data source</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">data</span><span class="p">,</span> <span class="n">attrs</span> <span class="o">=</span> <span class="n">read_radolan</span><span class="p">(</span><span class="s1">&#39;raa01-rl_10000-1408102050-dwd---bin.gz&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Mask data</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [22]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">masked_equal</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">-</span><span class="mi">9999</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [23]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">plot_radolan</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">attrs</span><span class="p">,</span> <span class="n">radolan_grid_xy</span><span class="p">,</span> <span class="n">clabel</span><span class="o">=</span><span class="s1">&#39;mm * h-1&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_radolan_radolan_showcase_50_0.png" src="../../_images/notebooks_radolan_radolan_showcase_50_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="RADOLAN-RW-Product">
+<h4>RADOLAN RW Product<a class="headerlink" href="#RADOLAN-RW-Product" title="Permalink to this headline">¶</a></h4>
+<p>Load data from data source</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [24]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">data</span><span class="p">,</span> <span class="n">attrs</span> <span class="o">=</span> <span class="n">read_radolan</span><span class="p">(</span><span class="s1">&#39;raa01-rw_10000-1408102050-dwd---bin.gz&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Mask data</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [25]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">masked_equal</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">-</span><span class="mi">9999</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [26]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">plot_radolan</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">attrs</span><span class="p">,</span> <span class="n">radolan_grid_xy</span><span class="p">,</span> <span class="n">clabel</span><span class="o">=</span><span class="s1">&#39;mm * h-1&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_radolan_radolan_showcase_56_0.png" src="../../_images/notebooks_radolan_radolan_showcase_56_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="RADOLAN-RU-Product">
+<h4>RADOLAN RU Product<a class="headerlink" href="#RADOLAN-RU-Product" title="Permalink to this headline">¶</a></h4>
+<p>Load data from data source</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [27]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">data</span><span class="p">,</span> <span class="n">attrs</span> <span class="o">=</span> <span class="n">read_radolan</span><span class="p">(</span><span class="s1">&#39;raa01-ru_10000-1408102050-dwd---bin.gz&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Mask data</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [28]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">masked_equal</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">-</span><span class="mi">9999</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [29]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">plot_radolan</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">attrs</span><span class="p">,</span> <span class="n">radolan_grid_xy</span><span class="p">,</span> <span class="n">clabel</span><span class="o">=</span><span class="s1">&#39;mm * h-1&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_radolan_radolan_showcase_62_0.png" src="../../_images/notebooks_radolan_radolan_showcase_62_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="RADOLAN-SQ-Product">
+<h4>RADOLAN SQ Product<a class="headerlink" href="#RADOLAN-SQ-Product" title="Permalink to this headline">¶</a></h4>
+<p>Load data from data source</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [30]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">data</span><span class="p">,</span> <span class="n">attrs</span> <span class="o">=</span> <span class="n">read_radolan</span><span class="p">(</span><span class="s1">&#39;raa01-sq_10000-1408102050-dwd---bin.gz&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Mask data</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [31]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">masked_equal</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">-</span><span class="mi">9999</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [32]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">plot_radolan</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">attrs</span><span class="p">,</span> <span class="n">radolan_grid_xy</span><span class="p">,</span> <span class="n">clabel</span><span class="o">=</span><span class="s1">&#39;mm * h-1&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_radolan_radolan_showcase_68_0.png" src="../../_images/notebooks_radolan_radolan_showcase_68_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="RADOLAN-SH-Product">
+<h4>RADOLAN SH Product<a class="headerlink" href="#RADOLAN-SH-Product" title="Permalink to this headline">¶</a></h4>
+<p>Load data from data source</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [33]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">data</span><span class="p">,</span> <span class="n">attrs</span> <span class="o">=</span> <span class="n">read_radolan</span><span class="p">(</span><span class="s1">&#39;raa01-sh_10000-1408102050-dwd---bin.gz&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Mask data</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [34]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">masked_equal</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">-</span><span class="mi">9999</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [35]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">plot_radolan</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">attrs</span><span class="p">,</span> <span class="n">radolan_grid_xy</span><span class="p">,</span> <span class="n">clabel</span><span class="o">=</span><span class="s1">&#39;mm * h-1&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_radolan_radolan_showcase_74_0.png" src="../../_images/notebooks_radolan_radolan_showcase_74_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="RADOLAN-SF-Product">
+<h4>RADOLAN SF Product<a class="headerlink" href="#RADOLAN-SF-Product" title="Permalink to this headline">¶</a></h4>
+<p>Load data from data source</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [36]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">data</span><span class="p">,</span> <span class="n">attrs</span> <span class="o">=</span> <span class="n">read_radolan</span><span class="p">(</span><span class="s1">&#39;raa01-sf_10000-1408102050-dwd---bin.gz&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Mask data</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [37]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">masked_equal</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">-</span><span class="mi">9999</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [38]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">plot_radolan</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">attrs</span><span class="p">,</span> <span class="n">radolan_grid_xy</span><span class="p">,</span> <span class="n">clabel</span><span class="o">=</span><span class="s1">&#39;mm * h-1&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_radolan_radolan_showcase_80_0.png" src="../../_images/notebooks_radolan_radolan_showcase_80_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="RADOLAN-W1-Product">
+<h4>RADOLAN W1 Product<a class="headerlink" href="#RADOLAN-W1-Product" title="Permalink to this headline">¶</a></h4>
+<p>Load data from data source</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [39]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">data</span><span class="p">,</span> <span class="n">attrs</span> <span class="o">=</span> <span class="n">read_radolan</span><span class="p">(</span><span class="s1">&#39;raa01-w1_10000-1408110550-dwd---bin.gz&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Mask data</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [40]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">masked_equal</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">-</span><span class="mi">9999</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [41]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">plot_radolan</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">attrs</span><span class="p">,</span> <span class="n">radolan_grid_xy</span><span class="p">,</span> <span class="n">clabel</span><span class="o">=</span><span class="s1">&#39;mm * h-1&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_radolan_radolan_showcase_86_0.png" src="../../_images/notebooks_radolan_radolan_showcase_86_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="RADOLAN-W2-Product">
+<h4>RADOLAN W2 Product<a class="headerlink" href="#RADOLAN-W2-Product" title="Permalink to this headline">¶</a></h4>
+<p>Load data from data source</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [42]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">data</span><span class="p">,</span> <span class="n">attrs</span> <span class="o">=</span> <span class="n">read_radolan</span><span class="p">(</span><span class="s1">&#39;raa01-w2_10000-1408110550-dwd---bin.gz&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Mask data</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [43]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">masked_equal</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">-</span><span class="mi">9999</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [44]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">plot_radolan</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">attrs</span><span class="p">,</span> <span class="n">radolan_grid_xy</span><span class="p">,</span> <span class="n">clabel</span><span class="o">=</span><span class="s1">&#39;mm * h-1&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_radolan_radolan_showcase_92_0.png" src="../../_images/notebooks_radolan_radolan_showcase_92_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="RADOLAN-WX-Product">
+<h4>RADOLAN WX Product<a class="headerlink" href="#RADOLAN-WX-Product" title="Permalink to this headline">¶</a></h4>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [45]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">data</span><span class="p">,</span> <span class="n">attrs</span> <span class="o">=</span> <span class="n">read_radolan</span><span class="p">(</span><span class="s1">&#39;raa01-wx_10000-1408102050-dwd---bin.gz&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Mask data</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [46]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">masked_equal</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">-</span><span class="mi">9999</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">-</span> <span class="mf">32.5</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [47]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">plot_radolan</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">attrs</span><span class="p">,</span> <span class="n">radolan_wgrid_xy</span><span class="p">,</span> <span class="n">clabel</span><span class="o">=</span><span class="s1">&#39;dBZ&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_radolan_radolan_showcase_97_0.png" src="../../_images/notebooks_radolan_radolan_showcase_97_0.png" />
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="Extended-RADOLAN-Composites">
+<h3>Extended RADOLAN Composites<a class="headerlink" href="#Extended-RADOLAN-Composites" title="Permalink to this headline">¶</a></h3>
+<p>The common central european products with a range of 1500 km by 1400 km
+are presented in the following table:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="5%" />
+<col width="9%" />
+<col width="9%" />
+<col width="78%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">ID</th>
+<th class="head">INT</th>
+<th class="head">avail</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>EX</td>
+<td>5 min</td>
+<td>5 min</td>
+<td>analogue RX</td>
+</tr>
+<tr class="row-odd"><td>EZ</td>
+<td>5 min</td>
+<td>5 min</td>
+<td>analogue RZ</td>
+</tr>
+<tr class="row-even"><td>EY</td>
+<td>5 min</td>
+<td>5 min</td>
+<td>analogue EY after correction with Quality-composit</td>
+</tr>
+<tr class="row-odd"><td>EH</td>
+<td>1 h</td>
+<td>hh:50</td>
+<td>analogue RH (no preadjustment) 1 h summation of EY-composite</td>
+</tr>
+<tr class="row-even"><td>EB</td>
+<td>1 h</td>
+<td>hh:50</td>
+<td>analogue RB (with preadjustment) 1 h summation</td>
+</tr>
+<tr class="row-odd"><td>EW</td>
+<td>1 h</td>
+<td>hh:50</td>
+<td>analogue RW (full adjustment) 1 h summation</td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="RADOLAN-EX-Product">
+<h4>RADOLAN EX Product<a class="headerlink" href="#RADOLAN-EX-Product" title="Permalink to this headline">¶</a></h4>
+<p>Load data from data source</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [48]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">data</span><span class="p">,</span> <span class="n">attrs</span> <span class="o">=</span> <span class="n">read_radolan</span><span class="p">(</span><span class="s1">&#39;raa01-ex_10000-1408102050-dwd---bin.gz&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Mask data and apply scale and offset</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [49]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">masked_equal</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">-</span><span class="mi">9999</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">-</span> <span class="mf">32.5</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [50]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">plot_radolan</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">attrs</span><span class="p">,</span> <span class="n">radolan_egrid_xy</span><span class="p">,</span> <span class="n">clabel</span><span class="o">=</span><span class="s1">&#39;dBZ&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_radolan_radolan_showcase_105_0.png" src="../../_images/notebooks_radolan_radolan_showcase_105_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="RADOLAN-EZ-Product">
+<h4>RADOLAN EZ Product<a class="headerlink" href="#RADOLAN-EZ-Product" title="Permalink to this headline">¶</a></h4>
+<p>Load data from data source</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [51]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">data</span><span class="p">,</span> <span class="n">attrs</span> <span class="o">=</span> <span class="n">read_radolan</span><span class="p">(</span><span class="s1">&#39;raa01-ez_10000-1408102050-dwd---bin.gz&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Mask data</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [52]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">masked_equal</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">-</span><span class="mi">9999</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [53]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">plot_radolan</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">attrs</span><span class="p">,</span> <span class="n">radolan_egrid_xy</span><span class="p">,</span> <span class="n">clabel</span><span class="o">=</span><span class="s1">&#39;mm * h-1&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_radolan_radolan_showcase_111_0.png" src="../../_images/notebooks_radolan_radolan_showcase_111_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="RADOLAN-EY-Product">
+<h4>RADOLAN EY Product<a class="headerlink" href="#RADOLAN-EY-Product" title="Permalink to this headline">¶</a></h4>
+<p>Load data from data source</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [54]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">data</span><span class="p">,</span> <span class="n">attrs</span> <span class="o">=</span> <span class="n">read_radolan</span><span class="p">(</span><span class="s1">&#39;raa01-ey_10000-1408102050-dwd---bin.gz&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Mask data</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [55]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">masked_equal</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">-</span><span class="mi">9999</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [56]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">plot_radolan</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">attrs</span><span class="p">,</span> <span class="n">radolan_egrid_xy</span><span class="p">,</span> <span class="n">clabel</span><span class="o">=</span><span class="s1">&#39;mm * h-1&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_radolan_radolan_showcase_117_0.png" src="../../_images/notebooks_radolan_radolan_showcase_117_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="RADOLAN-EH-Product">
+<h4>RADOLAN EH Product<a class="headerlink" href="#RADOLAN-EH-Product" title="Permalink to this headline">¶</a></h4>
+<p>Load data from data source</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [57]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">data</span><span class="p">,</span> <span class="n">attrs</span> <span class="o">=</span> <span class="n">read_radolan</span><span class="p">(</span><span class="s1">&#39;raa01-eh_10000-1408102050-dwd---bin.gz&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Mask data</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [58]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">masked_equal</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">-</span><span class="mi">9999</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [59]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">plot_radolan</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">attrs</span><span class="p">,</span> <span class="n">radolan_egrid_xy</span><span class="p">,</span> <span class="n">clabel</span><span class="o">=</span><span class="s1">&#39;mm * h-1&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_radolan_radolan_showcase_123_0.png" src="../../_images/notebooks_radolan_radolan_showcase_123_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="RADOLAN-EB-Product">
+<h4>RADOLAN EB Product<a class="headerlink" href="#RADOLAN-EB-Product" title="Permalink to this headline">¶</a></h4>
+<p>Load data from data source</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [60]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">data</span><span class="p">,</span> <span class="n">attrs</span> <span class="o">=</span> <span class="n">read_radolan</span><span class="p">(</span><span class="s1">&#39;raa01-eb_10000-1408102050-dwd---bin.gz&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Mask data</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [61]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">masked_equal</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">-</span><span class="mi">9999</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [62]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">plot_radolan</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">attrs</span><span class="p">,</span> <span class="n">radolan_egrid_xy</span><span class="p">,</span> <span class="n">clabel</span><span class="o">=</span><span class="s1">&#39;mm * h-1&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_radolan_radolan_showcase_129_0.png" src="../../_images/notebooks_radolan_radolan_showcase_129_0.png" />
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="RADOLAN-PG/PC-Product">
+<h3>RADOLAN PG/PC Product<a class="headerlink" href="#RADOLAN-PG/PC-Product" title="Permalink to this headline">¶</a></h3>
+<p>The PG/PC product is a bit different from the normal RADOLAN formats.
+The header is actually the same, but the data is runlength encoded. Also
+the RADOLAN grid cells have 2km edge length (460x460 cells).</p>
+<p>Load data from data source</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [63]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">radfile</span> <span class="o">=</span> <span class="s1">&#39;raa00-pc_10015-1408030905-dwd---bin.gz&#39;</span>
+<span class="n">radfile</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">get_wradlib_data_file</span><span class="p">(</span><span class="s1">&#39;radolan/misc/&#39;</span> <span class="o">+</span> <span class="n">radfile</span><span class="p">)</span>
+<span class="n">data</span><span class="p">,</span> <span class="n">attrs</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_RADOLAN_composite</span><span class="p">(</span><span class="n">radfile</span><span class="p">,</span> <span class="n">missing</span><span class="o">=</span><span class="mi">255</span><span class="p">)</span>
+<span class="n">radolan_grid_pc</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">georef</span><span class="o">.</span><span class="n">get_radolan_grid</span><span class="p">(</span><span class="mi">460</span><span class="p">,</span><span class="mi">460</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Mask data</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [64]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">masked_equal</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(460, 460)
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [65]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># plot the images side by side</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">radolan_grid_pc</span><span class="p">[:,:,</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">Y</span> <span class="o">=</span> <span class="n">radolan_grid_pc</span><span class="p">[:,:,</span><span class="mi">1</span><span class="p">]</span>
+<span class="c1"># color-scheme taken from DWD &quot;legend_radar_products_pc.pdf&quot;</span>
+<span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;lightgrey&#39;</span><span class="p">,</span> <span class="s1">&#39;yellow&#39;</span><span class="p">,</span> <span class="s1">&#39;lightblue&#39;</span><span class="p">,</span> <span class="s1">&#39;magenta&#39;</span><span class="p">,</span> <span class="s1">&#39;green&#39;</span><span class="p">,</span>
+          <span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="s1">&#39;darkblue&#39;</span><span class="p">,</span> <span class="s1">&#39;darkred&#39;</span><span class="p">]</span>
+<span class="n">cmap</span> <span class="o">=</span> <span class="n">mpl</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">ListedColormap</span><span class="p">(</span><span class="n">colors</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sa">u</span><span class="s1">&#39;DWD-pc-scheme&#39;</span><span class="p">)</span>
+<span class="n">bounds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">colors</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">norm</span> <span class="o">=</span> <span class="n">mpl</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">BoundaryNorm</span><span class="p">(</span><span class="n">bounds</span><span class="p">,</span> <span class="n">cmap</span><span class="o">.</span><span class="n">N</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">norm</span><span class="p">)</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">xlim</span><span class="p">((</span><span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">ylim</span><span class="p">((</span><span class="n">Y</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">Y</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+
+<span class="c1"># add colorbar and do some magic for proper visualisation</span>
+<span class="n">cb</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">shrink</span><span class="o">=</span><span class="mf">0.75</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">norm</span><span class="p">,</span> <span class="n">boundaries</span><span class="o">=</span><span class="n">bounds</span><span class="p">)</span>
+<span class="n">loc</span> <span class="o">=</span> <span class="n">bounds</span> <span class="o">+</span> <span class="o">.</span><span class="mi">5</span>
+<span class="n">cb</span><span class="o">.</span><span class="n">set_ticks</span><span class="p">(</span><span class="n">loc</span><span class="p">)</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="n">bounds</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">cb</span><span class="o">.</span><span class="n">set_ticklabels</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span>
+<span class="n">cl</span> <span class="o">=</span> <span class="n">cb</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">get_yticklabels</span><span class="p">()</span>
+<span class="n">cl</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="s1">&#39;9&#39;</span><span class="p">)</span>
+<span class="n">cb</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">([</span><span class="n">elem</span><span class="o">.</span><span class="n">get_text</span><span class="p">()</span> <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">cl</span><span class="p">])</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;RADOLAN PG Product </span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;datetime&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isoformat</span><span class="p">())</span>
+<span class="n">pl</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_radolan_radolan_showcase_136_0.png" src="../../_images/notebooks_radolan_radolan_showcase_136_0.png" />
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="radolan_network.html" class="btn btn-neutral float-right" title="RADOLAN Radar Network" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="radolan_quickstart.html" class="btn btn-neutral" title="RADOLAN Quick Start" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2011-2016, wradlib developers.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.11.3',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

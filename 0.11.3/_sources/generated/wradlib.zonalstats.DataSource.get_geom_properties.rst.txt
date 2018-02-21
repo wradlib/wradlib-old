@@ -1,0 +1,6 @@
+wradlib.zonalstats.DataSource.get\_geom\_properties
+===================================================
+
+.. currentmodule:: wradlib.zonalstats
+
+.. automethod:: DataSource.get_geom_properties

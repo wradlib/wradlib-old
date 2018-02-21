@@ -1,0 +1,6 @@
+wradlib.adjust.AdjustMFB.xvalidate
+==================================
+
+.. currentmodule:: wradlib.adjust
+
+.. automethod:: AdjustMFB.xvalidate

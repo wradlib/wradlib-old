@@ -1,0 +1,6 @@
+wradlib.zonalstats.GridPointsToPoly.mean
+========================================
+
+.. currentmodule:: wradlib.zonalstats
+
+.. automethod:: GridPointsToPoly.mean

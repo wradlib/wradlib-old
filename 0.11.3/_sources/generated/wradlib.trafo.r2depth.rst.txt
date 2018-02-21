@@ -1,0 +1,6 @@
+wradlib.trafo.r2depth
+=====================
+
+.. currentmodule:: wradlib.trafo
+
+.. autofunction:: r2depth

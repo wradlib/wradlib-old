@@ -1,0 +1,6 @@
+wradlib.dp.process\_raw\_phidp\_vulpiani
+========================================
+
+.. currentmodule:: wradlib.dp
+
+.. autofunction:: process_raw_phidp_vulpiani

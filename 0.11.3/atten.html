@@ -1,0 +1,345 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Attenuation Correction &mdash; wradlib</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/wradlib.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="wradlib" href="index.html"/>
+        <link rel="up" title="Library Reference" href="reference.html"/>
+        <link rel="next" title="wradlib.atten.correctAttenuationHB" href="generated/wradlib.atten.correctAttenuationHB.html"/>
+        <link rel="prev" title="wradlib.vpr.PseudoCAPPI.__call__" href="generated/wradlib.vpr.PseudoCAPPI.__call__.html"/>
+    
+    <link href="_static/wradlib.css" rel="stylesheet" type="text/css">
+
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+  <a href="index.html" class="icon icon-home"> wradlib
+
+
+
+</a>
+
+
+
+  <div class="version">
+    
+    <button class="verbtn">0.11.3</button>
+    <div class="version-content">
+      
+        <a href="../latest/">latest</a>
+        <a href="../0.11.3/">0.11.3</a>
+        <a href="../0.11.1/">0.11.1</a>
+    </div>
+  </div>
+
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="gettingstarted.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks.html">Tutorials and Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="reference.html">Library Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="io.html">Raw Data I/O</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trafo.html">Data Transformation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zr.html">Z-R Conversions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="georef.html">Georeferencing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipol.html">Interpolation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qual.html">Data Quality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="comp.html">Composition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clutter.html">Clutter Identification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dp.html">Dual-Pol and Differential Phase</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fill.html">Filling Missing Values</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vpr.html">Vertical Profile of Reflectivity (VPR)</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Attenuation Correction</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/wradlib.atten.correctAttenuationHB.html">wradlib.atten.correctAttenuationHB</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/wradlib.atten.correctAttenuationKraemer.html">wradlib.atten.correctAttenuationKraemer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/wradlib.atten.correctAttenuationHJ.html">wradlib.atten.correctAttenuationHJ</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/wradlib.atten.constraint_dBZ.html">wradlib.atten.constraint_dBZ</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/wradlib.atten.constraint_pia.html">wradlib.atten.constraint_pia</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/wradlib.atten.correctAttenuationConstrained2.html">wradlib.atten.correctAttenuationConstrained2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/wradlib.atten.correctRadomeAttenuationEmpirical.html">wradlib.atten.correctRadomeAttenuationEmpirical</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/wradlib.atten.pia_from_kdp.html">wradlib.atten.pia_from_kdp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="adjust.html">Gage adjustment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="verify.html">Verification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vis.html">Visualisation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zonalstats.html">Zonal Statistics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="util.html">Utility functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dev_setup.html">For Developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="zreferences.html">Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="release_notes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">wradlib</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="reference.html">Library Reference</a> &raquo;</li>
+        
+      <li>Attenuation Correction</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/atten.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+/* nice headers on first paragraph of info/warning boxes */
+.admonition .first {
+    margin: -12px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1;
+    display: block;
+}
+.admonition.warning .first {
+    background: #f0b37e;
+}
+.admonition.note .first {
+    background: #6ab0de;
+}
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<span class="target" id="module-wradlib.atten"></span><div class="section" id="attenuation-correction">
+<h1>Attenuation Correction<a class="headerlink" href="#attenuation-correction" title="Permalink to this headline">¶</a></h1>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/wradlib.atten.correctAttenuationHB.html#wradlib.atten.correctAttenuationHB" title="wradlib.atten.correctAttenuationHB"><code class="xref py py-obj docutils literal notranslate"><span class="pre">correctAttenuationHB</span></code></a></td>
+<td>Gate-by-Gate attenuation correction according to</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/wradlib.atten.correctAttenuationKraemer.html#wradlib.atten.correctAttenuationKraemer" title="wradlib.atten.correctAttenuationKraemer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">correctAttenuationKraemer</span></code></a></td>
+<td>Gate-by-Gate attenuation correction according to <a class="reference internal" href="zreferences.html#kraemer2008" id="id1">[Kraemer et al., 2008]</a>.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/wradlib.atten.correctAttenuationHJ.html#wradlib.atten.correctAttenuationHJ" title="wradlib.atten.correctAttenuationHJ"><code class="xref py py-obj docutils literal notranslate"><span class="pre">correctAttenuationHJ</span></code></a></td>
+<td>Gate-by-Gate attenuation correction based on <a class="reference internal" href="zreferences.html#kraemer2008" id="id2">[Kraemer et al., 2008]</a>, expanded by <a class="reference internal" href="zreferences.html#jacobi2012" id="id3">[Jacobi et al., 2012]</a>.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/wradlib.atten.constraint_dBZ.html#wradlib.atten.constraint_dBZ" title="wradlib.atten.constraint_dBZ"><code class="xref py py-obj docutils literal notranslate"><span class="pre">constraint_dBZ</span></code></a></td>
+<td>Constraint callback function for correctAttenuationConstrained.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/wradlib.atten.constraint_pia.html#wradlib.atten.constraint_pia" title="wradlib.atten.constraint_pia"><code class="xref py py-obj docutils literal notranslate"><span class="pre">constraint_pia</span></code></a></td>
+<td>Constraint callback function for correctAttenuationConstrained.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/wradlib.atten.correctAttenuationConstrained2.html#wradlib.atten.correctAttenuationConstrained2" title="wradlib.atten.correctAttenuationConstrained2"><code class="xref py py-obj docutils literal notranslate"><span class="pre">correctAttenuationConstrained2</span></code></a></td>
+<td>Gate-by-Gate attenuation correction based on the iterative approach of <a class="reference internal" href="zreferences.html#kraemer2008" id="id4">[Kraemer et al., 2008]</a> with a generalized and scalable number of constraints.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/wradlib.atten.correctRadomeAttenuationEmpirical.html#wradlib.atten.correctRadomeAttenuationEmpirical" title="wradlib.atten.correctRadomeAttenuationEmpirical"><code class="xref py py-obj docutils literal notranslate"><span class="pre">correctRadomeAttenuationEmpirical</span></code></a></td>
+<td>Estimate two-way wet radome losses as an empirical function of frequency and rainfall rate for both standard and hydrophobic radomes based on the approach of <a class="reference internal" href="zreferences.html#merceret2000" id="id5">[Merceret et al., 2000]</a>.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/wradlib.atten.pia_from_kdp.html#wradlib.atten.pia_from_kdp" title="wradlib.atten.pia_from_kdp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pia_from_kdp</span></code></a></td>
+<td>Retrieving path integrated attenuation from specific differential phase (Kdp).</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="generated/wradlib.atten.correctAttenuationHB.html" class="btn btn-neutral float-right" title="wradlib.atten.correctAttenuationHB" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="generated/wradlib.vpr.PseudoCAPPI.__call__.html" class="btn btn-neutral" title="wradlib.vpr.PseudoCAPPI.__call__" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2011-2016, wradlib developers.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.11.3',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,425 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Tutorials and Examples &mdash; wradlib</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/wradlib.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="wradlib" href="index.html"/>
+        <link rel="next" title="How to use the tutorials and examples?" href="jupyter.html"/>
+        <link rel="prev" title="Getting Started" href="gettingstarted.html"/>
+    
+    <link href="_static/wradlib.css" rel="stylesheet" type="text/css">
+
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+  <a href="index.html" class="icon icon-home"> wradlib
+
+
+
+</a>
+
+
+
+  <div class="version">
+    
+    <button class="verbtn">0.11.3</button>
+    <div class="version-content">
+      
+        <a href="../latest/">latest</a>
+        <a href="../0.11.3/">0.11.3</a>
+        <a href="../0.11.1/">0.11.1</a>
+    </div>
+  </div>
+
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="gettingstarted.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Tutorials and Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="jupyter.html">How to use the tutorials and examples?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/learnpython.html">An incomplete introduction to Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/basics.html">Getting started with wradlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/fileio.html">Data Input - Data Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/attenuation/wradlib_attenuation.html">Attenuation correction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/beamblockage/wradlib_beamblock.html">Beam Blockage Calculation using a DEM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/classify.html">Clutter and Echo Classification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/georeferencing.html">Georeferencing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/match3d/wradlib_match_workflow.html">Match spaceborn SR (GPM/TRMM) with ground radars GR</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/develop.html">For Developers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/interpolation/wradlib_ipol_example.html">How to use wradlib’s ipol module for interpolation tasks?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/multisensor/wradlib_adjust_example.html">Adjusting radar-base rainfall estimates by rain gauge observations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/verification/wradlib_verify_example.html">Routine verification measures for radar-based precipitation estimates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/recipes.html">Recipes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/radolan.html">RADOLAN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/zonalstats/wradlib_zonalstats_classes.html">Zonal Statistics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="reference.html">Library Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dev_setup.html">For Developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="zreferences.html">Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="release_notes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">wradlib</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Tutorials and Examples</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/notebooks.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+/* nice headers on first paragraph of info/warning boxes */
+.admonition .first {
+    margin: -12px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1;
+    display: block;
+}
+.admonition.warning .first {
+    background: #f0b37e;
+}
+.admonition.note .first {
+    background: #6ab0de;
+}
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="tutorials-and-examples">
+<h1>Tutorials and Examples<a class="headerlink" href="#tutorials-and-examples" title="Permalink to this headline">¶</a></h1>
+<p>This tutorials and examples should give an idea how the individual functions of
+<span class="math notranslate">\(\omega radlib\)</span> can be used for weather radar processing. For additional
+help to certain functions also consider to have look at the jupyter notebooks
+and example scripts distributed with the source code.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="jupyter.html">How to use the tutorials and examples?</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="jupyter.html#examples-your-entry-point-to-wradlib">Examples: your entry point to wradlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jupyter.html#interactive-examples-with-jupyter-notebooks">Interactive examples with jupyter notebooks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jupyter.html#how-can-i-get-the-example-notebooks">How can I get the example notebooks?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jupyter.html#how-can-i-get-the-example-data">How can I get the example data?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jupyter.html#how-to-install-jupyter">How to install jupyter?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jupyter.html#i-prefer-simple-python-scripts-instead-of-notebooks">I prefer simple Python scripts instead of notebooks</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/learnpython.html">An incomplete introduction to Python</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/python/quickstart.html">A quick start to Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/python/numpyintro.html">Numpy: manipulating numerical data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/python/mplintro.html">Visualising data with Matplotlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/python/timeseries.html">Dealing with time series</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/python/virtenvs.html">Using virtual environments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ide.html">Integrated Development Environments for Python</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/basics.html">Getting started with wradlib</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/basics/wradlib_introduction.html">Get wradlib version</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/basics/wradlib_workflow.html">Typical Workflow for Radar-Based RainfallEstimation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/basics/wradlib_get_rainfall.html">From Reflectivity toRainfall</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/visualisation/wradlib_plot_ppi_example.html">Plot Polar Data asPPI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/visualisation/wradlib_plot_curvelinear_grids.html">Plot PolarData on CurvelinearGrids</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/fileio.html">Data Input - Data Output</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/fileio/wradlib_radar_formats.html">Overview over Radar DataFormats</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/fileio/wradlib_reading_dx.html">DWD DX Format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/radolan/radolan_format.html">DWD RADOLAN Format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/fileio/wradlib_generic_netcdf_example.html">Generic NetCDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/fileio/wradlib_load_rainbow_example.html">Gematronik Rainbow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/fileio/wradlib_gis_export_example.html">GIS Export</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/attenuation/wradlib_attenuation.html">Attenuation correction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/attenuation/wradlib_attenuation.html#Introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/attenuation/wradlib_attenuation.html#The-Example-Event:-June-2nd,-2008,-SW-Germany">The Example Event: June 2nd, 2008, SW-Germany</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/attenuation/wradlib_attenuation.html#Examining-different-attenuation-correction-procedures">Examining different attenuation correction procedures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/attenuation/wradlib_attenuation.html#Comparison-of-all-Methods">Comparison of all Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/beamblockage/wradlib_beamblock.html">Beam Blockage Calculation using a DEM</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/beamblockage/wradlib_beamblock.html#Setup-for-Bonn-radar">Setup for Bonn radar</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/beamblockage/wradlib_beamblock.html#Preprocessing-the-digitial-elevation-model">Preprocessing the digitial elevation model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/beamblockage/wradlib_beamblock.html#Calculate-Beam-Blockage">Calculate Beam-Blockage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/beamblockage/wradlib_beamblock.html#Visualize-Beamblockage">Visualize Beamblockage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/beamblockage/wradlib_beamblock.html#Visualize-Beam-Propagation-showing-earth-curvature">Visualize Beam Propagation showing earth curvature</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/classify.html">Clutter and Echo Classification</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/classify/wradlib_clutter_gabella_example.html">Clutter detection using Gabellaapproach</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/classify/wradlib_clutter_cloud_example.html">Clutter detection by using space-born cloudimages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/classify/wradlib_histo_cut_example.html">Heuristic clutterdetection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/classify/wradlib_fuzzy_echo_classify.html">Fuzzy echoclassification</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/georeferencing.html">Georeferencing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/georeferencing/wradlib_coords_example.html">Computing Cartesian Coordinates from PolarData</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/georeferencing/wradlib_georef_example.html">Georeferencing a RadarDataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/radolan/radolan_grid.html">RADOLAN Grid Calculations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/visualisation/wradlib_overlay.html">Overlay Ancillary Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/zonalstats/wradlib_zonalstats_classes.html">Managing GeoreferencedData</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/match3d/wradlib_match_workflow.html">Match spaceborn SR (GPM/TRMM) with ground radars GR</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/match3d/wradlib_match_workflow.html#Conventions">Conventions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/match3d/wradlib_match_workflow.html#Data-Input">Data Input</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/match3d/wradlib_match_workflow.html#Data-handling">Data handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/match3d/wradlib_match_workflow.html#Georeferencing">Georeferencing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/match3d/wradlib_match_workflow.html#Matching-SR/GR">Matching SR/GR</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/match3d/wradlib_match_workflow.html#Diagnostic-Plots">Diagnostic Plots</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/match3d/wradlib_match_workflow.html#Former-Method-using-loop">Former Method using loop</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/develop.html">For Developers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorial_autoimages.html">Automate Image Generation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/develop/wradlib_api_change.html">Apichange Function Decorators</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/interpolation/wradlib_ipol_example.html">How to use wradlib’s ipol module for interpolation tasks?</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/interpolation/wradlib_ipol_example.html#1-dimensional-example">1-dimensional example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/interpolation/wradlib_ipol_example.html#2-dimensional-example">2-dimensional example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/interpolation/wradlib_ipol_example.html#Using-the-convenience-function-ipol.interpolation-in-order-to-deal-with-missing-values">Using the convenience function ipol.interpolation in order to deal with missing values</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/interpolation/wradlib_ipol_example.html#How-to-use-interpolation-for-gridding-data-in-polar-coordinates?">How to use interpolation for gridding data in polar coordinates?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/multisensor/wradlib_adjust_example.html">Adjusting radar-base rainfall estimates by rain gauge observations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/multisensor/wradlib_adjust_example.html#Background">Background</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/multisensor/wradlib_adjust_example.html#Example-for-the-1-dimensional-case">Example for the 1-dimensional case</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/multisensor/wradlib_adjust_example.html#Example-for-the-2-dimensional-case">Example for the 2-dimensional case</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/verification/wradlib_verify_example.html">Routine verification measures for radar-based precipitation estimates</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/verification/wradlib_verify_example.html#Extract-bin-values-from-a-polar-radar-data-set-at-rain-gage-locations">Extract bin values from a polar radar data set at rain gage locations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/verification/wradlib_verify_example.html#Create-a-verification-report">Create a verification report</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/recipes.html">Recipes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/workflow/recipe1.html">Recipe1: Clutter and attenuation correction plus composition for twoDWD radars</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/workflow/recipe2.html">Recipe2: Reading and visualizing an ODIM_H5 polarvolume</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/radolan.html">RADOLAN</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/radolan/radolan_quickstart.html">RADOLAN Quick Start</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/radolan/radolan_format.html">RADOLAN Binary Data Format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/radolan/radolan_showcase.html">RADOLAN Product Showcase</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/radolan/radolan_grid.html">RADOLAN Grid</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/radolan/radolan_network.html">DWD Radar Network</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/zonalstats/wradlib_zonalstats_classes.html">Zonal Statistics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/zonalstats/wradlib_zonalstats_classes.html#DataSource">DataSource</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/zonalstats/wradlib_zonalstats_classes.html#ZonalData">ZonalData</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/zonalstats/wradlib_zonalstats_classes.html#ZonalStats">ZonalStats</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/zonalstats/wradlib_zonalstats_classes.html#Examples">Examples</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="jupyter.html" class="btn btn-neutral float-right" title="How to use the tutorials and examples?" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="gettingstarted.html" class="btn btn-neutral" title="Getting Started" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2011-2016, wradlib developers.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.11.3',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

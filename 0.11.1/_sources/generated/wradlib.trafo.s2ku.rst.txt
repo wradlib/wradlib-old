@@ -1,0 +1,13 @@
+wradlib\.trafo\.s2ku
+====================
+
+.. currentmodule:: wradlib.trafo
+
+.. autoclass:: s2ku
+
+   
+
+
+
+   
+

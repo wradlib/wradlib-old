@@ -1,0 +1,6 @@
+wradlib.georef.raster.pixel\_coordinates
+========================================
+
+.. currentmodule:: wradlib.georef.raster
+
+.. autofunction:: pixel_coordinates

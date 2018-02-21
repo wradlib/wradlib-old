@@ -1,0 +1,6 @@
+wradlib\.dp\.texture
+====================
+
+.. currentmodule:: wradlib.dp
+
+.. autofunction:: texture

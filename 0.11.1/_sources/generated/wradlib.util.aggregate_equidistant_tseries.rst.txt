@@ -1,0 +1,6 @@
+wradlib\.util\.aggregate\_equidistant\_tseries
+==============================================
+
+.. currentmodule:: wradlib.util
+
+.. autofunction:: aggregate_equidistant_tseries

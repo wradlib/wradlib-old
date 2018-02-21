@@ -1,0 +1,6 @@
+wradlib.io.iris.IrisFile.fh
+===========================
+
+.. currentmodule:: wradlib.io.iris
+
+.. autoattribute:: IrisFile.fh

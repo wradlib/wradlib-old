@@ -1,0 +1,6 @@
+wradlib.io.iris.IrisFile.get\_product\_specific\_info
+=====================================================
+
+.. currentmodule:: wradlib.io.iris
+
+.. automethod:: IrisFile.get_product_specific_info

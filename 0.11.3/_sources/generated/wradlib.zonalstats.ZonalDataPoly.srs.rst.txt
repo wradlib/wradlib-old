@@ -1,0 +1,6 @@
+wradlib.zonalstats.ZonalDataPoly.srs
+====================================
+
+.. currentmodule:: wradlib.zonalstats
+
+.. autoattribute:: ZonalDataPoly.srs

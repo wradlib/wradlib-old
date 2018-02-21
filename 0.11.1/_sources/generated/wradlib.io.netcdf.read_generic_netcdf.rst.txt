@@ -1,0 +1,6 @@
+wradlib\.io\.netcdf\.read\_generic\_netcdf
+==========================================
+
+.. currentmodule:: wradlib.io.netcdf
+
+.. autofunction:: read_generic_netcdf

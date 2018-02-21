@@ -1,0 +1,13 @@
+wradlib\.adjust\.AdjustBase
+===========================
+
+.. currentmodule:: wradlib.adjust
+
+.. autoclass:: AdjustBase
+
+   
+
+
+
+   
+

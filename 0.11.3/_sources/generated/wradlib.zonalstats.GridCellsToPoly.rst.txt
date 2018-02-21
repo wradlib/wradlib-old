@@ -1,0 +1,34 @@
+wradlib.zonalstats.GridCellsToPoly
+==================================
+
+.. currentmodule:: wradlib.zonalstats
+
+.. autoclass:: GridCellsToPoly
+
+   
+
+.. HACK -- the point here is that we don't want this to appear in the output, but the autosummary should still generate the pages.
+
+.. autosummary::
+   :toctree:
+
+
+   ~GridCellsToPoly.check_empty
+   ~GridCellsToPoly.mean
+   ~GridCellsToPoly.var
+
+
+
+
+   
+
+.. HACK -- the point here is that we don't want this to appear in the output, but the autosummary should still generate the pages.
+
+.. autosummary::
+   :toctree:
+
+
+   ~GridCellsToPoly.ix
+   ~GridCellsToPoly.w
+   ~GridCellsToPoly.zdata
+

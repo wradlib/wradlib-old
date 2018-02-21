@@ -1,0 +1,6 @@
+wradlib\.io\.iris\.read\_iris
+=============================
+
+.. currentmodule:: wradlib.io.iris
+
+.. autofunction:: read_iris

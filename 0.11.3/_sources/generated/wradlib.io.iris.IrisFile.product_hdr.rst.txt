@@ -1,0 +1,6 @@
+wradlib.io.iris.IrisFile.product\_hdr
+=====================================
+
+.. currentmodule:: wradlib.io.iris
+
+.. autoattribute:: IrisFile.product_hdr

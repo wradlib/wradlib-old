@@ -1,0 +1,6 @@
+wradlib.adjust.AdjustMultiply.xvalidate
+=======================================
+
+.. currentmodule:: wradlib.adjust
+
+.. automethod:: AdjustMultiply.xvalidate

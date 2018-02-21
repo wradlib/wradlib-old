@@ -1,0 +1,6 @@
+wradlib.io.radolan.read\_radolan\_header
+========================================
+
+.. currentmodule:: wradlib.io.radolan
+
+.. autofunction:: read_radolan_header

@@ -1,0 +1,346 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>wradlib.vpr.PseudoCAPPI &mdash; wradlib</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/wradlib.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="wradlib" href="../index.html"/>
+        <link rel="up" title="Vertical Profile of Reflectivity (VPR)" href="../vpr.html"/>
+    
+    <link href="../_static/wradlib.css" rel="stylesheet" type="text/css">
+
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+  <a href="../index.html" class="icon icon-home"> wradlib
+
+
+
+</a>
+
+
+
+  <div class="version">
+    
+    <button class="verbtn">0.11.1</button>
+    <div class="version-content">
+      
+        <a href="../latest/">latest</a>
+        <a href="../0.11.1/">0.11.1</a>
+    </div>
+  </div>
+
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../gettingstarted.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks.html">Tutorials and Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../reference.html">Library Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../io.html">Raw Data I/O</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../trafo.html">Data Transformation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zr.html">Z-R Conversions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../georef.html">Georeferencing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ipol.html">Interpolation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../qual.html">Data Quality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../comp.html">Composition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../clutter.html">Clutter Identification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dp.html">Dual-Pol and Differential Phase</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../fill.html">Filling Missing Values</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../vpr.html">Vertical Profile of Reflectivity (VPR)</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="wradlib.vpr.volcoords_from_polar.html">wradlib.vpr.volcoords_from_polar</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wradlib.vpr.make_3D_grid.html">wradlib.vpr.make_3D_grid</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wradlib.vpr.CartesianVolume.html">wradlib.vpr.CartesianVolume</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wradlib.vpr.CAPPI.html">wradlib.vpr.CAPPI</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">wradlib.vpr.PseudoCAPPI</a><ul class="simple">
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../atten.html">Attenuation Correction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../adjust.html">Gage adjustment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../verify.html">Verification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../vis.html">Visualisation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zonalstats.html">Zonal Statistics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../util.html">Utility functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_setup.html">For Developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zreferences.html">Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">wradlib</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../reference.html">Library Reference</a> &raquo;</li>
+        
+          <li><a href="../vpr.html">Vertical Profile of Reflectivity (VPR)</a> &raquo;</li>
+        
+      <li>wradlib.vpr.PseudoCAPPI</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/generated/wradlib.vpr.PseudoCAPPI.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+/* nice headers on first paragraph of info/warning boxes */
+.admonition .first {
+    margin: -12px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1;
+    display: block;
+}
+.admonition.warning .first {
+    background: #f0b37e;
+}
+.admonition.note .first {
+    background: #6ab0de;
+}
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="wradlib-vpr-pseudocappi">
+<h1>wradlib.vpr.PseudoCAPPI<a class="headerlink" href="#wradlib-vpr-pseudocappi" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="wradlib.vpr.PseudoCAPPI">
+<em class="property">class </em><code class="descclassname">wradlib.vpr.</code><code class="descname">PseudoCAPPI</code><span class="sig-paren">(</span><em>polcoords</em>, <em>gridcoords</em>, <em>gridshape=None</em>, <em>maxrange=None</em>, <em>minelev=None</em>, <em>maxelev=None</em>, <em>Ipclass=&lt;class 'wradlib.ipol.Idw'&gt;</em>, <em>**ipargs</em><span class="sig-paren">)</span><a class="headerlink" href="#wradlib.vpr.PseudoCAPPI" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a Pseudo-CAPPI Constant Altitude Plan Position Indicator (CAPPI)</p>
+<p>The difference to a CAPPI (<a class="reference internal" href="wradlib.vpr.CAPPI.html#wradlib.vpr.CAPPI" title="wradlib.vpr.CAPPI"><code class="xref py py-meth docutils literal"><span class="pre">wradlib.vpr.CAPPI</span></code></a> is that the blind area
+<em>below</em> and <em>above</em> the radar are not masked, but filled by interpolation.
+Only the areas beyond the <em>range</em> of the radar are masked out. As a result,
+“blind” areas below the radar are particularly filled from the lowest
+available elevation angle.</p>
+<p>In order to create a Pseudo CAPPI, you first have to create an instance of
+this class. Calling this instance with the actual polar volume data will
+return the Pseudo CAPPI grid.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>polcoords</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.array.html#numpy.array" title="(in NumPy v1.13)"><code class="docutils literal"><span class="pre">numpy.array</span></code></a> coordinate array         of shape (num bins, 3)) – Represents the 3-D coordinates of the orginal radar bins</li>
+<li><strong>gridcoords</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.array.html#numpy.array" title="(in NumPy v1.13)"><code class="docutils literal"><span class="pre">numpy.array</span></code></a> coordinate array         of shape (num voxels, 3)) – Represents the 3-D coordinates of the Cartesian grid</li>
+<li><strong>gridshape</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#tuple" title="(in Python v2.7)"><em>tuple</em></a>) – shape of the original polar volume (num elevation angles,
+num azimuth angles, num range bins)
+size must correspond to length of polcoords</li>
+<li><strong>maxrange</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) – The maximum radar range (must be the same for each elevation angle)</li>
+<li><strong>Ipclass</strong> (an interpolation class from <a class="reference internal" href="../ipol.html#module-wradlib.ipol" title="wradlib.ipol"><code class="xref py py-mod docutils literal"><span class="pre">wradlib.ipol</span></code></a>) – </li>
+<li><strong>ipargs</strong> (<em>keyword arguments corresponding to Ipclass</em>) – </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">__call__</span></code>(data)</td>
+<td>Interpolates the polar data to 3-dimensional Cartesian coordinates</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2011-2016, wradlib developers.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.11.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,6 @@
+wradlib.zonalstats.mask\_from\_bbox
+===================================
+
+.. currentmodule:: wradlib.zonalstats
+
+.. autofunction:: mask_from_bbox

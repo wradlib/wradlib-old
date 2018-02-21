@@ -1,0 +1,23 @@
+wradlib.adjust.AdjustNone
+=========================
+
+.. currentmodule:: wradlib.adjust
+
+.. autoclass:: AdjustNone
+
+   
+
+.. HACK -- the point here is that we don't want this to appear in the output, but the autosummary should still generate the pages.
+
+.. autosummary::
+   :toctree:
+
+
+   ~AdjustNone.__call__
+   ~AdjustNone.xvalidate
+
+
+
+
+   
+

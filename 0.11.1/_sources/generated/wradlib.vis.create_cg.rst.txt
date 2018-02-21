@@ -1,0 +1,6 @@
+wradlib\.vis\.create\_cg
+========================
+
+.. currentmodule:: wradlib.vis
+
+.. autofunction:: create_cg

@@ -1,0 +1,6 @@
+wradlib.qual.beam\_block\_frac
+==============================
+
+.. currentmodule:: wradlib.qual
+
+.. autofunction:: beam_block_frac

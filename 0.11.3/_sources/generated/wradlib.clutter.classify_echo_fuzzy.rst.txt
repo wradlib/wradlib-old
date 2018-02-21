@@ -1,0 +1,6 @@
+wradlib.clutter.classify\_echo\_fuzzy
+=====================================
+
+.. currentmodule:: wradlib.clutter
+
+.. autofunction:: classify_echo_fuzzy

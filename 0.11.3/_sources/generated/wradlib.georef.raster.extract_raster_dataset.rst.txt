@@ -1,0 +1,6 @@
+wradlib.georef.raster.extract\_raster\_dataset
+==============================================
+
+.. currentmodule:: wradlib.georef.raster
+
+.. autofunction:: extract_raster_dataset

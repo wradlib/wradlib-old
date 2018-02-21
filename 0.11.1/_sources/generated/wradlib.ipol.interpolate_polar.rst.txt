@@ -1,0 +1,6 @@
+wradlib\.ipol\.interpolate\_polar
+=================================
+
+.. currentmodule:: wradlib.ipol
+
+.. autofunction:: interpolate_polar

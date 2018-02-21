@@ -1,0 +1,352 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>wradlib.georef.vector.ogr_add_feature &mdash; wradlib</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/wradlib.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="wradlib" href="../index.html"/>
+        <link rel="up" title="Georeferencing" href="../georef.html"/>
+        <link rel="next" title="wradlib.georef.vector.ogr_add_geometry" href="wradlib.georef.vector.ogr_add_geometry.html"/>
+        <link rel="prev" title="wradlib.georef.vector.ogr_copy_layer_by_name" href="wradlib.georef.vector.ogr_copy_layer_by_name.html"/>
+    
+    <link href="../_static/wradlib.css" rel="stylesheet" type="text/css">
+
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+  <a href="../index.html" class="icon icon-home"> wradlib
+
+
+
+</a>
+
+
+
+  <div class="version">
+    
+    <button class="verbtn">0.11.1</button>
+    <div class="version-content">
+      
+        <a href="../latest/">latest</a>
+        <a href="../0.11.1/">0.11.1</a>
+    </div>
+  </div>
+
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../gettingstarted.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks.html">Tutorials and Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../reference.html">Library Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../io.html">Raw Data I/O</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../trafo.html">Data Transformation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zr.html">Z-R Conversions</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../georef.html">Georeferencing</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../georef.html#miscellaneous">Miscellaneous</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../georef.html#polar-grid-functions">Polar Grid Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../georef.html#projection-functions">Projection Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../georef.html#raster-functions">Raster Functions</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../georef.html#vector-functions-gdal">Vector Functions (GDAL)</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="wradlib.georef.vector.get_shape_coordinates.html">wradlib.georef.vector.get_shape_coordinates</a></li>
+<li class="toctree-l4"><a class="reference internal" href="wradlib.georef.vector.get_shape_points.html">wradlib.georef.vector.get_shape_points</a></li>
+<li class="toctree-l4"><a class="reference internal" href="wradlib.georef.vector.transform_geometry.html">wradlib.georef.vector.transform_geometry</a></li>
+<li class="toctree-l4"><a class="reference internal" href="wradlib.georef.vector.get_shape_coordinates.html">wradlib.georef.vector.get_shape_coordinates</a></li>
+<li class="toctree-l4"><a class="reference internal" href="wradlib.georef.vector.ogr_create_layer.html">wradlib.georef.vector.ogr_create_layer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="wradlib.georef.vector.ogr_copy_layer.html">wradlib.georef.vector.ogr_copy_layer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="wradlib.georef.vector.ogr_copy_layer_by_name.html">wradlib.georef.vector.ogr_copy_layer_by_name</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">wradlib.georef.vector.ogr_add_feature</a></li>
+<li class="toctree-l4"><a class="reference internal" href="wradlib.georef.vector.ogr_add_geometry.html">wradlib.georef.vector.ogr_add_geometry</a></li>
+<li class="toctree-l4"><a class="reference internal" href="wradlib.georef.vector.numpy_to_ogr.html">wradlib.georef.vector.numpy_to_ogr</a></li>
+<li class="toctree-l4"><a class="reference internal" href="wradlib.georef.vector.ogr_to_numpy.html">wradlib.georef.vector.ogr_to_numpy</a></li>
+<li class="toctree-l4"><a class="reference internal" href="wradlib.georef.vector.ogr_geocol_to_numpy.html">wradlib.georef.vector.ogr_geocol_to_numpy</a></li>
+<li class="toctree-l4"><a class="reference internal" href="wradlib.georef.vector.get_centroid.html">wradlib.georef.vector.get_centroid</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../georef.html#rectangular-grid-functions">Rectangular Grid Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../georef.html#satellite-functions">Satellite Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../ipol.html">Interpolation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../qual.html">Data Quality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../comp.html">Composition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../clutter.html">Clutter Identification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dp.html">Dual-Pol and Differential Phase</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../fill.html">Filling Missing Values</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../vpr.html">Vertical Profile of Reflectivity (VPR)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../atten.html">Attenuation Correction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../adjust.html">Gage adjustment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../verify.html">Verification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../vis.html">Visualisation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zonalstats.html">Zonal Statistics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../util.html">Utility functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_setup.html">For Developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zreferences.html">Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">wradlib</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../reference.html">Library Reference</a> &raquo;</li>
+        
+          <li><a href="../georef.html">Georeferencing</a> &raquo;</li>
+        
+      <li>wradlib.georef.vector.ogr_add_feature</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/generated/wradlib.georef.vector.ogr_add_feature.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+/* nice headers on first paragraph of info/warning boxes */
+.admonition .first {
+    margin: -12px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1;
+    display: block;
+}
+.admonition.warning .first {
+    background: #f0b37e;
+}
+.admonition.note .first {
+    background: #6ab0de;
+}
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="wradlib-georef-vector-ogr-add-feature">
+<h1>wradlib.georef.vector.ogr_add_feature<a class="headerlink" href="#wradlib-georef-vector-ogr-add-feature" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="wradlib.georef.vector.ogr_add_feature">
+<code class="descclassname">wradlib.georef.vector.</code><code class="descname">ogr_add_feature</code><span class="sig-paren">(</span><em>ds</em>, <em>src</em>, <em>name=None</em><span class="sig-paren">)</span><a class="headerlink" href="#wradlib.georef.vector.ogr_add_feature" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates OGR.Feature objects in OGR.Layer object.</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 0.7.0.</span></p>
+</div>
+<p>OGR.Features are built from numpy src points or polygons.</p>
+<p>OGR.Features ‘FID’ and ‘index’ corresponds to source data element</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>ds</strong> (<em>gdal.Dataset</em>) – object</li>
+<li><strong>src</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.array.html#numpy.array" title="(in NumPy v1.13)"><code class="docutils literal"><span class="pre">numpy.array</span></code></a>) – source data</li>
+<li><strong>name</strong> (<a class="reference external" href="https://docs.python.org/2/library/string.html#module-string" title="(in Python v2.7)"><em>string</em></a>) – name of wanted Layer</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="wradlib.georef.vector.ogr_add_geometry.html" class="btn btn-neutral float-right" title="wradlib.georef.vector.ogr_add_geometry" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="wradlib.georef.vector.ogr_copy_layer_by_name.html" class="btn btn-neutral" title="wradlib.georef.vector.ogr_copy_layer_by_name" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2011-2016, wradlib developers.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.11.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,13 @@
+wradlib\.zonalstats\.ZonalDataBase
+==================================
+
+.. currentmodule:: wradlib.zonalstats
+
+.. autoclass:: ZonalDataBase
+
+   
+
+
+
+   
+

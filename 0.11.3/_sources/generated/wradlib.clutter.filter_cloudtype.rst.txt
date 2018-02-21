@@ -1,0 +1,6 @@
+wradlib.clutter.filter\_cloudtype
+=================================
+
+.. currentmodule:: wradlib.clutter
+
+.. autofunction:: filter_cloudtype

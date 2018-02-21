@@ -1,0 +1,6 @@
+wradlib\.trafo\.kts2si
+======================
+
+.. currentmodule:: wradlib.trafo
+
+.. autofunction:: kts2si

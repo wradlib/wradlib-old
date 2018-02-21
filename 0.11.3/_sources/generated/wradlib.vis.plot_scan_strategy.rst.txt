@@ -1,0 +1,6 @@
+wradlib.vis.plot\_scan\_strategy
+================================
+
+.. currentmodule:: wradlib.vis
+
+.. autofunction:: plot_scan_strategy

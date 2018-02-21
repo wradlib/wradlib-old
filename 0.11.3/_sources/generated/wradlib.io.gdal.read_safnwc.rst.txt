@@ -1,0 +1,6 @@
+wradlib.io.gdal.read\_safnwc
+============================
+
+.. currentmodule:: wradlib.io.gdal
+
+.. autofunction:: read_safnwc

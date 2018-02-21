@@ -1,0 +1,6 @@
+wradlib.georef.polar.centroid2polyvert
+======================================
+
+.. currentmodule:: wradlib.georef.polar
+
+.. autofunction:: centroid2polyvert

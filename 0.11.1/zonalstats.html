@@ -1,0 +1,380 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Zonal Statistics &mdash; wradlib</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/wradlib.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="wradlib" href="index.html"/>
+        <link rel="up" title="Library Reference" href="reference.html"/>
+        <link rel="next" title="wradlib.zonalstats.DataSource" href="generated/wradlib.zonalstats.DataSource.html"/>
+        <link rel="prev" title="wradlib.vis.add_patches" href="generated/wradlib.vis.add_patches.html"/>
+    
+    <link href="_static/wradlib.css" rel="stylesheet" type="text/css">
+
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+  <a href="index.html" class="icon icon-home"> wradlib
+
+
+
+</a>
+
+
+
+  <div class="version">
+    
+    <button class="verbtn">0.11.1</button>
+    <div class="version-content">
+      
+        <a href="../latest/">latest</a>
+        <a href="../0.11.1/">0.11.1</a>
+    </div>
+  </div>
+
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="gettingstarted.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks.html">Tutorials and Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="reference.html">Library Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="io.html">Raw Data I/O</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trafo.html">Data Transformation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="zr.html">Z-R Conversions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="georef.html">Georeferencing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipol.html">Interpolation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="qual.html">Data Quality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="comp.html">Composition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clutter.html">Clutter Identification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dp.html">Dual-Pol and Differential Phase</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fill.html">Filling Missing Values</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vpr.html">Vertical Profile of Reflectivity (VPR)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="atten.html">Attenuation Correction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="adjust.html">Gage adjustment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="verify.html">Verification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="vis.html">Visualisation</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Zonal Statistics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/wradlib.zonalstats.DataSource.html">wradlib.zonalstats.DataSource</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/wradlib.zonalstats.ZonalDataBase.html">wradlib.zonalstats.ZonalDataBase</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/wradlib.zonalstats.ZonalDataPoint.html">wradlib.zonalstats.ZonalDataPoint</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/wradlib.zonalstats.ZonalDataPoly.html">wradlib.zonalstats.ZonalDataPoly</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/wradlib.zonalstats.ZonalStatsBase.html">wradlib.zonalstats.ZonalStatsBase</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/wradlib.zonalstats.GridCellsToPoly.html">wradlib.zonalstats.GridCellsToPoly</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/wradlib.zonalstats.GridPointsToPoly.html">wradlib.zonalstats.GridPointsToPoly</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/wradlib.zonalstats.mask_from_bbox.html">wradlib.zonalstats.mask_from_bbox</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/wradlib.zonalstats.get_bbox.html">wradlib.zonalstats.get_bbox</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/wradlib.zonalstats.grid_centers_to_vertices.html">wradlib.zonalstats.grid_centers_to_vertices</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/wradlib.zonalstats.get_clip_mask.html">wradlib.zonalstats.get_clip_mask</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="util.html">Utility functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dev_setup.html">For Developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="zreferences.html">Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="release_notes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">wradlib</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="reference.html">Library Reference</a> &raquo;</li>
+        
+      <li>Zonal Statistics</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/zonalstats.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+/* nice headers on first paragraph of info/warning boxes */
+.admonition .first {
+    margin: -12px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1;
+    display: block;
+}
+.admonition.warning .first {
+    background: #f0b37e;
+}
+.admonition.note .first {
+    background: #6ab0de;
+}
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<span class="target" id="module-wradlib.zonalstats"></span><div class="section" id="zonal-statistics">
+<h1>Zonal Statistics<a class="headerlink" href="#zonal-statistics" title="Permalink to this headline">¶</a></h1>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 0.7.0.</span></p>
+</div>
+<p>This module supports you in computing statistics over spatial zones. A typical
+application would be to compute mean areal precipitation for a catchment by
+using precipitation estimates from a radar grid in polar coordinates or from
+precipitation estimates in a Cartesian grid.</p>
+<p>The general usage is similar to the ipol and adjustment modules:</p>
+<p>You have to create an instance of a class (derived from ZonalDataBase) by using
+the spatial information of your source and target objects (e.g. radar bins and
+catchment polygons). The Zonal Data within this object can be saved as an
+ESRI Shapefile.</p>
+<p>This object is then called with another class to compute zonal statistics for
+your target objects by calling the class instance with an array of values
+(one for each source object).</p>
+<p>Typically, creating the instance of the ZonalData class will be computationally
+expensive, but only has to be done once (as long as the geometries do
+not change).</p>
+<p>Calling the objects with actual data, however, will be very fast.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Right now we only support a limited set of 2-dimensional zonal
+statistics. In the future, we plan to extend this to three dimensions.</p>
+</div>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/wradlib.zonalstats.DataSource.html#wradlib.zonalstats.DataSource" title="wradlib.zonalstats.DataSource"><code class="xref py py-obj docutils literal"><span class="pre">DataSource</span></code></a></td>
+<td>DataSource class for handling ogr/gdal vector data</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/wradlib.zonalstats.ZonalDataBase.html#wradlib.zonalstats.ZonalDataBase" title="wradlib.zonalstats.ZonalDataBase"><code class="xref py py-obj docutils literal"><span class="pre">ZonalDataBase</span></code></a></td>
+<td>The base class for managing 2-dimensional zonal data for target polygons from source points or polygons.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/wradlib.zonalstats.ZonalDataPoint.html#wradlib.zonalstats.ZonalDataPoint" title="wradlib.zonalstats.ZonalDataPoint"><code class="xref py py-obj docutils literal"><span class="pre">ZonalDataPoint</span></code></a></td>
+<td>ZonalData object for source points</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/wradlib.zonalstats.ZonalDataPoly.html#wradlib.zonalstats.ZonalDataPoly" title="wradlib.zonalstats.ZonalDataPoly"><code class="xref py py-obj docutils literal"><span class="pre">ZonalDataPoly</span></code></a></td>
+<td>ZonalData object for source polygons</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/wradlib.zonalstats.ZonalStatsBase.html#wradlib.zonalstats.ZonalStatsBase" title="wradlib.zonalstats.ZonalStatsBase"><code class="xref py py-obj docutils literal"><span class="pre">ZonalStatsBase</span></code></a></td>
+<td>Base class for all 2-dimensional zonal statistics.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/wradlib.zonalstats.GridCellsToPoly.html#wradlib.zonalstats.GridCellsToPoly" title="wradlib.zonalstats.GridCellsToPoly"><code class="xref py py-obj docutils literal"><span class="pre">GridCellsToPoly</span></code></a></td>
+<td>Compute weighted average for target polygons based on areal weights.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/wradlib.zonalstats.GridPointsToPoly.html#wradlib.zonalstats.GridPointsToPoly" title="wradlib.zonalstats.GridPointsToPoly"><code class="xref py py-obj docutils literal"><span class="pre">GridPointsToPoly</span></code></a></td>
+<td>Compute zonal average from all points in or close to the target polygon.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/wradlib.zonalstats.mask_from_bbox.html#wradlib.zonalstats.mask_from_bbox" title="wradlib.zonalstats.mask_from_bbox"><code class="xref py py-obj docutils literal"><span class="pre">mask_from_bbox</span></code></a></td>
+<td>Return 2-d index array based on spatial selection from a bounding box.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/wradlib.zonalstats.get_bbox.html#wradlib.zonalstats.get_bbox" title="wradlib.zonalstats.get_bbox"><code class="xref py py-obj docutils literal"><span class="pre">get_bbox</span></code></a></td>
+<td>Return bbox dictionary that represents the extent of the points.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/wradlib.zonalstats.grid_centers_to_vertices.html#wradlib.zonalstats.grid_centers_to_vertices" title="wradlib.zonalstats.grid_centers_to_vertices"><code class="xref py py-obj docutils literal"><span class="pre">grid_centers_to_vertices</span></code></a></td>
+<td>Produces array of vertices from grid’s center point coordinates.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/wradlib.zonalstats.get_clip_mask.html#wradlib.zonalstats.get_clip_mask" title="wradlib.zonalstats.get_clip_mask"><code class="xref py py-obj docutils literal"><span class="pre">get_clip_mask</span></code></a></td>
+<td>Returns boolean mask of points (coords) located inside polygon clippoly</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="generated/wradlib.zonalstats.DataSource.html" class="btn btn-neutral float-right" title="wradlib.zonalstats.DataSource" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="generated/wradlib.vis.add_patches.html" class="btn btn-neutral" title="wradlib.vis.add_patches" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2011-2016, wradlib developers.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.11.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

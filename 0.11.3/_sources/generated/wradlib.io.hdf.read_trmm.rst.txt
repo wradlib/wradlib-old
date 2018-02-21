@@ -1,0 +1,6 @@
+wradlib.io.hdf.read\_trmm
+=========================
+
+.. currentmodule:: wradlib.io.hdf
+
+.. autofunction:: read_trmm

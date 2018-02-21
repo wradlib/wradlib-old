@@ -1,0 +1,6 @@
+wradlib.io.radolan.read\_radolan\_binary\_array
+===============================================
+
+.. currentmodule:: wradlib.io.radolan
+
+.. autofunction:: read_radolan_binary_array

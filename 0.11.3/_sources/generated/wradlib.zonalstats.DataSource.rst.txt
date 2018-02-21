@@ -1,0 +1,38 @@
+wradlib.zonalstats.DataSource
+=============================
+
+.. currentmodule:: wradlib.zonalstats
+
+.. autoclass:: DataSource
+
+   
+
+.. HACK -- the point here is that we don't want this to appear in the output, but the autosummary should still generate the pages.
+
+.. autosummary::
+   :toctree:
+
+
+   ~DataSource.dump_raster
+   ~DataSource.dump_vector
+   ~DataSource.get_attributes
+   ~DataSource.get_data_by_att
+   ~DataSource.get_data_by_geom
+   ~DataSource.get_data_by_idx
+   ~DataSource.get_geom_properties
+   ~DataSource.set_attribute
+
+
+
+
+   
+
+.. HACK -- the point here is that we don't want this to appear in the output, but the autosummary should still generate the pages.
+
+.. autosummary::
+   :toctree:
+
+
+   ~DataSource.data
+   ~DataSource.ds
+

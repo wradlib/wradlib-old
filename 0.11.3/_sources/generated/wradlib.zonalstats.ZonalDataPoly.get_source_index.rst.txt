@@ -1,0 +1,6 @@
+wradlib.zonalstats.ZonalDataPoly.get\_source\_index
+===================================================
+
+.. currentmodule:: wradlib.zonalstats
+
+.. automethod:: ZonalDataPoly.get_source_index

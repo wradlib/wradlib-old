@@ -1,0 +1,6 @@
+wradlib.util.calculate\_polynomial
+==================================
+
+.. currentmodule:: wradlib.util
+
+.. autofunction:: calculate_polynomial

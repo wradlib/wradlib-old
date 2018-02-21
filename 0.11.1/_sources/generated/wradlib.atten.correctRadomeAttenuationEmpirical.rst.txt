@@ -1,0 +1,6 @@
+wradlib\.atten\.correctRadomeAttenuationEmpirical
+=================================================
+
+.. currentmodule:: wradlib.atten
+
+.. autofunction:: correctRadomeAttenuationEmpirical

@@ -1,0 +1,6 @@
+wradlib.io.hdf.from\_hdf5
+=========================
+
+.. currentmodule:: wradlib.io.hdf
+
+.. autofunction:: from_hdf5

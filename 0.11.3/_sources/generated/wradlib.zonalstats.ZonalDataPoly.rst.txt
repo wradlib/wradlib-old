@@ -1,0 +1,35 @@
+wradlib.zonalstats.ZonalDataPoly
+================================
+
+.. currentmodule:: wradlib.zonalstats
+
+.. autoclass:: ZonalDataPoly
+
+   
+
+.. HACK -- the point here is that we don't want this to appear in the output, but the autosummary should still generate the pages.
+
+.. autosummary::
+   :toctree:
+
+
+   ~ZonalDataPoly.dump_vector
+   ~ZonalDataPoly.get_isec
+   ~ZonalDataPoly.get_source_index
+   ~ZonalDataPoly.load_vector
+
+
+
+
+   
+
+.. HACK -- the point here is that we don't want this to appear in the output, but the autosummary should still generate the pages.
+
+.. autosummary::
+   :toctree:
+
+
+   ~ZonalDataPoly.count_intersections
+   ~ZonalDataPoly.isecs
+   ~ZonalDataPoly.srs
+

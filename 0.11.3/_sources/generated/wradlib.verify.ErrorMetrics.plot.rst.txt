@@ -1,0 +1,6 @@
+wradlib.verify.ErrorMetrics.plot
+================================
+
+.. currentmodule:: wradlib.verify
+
+.. automethod:: ErrorMetrics.plot

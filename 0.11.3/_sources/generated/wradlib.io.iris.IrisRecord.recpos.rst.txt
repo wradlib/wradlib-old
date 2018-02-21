@@ -1,0 +1,6 @@
+wradlib.io.iris.IrisRecord.recpos
+=================================
+
+.. currentmodule:: wradlib.io.iris
+
+.. autoattribute:: IrisRecord.recpos

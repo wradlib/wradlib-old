@@ -1,0 +1,377 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>wradlib.ipol.interpolate &mdash; wradlib</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/wradlib.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="wradlib" href="../index.html"/>
+        <link rel="up" title="Interpolation" href="../ipol.html"/>
+        <link rel="next" title="wradlib.ipol.interpolate_polar" href="wradlib.ipol.interpolate_polar.html"/>
+    
+    <link href="../_static/wradlib.css" rel="stylesheet" type="text/css">
+
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+  <a href="../index.html" class="icon icon-home"> wradlib
+
+
+
+</a>
+
+
+
+  <div class="version">
+    
+    <button class="verbtn">0.11.1</button>
+    <div class="version-content">
+      
+        <a href="../latest/">latest</a>
+        <a href="../0.11.1/">0.11.1</a>
+    </div>
+  </div>
+
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../gettingstarted.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks.html">Tutorials and Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../reference.html">Library Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../io.html">Raw Data I/O</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../trafo.html">Data Transformation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zr.html">Z-R Conversions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../georef.html">Georeferencing</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../ipol.html">Interpolation</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="wradlib.ipol.Nearest.html">wradlib.ipol.Nearest</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wradlib.ipol.Idw.html">wradlib.ipol.Idw</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wradlib.ipol.Linear.html">wradlib.ipol.Linear</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wradlib.ipol.OrdinaryKriging.html">wradlib.ipol.OrdinaryKriging</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wradlib.ipol.ExternalDriftKriging.html">wradlib.ipol.ExternalDriftKriging</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">wradlib.ipol.interpolate</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wradlib.ipol.interpolate_polar.html">wradlib.ipol.interpolate_polar</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wradlib.ipol.cart2irregular_interp.html">wradlib.ipol.cart2irregular_interp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wradlib.ipol.cart2irregular_spline.html">wradlib.ipol.cart2irregular_spline</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../qual.html">Data Quality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../comp.html">Composition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../clutter.html">Clutter Identification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dp.html">Dual-Pol and Differential Phase</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../fill.html">Filling Missing Values</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../vpr.html">Vertical Profile of Reflectivity (VPR)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../atten.html">Attenuation Correction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../adjust.html">Gage adjustment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../verify.html">Verification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../vis.html">Visualisation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zonalstats.html">Zonal Statistics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../util.html">Utility functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_setup.html">For Developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zreferences.html">Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">wradlib</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../reference.html">Library Reference</a> &raquo;</li>
+        
+          <li><a href="../ipol.html">Interpolation</a> &raquo;</li>
+        
+      <li>wradlib.ipol.interpolate</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/generated/wradlib.ipol.interpolate.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+/* nice headers on first paragraph of info/warning boxes */
+.admonition .first {
+    margin: -12px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1;
+    display: block;
+}
+.admonition.warning .first {
+    background: #f0b37e;
+}
+.admonition.note .first {
+    background: #6ab0de;
+}
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="wradlib-ipol-interpolate">
+<h1>wradlib.ipol.interpolate<a class="headerlink" href="#wradlib-ipol-interpolate" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="wradlib.ipol.interpolate">
+<code class="descclassname">wradlib.ipol.</code><code class="descname">interpolate</code><span class="sig-paren">(</span><em>src</em>, <em>trg</em>, <em>vals</em>, <em>Interpolator</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#wradlib.ipol.interpolate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience function to use the interpolation classes in an efficient way</p>
+<p>The interpolation classes in wradlib.ipol are computationally very
+efficient if they are applied on large multi-dimensional arrays of which
+the first dimension must be the locations’ dimension (1d or 2d coordinates)
+and the following dimensions can be anything (e.g. time or ensembles). This
+way, the weights need to be computed only once. However, this can only be
+done with success if all source values for the interpolation are valid
+numbers. If the source values contain let’s say <em>np.nan</em> types, the result
+of the interpolation will be <em>np.nan</em> in the vicinity of the corresponding
+points, too. Imagine that you have a time series of observations at points
+and in each time step one observation is missing.
+You would still like to efficiently apply the interpolation
+classes, but you will need to account for the resulting <em>np.nan</em> values in
+the interpolation output.</p>
+<p>In order to still allow for the efficient application, you have to take
+care of the remaining np.nan in your interpolation result. This is done by
+this convenience function.</p>
+<p>Alternatively, you have to make sure that your <em>vals</em> argument does not
+contain any <em>np.nan</em> values OR you have to post-process missing values in
+your interpolation result in another way.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Works only for one- and two-dimensional <em>vals</em> arrays, yet.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>src</strong> (<em>ndarray of floats</em><em>, </em><em>shape</em><em> (</em><em>npoints</em><em>, </em><em>ndims</em><em>)</em>) – Data point coordinates of the source points.</li>
+<li><strong>trg</strong> (<em>ndarray of floats</em><em>, </em><em>shape</em><em> (</em><em>npoints</em><em>, </em><em>ndims</em><em>)</em>) – Data point coordinates of the target points.</li>
+<li><strong>vals</strong> (<em>ndarray of float</em><em>, </em><em>shape</em><em> (</em><em>numsourcepoints</em><em>, </em><em>..</em><em>)</em>) – Values at the source points which to interpolate</li>
+<li><strong>Interpolator</strong> (<em>a class which inherits from IpolBase</em>) – </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Other Parameters:</th></tr>
+<tr class="field-even field"><td>&#160;</td><td class="field-body"><p class="first"><strong>*args</strong> (<em>arguments of Interpolator (see class documentation)</em>)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">Keyword Arguments:</th></tr>
+<tr class="field-odd field"><td>&#160;</td><td class="field-body"><p class="first last"><strong>**kwargs</strong> (<em>keyword arguments of Interpolator</em><em> (</em><em>see class documentation</em><em>)</em>) – </p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># test for 1 dimension in space and two value dimensions</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">src</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">)[:,</span><span class="kc">None</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">40</span><span class="p">)[:,</span><span class="kc">None</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">src</span><span class="p">),</span> <span class="mf">10.</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">src</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># here we introduce missing values only in the second dimension</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vals</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ipol_result</span> <span class="o">=</span> <span class="n">interpolate</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">trg</span><span class="p">,</span> <span class="n">vals</span><span class="p">,</span> <span class="n">Idw</span><span class="p">,</span> <span class="n">nnearest</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">interactive</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">line1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">trg</span><span class="p">,</span> <span class="n">ipol_result</span><span class="p">,</span> <span class="s1">&#39;b+&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">line2</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">vals</span><span class="p">,</span> <span class="s1">&#39;ro&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="wradlib.ipol.interpolate_polar.html" class="btn btn-neutral float-right" title="wradlib.ipol.interpolate_polar" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2011-2016, wradlib developers.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.11.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,384 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>How to use the tutorials and examples? &mdash; wradlib</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/wradlib.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="wradlib" href="index.html"/>
+        <link rel="up" title="Tutorials and Examples" href="notebooks.html"/>
+        <link rel="next" title="An incomplete introduction to Python" href="notebooks/learnpython.html"/>
+        <link rel="prev" title="Tutorials and Examples" href="notebooks.html"/>
+    
+    <link href="_static/wradlib.css" rel="stylesheet" type="text/css">
+
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+  <a href="index.html" class="icon icon-home"> wradlib
+
+
+
+</a>
+
+
+
+  <div class="version">
+    
+    <button class="verbtn">0.11.1</button>
+    <div class="version-content">
+      
+        <a href="../latest/">latest</a>
+        <a href="../0.11.1/">0.11.1</a>
+    </div>
+  </div>
+
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="gettingstarted.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="notebooks.html">Tutorials and Examples</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">How to use the tutorials and examples?</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#examples-your-entry-point-to-wradlib">Examples: your entry point to wradlib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#interactive-examples-with-jupyter-notebooks">Interactive examples with jupyter notebooks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#how-can-i-get-the-example-notebooks">How can I get the example notebooks?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#how-can-i-get-the-example-data">How can I get the example data?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#how-to-install-jupyter">How to install jupyter?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#i-prefer-simple-python-scripts-instead-of-notebooks">I prefer simple Python scripts instead of notebooks</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/learnpython.html">An incomplete introduction to Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/basics.html">Getting started with wradlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/fileio.html">Data Input - Data Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/attenuation/wradlib_attenuation.html">Attenuation correction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/beamblockage/wradlib_beamblock.html">Beam Blockage Calculation using a DEM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/classify.html">Clutter and Echo Classification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/georeferencing.html">Georeferencing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/match3d/wradlib_match_workflow.html">Match spaceborn PR (GPM/TRMM) with ground radars</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/develop.html">For Developers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/interpolation/wradlib_ipol_example.html">How to use wradlib’s ipol module for interpolation tasks?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/multisensor/wradlib_adjust_example.html">Adjusting radar-base rainfall estimates by rain gauge observations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/verification/wradlib_verify_example.html">Routine verification measures for radar-based precipitation estimates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/recipes.html">Recipes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/radolan.html">RADOLAN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/zonalstats/wradlib_zonalstats_classes.html">Zonal Statistics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="reference.html">Library Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dev_setup.html">For Developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="zreferences.html">Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="release_notes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">wradlib</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="notebooks.html">Tutorials and Examples</a> &raquo;</li>
+        
+      <li>How to use the tutorials and examples?</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/jupyter.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+/* nice headers on first paragraph of info/warning boxes */
+.admonition .first {
+    margin: -12px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1;
+    display: block;
+}
+.admonition.warning .first {
+    background: #f0b37e;
+}
+.admonition.note .first {
+    background: #6ab0de;
+}
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="how-to-use-the-tutorials-and-examples">
+<h1>How to use the tutorials and examples?<a class="headerlink" href="#how-to-use-the-tutorials-and-examples" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="examples-your-entry-point-to-wradlib">
+<h2>Examples: your entry point to wradlib<a class="headerlink" href="#examples-your-entry-point-to-wradlib" title="Permalink to this headline">¶</a></h2>
+<p>The documentation of <span class="math">\(\omega radlib\)</span> basically consists of two elements: the first element is the <a class="reference internal" href="reference.html"><span class="doc">library reference</span></a> which provides a systematic documentation of each function in wradlib’s API. In order to use the library reference properly, you should have an idea what you’re actually looking for. This is why new users mostly start with the second element, the <a class="reference internal" href="notebooks.html"><span class="doc">tutorials and examples</span></a>. Here you can look for application examples that are close to what you actually want to achieve, and than use these as a basis for further development. Once you understood an example, you also know what to look for in the <a class="reference internal" href="reference.html"><span class="doc">library reference</span></a>.</p>
+</div>
+<div class="section" id="interactive-examples-with-jupyter-notebooks">
+<h2>Interactive examples with jupyter notebooks<a class="headerlink" href="#interactive-examples-with-jupyter-notebooks" title="Permalink to this headline">¶</a></h2>
+<p>All <span class="math">\(\omega radlib\)</span> examples are distributed as <a class="reference external" href="http://jupyter.org/">jupyter notebooks</a>. This way, you can interactively explore various   topics. Each notebook is organized in documented code blocks. You can browse through a notebook block by block, inspect the results, and experiment with the code. However, you can also view the rendered notebooks including the example results on the web pages of this section: Each page was directly generated from <span class="math">\(\omega radlib\)</span>‘s example notebooks. This way, you can copy&amp;paste code snippets directly into your applications.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Are you using <span class="math">\(\omega radlib\)</span> on the <a class="reference external" href="http://openradar.github.io/">Open Virtual Machine for Cross-Platform Weather Radar Science</a>? Then skip the rest: just log in, run the command <code class="docutils literal"><span class="pre">$</span> <span class="pre">./start_notebook.sh</span></code> and direct your browser to <a class="reference external" href="http://127.0.0.1:8888/tree">http://127.0.0.1:8888/tree</a>. That’s it.</p>
+</div>
+<p>Otherwise, you need to make sure to</p>
+<ul class="simple">
+<li><a class="reference internal" href="#ref-get-notebooks"><span class="std std-ref">get the actual notebook files</span></a>,</li>
+<li><a class="reference internal" href="#ref-get-data"><span class="std std-ref">get the example data</span></a>,</li>
+<li>and <a class="reference internal" href="#ref-get-jupyter"><span class="std std-ref">install jupyter</span></a></li>
+</ul>
+<p>Once these conditions are met, you can open a notebook: Launch a console or bash window in the directory that contains the example notebooks. If you installed <span class="math">\(\omega radlib\)</span> (e.g. via <code class="docutils literal"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">wradlib</span></code>) into Anaconda’s default (root) environment, you just need to execute:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">jupyter</span> <span class="n">notebook</span>
+</pre></div>
+</div>
+<p>If you installed <span class="math">\(\omega radlib\)</span> into a conda environment (as recommended <a class="reference internal" href="gettingstarted.html"><span class="doc">here</span></a>),
+you need to activate that environment first. Let’s say you named the environment <cite>wradlib</cite>:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">activate</span> <span class="n">wradlib</span>
+<span class="o">&gt;</span> <span class="n">jupyter</span> <span class="n">notebook</span>
+</pre></div>
+</div>
+<p>Did you forget the name of the environment that contains wradlib? This way, you get an overview over all environments:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">conda</span> <span class="n">info</span> <span class="o">--</span><span class="n">envs</span>
+</pre></div>
+</div>
+<p>which will give you something like (example output under Windows):</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># conda environments</span>
+<span class="n">wradlib</span>      <span class="n">C</span><span class="p">:</span>\<span class="n">Anaconda2</span>\<span class="n">envs</span>\<span class="n">wradlib</span>
+<span class="n">root</span>      <span class="o">*</span>  <span class="n">C</span><span class="p">:</span>\<span class="n">Anaconda2</span>
+</pre></div>
+</div>
+<p>In both cases, a browser window will open (typically at <a class="reference external" href="http://localhost:8888/tree">http://localhost:8888/tree</a>) which will show the tree of the directory in which you started the jupyter notebook server. Just open any notebook by clicking. Code cells are executed by hitting <code class="docutils literal"><span class="pre">Shift</span> <span class="pre">+</span> <span class="pre">Enter</span></code> or by using the toolbar icons. It’s pretty much self-explaining, and you’ll soon get the hang of it.</p>
+</div>
+<div class="section" id="how-can-i-get-the-example-notebooks">
+<span id="ref-get-notebooks"></span><h2>How can I get the example notebooks?<a class="headerlink" href="#how-can-i-get-the-example-notebooks" title="Permalink to this headline">¶</a></h2>
+<p>The notebooks are distributed with each <span class="math">\(\omega radlib\)</span> release on <a class="reference external" href="https://pypi.python.org/pypi/wradlib">PyPI</a> (beginning with version 0.9.0). Alternatively, you can <a class="reference external" href="https://github.com/wradlib/wradlib/archive/master.zip">download</a> the latest (“bleeding edge”) notebooks from our <a class="reference external" href="https://github.com/wradlib/wradlib">GitHub repository</a>. In both cases, you find everything in the directory <code class="docutils literal"><span class="pre">/notebooks</span></code> (after extracting the downloaded archives).</p>
+</div>
+<div class="section" id="how-can-i-get-the-example-data">
+<span id="ref-get-data"></span><h2>How can I get the example data?<a class="headerlink" href="#how-can-i-get-the-example-data" title="Permalink to this headline">¶</a></h2>
+<p>Most notebooks use example data. These data are provided in a separate repository and you need to “install” them manually. <em>“Installing”</em> actually means: Download the data archive <a class="reference external" href="https://github.com/wradlib/wradlib-data/archive/master.zip">here</a> and extract it into any arbitrary directory. Now you need to set an environment variable pointing to that directory:</p>
+<p><strong>Under Windows</strong>, open a console and execute <code class="docutils literal"><span class="pre">setx</span> <span class="pre">WRADLIB_DATA</span> <span class="pre">&lt;full</span> <span class="pre">path</span> <span class="pre">to</span> <span class="pre">wradlib-data&gt;</span></code>.</p>
+<p><strong>Under Linux</strong>, you need to set the env variable in your current shell profile. In most cases, this will be loaded from <code class="docutils literal"><span class="pre">~/.bashrc</span></code>. Open that file in an editor (e.g. via <code class="docutils literal"><span class="pre">$EDITOR</span> <span class="pre">~/.bashrc</span></code>) and add the following line at the end of the file:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">WRADLIB_DATA</span><span class="o">=/</span><span class="n">insert</span><span class="o">/</span><span class="n">full</span><span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">wradlib</span><span class="o">-</span><span class="n">data</span><span class="o">/</span>
+</pre></div>
+</div>
+<p>After this procedure, the example notebooks will automagically pull the required files from the data archive.</p>
+</div>
+<div class="section" id="how-to-install-jupyter">
+<span id="ref-get-jupyter"></span><h2>How to install jupyter?<a class="headerlink" href="#how-to-install-jupyter" title="Permalink to this headline">¶</a></h2>
+<p>As already pointed out above, you can just look at the rendered notebooks <a class="reference internal" href="notebooks.html"><span class="doc">online docs</span></a>. In order to use them interactively, you need to install <code class="docutils literal"><span class="pre">jupyter</span></code>. <code class="docutils literal"><span class="pre">jupyter</span></code> is shipped with <a class="reference external" href="https://www.continuum.io/downloads">Anaconda’s</a> distribution by default. If you installed wradlib into Anaconda’s <em>default (root) environment</em>, you are already done. If you installed wradlib in a seperate <em>virtual environment</em> (as recommended <a class="reference internal" href="gettingstarted.html"><span class="doc">here</span></a>), you need to install <code class="docutils literal"><span class="pre">jupyter</span></code> in that virtual environment, too:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>Under Windows:
+&gt; activate wradlib
+[wradlib] &gt; conda install jupyter
+
+Under Linux/OSX:
+$ source activate wradlib
+[wradlib] $ conda install jupyter
+</pre></div>
+</div>
+<p>If you are not sure which conda environments you have, you can check via <code class="docutils literal"><span class="pre">conda</span> <span class="pre">info</span> <span class="pre">--envs</span></code>.</p>
+<p>If you did not install <span class="math">\(\omega radlib\)</span> on top of Anaconda, you should first check whether <code class="docutils literal"><span class="pre">jupyter</span></code> might already be available on your system (use e.g. <code class="docutils literal"><span class="pre">jupyter</span> <span class="pre">--version</span></code>). If <code class="docutils literal"><span class="pre">jupyter</span></code> is not available, you should check out the <a class="reference external" href="http://jupyter.readthedocs.io/en/latest/install.html">jupyter docs</a> for alternative installation options.</p>
+</div>
+<div class="section" id="i-prefer-simple-python-scripts-instead-of-notebooks">
+<h2>I prefer simple Python scripts instead of notebooks<a class="headerlink" href="#i-prefer-simple-python-scripts-instead-of-notebooks" title="Permalink to this headline">¶</a></h2>
+<p>No problem. Each <span class="math">\(\omega radlib\)</span> release from PyPI not only distributes the notebooks, but also the corresponding Python scripts. Just look for <code class="docutils literal"><span class="pre">.py</span></code> files in the <code class="docutils literal"><span class="pre">notebooks</span></code> directory. If you downloaded the notebooks directly from the wradlib repository, you can easily convert them to Python scripts yourself (but you need to <a class="reference internal" href="#ref-get-jupyter"><span class="std std-ref">install jupyter</span></a> to do the conversion):</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ jupyter nbconvert --to script &lt;name of the notebook&gt;
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="notebooks/learnpython.html" class="btn btn-neutral float-right" title="An incomplete introduction to Python" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="notebooks.html" class="btn btn-neutral" title="Tutorials and Examples" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2011-2016, wradlib developers.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.11.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

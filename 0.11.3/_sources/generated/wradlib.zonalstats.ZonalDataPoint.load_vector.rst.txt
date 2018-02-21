@@ -1,0 +1,6 @@
+wradlib.zonalstats.ZonalDataPoint.load\_vector
+==============================================
+
+.. currentmodule:: wradlib.zonalstats
+
+.. automethod:: ZonalDataPoint.load_vector

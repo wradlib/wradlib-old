@@ -1,0 +1,505 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>wradlib.georef.rect.get_radolan_grid &mdash; wradlib</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/wradlib.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="wradlib" href="../index.html"/>
+        <link rel="up" title="Georeferencing" href="../georef.html"/>
+        <link rel="next" title="wradlib.georef.rect.xyz_to_spherical" href="wradlib.georef.rect.xyz_to_spherical.html"/>
+        <link rel="prev" title="wradlib.georef.rect.get_radolan_coords" href="wradlib.georef.rect.get_radolan_coords.html"/>
+    
+    <link href="../_static/wradlib.css" rel="stylesheet" type="text/css">
+
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+  <a href="../index.html" class="icon icon-home"> wradlib
+
+
+
+</a>
+
+
+
+  <div class="version">
+    
+    <button class="verbtn">0.11.3</button>
+    <div class="version-content">
+      
+        <a href="../latest/">latest</a>
+        <a href="../0.11.3/">0.11.3</a>
+        <a href="../0.11.1/">0.11.1</a>
+    </div>
+  </div>
+
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../gettingstarted.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../notebooks.html">Tutorials and Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../reference.html">Library Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../io.html">Raw Data I/O</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../trafo.html">Data Transformation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zr.html">Z-R Conversions</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../georef.html">Georeferencing</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../georef.html#miscellaneous">Miscellaneous</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../georef.html#polar-grid-functions">Polar Grid Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../georef.html#projection-functions">Projection Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../georef.html#raster-functions">Raster Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../georef.html#vector-functions-gdal">Vector Functions (GDAL)</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../georef.html#rectangular-grid-functions">Rectangular Grid Functions</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="wradlib.georef.rect.get_radolan_coords.html">wradlib.georef.rect.get_radolan_coords</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">wradlib.georef.rect.get_radolan_grid</a></li>
+<li class="toctree-l4"><a class="reference internal" href="wradlib.georef.rect.xyz_to_spherical.html">wradlib.georef.rect.xyz_to_spherical</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../georef.html#satellite-functions">Satellite Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../ipol.html">Interpolation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../qual.html">Data Quality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../comp.html">Composition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../clutter.html">Clutter Identification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dp.html">Dual-Pol and Differential Phase</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../fill.html">Filling Missing Values</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../vpr.html">Vertical Profile of Reflectivity (VPR)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../atten.html">Attenuation Correction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../adjust.html">Gage adjustment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../verify.html">Verification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../vis.html">Visualisation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zonalstats.html">Zonal Statistics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../util.html">Utility functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../dev_setup.html">For Developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../zreferences.html">Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../release_notes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">wradlib</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../reference.html">Library Reference</a> &raquo;</li>
+        
+          <li><a href="../georef.html">Georeferencing</a> &raquo;</li>
+        
+      <li>wradlib.georef.rect.get_radolan_grid</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/generated/wradlib.georef.rect.get_radolan_grid.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+/* nice headers on first paragraph of info/warning boxes */
+.admonition .first {
+    margin: -12px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1;
+    display: block;
+}
+.admonition.warning .first {
+    background: #f0b37e;
+}
+.admonition.note .first {
+    background: #6ab0de;
+}
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="wradlib-georef-rect-get-radolan-grid">
+<h1>wradlib.georef.rect.get_radolan_grid<a class="headerlink" href="#wradlib-georef-rect-get-radolan-grid" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="wradlib.georef.rect.get_radolan_grid">
+<code class="descclassname">wradlib.georef.rect.</code><code class="descname">get_radolan_grid</code><span class="sig-paren">(</span><em>nrows=None</em>, <em>ncols=None</em>, <em>trig=False</em>, <em>wgs84=False</em><span class="sig-paren">)</span><a class="headerlink" href="#wradlib.georef.rect.get_radolan_grid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates x/y coordinates of radolan grid of the German Weather Service</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 0.4.0.</span></p>
+</div>
+<p>Returns the x,y coordinates of the radolan grid positions
+(lower left corner of every pixel). The radolan grid is a
+polarstereographic projection, the projection information was taken from
+RADOLAN-RADVOR-OP Kompositformat_2.2.2  <a class="reference internal" href="../zreferences.html#dwd2009" id="id1">[DWD, 2009]</a></p>
+<table border="1" class="docutils" id="id2">
+<caption><span class="caption-text">Coordinates for 900km x 900km grid</span><a class="headerlink" href="#id2" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col width="21%" />
+<col width="19%" />
+<col width="21%" />
+<col width="19%" />
+<col width="19%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Coordinate</th>
+<th class="head">lon</th>
+<th class="head">lat</th>
+<th class="head">x</th>
+<th class="head">y</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>LowerLeft</td>
+<td>3.5889E</td>
+<td>46.9526N</td>
+<td>-523.4622</td>
+<td>-4658.645</td>
+</tr>
+<tr class="row-odd"><td>LowerRight</td>
+<td>14.6209E</td>
+<td>47.0705N</td>
+<td>376.5378</td>
+<td>-4658.645</td>
+</tr>
+<tr class="row-even"><td>UpperRight</td>
+<td>15.7208E</td>
+<td>54.7405N</td>
+<td>376.5378</td>
+<td>-3758.645</td>
+</tr>
+<tr class="row-odd"><td>UpperLeft</td>
+<td>2.0715E</td>
+<td>54.5877N</td>
+<td>-523.4622</td>
+<td>-3758.645</td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="docutils" id="id3">
+<caption><span class="caption-text">Coordinates for 1100km x 900km grid</span><a class="headerlink" href="#id3" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col width="21%" />
+<col width="19%" />
+<col width="21%" />
+<col width="19%" />
+<col width="19%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Coordinate</th>
+<th class="head">lon</th>
+<th class="head">lat</th>
+<th class="head">x</th>
+<th class="head">y</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>LowerLeft</td>
+<td>4.6759E</td>
+<td>46.1929N</td>
+<td>-443.4622</td>
+<td>-4758.645</td>
+</tr>
+<tr class="row-odd"><td>LowerRight</td>
+<td>15.4801E</td>
+<td>46.1827N</td>
+<td>456.5378</td>
+<td>-4758.645</td>
+</tr>
+<tr class="row-even"><td>UpperRight</td>
+<td>17.1128E</td>
+<td>55.5342N</td>
+<td>456.5378</td>
+<td>-3658.645</td>
+</tr>
+<tr class="row-odd"><td>UpperLeft</td>
+<td>3.0889E</td>
+<td>55.5482N</td>
+<td>-433.4622</td>
+<td>-3658.645</td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="docutils" id="id4">
+<caption><span class="caption-text">Coordinates for 1500km x 1400km grid</span><a class="headerlink" href="#id4" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col width="21%" />
+<col width="19%" />
+<col width="21%" />
+<col width="19%" />
+<col width="19%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Coordinate</th>
+<th class="head">lon</th>
+<th class="head">lat</th>
+<th class="head">x</th>
+<th class="head">y</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>LowerLeft</td>
+<td>2.3419E</td>
+<td>43.9336N</td>
+<td>-673.4622</td>
+<td>-5008.645</td>
+</tr>
+</tbody>
+</table>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>nrows</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) – number of rows (460, 900 by default, 1100, 1500)</li>
+<li><strong>ncols</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) – number of columns (460, 900 by default, 1400)</li>
+<li><strong>trig</strong> (<em>boolean</em>) – if True, uses trigonometric formulas for calculation
+if False, uses osr spatial reference system to transform between
+projections
+<cite>trig</cite> is recommended to be False, however, the two ways of computation
+are expected to be equivalent.</li>
+<li><strong>wgs84</strong> (<em>boolean</em>) – if True, output coordinates are in wgs84 lonlat format (default: False)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>radolan_grid</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.14)"><code class="docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>) – Array of shape (rows, cols, 2) xy- or lonlat-grid.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># using osr spatial reference transformation</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">wradlib.georef</span> <span class="k">as</span> <span class="nn">georef</span>  <span class="c1"># noqa</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">radolan_grid</span> <span class="o">=</span> <span class="n">georef</span><span class="o">.</span><span class="n">get_radolan_grid</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">, (</span><span class="si">{1:.4f}</span><span class="s2">, </span><span class="si">{2:.4f}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">radolan_grid</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="o">*</span><span class="n">radolan_grid</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,:]))</span>  <span class="c1"># noqa</span>
+<span class="go">(900, 900, 2), (-523.4622, -4658.6447)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># using pure trigonometric transformations</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">wradlib.georef</span> <span class="k">as</span> <span class="nn">georef</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">radolan_grid</span> <span class="o">=</span> <span class="n">georef</span><span class="o">.</span><span class="n">get_radolan_grid</span><span class="p">(</span><span class="n">trig</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">, (</span><span class="si">{1:.4f}</span><span class="s2">, </span><span class="si">{2:.4f}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">radolan_grid</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="o">*</span><span class="n">radolan_grid</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,:]))</span>  <span class="c1"># noqa</span>
+<span class="go">(900, 900, 2), (-523.4622, -4658.6447)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># using osr spatial reference transformation</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">wradlib.georef</span> <span class="k">as</span> <span class="nn">georef</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">radolan_grid</span> <span class="o">=</span> <span class="n">georef</span><span class="o">.</span><span class="n">get_radolan_grid</span><span class="p">(</span><span class="mi">1500</span><span class="p">,</span> <span class="mi">1400</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">, (</span><span class="si">{1:.4f}</span><span class="s2">, </span><span class="si">{2:.4f}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">radolan_grid</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="o">*</span><span class="n">radolan_grid</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,:]))</span>  <span class="c1"># noqa</span>
+<span class="go">(1500, 1400, 2), (-673.4622, -5008.6447)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># using osr spatial reference transformation</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">wradlib.georef</span> <span class="k">as</span> <span class="nn">georef</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">radolan_grid</span> <span class="o">=</span> <span class="n">georef</span><span class="o">.</span><span class="n">get_radolan_grid</span><span class="p">(</span><span class="mi">900</span><span class="p">,</span> <span class="mi">900</span><span class="p">,</span> <span class="n">wgs84</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{0}</span><span class="s2">, (</span><span class="si">{1:.4f}</span><span class="s2">, </span><span class="si">{2:.4f}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">radolan_grid</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="o">*</span><span class="n">radolan_grid</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,:]))</span>  <span class="c1"># noqa</span>
+<span class="go">(900, 900, 2), (3.5889, 46.9526)</span>
+</pre></div>
+</div>
+<p>See <span class="xref std std-ref">notebooks/radolan/radolan_grid.ipynb#Polar-Stereographic-Projection</span>.  # noqa</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body">TypeError, ValueError</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="wradlib.georef.rect.xyz_to_spherical.html" class="btn btn-neutral float-right" title="wradlib.georef.rect.xyz_to_spherical" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="wradlib.georef.rect.get_radolan_coords.html" class="btn btn-neutral" title="wradlib.georef.rect.get_radolan_coords" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2011-2016, wradlib developers.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.11.3',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

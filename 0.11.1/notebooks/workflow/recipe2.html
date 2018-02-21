@@ -1,0 +1,563 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Recipe #2: Reading and visualizing an ODIM_H5 polar volume &mdash; wradlib</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/wradlib.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="wradlib" href="../../index.html"/>
+        <link rel="up" title="Recipes" href="../recipes.html"/>
+        <link rel="next" title="RADOLAN" href="../radolan.html"/>
+        <link rel="prev" title="Recipe #1: Clutter and attenuation correction plus composition for two DWD radars" href="recipe1.html"/>
+    
+    <link href="../../_static/wradlib.css" rel="stylesheet" type="text/css">
+
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+  <a href="../../index.html" class="icon icon-home"> wradlib
+
+
+
+</a>
+
+
+
+  <div class="version">
+    
+    <button class="verbtn">0.11.1</button>
+    <div class="version-content">
+      
+        <a href="../latest/">latest</a>
+        <a href="../0.11.1/">0.11.1</a>
+    </div>
+  </div>
+
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../gettingstarted.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../notebooks.html">Tutorials and Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../jupyter.html">How to use the tutorials and examples?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../learnpython.html">An incomplete introduction to Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics.html">Getting started with wradlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../fileio.html">Data Input - Data Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../attenuation/wradlib_attenuation.html">Attenuation correction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../beamblockage/wradlib_beamblock.html">Beam Blockage Calculation using a DEM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../classify.html">Clutter and Echo Classification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../georeferencing.html">Georeferencing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../match3d/wradlib_match_workflow.html">Match spaceborn PR (GPM/TRMM) with ground radars</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../develop.html">For Developers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interpolation/wradlib_ipol_example.html">How to use wradlib’s ipol module for interpolation tasks?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../multisensor/wradlib_adjust_example.html">Adjusting radar-base rainfall estimates by rain gauge observations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../verification/wradlib_verify_example.html">Routine verification measures for radar-based precipitation estimates</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../recipes.html">Recipes</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="recipe1.html">Recipe1: Clutter and attenuation correction plus composition for twoDWD radars</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Recipe2: Reading and visualizing an ODIM_H5 polarvolume</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../radolan.html">RADOLAN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zonalstats/wradlib_zonalstats_classes.html">Zonal Statistics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference.html">Library Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev_setup.html">For Developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zreferences.html">Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../release_notes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">wradlib</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../notebooks.html">Tutorials and Examples</a> &raquo;</li>
+        
+          <li><a href="../recipes.html">Recipes</a> &raquo;</li>
+        
+      <li>Recipe #2: Reading and visualizing an ODIM_H5 polar volume</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/notebooks/workflow/recipe2.ipynb.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #303F9F;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #D84315;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 8ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+/* nice headers on first paragraph of info/warning boxes */
+.admonition .first {
+    margin: -12px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1;
+    display: block;
+}
+.admonition.warning .first {
+    background: #f0b37e;
+}
+.admonition.note .first {
+    background: #6ab0de;
+}
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="Recipe-#2:-Reading-and-visualizing-an-ODIM_H5-polar-volume">
+<h1>Recipe #2: Reading and visualizing an ODIM_H5 polar volume<a class="headerlink" href="#Recipe-#2:-Reading-and-visualizing-an-ODIM_H5-polar-volume" title="Permalink to this headline">¶</a></h1>
+<p>This recipe shows how extract the polar volume data from an ODIM_H5 hdf5
+file (KNMI example file from OPERA), contruct a 3-dimensional Cartesian
+volume and produce a diagnostic plot. The challenge for this file is
+that for each elevation angle, the scan strategy is different.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">datetime</span> <span class="kn">as</span> <span class="nn">dt</span>
+<span class="kn">from</span> <span class="nn">osgeo</span> <span class="kn">import</span> <span class="n">osr</span>
+
+<span class="c1"># read the data (sample file in WRADLIB_DATA)</span>
+<span class="n">filename</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">get_wradlib_data_file</span><span class="p">(</span><span class="s1">&#39;hdf5/knmi_polar_volume.h5&#39;</span><span class="p">)</span>
+<span class="n">raw</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_OPERA_hdf5</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+<span class="c1"># this is the radar position tuple (longitude, latitude, altitude)</span>
+<span class="n">sitecoords</span> <span class="o">=</span> <span class="p">(</span><span class="n">raw</span><span class="p">[</span><span class="s2">&quot;where&quot;</span><span class="p">][</span><span class="s2">&quot;lon&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">raw</span><span class="p">[</span><span class="s2">&quot;where&quot;</span><span class="p">][</span><span class="s2">&quot;lat&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span>
+              <span class="n">raw</span><span class="p">[</span><span class="s2">&quot;where&quot;</span><span class="p">][</span><span class="s2">&quot;height&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+<span class="c1"># define your cartesian reference system</span>
+<span class="c1"># proj = wradlib.georef.create_osr(32632)</span>
+<span class="n">proj</span> <span class="o">=</span> <span class="n">osr</span><span class="o">.</span><span class="n">SpatialReference</span><span class="p">()</span>
+<span class="n">proj</span><span class="o">.</span><span class="n">ImportFromEPSG</span><span class="p">(</span><span class="mi">32632</span><span class="p">)</span>
+<span class="c1"># containers to hold Cartesian bin coordinates and data</span>
+<span class="n">xyz</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])</span>
+<span class="c1"># iterate over 14 elevation angles</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">14</span><span class="p">):</span>
+    <span class="c1"># get the scan metadata for each elevation</span>
+    <span class="n">where</span> <span class="o">=</span> <span class="n">raw</span><span class="p">[</span><span class="s2">&quot;dataset</span><span class="si">%d</span><span class="s2">/where&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+    <span class="n">what</span> <span class="o">=</span> <span class="n">raw</span><span class="p">[</span><span class="s2">&quot;dataset</span><span class="si">%d</span><span class="s2">/data1/what&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+    <span class="c1"># define arrays of polar coordinate arrays (azimuth and range)</span>
+    <span class="n">az</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">360.</span><span class="p">,</span> <span class="mf">360.</span> <span class="o">/</span> <span class="n">where</span><span class="p">[</span><span class="s2">&quot;nrays&quot;</span><span class="p">])</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">where</span><span class="p">[</span><span class="s2">&quot;rstart&quot;</span><span class="p">],</span>
+                  <span class="n">where</span><span class="p">[</span><span class="s2">&quot;rstart&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">where</span><span class="p">[</span><span class="s2">&quot;nbins&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">where</span><span class="p">[</span><span class="s2">&quot;rscale&quot;</span><span class="p">],</span>
+                  <span class="n">where</span><span class="p">[</span><span class="s2">&quot;rscale&quot;</span><span class="p">])</span>
+    <span class="c1"># derive 3-D Cartesian coordinate tuples</span>
+    <span class="n">xyz_</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">vpr</span><span class="o">.</span><span class="n">volcoords_from_polar</span><span class="p">(</span><span class="n">sitecoords</span><span class="p">,</span> <span class="n">where</span><span class="p">[</span><span class="s2">&quot;elangle&quot;</span><span class="p">],</span>
+                                        <span class="n">az</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">proj</span><span class="p">)</span>
+    <span class="c1"># get the scan data for this elevation</span>
+    <span class="c1">#   here, you can do all the processing on the 2-D polar level</span>
+    <span class="c1">#   e.g. clutter elimination, attenuation correction, ...</span>
+    <span class="n">data_</span> <span class="o">=</span> <span class="n">what</span><span class="p">[</span><span class="s2">&quot;offset&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">what</span><span class="p">[</span><span class="s2">&quot;gain&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">raw</span><span class="p">[</span>
+        <span class="s2">&quot;dataset</span><span class="si">%d</span><span class="s2">/data1/data&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+    <span class="c1"># transfer to containers</span>
+    <span class="n">xyz</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">xyz</span><span class="p">,</span> <span class="n">xyz_</span><span class="p">)),</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">data_</span><span class="o">.</span><span class="n">ravel</span><span class="p">())</span>
+
+<span class="c1"># generate 3-D Cartesian target grid coordinates</span>
+<span class="n">maxrange</span> <span class="o">=</span> <span class="mf">200000.</span>
+<span class="n">minelev</span> <span class="o">=</span> <span class="mf">0.1</span>
+<span class="n">maxelev</span> <span class="o">=</span> <span class="mf">25.</span>
+<span class="n">maxalt</span> <span class="o">=</span> <span class="mf">5000.</span>
+<span class="n">horiz_res</span> <span class="o">=</span> <span class="mf">2000.</span>
+<span class="n">vert_res</span> <span class="o">=</span> <span class="mf">250.</span>
+<span class="n">trgxyz</span><span class="p">,</span> <span class="n">trgshape</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">vpr</span><span class="o">.</span><span class="n">make_3D_grid</span><span class="p">(</span><span class="n">sitecoords</span><span class="p">,</span> <span class="n">proj</span><span class="p">,</span> <span class="n">maxrange</span><span class="p">,</span>
+                                        <span class="n">maxalt</span><span class="p">,</span> <span class="n">horiz_res</span><span class="p">,</span> <span class="n">vert_res</span><span class="p">)</span>
+
+<span class="c1"># interpolate to Cartesian 3-D volume grid</span>
+<span class="n">tstart</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+<span class="n">gridder</span> <span class="o">=</span> <span class="n">wrl</span><span class="o">.</span><span class="n">vpr</span><span class="o">.</span><span class="n">CAPPI</span><span class="p">(</span><span class="n">xyz</span><span class="p">,</span> <span class="n">trgxyz</span><span class="p">,</span> <span class="n">trgshape</span><span class="p">,</span> <span class="n">maxrange</span><span class="p">,</span> <span class="n">minelev</span><span class="p">,</span>
+                        <span class="n">maxelev</span><span class="p">)</span>
+<span class="n">vol</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">masked_invalid</span><span class="p">(</span><span class="n">gridder</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">trgshape</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;3-D interpolation took:&quot;</span><span class="p">,</span> <span class="n">dt</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="n">tstart</span><span class="p">)</span>
+
+<span class="c1"># diagnostic plot</span>
+<span class="n">trgx</span> <span class="o">=</span> <span class="n">trgxyz</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">trgshape</span><span class="p">)[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">:]</span>
+<span class="n">trgy</span> <span class="o">=</span> <span class="n">trgxyz</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">trgshape</span><span class="p">)[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">trgz</span> <span class="o">=</span> <span class="n">trgxyz</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">trgshape</span><span class="p">)[:,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">wrl</span><span class="o">.</span><span class="n">vis</span><span class="o">.</span><span class="n">plot_max_plan_and_vert</span><span class="p">(</span><span class="n">trgx</span><span class="p">,</span> <span class="n">trgy</span><span class="p">,</span> <span class="n">trgz</span><span class="p">,</span> <span class="n">vol</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;dBZH&quot;</span><span class="p">,</span>
+                               <span class="n">levels</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="mi">32</span><span class="p">,</span> <span class="mi">60</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+3-D interpolation took: 0:00:35.334988
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_workflow_recipe2_4_1.png" src="../../_images/notebooks_workflow_recipe2_4_1.png" />
+</div>
+</div>
+<div class="admonition note">
+<p class="first fa fa-exclamation-circle"><strong>Note</strong></p>
+<p class="last">In order to run the recipe code, you need to extract the sample data
+into a directory pointed to by environment variable <code class="docutils literal"><span class="pre">WRADLIB_DATA</span></code>.</p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../radolan.html" class="btn btn-neutral float-right" title="RADOLAN" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="recipe1.html" class="btn btn-neutral" title="Recipe #1: Clutter and attenuation correction plus composition for two DWD radars" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2011-2016, wradlib developers.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.11.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

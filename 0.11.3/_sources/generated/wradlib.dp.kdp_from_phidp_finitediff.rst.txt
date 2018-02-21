@@ -1,0 +1,6 @@
+wradlib.dp.kdp\_from\_phidp\_finitediff
+=======================================
+
+.. currentmodule:: wradlib.dp
+
+.. autofunction:: kdp_from_phidp_finitediff

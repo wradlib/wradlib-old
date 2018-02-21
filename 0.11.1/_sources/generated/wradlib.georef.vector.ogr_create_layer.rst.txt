@@ -1,0 +1,6 @@
+wradlib\.georef\.vector\.ogr\_create\_layer
+===========================================
+
+.. currentmodule:: wradlib.georef.vector
+
+.. autofunction:: ogr_create_layer

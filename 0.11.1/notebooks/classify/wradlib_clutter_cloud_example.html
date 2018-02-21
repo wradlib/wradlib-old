@@ -1,0 +1,678 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Clutter detection by using space-born cloud images &mdash; wradlib</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/wradlib.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="wradlib" href="../../index.html"/>
+        <link rel="up" title="Clutter and Echo Classification" href="../classify.html"/>
+        <link rel="next" title="Heuristic clutter detection based on distribution properties (“histo cut”)" href="wradlib_histo_cut_example.html"/>
+        <link rel="prev" title="Clutter detection using the Gabella approach" href="wradlib_clutter_gabella_example.html"/>
+    
+    <link href="../../_static/wradlib.css" rel="stylesheet" type="text/css">
+
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+  <a href="../../index.html" class="icon icon-home"> wradlib
+
+
+
+</a>
+
+
+
+  <div class="version">
+    
+    <button class="verbtn">0.11.1</button>
+    <div class="version-content">
+      
+        <a href="../latest/">latest</a>
+        <a href="../0.11.1/">0.11.1</a>
+    </div>
+  </div>
+
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../gettingstarted.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../notebooks.html">Tutorials and Examples</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../jupyter.html">How to use the tutorials and examples?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../learnpython.html">An incomplete introduction to Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics.html">Getting started with wradlib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../fileio.html">Data Input - Data Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../attenuation/wradlib_attenuation.html">Attenuation correction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../beamblockage/wradlib_beamblock.html">Beam Blockage Calculation using a DEM</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../classify.html">Clutter and Echo Classification</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="wradlib_clutter_gabella_example.html">Clutter detection using Gabellaapproach</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Clutter detection by using space-born cloudimages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Read-the-radar-data-and-count-the-number-of-tilts">Read the radar data and count the number of tilts</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Reconstruct-the-radar-values">Reconstruct the radar values</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Construct-the-corresponding-radar-coordinates">Construct the corresponding radar coordinates</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Construct-collocated-satellite-data">Construct collocated satellite data</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Estimate-localisation-errors">Estimate localisation errors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Identify-clutter-based-on-collocated-cloudtype">Identify clutter based on collocated cloudtype</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Plot-the-results">Plot the results</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="wradlib_histo_cut_example.html">Heuristic clutterdetection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wradlib_fuzzy_echo_classify.html">Fuzzy echoclassification</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../georeferencing.html">Georeferencing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../match3d/wradlib_match_workflow.html">Match spaceborn PR (GPM/TRMM) with ground radars</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../develop.html">For Developers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../interpolation/wradlib_ipol_example.html">How to use wradlib’s ipol module for interpolation tasks?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../multisensor/wradlib_adjust_example.html">Adjusting radar-base rainfall estimates by rain gauge observations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../verification/wradlib_verify_example.html">Routine verification measures for radar-based precipitation estimates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../recipes.html">Recipes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../radolan.html">RADOLAN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../zonalstats/wradlib_zonalstats_classes.html">Zonal Statistics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../reference.html">Library Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../community.html">Community</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dev_setup.html">For Developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../zreferences.html">Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../release_notes.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">wradlib</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../notebooks.html">Tutorials and Examples</a> &raquo;</li>
+        
+          <li><a href="../classify.html">Clutter and Echo Classification</a> &raquo;</li>
+        
+      <li>Clutter detection by using space-born cloud images</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/notebooks/classify/wradlib_clutter_cloud_example.ipynb.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #303F9F;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #D84315;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 8ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+/* nice headers on first paragraph of info/warning boxes */
+.admonition .first {
+    margin: -12px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1;
+    display: block;
+}
+.admonition.warning .first {
+    background: #f0b37e;
+}
+.admonition.note .first {
+    background: #6ab0de;
+}
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="Clutter-detection-by-using-space-born-cloud-images">
+<h1>Clutter detection by using space-born cloud images<a class="headerlink" href="#Clutter-detection-by-using-space-born-cloud-images" title="Permalink to this headline">¶</a></h1>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+<span class="kn">import</span> <span class="nn">wradlib.vis</span> <span class="kn">as</span> <span class="nn">vis</span>
+<span class="kn">import</span> <span class="nn">wradlib.clutter</span> <span class="kn">as</span> <span class="nn">cl</span>
+<span class="kn">import</span> <span class="nn">wradlib.georef</span> <span class="kn">as</span> <span class="nn">georef</span>
+<span class="kn">import</span> <span class="nn">wradlib.ipol</span> <span class="kn">as</span> <span class="nn">ipol</span>
+<span class="kn">import</span> <span class="nn">wradlib.io</span> <span class="kn">as</span> <span class="nn">io</span>
+<span class="kn">import</span> <span class="nn">wradlib.util</span> <span class="kn">as</span> <span class="nn">util</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">get_ipython</span><span class="p">()</span><span class="o">.</span><span class="n">magic</span><span class="p">(</span><span class="s2">&quot;matplotlib inline&quot;</span><span class="p">)</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ion</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="Read-the-radar-data-and-count-the-number-of-tilts">
+<h2>Read the radar data and count the number of tilts<a class="headerlink" href="#Read-the-radar-data-and-count-the-number-of-tilts" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="c1"># read the radar volume scan</span>
+<span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;hdf5/20130429043000.rad.bewid.pvol.dbzh.scan1.hdf&#39;</span>
+<span class="n">filename</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">get_wradlib_data_file</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+<span class="n">pvol</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">read_OPERA_hdf5</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+<span class="c1"># Count the number of dataset</span>
+
+<span class="n">ntilt</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">pvol</span><span class="p">[</span><span class="s2">&quot;dataset</span><span class="si">%d</span><span class="s2">/what&quot;</span> <span class="o">%</span> <span class="n">ntilt</span><span class="p">]</span>
+        <span class="n">ntilt</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="n">ntilt</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="k">break</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Reconstruct-the-radar-values">
+<h2>Reconstruct the radar values<a class="headerlink" href="#Reconstruct-the-radar-values" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="n">nrays</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">pvol</span><span class="p">[</span><span class="s2">&quot;dataset1/where&quot;</span><span class="p">][</span><span class="s2">&quot;nrays&quot;</span><span class="p">])</span>
+<span class="n">nbins</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">pvol</span><span class="p">[</span><span class="s2">&quot;dataset1/where&quot;</span><span class="p">][</span><span class="s2">&quot;nbins&quot;</span><span class="p">])</span>
+<span class="n">val</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">ntilt</span><span class="p">,</span> <span class="n">nrays</span><span class="p">,</span> <span class="n">nbins</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ntilt</span><span class="p">):</span>
+    <span class="n">val</span><span class="p">[</span><span class="n">t</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n">pvol</span><span class="p">[</span><span class="s2">&quot;dataset</span><span class="si">%d</span><span class="s2">/data1/data&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">t</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+<span class="n">gain</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">pvol</span><span class="p">[</span><span class="s2">&quot;dataset1/data1/what&quot;</span><span class="p">][</span><span class="s2">&quot;gain&quot;</span><span class="p">])</span>
+<span class="n">offset</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">pvol</span><span class="p">[</span><span class="s2">&quot;dataset1/data1/what&quot;</span><span class="p">][</span><span class="s2">&quot;offset&quot;</span><span class="p">])</span>
+<span class="n">val</span> <span class="o">=</span> <span class="n">val</span> <span class="o">*</span> <span class="n">gain</span> <span class="o">+</span> <span class="n">offset</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Construct-the-corresponding-radar-coordinates">
+<h2>Construct the corresponding radar coordinates<a class="headerlink" href="#Construct-the-corresponding-radar-coordinates" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="n">rscale</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">pvol</span><span class="p">[</span><span class="s2">&quot;dataset1/where&quot;</span><span class="p">][</span><span class="s2">&quot;rscale&quot;</span><span class="p">])</span>
+<span class="n">coord</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">ntilt</span><span class="p">,</span> <span class="n">nrays</span><span class="p">,</span> <span class="n">nbins</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ntilt</span><span class="p">):</span>
+    <span class="n">elangle</span> <span class="o">=</span> <span class="n">pvol</span><span class="p">[</span><span class="s2">&quot;dataset</span><span class="si">%d</span><span class="s2">/where&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">t</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)][</span><span class="s2">&quot;elangle&quot;</span><span class="p">]</span>
+    <span class="n">coord</span><span class="p">[</span><span class="n">t</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="n">georef</span><span class="o">.</span><span class="n">sweep_centroids</span><span class="p">(</span><span class="n">nrays</span><span class="p">,</span> <span class="n">rscale</span><span class="p">,</span> <span class="n">nbins</span><span class="p">,</span> <span class="n">elangle</span><span class="p">)</span>
+<span class="c1"># ascale = math.pi / nrays</span>
+<span class="n">sitecoords</span> <span class="o">=</span> <span class="p">(</span><span class="n">pvol</span><span class="p">[</span><span class="s2">&quot;where&quot;</span><span class="p">][</span><span class="s2">&quot;lon&quot;</span><span class="p">],</span> <span class="n">pvol</span><span class="p">[</span><span class="s2">&quot;where&quot;</span><span class="p">][</span><span class="s2">&quot;lat&quot;</span><span class="p">],</span>
+              <span class="n">pvol</span><span class="p">[</span><span class="s2">&quot;where&quot;</span><span class="p">][</span><span class="s2">&quot;height&quot;</span><span class="p">])</span>
+<span class="n">proj_radar</span> <span class="o">=</span> <span class="n">georef</span><span class="o">.</span><span class="n">create_osr</span><span class="p">(</span><span class="s2">&quot;aeqd&quot;</span><span class="p">,</span> <span class="n">lat_0</span><span class="o">=</span><span class="n">pvol</span><span class="p">[</span><span class="s2">&quot;where&quot;</span><span class="p">][</span><span class="s2">&quot;lat&quot;</span><span class="p">],</span>
+                               <span class="n">lon_0</span><span class="o">=</span><span class="n">pvol</span><span class="p">[</span><span class="s2">&quot;where&quot;</span><span class="p">][</span><span class="s2">&quot;lon&quot;</span><span class="p">])</span>
+<span class="p">(</span><span class="n">coord</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+ <span class="n">coord</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+ <span class="n">coord</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span> <span class="o">=</span> <span class="n">georef</span><span class="o">.</span><span class="n">polar2lonlatalt_n</span><span class="p">(</span><span class="n">coord</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                                           <span class="n">np</span><span class="o">.</span><span class="n">degrees</span><span class="p">(</span><span class="n">coord</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">1</span><span class="p">]),</span>
+                                           <span class="n">coord</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">sitecoords</span><span class="p">,</span>
+                                           <span class="n">re</span><span class="o">=</span><span class="mf">6370040.</span><span class="p">,</span>
+                                           <span class="n">ke</span><span class="o">=</span><span class="mf">4.</span> <span class="o">/</span> <span class="mf">3.</span><span class="p">)</span>
+<span class="n">coord</span> <span class="o">=</span> <span class="n">georef</span><span class="o">.</span><span class="n">reproject</span><span class="p">(</span><span class="n">coord</span><span class="p">,</span> <span class="n">projection_target</span><span class="o">=</span><span class="n">proj_radar</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Construct-collocated-satellite-data">
+<h2>Construct collocated satellite data<a class="headerlink" href="#Construct-collocated-satellite-data" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;hdf5/SAFNWC_MSG3_CT___201304290415_BEL_________.h5&#39;</span>
+<span class="n">filename</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">get_wradlib_data_file</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+<span class="n">sat_gdal</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">read_safnwc</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+<span class="n">val_sat</span> <span class="o">=</span> <span class="n">georef</span><span class="o">.</span><span class="n">read_gdal_values</span><span class="p">(</span><span class="n">sat_gdal</span><span class="p">)</span>
+<span class="n">coord_sat</span> <span class="o">=</span> <span class="n">georef</span><span class="o">.</span><span class="n">read_gdal_coordinates</span><span class="p">(</span><span class="n">sat_gdal</span><span class="p">)</span>
+<span class="n">proj_sat</span> <span class="o">=</span> <span class="n">georef</span><span class="o">.</span><span class="n">read_gdal_projection</span><span class="p">(</span><span class="n">sat_gdal</span><span class="p">)</span>
+<span class="n">coord_sat</span> <span class="o">=</span> <span class="n">georef</span><span class="o">.</span><span class="n">reproject</span><span class="p">(</span><span class="n">coord_sat</span><span class="p">,</span> <span class="n">projection_source</span><span class="o">=</span><span class="n">proj_sat</span><span class="p">,</span>
+                             <span class="n">projection_target</span><span class="o">=</span><span class="n">proj_radar</span><span class="p">)</span>
+<span class="n">coord_radar</span> <span class="o">=</span> <span class="n">coord</span>
+<span class="n">interp</span> <span class="o">=</span> <span class="n">ipol</span><span class="o">.</span><span class="n">Nearest</span><span class="p">(</span><span class="n">coord_sat</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+                      <span class="n">coord_radar</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="n">val_sat</span> <span class="o">=</span> <span class="n">interp</span><span class="p">(</span><span class="n">val_sat</span><span class="o">.</span><span class="n">ravel</span><span class="p">())</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">val</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Estimate-localisation-errors">
+<h2>Estimate localisation errors<a class="headerlink" href="#Estimate-localisation-errors" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="n">timelag</span> <span class="o">=</span> <span class="mi">9</span> <span class="o">*</span> <span class="mi">60</span>
+<span class="n">wind</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">error</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">absolute</span><span class="p">(</span><span class="n">timelag</span><span class="p">)</span> <span class="o">*</span> <span class="n">wind</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Identify-clutter-based-on-collocated-cloudtype">
+<h2>Identify clutter based on collocated cloudtype<a class="headerlink" href="#Identify-clutter-based-on-collocated-cloudtype" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="n">clutter</span> <span class="o">=</span> <span class="n">cl</span><span class="o">.</span><span class="n">filter_cloudtype</span><span class="p">(</span><span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span> <span class="n">val_sat</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span>
+                              <span class="n">scale</span><span class="o">=</span><span class="n">rscale</span><span class="p">,</span> <span class="n">smoothing</span><span class="o">=</span><span class="n">error</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Plot-the-results">
+<h2>Plot the results<a class="headerlink" href="#Plot-the-results" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>In [8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython2"><div class="highlight"><pre>
+<span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">131</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">,</span> <span class="n">pm</span> <span class="o">=</span> <span class="n">vis</span><span class="o">.</span><span class="n">plot_ppi</span><span class="p">(</span><span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">pm</span><span class="p">,</span> <span class="n">shrink</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Radar reflectivity&#39;</span><span class="p">)</span>
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">132</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">,</span> <span class="n">pm</span> <span class="o">=</span> <span class="n">vis</span><span class="o">.</span><span class="n">plot_ppi</span><span class="p">(</span><span class="n">val_sat</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">pm</span><span class="p">,</span> <span class="n">shrink</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Satellite cloud classification&#39;</span><span class="p">)</span>
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">133</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">,</span> <span class="n">pm</span> <span class="o">=</span> <span class="n">vis</span><span class="o">.</span><span class="n">plot_ppi</span><span class="p">(</span><span class="n">clutter</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Detected clutter&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none"><div class="highlight"><pre>
+<span></span>Out[8]:
+</pre></div>
+</div>
+<div class="output_area highlight-none"><div class="highlight"><pre>
+<span></span>Text(0.5,1,&#39;Detected clutter&#39;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/notebooks_classify_wradlib_clutter_cloud_example_16_1.png" src="../../_images/notebooks_classify_wradlib_clutter_cloud_example_16_1.png" />
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="wradlib_histo_cut_example.html" class="btn btn-neutral float-right" title="Heuristic clutter detection based on distribution properties (“histo cut”)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="wradlib_clutter_gabella_example.html" class="btn btn-neutral" title="Clutter detection using the Gabella approach" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2011-2016, wradlib developers.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.11.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

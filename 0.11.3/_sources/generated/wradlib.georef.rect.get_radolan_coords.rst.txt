@@ -1,0 +1,6 @@
+wradlib.georef.rect.get\_radolan\_coords
+========================================
+
+.. currentmodule:: wradlib.georef.rect
+
+.. autofunction:: get_radolan_coords
